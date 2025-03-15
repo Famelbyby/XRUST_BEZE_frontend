@@ -3,12 +3,13 @@ import './Chat.scss'
 import MainWebSocket from '../../../shared/WebSocket/WebSocket'
 import {MessageType, SendingMessageType} from '../../../widgets/Message/MessageTypes'
 import Message from '../../../widgets/Message/Message'
+import { useSearchParams } from 'react-router';
 
 const initialMessages: Array<MessageType> = [
     {
         message_id: 1,
         event: "EventText",
-        channel_id: 1,
+        channel_id: 0,
         user_id: 1,
         payload: "Добрый день, Shkaf! Видел Вашу анкету, ваши познания в CS:GO и Dota 2 меня поразили, не могли бы Вы рассказать как занимать банан на Инферно и коннектор на Мираже?",
         seen: false,
@@ -25,9 +26,20 @@ const initialMessages: Array<MessageType> = [
     },
 ]
 
+let companionID: number = 0;
+
 const Chat: React.FC = () => {
     const [inputText, setText] = useState('');
     const [messages, setMessages] = useState(initialMessages);
+    const [mate, setMate] = useSearchParams();
+
+    const mateID = mate.get('id');
+
+    if (mateID !== null) {
+        companionID = +mateID;
+    } else {
+        setMate({"id": "1"});
+    }
 
     MainWebSocket.addObserver((data: string) => {
         handleReceivingMessage(data);
@@ -41,12 +53,12 @@ const Chat: React.FC = () => {
     }
 
     function handleSendingMessage() {
-        const user_id: number = +(localStorage.getItem('user_id') || '0');
+        const userId: number = +(localStorage.getItem('user_id') || '0');
 
         const messageJSON: SendingMessageType = {
             "event": "EventText",
-            "user_id": user_id,
-            "channel_id": 1,
+            "user_id": userId,
+            "channel_id": companionID,
             "payload": inputText,
         }
 

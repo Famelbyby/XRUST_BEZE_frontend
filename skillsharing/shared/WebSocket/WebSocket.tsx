@@ -1,5 +1,5 @@
 class MainWebSocket {
-    #socket;
+    #socket: WebSocket;
     #observers: Array<(arg: string) => void>;
 
     constructor() {
