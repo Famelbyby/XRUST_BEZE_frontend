@@ -5,6 +5,10 @@ class MainWebSocket {
     constructor() {
         this.#socket = new WebSocket('ws://localhost:8080/ws');
         this.#observers = [];
+        this.#socket.onmessage = (event: WebSocketEventMap["message"]) => {
+            console.log(event.data);
+            this.receivedMessage(event.data);
+        }
     }
 
     addObserver = (newObserver: (arg: string) => void) => {
