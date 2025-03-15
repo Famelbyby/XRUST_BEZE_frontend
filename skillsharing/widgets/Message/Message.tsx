@@ -9,7 +9,7 @@ interface PropType {
 const Message: React.FC<PropType> = ({message}) => {
     const user_id: number = +(localStorage.getItem('user_id') || 0);
 
-    const messageTime: Date = new Date(message.time);
+    const messageTime: Date = new Date();
     console.log(messageTime)
 
     return (

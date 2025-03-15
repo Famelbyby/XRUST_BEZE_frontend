@@ -17,7 +17,6 @@ class MainWebSocket {
 
     sendMessage = (data: string) => {
         this.#socket.send(data);
-        this.receivedMessage(data);
     }
 
     receivedMessage = (data: string) => {
