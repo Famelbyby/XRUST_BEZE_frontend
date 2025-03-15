@@ -1,0 +1,23 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(0, 0, 0, 0.4);
+    padding: 30px;
+    gap: 20px;
+
+    &-item {
+        display: flex;
+        align-items: center;
+
+        &__img {
+            width: 25px;
+            height: 25px;
+        }
+
+        &__title {
+            font-family: 'Inder';
+            margin-left: 5px;
+            font-size: 18px;
+        }
+    }
+}

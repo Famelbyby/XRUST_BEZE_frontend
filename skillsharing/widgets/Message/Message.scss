@@ -1,0 +1,25 @@
+$borderRad: 23px;
+
+.chat {
+    &-message {
+        display: flex;
+        flex-direction: column;
+        max-width: 300px;
+        padding: 10px;
+        border-radius: $borderRad $borderRad 0 0;
+        gap: 4px;
+
+        &_left {
+            background-color: #D4E2FF;
+            border-radius: $borderRad $borderRad $borderRad;
+            align-items: start;
+        }
+
+        &_right {
+            background-color: rgba(0, 30, 222, 0.29);
+            border-radius: $borderRad $borderRad 0 $borderRad;
+            align-items: end;
+            margin: 0 0 0 auto;
+        }
+    }
+}
