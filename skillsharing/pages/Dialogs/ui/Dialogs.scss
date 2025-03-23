@@ -1,0 +1,148 @@
+.dialogs {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 30px;
+    align-items: stretch;
+    gap: 15px;
+
+    &-page {
+        display: flex;
+        width: 100%;
+        padding-right: 80px;
+        padding-top: 50px;
+    }
+}
+
+.dialog {
+    display: flex;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    padding: 10px;
+    justify-content: space-between;
+
+    &-user {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        //flex-grow: 1;
+
+        &__avatar {
+            width: 55px;
+            height: 55px;
+            flex-shrink: 0;
+
+            &-mock {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgb(128 128 128 / 34%);
+                border-radius: 5px;
+            }
+
+            &-spinner {
+                border-radius: inherit;
+                background-color: #ffffff47;
+                animation-name: avatar-spinner;
+                animation-duration: 1s;
+                animation-iteration-count: infinite;
+                animation-direction: alternate;
+            }
+        }
+
+        &-info {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            &__name {
+                font-family: 'Inria-sans';
+                margin-bottom: 8px;
+                font-size: 18px;
+                height: 18px;
+
+                &-mock {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: rgb(128 128 128 / 34%);
+                    width: 100px;
+                    border-radius: 5px;
+                }
+
+                &-spinner {
+                    border-radius: inherit;
+                    background-color: #ffffff47;
+                    animation-name: avatar-spinner;
+                    animation-duration: 1s;
+                    animation-iteration-count: infinite;
+                    animation-direction: alternate;
+                }
+            }
+
+            &__last-message {
+                margin-bottom: 5px;
+                height: 17px;
+                max-width: 20vw;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+
+                &-mock {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: rgb(128 128 128 / 34%);
+                    width: 50%;
+                    max-width: 20vh;
+                    border-radius: 5px;
+                }
+
+                &-spinner {
+                    border-radius: inherit;
+                    background-color: #ffffff47;
+                    animation-name: avatar-spinner;
+                    animation-duration: 1s;
+                    animation-iteration-count: infinite;
+                    animation-direction: alternate;
+                }
+            }
+
+            &__message {
+                &-time {
+                    font-size: 10px;
+                    color: gray;
+                }
+            }
+        }
+    }
+
+    &-info {
+        font-family: 'Inter';
+        color: rgba(0, 0, 0, 0.4);
+
+        &__tags {
+            height: 20px;
+
+            &-mock {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgb(128 128 128 / 34%);
+                width: 200px;
+                max-width: 20vh;
+                border-radius: 5px;
+            }
+
+            &-spinner {
+                border-radius: inherit;
+                background-color: #ffffff47;
+                animation-name: avatar-spinner;
+                animation-duration: 1s;
+                animation-iteration-count: infinite;
+                animation-direction: alternate;
+            }
+        }
+    }
+}

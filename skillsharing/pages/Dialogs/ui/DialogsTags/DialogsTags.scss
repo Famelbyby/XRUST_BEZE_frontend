@@ -1,0 +1,32 @@
+.dialogs-tags {
+    min-width: 300px;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+
+    &__tag {
+        padding: 5px 10px;
+        border-radius: 15px;
+        cursor: pointer;
+        font-size: 17px;
+
+        &_selected {
+            background-color: green;
+            color: white;
+        }
+    }
+
+    &-title {
+        font-family: 'Inter';
+        font-weight: bold;
+        font-size: 23px;
+        margin-bottom: 20px;
+    }
+
+    &-examples {
+        display: flex;
+        flex-wrap: wrap;
+        padding-right: 10px;
+        gap: 10px;
+    }
+}
