@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Chat.scss'
 import ChatFooter from './ChatFooter/ChatFooter';
 import ChatHeader from './ChatHeader/ChatHeader';

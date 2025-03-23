@@ -4,7 +4,7 @@ import axios from "axios";
 import { Link } from "react-router";
 import { GetChatCompanion } from "../../api/ChatCompanion";
 import { useDispatch, useSelector } from "react-redux";
-import { removeSelectedMessages, setChannelID } from "../../../../widgets/Message/MessagesSlice";
+import { removeSelectedMessages, setChannelID, editMessage } from "../../../../widgets/Message/MessagesSlice";
 import { ChatState } from "../ChatStore";
 import MainWebSocket from './../../../../shared/WebSocket/WebSocket'
 import { IDeletingMessage, IMessage } from "../../../../widgets/Message/MessageTypes";
@@ -51,8 +51,11 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({companionID}) => {
 
         return () => {
             componentIsMounted.current = false;
+            dispatch(setChannelID(""));
         };
     }, [dispatch, companionID]);
+
+    console.log(selectedMessages);
 
     return (
         <div className='chat-header'>
@@ -107,7 +110,9 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({companionID}) => {
                     <div className="chat-header-controls">
                         {selectedMessagesCount === 1 &&
                             <>
-                                <img className="chat-header-controls__img chat-header-controls__edit" src="/shared/pen.png" alt="Изменить сообщение" />
+                                <img className="chat-header-controls__img chat-header-controls__edit" src="/shared/pen.png" alt="Изменить сообщение" onClick={() => {
+                                    dispatch(editMessage());
+                                }}/>
                                 <img className="chat-header-controls__img chat-header-controls__copy" src="/Chat/copy.png" alt="Копировать сообщение" onClick={() => {
                                     navigator.clipboard.writeText(selectedMessages[0].payload);
 

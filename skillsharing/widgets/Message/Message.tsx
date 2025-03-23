@@ -22,6 +22,11 @@ const Message: React.FC<PropType> = ({message, isSelected}) => {
                     {message.payload}
                 </div>
                 <div className='chat-content__time'>
+                    {message.updatedAt !== message.createdAt && 
+                        <div className='chat-content__time_redacted'>
+                            ред.
+                        </div>
+                    }
                     {messageTime.getHours()}:{messageTime.getMinutes()}
                 </div>
             </div>

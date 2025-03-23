@@ -40,6 +40,20 @@ const ProfileHeader: React.FC<ProfileHeaderPropTypes> = ({user}) => {
                     </div>
                 </div>
             }
+            { user !== undefined && ownUserID !== user.id && 
+                <div className="profile-buttons profile-buttons_other">
+                        <div className="profile-buttons-report">
+                            <img className="profile-buttons-report__img" src="/Profile/report.png" alt="" />
+                            Пожаловаться
+                        </div>
+                    <Link to={`/chat/${user.id}`}>
+                        <div className="profile-buttons-chat">
+                            <img className="profile-buttons-chat__img" src="/Profile/chat.png" alt="" />
+                            Написать
+                        </div>
+                    </Link>
+                </div>
+            }
         </div>
     )
 };

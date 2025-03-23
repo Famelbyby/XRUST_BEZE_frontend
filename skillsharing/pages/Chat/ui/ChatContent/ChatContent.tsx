@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Message from "../../../../widgets/Message/Message";
 import { IMessage } from "../../../../widgets/Message/MessageTypes";
 import { GetChatMessages } from "../../api/ChatMessages";
-import { addMessage, replaceMessages, deleteMessage } from "../../../../widgets/Message/MessagesSlice";
+import { addMessage, replaceMessages, deleteMessage, updateMessage } from "../../../../widgets/Message/MessagesSlice";
 import MainWebSocket from '../../../../shared/WebSocket/WebSocket'
 import { ChatState } from "../ChatStore";
 
@@ -25,6 +25,8 @@ const ChatContent: React.FC = () => {
                     dispatch(addMessage(message));
                     break;
                 case 'update_message':
+                    dispatch(updateMessage(message));
+                    break;
                 case 'delete_message':
                     dispatch(deleteMessage(message));
                     break;
@@ -50,6 +52,7 @@ const ChatContent: React.FC = () => {
 
         return () => {
             componentIsMounted.current = false;
+            dispatch(replaceMessages([]));
         };
     }, [dispatch]);
 

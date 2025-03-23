@@ -32,7 +32,7 @@ const Profile: React.FC = () => {
         return () => {
             componentIsMounted.current = false;
         }
-    }, [])
+    }, [params.userID, navigateTo])
 
     return (
         <div className="profile-page">

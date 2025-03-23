@@ -6,23 +6,33 @@ export interface MessagesState {
   messages: IMessage[],
   selectedMessages: IMessage[],
   channelID: string,
+  editingMessage: IMessage | null,
 }
 
 const initialState: MessagesState = {
   messages: [],
   selectedMessages: [],
   channelID: "",
+  editingMessage: null,
 }
 
 export const messagesSlice = createSlice({
   name: 'chatMessages',
   initialState,
   reducers: {
+    editMessage: (state: MessagesState) => {
+      state.editingMessage = state.selectedMessages[0];
+      state.selectedMessages = [];
+    },
+    stopEditingMessage: (state: MessagesState) => {
+      state.editingMessage = null;
+    },
     setChannelID: (state: MessagesState, action: PayloadAction<MessagesState["channelID"]>) => {
       state.channelID = action.payload;
     },
     replaceMessages: (state: MessagesState, action: PayloadAction<IMessage[]>) => {
         state.messages = action.payload;
+        state.selectedMessages = [];
     },
     addMessage: (state: MessagesState, action: PayloadAction<IMessage>) => {
         const newMessage: IMessage = action.payload;
@@ -32,6 +42,25 @@ export const messagesSlice = createSlice({
         }
 
         state.messages = [action.payload, ...state.messages];
+    },
+    updateMessage: (state: MessagesState, action: PayloadAction<IMessage>) => {
+      const updatedMessage: IMessage = action.payload;
+
+      console.log('jsad');
+
+      if (state.channelID !== updatedMessage.channel_id && state.channelID !== updatedMessage.user_id) {
+        return;
+      }
+
+      console.log('jsad');
+
+      const messageIndex: number = state.messages.findIndex((message) => message.message_id === updatedMessage.message_id);
+
+      console.log(messageIndex);
+      if (messageIndex !== -1) {
+        console.log('here')
+        state.messages = [...state.messages.slice(0, messageIndex), updatedMessage, ...state.messages.slice(messageIndex + 1)];
+      }
     },
     deleteMessage: (state: MessagesState, action: PayloadAction<IMessage>) => {
       const messageForDelete: IMessage = action.payload;
@@ -64,6 +93,6 @@ export const messagesSlice = createSlice({
   },
 })
 
-export const { addMessage, replaceMessages, toggleSelectedMessage, removeSelectedMessages, deleteMessage, setChannelID } = messagesSlice.actions
+export const { addMessage, replaceMessages, toggleSelectedMessage, removeSelectedMessages, deleteMessage, setChannelID, editMessage, stopEditingMessage, updateMessage } = messagesSlice.actions
 
 export default messagesSlice.reducer
