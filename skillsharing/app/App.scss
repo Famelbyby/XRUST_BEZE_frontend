@@ -1,3 +1,5 @@
+@import url('../shared/Styles/Spinners.scss');
+
 body {
     margin: 0;
     min-height: 100vh;
@@ -10,6 +12,7 @@ body {
     display: flex;
     flex-direction: row;
     flex-grow: 1;
+    max-height: calc(100% - 60px);
 }
 
 #root {

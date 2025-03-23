@@ -1,0 +1,46 @@
+@mixin box-spinner{
+    border-radius: inherit;
+    background-color: #ffffff47;
+    animation-name: avatar-spinner;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@mixin message-spinner {
+    animation-name: messages-spinner;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    background-color: #d3cff98f;
+    border-radius: 50%;
+}
+
+@keyframes avatar-spinner {
+    from {
+      width: 0px;
+      height: 0px;
+    }
+    to {
+      width: 100%;
+      height: 100%;
+    }
+}
+
+@keyframes messages-spinner {
+    from {
+        width: 10px;
+        height: 10px;
+        opacity: 0;
+    }
+    50% {
+        width: 50px;
+        height: 50px;
+        opacity: 1;
+    }
+    to {
+        width: 10px;
+        height: 10px;
+        opacity: 0;
+    }
+}
