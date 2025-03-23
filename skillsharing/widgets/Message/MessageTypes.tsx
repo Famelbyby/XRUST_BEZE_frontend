@@ -1,16 +1,28 @@
-export interface MessageType extends SendingMessageType{
-    message_id: number,
+type MessageType = "send_message" | "update_message" | "delete_message";
+
+export interface IMessage extends ISendingMessage, IDeletingMessage{
+    message_id: string,
+    type: MessageType,
     event: string,
-    channel_id: number,
-    user_id: number,
+    channel_id: string,
+    user_id: string,
     payload: string,
-    seen: boolean,
-    time: number,
+    createdAt: number,
+    updatedAt: number,
 }
 
-export interface SendingMessageType {
+export interface IDeletingMessage {
+    type: MessageType,
+    user_id: string,
+    channel_id: string,
     event: string,
-    channel_id: number, //mocked = 2 - this is a mate's ID
-    user_id: number, //mocked = from local storage
+    message_id: string,
+}
+
+export interface ISendingMessage {
+    type: MessageType,
+    event: string,
+    channel_id: string, //mocked = 2 - this is a mate's ID
+    user_id: string, //mocked = from local storage
     payload: string, //text message content
 }

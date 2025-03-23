@@ -8,11 +8,29 @@ $borderRad: 23px;
         padding: 10px;
         border-radius: $borderRad $borderRad 0 0;
         gap: 4px;
+        cursor: pointer;
+
+        &-field {
+            display: flex;
+            width: 100%;
+            cursor: pointer;
+            padding: 6px 0;
+
+            &:hover, &_selected {
+                background-color: #0000000a;
+            }
+        }
 
         &_left {
             background-color: #D4E2FF;
-            border-radius: $borderRad $borderRad $borderRad;
+            border-radius: $borderRad $borderRad $borderRad 0;
             align-items: start;
+
+            &::before {
+                content: "";
+                width: 5px;
+                border-radius: 12px;
+            }
         }
 
         &_right {
