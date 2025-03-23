@@ -1,118 +1,62 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './Chat.scss'
-import MainWebSocket from '../../../shared/WebSocket/WebSocket'
-import {MessageType, SendingMessageType} from '../../../widgets/Message/MessageTypes'
-import Message from '../../../widgets/Message/Message'
-import { useSearchParams } from 'react-router';
+import ChatFooter from './ChatFooter/ChatFooter';
+import ChatHeader from './ChatHeader/ChatHeader';
+import { useNavigate, useParams } from 'react-router';
+import { Provider } from 'react-redux';
+import {chatStore} from './ChatStore'
+import ChatContent from './ChatContent/ChatContent';
 
-const initialMessages: Array<MessageType> = [
-    {
-        message_id: 1,
-        event: "EventText",
-        channel_id: 0,
-        user_id: 1,
-        payload: "Добрый день, Shkaf! Видел Вашу анкету, ваши познания в CS:GO и Dota 2 меня поразили, не могли бы Вы рассказать как занимать банан на Инферно и коннектор на Мираже?",
-        seen: false,
-        time: 1231231,
-    },
-    {
-        message_id: 2,
-        event: "EventText",
-        channel_id: 1,
-        user_id: 0,
-        payload: "Приветствую! Да, с превеликим удовольствием. Сейчас составлю Вам план (с помощью встроенной функции)",
-        seen: false,
-        time: 1231231,
-    },
-]
+function handleEnter(event: KeyboardEvent) {
+    if (event.key !== 'Enter') {
+        return;
+    }
 
-let companionID: number = 0;
+    const sendMessageButton: HTMLButtonElement | null = document.querySelector('#send-message');
+
+    if (sendMessageButton !== null) {
+        sendMessageButton.click();
+    }
+}
 
 const Chat: React.FC = () => {
-    const [inputText, setText] = useState('');
-    const [messages, setMessages] = useState(initialMessages);
-    const [mate, setMate] = useSearchParams();
-
-    const mateID = mate.get('id');
-
-    if (mateID !== null) {
-        companionID = +mateID;
-    } else {
-        setMate({"id": "1"});
+    const navigateTo = useNavigate();
+    const params = useParams();
+    const companionID: string | undefined = params.chatID;
+    
+    if (companionID === undefined || Number.isNaN(+companionID)) {
+        navigateTo('/chats');
     }
 
-    MainWebSocket.addObserver((data: string) => {
-        handleReceivingMessage(data);
-    });
+    /**
+     * Adds eventListener on 'Enter' to send messages or confirm editing
+     */
+    useEffect(() => {
+        window.addEventListener('keypress', handleEnter);
 
-    function handleReceivingMessage(data: string) {
-        const message: MessageType = JSON.parse(data);
-        console.log(message); 
-
-        setMessages([message].concat(messages));
-    }
-
-    function handleSendingMessage() {
-        const userId: number = +(localStorage.getItem('user_id') || '0');
-
-        const messageJSON: SendingMessageType = {
-            "event": "EventText",
-            "user_id": userId,
-            "channel_id": companionID,
-            "payload": inputText,
+        return () => {
+            window.removeEventListener('keypress', handleEnter);
         }
-
-        MainWebSocket.sendMessage(JSON.stringify(messageJSON));
-        setText('');
-    }
+    }, []);
 
     return (
-        <div className='chat-page'>
-            <div className='chat-dialog'>
-                <div className='chat-header'>
-                    <div className='chat-header-user'>
-                        <img className='chat-header-user__avatar' src='/Chat/mate.png' alt='' />
-                        <div className='chat-header-user-info'>
-                            <div className='chat-header-user__name'>
-                                Michael Portman
-                            </div>
-                            <div className='chat-header-user__online'>
-                                Online
-                            </div>
-                        </div>
-                    </div>
-                    <div className='chat-header-chat-info'>
-                        <div className='chat-header-chat-info__tags'>
-                            CS:GO Dota2
-                        </div>
-                        <div className='chat-header-chat-info__rating'>
-                            Оценка 4.8
-                        </div>
+        <Provider store={chatStore}>
+            <div className='chat-page'>
+                <div className='chat-go-back'>
+                    <div className='chat-go-back-wrapper' onClick={() => {
+                        navigateTo(-1);
+                    }}>
+                        <img className='chat-go-back__img' src='/Chat/go-back.png' alt='' />
                     </div>
                 </div>
-                <div className='chat-content'>
-                    {messages.map((message) => {
-                        return (
-                            <Message message={message} key={message.message_id}/>
-                        )
-                    })}
-                </div>
-                <div className='chat-footer'>
-                    <div className='chat-footer-fields'>
-                        <img className='chat-footer-fields__microphone' src='/Chat/microphone.png' alt='record-voice-message' />
-                        <input type='text' className='chat-footer-fields__input' value={inputText} placeholder='Ваше сообщение...' onChange={(event) => {
-                            event.preventDefault();
-                            setText(event.target.value);
-                        }}/>
-                    </div>
-                    <div className='chat-footer-controls'>
-                        <img className='chat-footer-controls__attach-file' src='/Chat/plus.png' alt='attach-file'/>
-                        <img className='chat-footer-controls__send-message' src='/Chat/send.png' alt='send-message' onClick={handleSendingMessage}/>
-                    </div>
+                <div className='chat-dialog'>
+                    <ChatHeader companionID={companionID!}/>
+                    <ChatContent />
+                    <ChatFooter companionID={companionID!}/>
                 </div>
             </div>
-        </div>
+        </Provider>
     )
-};
+}
 
 export default Chat;
