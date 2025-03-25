@@ -1,20 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ICompanion } from "./ChatHeaderTypes";
 import axios from "axios";
 import { Link } from "react-router";
-import { GetChatCompanion } from "../../pages/Chat/api/ChatCompanion";
+import { GetProfile } from "../../pages/Profile/api/Profile";
 import { useDispatch, useSelector } from "react-redux";
 import { removeSelectedMessages, setChannelID, editMessage } from "../../entity/Message/slice/MessagesSlice";
 import { ChatState } from "../../app/stores/ChatStore";
 import MainWebSocket from './../../shared/WebSocket/WebSocket'
 import { IDeletingMessage, IMessage } from "../../entity/Message/MessageTypes";
+import { ProfileType } from "../../pages/Profile/ui/ProfileTypes";
+import { FormatRelativeTimeInPastInDays } from "../../shared/Functions/FormatDate";
+import { Skill } from "../ProfileLeftColumn/ProfileLeftColumnTypes";
 
 interface ChatHeaderPropTypes {
     companionID: string,
 }
 
 const ChatHeader: React.FC<ChatHeaderPropTypes> = ({companionID}) => {
-    const [companion, setCompanion] = useState<ICompanion>();
+    const [companion, setCompanion] = useState<ProfileType>();
     const componentIsMounted = useRef(true);
 
     const dispatch = useDispatch();
@@ -40,13 +42,13 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({companionID}) => {
     }
 
     useEffect(() => {
-        function companionGot(companionData: ICompanion) {
+        function companionGot(companionData: ProfileType) {
             if (componentIsMounted) {
                 setCompanion(companionData);
             }
         }
 
-        GetChatCompanion(2, companionGot);
+        GetProfile("2", companionGot);
         dispatch(setChannelID(companionID));
 
         return () => {
@@ -55,33 +57,39 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({companionID}) => {
         };
     }, [dispatch, companionID]);
 
-    console.log(selectedMessages);
+    let companionTags: string = '';
+
+    if (companion !== undefined) {
+        companion.skills_to_learn.forEach((skill_to_learn: Skill) => {
+            companionTags += skill_to_learn.name + ' ';
+        })
+    }
 
     return (
         <div className='chat-header'>
             {selectedMessagesCount === 0 &&
                 <>
-                    <Link to={companion === undefined ? window.location.href : `/profile/${companion.userID}`}>
+                    <Link to={companion === undefined ? window.location.href : `/profile/${companion.id}`}>
                         <div className='chat-header-user'>
-                            {companion && <img className='chat-header-user__avatar' src={companion.avatar} alt='' />}
+                            {companion && <img className='chat-header-user__avatar' src={companion.avatar_url} alt='' />}
                             {(companion === undefined) && 
                                 <div className="chat-header-user__avatar chat-header-user__avatar-mock">
                                     <div className="chat-header-spinner">
                                     </div>
                                 </div>}
                             <div className='chat-header-user-info'>
-                                {companion && 
+                                {companion !== undefined && 
                                     <div className='chat-header-user__name'>
-                                        {companion.name}
+                                        {companion.username}
                                     </div>}
                                 {(companion === undefined) && 
                                     <div className='chat-header-user__name-mock'>
                                         <div className="chat-header-spinner">
                                         </div>
                                     </div>}
-                                {companion && 
+                                {companion !== undefined && 
                                     <div className='chat-header-user__online'>
-                                        {companion.isOnline ? 'Online' : 'Offline'}
+                                        {FormatRelativeTimeInPastInDays(new Date(companion.last_active_at))}
                                     </div>}
                                 {(companion === undefined) && 
                                     <div className='chat-header-user__online-mock'>
@@ -91,14 +99,16 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({companionID}) => {
                             </div>
                         </div>
                     </Link>
-                    <div className='chat-header-chat-info'>
-                        <div className='chat-header-chat-info__tags'>
-                            CS:GO Dota2
+                    {companion !== undefined && 
+                        <div className='chat-header-chat-info'>
+                            <div className='chat-header-chat-info__tags'>
+                                {companionTags}
+                            </div>
+                            <div className='chat-header-chat-info__rating'>
+                                Оценка 4.8
+                            </div>
                         </div>
-                        <div className='chat-header-chat-info__rating'>
-                            Оценка 4.8
-                        </div>
-                    </div>
+                    }
                 </>
             }
             {selectedMessagesCount > 0 && 
