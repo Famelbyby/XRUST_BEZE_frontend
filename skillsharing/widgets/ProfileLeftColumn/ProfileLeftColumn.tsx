@@ -1,6 +1,7 @@
 import React from "react";
 import {Skill, StatisticItem} from './ProfileLeftColumnTypes'
 import { ProfileType } from "../../pages/Profile/ui/ProfileTypes";
+import {CapitalizeString} from '../../shared/Functions/FormatStrings'
 
 const profileStatistics: StatisticItem[] = [
     {
@@ -58,6 +59,7 @@ const ProfileLeftColumn: React.FC<ProfileLeftColumnPropTypes> = ({profile}) => {
                 <div className="profile-tags-header">
                     <div className="profile-tags-header__title">
                         Теги
+                        <img className="profile-tags-header__img" title="Пользователь делится следующими навыками" src="/Profile/question.png" alt=""/>
                     </div>
                     <div className="profile-tags-header__count">
                         {profile === undefined && 0}
@@ -68,7 +70,7 @@ const ProfileLeftColumn: React.FC<ProfileLeftColumnPropTypes> = ({profile}) => {
                     {profile !== undefined &&
                         profile.skills_to_learn.map((skill: Skill) => {
                             return (
-                                <div className={`profile-tags-array__tag profile-tags-array__tag_${skill.level}`} key={skill.name}>
+                                <div className={`profile-tags-array__tag profile-tags-array__tag_${skill.level}`} title={`${CapitalizeString(skill.level)}`} key={skill.name}>
                                     {skill.name}
                                 </div>
                             );

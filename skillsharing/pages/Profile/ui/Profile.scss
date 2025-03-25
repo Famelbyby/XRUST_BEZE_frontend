@@ -95,6 +95,9 @@
             margin-bottom: 10px;
             
             &__title {
+                display: flex;
+                align-items: center;
+                gap: 5px;
                 font-size: 23px;
                 font-family: 'Inter';
                 margin-right: 40px;
@@ -103,6 +106,12 @@
             &__count {
                 font-size: 21px;
                 color: gray;
+            }
+
+            &__img {
+                width: 15px;
+                height: 15px;
+                opacity: 0.5;
             }
         }
 
