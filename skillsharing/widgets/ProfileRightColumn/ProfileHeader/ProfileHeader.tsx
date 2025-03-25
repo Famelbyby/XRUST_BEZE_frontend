@@ -1,6 +1,7 @@
 import React, { use } from "react";
 import { Link } from "react-router";
 import { ProfileType } from "../../../pages/Profile/ui/ProfileTypes";
+import { FormatRelativeTimeInPastInDays } from "../../../shared/Functions/FormatDate";
 
 interface ProfileHeaderPropTypes {
     user: ProfileType | undefined,
@@ -26,7 +27,7 @@ const ProfileHeader: React.FC<ProfileHeaderPropTypes> = ({user}) => {
                     <img className="profile-brief-last-seen__img" src="/Profile/clock.png" alt="" />
                     {user !== undefined && 
                         <>
-                            {lastSeen?.getDate()}.{lastSeen?.getMonth()}.{lastSeen?.getFullYear()}
+                            {FormatRelativeTimeInPastInDays(lastSeen!)}
                         </>
                     }
                 </div>
