@@ -52,8 +52,8 @@ $borderRad: 23px;
 
             width: 15px;
             height: 15px;
-            border: 1px solid;
-            background-color: white;
+            border: 1px solid #00000059;
+            background-color: #c7ddff;
             border-radius: 50%;
 
             &_left {
@@ -67,6 +67,7 @@ $borderRad: 23px;
             &__img {
                 width: 8px;
                 height: 8px;
+                opacity: 0.7;
             }
         }
     }
