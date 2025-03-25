@@ -4,6 +4,7 @@ export interface StatisticItem {
 }
 
 type SkillLevel = "beginner" | "intermediate" | "advanced";
+export type CommunicationFormat = "voice" | "text" | "video";
 
 export interface Skill {
     name: string,

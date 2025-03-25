@@ -2,6 +2,7 @@ import React from "react";
 import {Skill, StatisticItem} from './ProfileLeftColumnTypes'
 import { ProfileType } from "../../pages/Profile/ui/ProfileTypes";
 import {CapitalizeString} from '../../shared/Functions/FormatStrings'
+import {PREFERRED_FORMAT_TRANSLATION} from '../../shared/Consts/Translations'
 
 const profileStatistics: StatisticItem[] = [
     {
@@ -78,6 +79,14 @@ const ProfileLeftColumn: React.FC<ProfileLeftColumnPropTypes> = ({profile}) => {
                     }
                 </div>
             </div>
+            {profile !== undefined && 
+                <div className="profile-preferred-format">
+                    Предпочитает общаться
+                    <div className="profile-preferred-format__example">
+                        {PREFERRED_FORMAT_TRANSLATION[profile.preferred_format]}
+                    </div>
+                </div>
+            }
         </div>
     )
 };

@@ -34,6 +34,7 @@ const userMock: ProfileType = {
     created_at: "0001",
     updated_at: "0001",
     last_active_at: "2025-01-03T00:00:00Z",
+    preferred_format: "voice",
 }
 
 export async function GetProfile (userID: string, callback: (profileData: ProfileType) => void) {

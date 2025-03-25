@@ -1,4 +1,4 @@
-import { Skill } from "../../../widgets/ProfileLeftColumn/ProfileLeftColumnTypes";
+import { CommunicationFormat, Skill } from "../../../widgets/ProfileLeftColumn/ProfileLeftColumnTypes";
 
 export interface ProfileType {
     "id": string,
@@ -11,4 +11,5 @@ export interface ProfileType {
     "created_at": string,
     "updated_at": string,
     "last_active_at": string,
+    "preferred_format": CommunicationFormat,
 };
