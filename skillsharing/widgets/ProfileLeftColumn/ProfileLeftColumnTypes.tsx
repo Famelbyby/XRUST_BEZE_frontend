@@ -3,8 +3,10 @@ export interface StatisticItem {
     userKey: "rate" | "helps" | "rating",
 }
 
+type SkillLevel = "beginner" | "intermediate" | "advanced";
+
 export interface Skill {
     name: string,
-    level: string,
+    level: SkillLevel,
     description: string,
 }

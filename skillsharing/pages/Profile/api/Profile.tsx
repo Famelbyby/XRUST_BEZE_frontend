@@ -11,29 +11,29 @@ const userMock: ProfileType = {
         {
             name: 'Figma',
             description: '',
-            level: '',
+            level: 'intermediate',
         },
         {
             name: 'Nginx',
             description: '',
-            level: '',
+            level: 'beginner',
         },
         {
             name: 'Docker',
             description: '',
-            level: '',
+            level: 'advanced',
         },
         {
             name: 'JavaScript',
             description: '',
-            level: '',
+            level: 'advanced',
         },
     ],
     skills_to_share: [],
     email: "ok",
     created_at: "0001",
     updated_at: "0001",
-    last_active_at: "0001",
+    last_active_at: "2025-01-03T00:00:00Z",
 }
 
 export async function GetProfile (userID: string, callback: (profileData: ProfileType) => void) {

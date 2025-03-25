@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router";
 import { DialogProps } from "./DialogTypes";
 import React from "react";
+import { FormatHoursMinutes } from "../../../shared/Functions/FormatDate";
 
 const Dialog: React.FC<DialogProps> = ({dialog}) => {
-    const dialogTime = new Date();
+    const dialogTime: string = FormatHoursMinutes(new Date());
     const navigateTo = useNavigate();
 
     return (
@@ -47,7 +48,7 @@ const Dialog: React.FC<DialogProps> = ({dialog}) => {
                     }
                     
                     <div className="dialog-user-info__message-time">
-                        {dialogTime.getHours()} : {dialogTime.getMinutes()}
+                        {dialogTime}
                     </div>
                 </div>
             </div>

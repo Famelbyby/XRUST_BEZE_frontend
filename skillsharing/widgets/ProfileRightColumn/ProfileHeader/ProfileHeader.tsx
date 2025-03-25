@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use } from "react";
 import { Link } from "react-router";
 import { ProfileType } from "../../../pages/Profile/ui/ProfileTypes";
 
@@ -8,6 +8,7 @@ interface ProfileHeaderPropTypes {
 
 const ProfileHeader: React.FC<ProfileHeaderPropTypes> = ({user}) => {
     const ownUserID: string = "67e018ff9d65eb861882040a";
+    const lastSeen: Date | undefined = (user === undefined ? undefined : new Date(user.last_active_at));
 
     return (
         <div className="profile-header">
@@ -23,7 +24,11 @@ const ProfileHeader: React.FC<ProfileHeaderPropTypes> = ({user}) => {
                 </div>
                 <div className="profile-brief-last-seen">
                     <img className="profile-brief-last-seen__img" src="/Profile/clock.png" alt="" />
-                    {user !== undefined && user.last_active_at}
+                    {user !== undefined && 
+                        <>
+                            {lastSeen?.getDate()}.{lastSeen?.getMonth()}.{lastSeen?.getFullYear()}
+                        </>
+                    }
                 </div>
             </div>
             { user !== undefined && ownUserID === user.id && 

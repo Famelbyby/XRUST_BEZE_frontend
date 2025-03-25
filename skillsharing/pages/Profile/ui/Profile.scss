@@ -117,6 +117,18 @@
                 padding: 5px 10px;
                 border-radius: 20px;
                 margin: 6px 7px;
+
+                &_beginner {
+                    background-color: #b2ffe5;
+                }
+        
+                &_intermediate {
+                    background-color: #ffff4dab;
+                }
+        
+                &_advanced {
+                    background-color: #ff7f7f;
+                }
             }
         }
     }

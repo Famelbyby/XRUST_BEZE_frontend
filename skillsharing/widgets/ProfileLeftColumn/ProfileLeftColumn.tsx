@@ -68,7 +68,7 @@ const ProfileLeftColumn: React.FC<ProfileLeftColumnPropTypes> = ({profile}) => {
                     {profile !== undefined &&
                         profile.skills_to_learn.map((skill: Skill) => {
                             return (
-                                <div className="profile-tags-array__tag" key={skill.name}>
+                                <div className={`profile-tags-array__tag profile-tags-array__tag_${skill.level}`} key={skill.name}>
                                     {skill.name}
                                 </div>
                             );
