@@ -1,6 +1,5 @@
 import axios from "axios";
 import { ProfileType } from "../ui/ProfileTypes";
-import { BACK_URL } from "../../../shared/Consts/NetworkConsts";
 
 const userMock: ProfileType = {
     id: "67e018ff9d65eb861882040a",
@@ -31,8 +30,8 @@ const userMock: ProfileType = {
     ],
     skills_to_share: [],
     email: "ok",
-    created_at: "0001",
-    updated_at: "0001",
+    created_at: "2025-01-03T00:00:00Z",
+    updated_at: "2025-01-03T00:00:00Z",
     last_active_at: "2025-01-03T00:00:00Z",
     preferred_format: "voice",
 }

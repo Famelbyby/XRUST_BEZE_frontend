@@ -1,0 +1,186 @@
+@mixin box-spinner{
+    border-radius: inherit;
+    background-color: #ffffff47;
+    animation-name: avatar-spinner;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.settings {
+    &-page {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+    
+    &-main {
+        display: flex;
+        flex-grow: 1;
+        padding: 40px 20px;
+    }
+
+    &-left-column {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+        align-items: center;
+        margin-right: 30px;
+        gap: 30px;
+    }
+
+    &-avatar {
+        display: flex;
+        flex-direction: column;
+        font-size: 22px;
+        align-items: start;
+        width: 100%;
+        gap: 10px;
+
+        &-set {
+            width: 200px;
+            height: 200px;
+            border-radius: 7px;
+            cursor: pointer;
+
+            &-mock {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgb(128 128 128 / 34%);
+            }
+    
+            &-spinner {
+                @include box-spinner;
+            }
+
+            &__img {
+                width: 100%;
+                height: 100%;
+                border-radius: inherit;
+            }
+        }
+
+        &__input {
+            display: none;
+        }
+    }
+
+    &-preferred-format {
+        display: flex;
+        align-items: start;
+        width: 100%;
+        font-size: 17px;
+        font-family: 'Inter';
+        flex-direction: column;
+        gap: 10px;
+
+        &-select {
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Inter';
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+
+    &-right-column {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding-right: 50px;
+        gap: 30px;
+    }
+
+    &-username {
+        display: flex;
+        flex-direction: column;
+        max-width: 250px;
+        gap: 10px;
+        font-size: 22px;
+
+        &__input {
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            background-color: #F7F7F7;
+            padding: 5px 10px;
+            border-radius: 17px;
+            font-size: 16px;
+            font-family: 'Inter';
+
+            &:focus-visible {
+                outline: none;
+            }
+        }
+    }
+
+    &-bio {
+        display: flex;
+        flex-direction: column;
+        font-size: 22px;
+        gap: 10px;
+
+        &-field {
+            display: flex;
+            flex-direction: column;
+            align-items: end;
+            border-radius: 25px;
+            background-color: #F2F2F2;
+            padding: 17px;
+            max-width: 80%;
+            min-width: 80%;
+            min-height: 145px;
+        }
+
+        &__input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            resize: none;
+            background-color: inherit;
+            font-family: 'Inter';
+
+            &:focus-visible {
+                outline: none;
+            }
+        }
+
+        &__length {
+            font-size: 10px;
+            color: #0000007d;
+            font-family: 'Inter';
+        }
+    }
+
+    &-footer {
+        display: flex;
+        width: 100%;
+        height: 90px;
+        align-items: center;
+        justify-content: center;
+        border-top: 1px solid;
+
+        &-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+        }
+
+        &__cancel, &__save {
+            padding: 10px 20px;
+            border: 1px solid;
+            border-radius: 10px;
+            font-family: 'Inter';
+            cursor: pointer;
+        }
+
+        &__save {
+            background-color: rgba(0, 0, 255, 0.7);
+            border: none;
+            color: white;
+        }
+    }
+}

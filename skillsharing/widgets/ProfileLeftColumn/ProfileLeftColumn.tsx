@@ -60,7 +60,7 @@ const ProfileLeftColumn: React.FC<ProfileLeftColumnPropTypes> = ({profile}) => {
                 <div className="profile-tags-header">
                     <div className="profile-tags-header__title">
                         Теги
-                        <img className="profile-tags-header__img" title="Пользователь делится следующими навыками" src="/Profile/question.png" alt=""/>
+                        <img className="profile-tags-header__img" title="Пользователь делится следующими навыками" src="/shared/question.png" alt=""/>
                     </div>
                     <div className="profile-tags-header__count">
                         {profile === undefined && 0}
