@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './Chat.scss'
-import ChatFooter from './ChatFooter/ChatFooter';
-import ChatHeader from './ChatHeader/ChatHeader';
+import ChatFooter from '../../../widgets/ChatFooter/ChatFooter';
+import ChatHeader from '../../../widgets/ChatHeader/ChatHeader'
 import { useNavigate, useParams } from 'react-router';
 import { Provider } from 'react-redux';
-import {chatStore} from './ChatStore'
-import ChatContent from './ChatContent/ChatContent';
+import {chatStore} from '../../../app/stores/ChatStore'
+import ChatContent from '../../../widgets/ChatContent/ChatContent';
 
 function handleEnter(event: KeyboardEvent) {
     if (event.key !== 'Enter') {

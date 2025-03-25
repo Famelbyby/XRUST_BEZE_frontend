@@ -1,11 +1,11 @@
 import React, { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Message from "../../../../widgets/Message/Message";
-import { IMessage } from "../../../../widgets/Message/MessageTypes";
-import { GetChatMessages } from "../../api/ChatMessages";
-import { addMessage, replaceMessages, deleteMessage, updateMessage } from "../../../../widgets/Message/MessagesSlice";
-import MainWebSocket from '../../../../shared/WebSocket/WebSocket'
-import { ChatState } from "../ChatStore";
+import Message from "../../entity/Message/Message"
+import { IMessage } from "../../entity/Message/MessageTypes";
+import { GetChatMessages } from "../../pages/Chat/api/ChatMessages";
+import { addMessage, replaceMessages, deleteMessage, updateMessage, stopEditingMessage } from "../../entity/Message/slice/MessagesSlice";
+import MainWebSocket from '../../shared/WebSocket/WebSocket'
+import { ChatState } from "../../app/stores/ChatStore";
 
 const ChatContent: React.FC = () => {
     const {messages, selectedMessages} = useSelector((state: ChatState) => state.chatMessages);
@@ -53,6 +53,7 @@ const ChatContent: React.FC = () => {
         return () => {
             componentIsMounted.current = false;
             dispatch(replaceMessages([]));
+            dispatch(stopEditingMessage());
         };
     }, [dispatch]);
 

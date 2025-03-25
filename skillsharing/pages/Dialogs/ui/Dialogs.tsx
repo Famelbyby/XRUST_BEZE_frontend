@@ -2,7 +2,7 @@ import { DialogItem } from "../../../widgets/Dialog/ui/DialogTypes"
 import Dialog from "../../../widgets/Dialog/ui/Dialog";
 import React, { useEffect, useRef, useState } from 'react';
 import './Dialogs.scss'
-import DialogsTags from "./DialogsTags/DialogsTags";
+import DialogsTags from "../../../widgets/DialogsTags/DialogsTags";
 import {GetDialogs} from '../api/Dialogs';
 
 const ownUserID = 2;

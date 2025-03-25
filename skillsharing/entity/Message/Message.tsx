@@ -2,7 +2,7 @@ import React from 'react'
 import { IMessage } from './MessageTypes';
 import './Message.scss'
 import { useDispatch } from 'react-redux';
-import {toggleSelectedMessage} from './MessagesSlice'
+import {toggleSelectedMessage} from './slice/MessagesSlice'
 
 interface PropType {
     message: IMessage,

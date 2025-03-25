@@ -6,7 +6,6 @@ export interface DialogItem {
     text: string,
     time: number,
     tags: string[],
-    isMocked?: boolean,
 }
 
 export interface DialogProps {

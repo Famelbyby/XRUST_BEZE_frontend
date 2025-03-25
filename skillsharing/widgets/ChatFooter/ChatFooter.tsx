@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { ISendingMessage, IUpdatingMessage } from "../../../../widgets/Message/MessageTypes";
-import MainWebSocket from '../../../../shared/WebSocket/WebSocket';
+import { ISendingMessage, IUpdatingMessage } from "../../entity/Message/MessageTypes";
+import MainWebSocket from '../../shared/WebSocket/WebSocket';
 import { useDispatch, useSelector } from "react-redux";
-import { ChatState } from "../ChatStore";
-import { stopEditingMessage } from "../../../../widgets/Message/MessagesSlice";
+import { ChatState } from "../../app/stores/ChatStore";
+import { stopEditingMessage } from "../../entity/Message/slice/MessagesSlice";
 
 const TEXTAREA_INITIAL_HEIGHT: number = 23;
 const MESSAGE_MAX_LENGTH: number = 800;

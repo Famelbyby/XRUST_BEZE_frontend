@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import {IMessage} from './MessageTypes'
+import {IMessage} from '../MessageTypes'
 
 export interface MessagesState {
   messages: IMessage[],

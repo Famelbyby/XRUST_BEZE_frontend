@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { ICompanion } from "./ChatHeaderTypes";
 import axios from "axios";
 import { Link } from "react-router";
-import { GetChatCompanion } from "../../api/ChatCompanion";
+import { GetChatCompanion } from "../../pages/Chat/api/ChatCompanion";
 import { useDispatch, useSelector } from "react-redux";
-import { removeSelectedMessages, setChannelID, editMessage } from "../../../../widgets/Message/MessagesSlice";
-import { ChatState } from "../ChatStore";
-import MainWebSocket from './../../../../shared/WebSocket/WebSocket'
-import { IDeletingMessage, IMessage } from "../../../../widgets/Message/MessageTypes";
+import { removeSelectedMessages, setChannelID, editMessage } from "../../entity/Message/slice/MessagesSlice";
+import { ChatState } from "../../app/stores/ChatStore";
+import MainWebSocket from './../../shared/WebSocket/WebSocket'
+import { IDeletingMessage, IMessage } from "../../entity/Message/MessageTypes";
 
 interface ChatHeaderPropTypes {
     companionID: string,
