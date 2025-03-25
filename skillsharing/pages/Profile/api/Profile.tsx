@@ -1,29 +1,42 @@
+import axios from "axios";
 import { ProfileType } from "../ui/ProfileTypes";
+import { BACK_URL } from "../../../shared/Consts/NetworkConsts";
 
 const userMock: ProfileType = {
-    id: 2,
-    name: 'Shkaf Unichtojitel',
-    avatar: '/Profile/avatar.png',
-    description: '[!i for i in [‘Красивый’, ‘Умный’, ‘Обаятельный’, ‘Спортсмен’]]',
-    tags: [
-        'Figma',
-        'Nginx',
-        'Docker',
-        'JavaScript',
+    id: "67e018ff9d65eb861882040a",
+    username: 'Shkaf Unichtojitel',
+    avatar_url: '/Profile/avatar.png',
+    bio: '[!i for i in [‘Красивый’, ‘Умный’, ‘Обаятельный’, ‘Спортсмен’]]',
+    skills_to_learn: [
+        {
+            name: 'Figma',
+            description: '',
+            level: '',
+        },
+        {
+            name: 'Nginx',
+            description: '',
+            level: '',
+        },
+        {
+            name: 'Docker',
+            description: '',
+            level: '',
+        },
+        {
+            name: 'JavaScript',
+            description: '',
+            level: '',
+        },
     ],
-    rating: 12,
-    helps: 23,
-    rate: 4.8,
-    lastSeen: 'Вчера',
-    hrefs: [
-        'https://github.com',
-        'https://vk.com',
-        'https://stackoverflow'
-    ],
-    feedbacks: [],
+    skills_to_share: [],
+    email: "ok",
+    created_at: "0001",
+    updated_at: "0001",
+    last_active_at: "0001",
 }
 
-export async function GetProfile (userID: number, callback: (profileData: ProfileType) => void) {
+export async function GetProfile (userID: string, callback: (profileData: ProfileType) => void) {
     (new Promise((resolve) => {
         setTimeout(() => {
             resolve(userMock);
@@ -32,4 +45,10 @@ export async function GetProfile (userID: number, callback: (profileData: Profil
         (profileData as ProfileType).id = userID;
         callback(profileData as ProfileType);
     });
+
+    // const {status, data} = await axios.get(`http://localhost:8081/api/v1/users/${userID}`);
+
+    // if (status === 200) {
+    //     callback(data as ProfileType);
+    // }
 };

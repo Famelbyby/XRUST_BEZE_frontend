@@ -1,13 +1,14 @@
+import { Skill } from "../../../widgets/ProfileLeftColumn/ProfileLeftColumnTypes";
+
 export interface ProfileType {
-    id: number,
-    name: string,
-    avatar: string,
-    description: string,
-    tags: string[],
-    rating: number,
-    helps: number,
-    rate: number,
-    lastSeen: string,
-    hrefs: string[],
-    feedbacks: never[],
+    "id": string,
+    "username": string,
+    "email": string,
+    "avatar_url": string,
+    "bio": string,
+    "skills_to_learn": Skill[],
+    "skills_to_share": Skill[],
+    "created_at": string,
+    "updated_at": string,
+    "last_active_at": string,
 };

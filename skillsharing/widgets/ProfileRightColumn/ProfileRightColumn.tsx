@@ -1,6 +1,6 @@
 import React from "react";
 import ProfileHeader from './ProfileHeader/ProfileHeader'
-import { ProfileType } from "../ProfileTypes";
+import { ProfileType } from "../../pages/Profile/ui/ProfileTypes";
 
 interface ProfileRightColumnPropTypes {
     profile: ProfileType | undefined,
@@ -20,10 +20,10 @@ const ProfileRightColumn: React.FC<ProfileRightColumnPropTypes> = ({profile}) =>
                                 </div>
                             </div>
                         }
-                        {profile !== undefined && profile.description}
+                        {profile !== undefined && profile.bio}
                     </div>
                 </div>
-                {profile && profile.hrefs.length > 0 &&
+                {/* {profile && profile.hrefs.length > 0 &&
                     <div className="profile-hrefs">
                         Ссылки
                         <div className="profile-hrefs-examples">
@@ -54,7 +54,7 @@ const ProfileRightColumn: React.FC<ProfileRightColumnPropTypes> = ({profile}) =>
                             Отзывов нет
                         </div>
                     }
-                </div>
+                </div> */}
             </div>
         </div>
     )

@@ -1,6 +1,6 @@
 import React from "react";
-import {StatisticItem} from './ProfileLeftColumnTypes'
-import { ProfileType } from "../ProfileTypes";
+import {Skill, StatisticItem} from './ProfileLeftColumnTypes'
+import { ProfileType } from "../../pages/Profile/ui/ProfileTypes";
 
 const profileStatistics: StatisticItem[] = [
     {
@@ -32,7 +32,7 @@ const ProfileLeftColumn: React.FC<ProfileLeftColumnPropTypes> = ({profile}) => {
                     </div>
                 }
                 {profile !== undefined &&
-                    <img className="profile-avatar__img" src={profile.avatar} alt="avatar"/>
+                    <img className="profile-avatar__img" src={profile.avatar_url} alt="avatar"/>
                 }
             </div>
             <div className="profile-stats">
@@ -49,7 +49,6 @@ const ProfileLeftColumn: React.FC<ProfileLeftColumnPropTypes> = ({profile}) => {
                                         </div>
                                     </div>
                                 }
-                                {profile !== undefined && profile[stat.userKey]}
                             </div>
                         </div>
                     );
@@ -62,15 +61,15 @@ const ProfileLeftColumn: React.FC<ProfileLeftColumnPropTypes> = ({profile}) => {
                     </div>
                     <div className="profile-tags-header__count">
                         {profile === undefined && 0}
-                        {profile !== undefined && profile.tags.length}
+                        {profile !== undefined && profile.skills_to_learn.length}
                     </div>
                 </div>
                 <div className="profile-tags-array">
                     {profile !== undefined &&
-                        profile.tags.map((tag: string) => {
+                        profile.skills_to_learn.map((skill: Skill) => {
                             return (
-                                <div className="profile-tags-array__tag" key={tag}>
-                                    {tag}
+                                <div className="profile-tags-array__tag" key={skill.name}>
+                                    {skill.name}
                                 </div>
                             );
                         })

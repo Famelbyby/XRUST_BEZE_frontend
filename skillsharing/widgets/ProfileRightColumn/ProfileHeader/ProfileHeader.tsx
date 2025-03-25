@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router";
-import { ProfileType } from "../../ProfileTypes";
+import { ProfileType } from "../../../pages/Profile/ui/ProfileTypes";
 
 interface ProfileHeaderPropTypes {
     user: ProfileType | undefined,
 }
 
 const ProfileHeader: React.FC<ProfileHeaderPropTypes> = ({user}) => {
-    const ownUserID = 2;
+    const ownUserID: string = "67e018ff9d65eb861882040a";
 
     return (
         <div className="profile-header">
@@ -19,11 +19,11 @@ const ProfileHeader: React.FC<ProfileHeaderPropTypes> = ({user}) => {
                             </div>
                         </div>
                     }
-                    {user !== undefined && user.name}
+                    {user !== undefined && user.username}
                 </div>
                 <div className="profile-brief-last-seen">
                     <img className="profile-brief-last-seen__img" src="/Profile/clock.png" alt="" />
-                    {user !== undefined && user.lastSeen}
+                    {user !== undefined && user.last_active_at}
                 </div>
             </div>
             { user !== undefined && ownUserID === user.id && 

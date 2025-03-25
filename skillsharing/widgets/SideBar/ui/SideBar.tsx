@@ -10,7 +10,7 @@ interface sideBarItem {
     linkTo: string,
 }
 
-const userID: number = 2;
+const userID: string = "67e018ff9d65eb861882040a";
 
 const sideBarItems: sideBarItem[] = [
     {

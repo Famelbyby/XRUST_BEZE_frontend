@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import ProfileLeftColumn from './ProfileLeftColumn/ProfileLeftColumn'
-import ProfileRightColumn from './ProfileRightColumn/ProfileRightColumn'
+import ProfileRightColumn from "../../../widgets/ProfileRightColumn/ProfileRightColumn";
+import ProfileLeftColumn from '../../../widgets/ProfileLeftColumn/ProfileLeftColumn'
 import './Profile.scss'
 import { ProfileType } from "./ProfileTypes";
 import { GetProfile } from "../api/Profile";
 
-const ownUserID = 2;
+const ownUserID: string = "67e018ff9d65eb861882040a";
 
 const Profile: React.FC = () => {
     const params = useParams();
@@ -27,7 +27,7 @@ const Profile: React.FC = () => {
             }
         }
 
-        GetProfile(+userID!, profileGot);
+        GetProfile(userID!, profileGot);
 
         return () => {
             componentIsMounted.current = false;
