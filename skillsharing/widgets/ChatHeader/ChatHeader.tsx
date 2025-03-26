@@ -49,7 +49,7 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({companionID}) => {
             }
         }
 
-        GetProfile("2", companionGot);
+        GetProfile(, companionGot);
         dispatch(setPeerID(companionID));
 
         return () => {

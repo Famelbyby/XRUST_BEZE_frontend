@@ -109,6 +109,6 @@ export async function GetChatMessages(companionID: string, callback: (messageDat
     console.log(status, data);
 
     if (status === 200) {
-        callback(data as IMessage[]);
+        callback(data.messages as IMessage[]);
     }
 }

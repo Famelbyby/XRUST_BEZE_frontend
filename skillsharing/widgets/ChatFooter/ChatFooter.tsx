@@ -12,6 +12,8 @@ interface ChatFooterPropTypes {
     companionID: string,
 }
 
+const userId: string = (localStorage.getItem('user_id') || '0');
+
 function normalizeTextarea() {
     const textareaInput: HTMLElement | null = document.getElementById('textarea');
 
@@ -36,8 +38,6 @@ const ChatFooter: React.FC<ChatFooterPropTypes> = ({companionID}) => {
         if (inputText.trim() === '') {
             return;
         }
-
-        const userId: string = (localStorage.getItem('user_id') || '0');
 
         let sendingText: string = inputText;
 
@@ -77,7 +77,6 @@ const ChatFooter: React.FC<ChatFooterPropTypes> = ({companionID}) => {
             return;
         }
 
-        const userId: string = (localStorage.getItem('user_id') || '0');
         const messageJSON: IUpdatingMessage = {
             "event": "EventText",
             "user_id": userId,
