@@ -4,9 +4,10 @@ export interface IMessage extends ISendingMessage, IDeletingMessage, IUpdatingMe
     message_id: string,
     type: MessageType,
     event: string,
-    channel_id: string,
+    channel_id: string | undefined,
     user_id: string,
     payload: string,
+    peer_id: string,
     createdAt: number,
     updatedAt: number,
 }
@@ -14,7 +15,8 @@ export interface IMessage extends ISendingMessage, IDeletingMessage, IUpdatingMe
 export interface IDeletingMessage {
     type: MessageType,
     user_id: string,
-    channel_id: string,
+    channel_id?: string,
+    peer_id: string,
     event: string,
     message_id: string,
 }
@@ -22,7 +24,8 @@ export interface IDeletingMessage {
 export interface IUpdatingMessage {
     type: MessageType,
     user_id: string,
-    channel_id: string,
+    channel_id?: string,
+    peer_id: string,
     event: string,
     message_id: string,
     payload: string,
@@ -31,7 +34,8 @@ export interface IUpdatingMessage {
 export interface ISendingMessage {
     type: MessageType,
     event: string,
-    channel_id: string, //mocked = 2 - this is a mate's ID
+    peer_id: string, //mocked = 2 - this is a mate's ID
+    channel_id?: string, 
     user_id: string, //mocked = from local storage
     payload: string, //text message content
 }

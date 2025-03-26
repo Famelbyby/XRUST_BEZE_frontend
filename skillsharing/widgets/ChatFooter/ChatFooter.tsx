@@ -23,7 +23,7 @@ function normalizeTextarea() {
 
 const ChatFooter: React.FC<ChatFooterPropTypes> = ({companionID}) => {
     const [inputText, setInputText] = useState('');
-    const {editingMessage} = useSelector((state: ChatState) => state.chatMessages);
+    const {editingMessage, channelID} = useSelector((state: ChatState) => state.chatMessages);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -44,8 +44,9 @@ const ChatFooter: React.FC<ChatFooterPropTypes> = ({companionID}) => {
         while (sendingText.length > MESSAGE_MAX_LENGTH) {
             const messageJSON: ISendingMessage = {
                 "event": "EventText",
-                "user_id": String(userId),
-                "channel_id": companionID,
+                "user_id": userId,
+                "peer_id": companionID,
+                "channel_id": channelID,
                 "payload": sendingText.slice(0, MESSAGE_MAX_LENGTH),
                 "type": "send_message",
             }
@@ -57,8 +58,9 @@ const ChatFooter: React.FC<ChatFooterPropTypes> = ({companionID}) => {
 
         const messageJSON: ISendingMessage = {
             "event": "EventText",
-            "user_id": String(userId),
-            "channel_id": companionID,
+            "user_id": userId,
+            "peer_id": companionID,
+            "channel_id": channelID,
             "payload": sendingText,
             "type": "send_message",
         }
@@ -78,8 +80,9 @@ const ChatFooter: React.FC<ChatFooterPropTypes> = ({companionID}) => {
         const userId: string = (localStorage.getItem('user_id') || '0');
         const messageJSON: IUpdatingMessage = {
             "event": "EventText",
-            "user_id": String(userId),
-            "channel_id": companionID,
+            "user_id": userId,
+            "peer_id": companionID,
+            "channel_id": channelID,
             "payload": inputText,
             "type": "update_message",
             "message_id": editingMessage!.message_id,
@@ -117,7 +120,7 @@ const ChatFooter: React.FC<ChatFooterPropTypes> = ({companionID}) => {
                 <textarea id="textarea" className='chat-footer-fields__textarea' value={inputText} placeholder='Ваше сообщение...' onChange={handleChangingTextareaInput}/>
             </div>
             <div className='chat-footer-controls'>
-                <img className='chat-footer-controls__attach-file' src='/Chat/plus.png' alt='attach-file'/>
+                <img className='chat-footer-controls__attach-file' src='/shared/plus.png' alt='attach-file'/>
                 {editingMessage === null && 
                     <img id="send-message" className='chat-footer-controls__send-message' src='/Chat/send.png' alt='send-message' onClick={handleSendingMessage}/>
                 }

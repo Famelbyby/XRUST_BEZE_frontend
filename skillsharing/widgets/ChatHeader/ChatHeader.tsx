@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router";
 import { GetProfile } from "../../pages/Profile/api/Profile";
 import { useDispatch, useSelector } from "react-redux";
-import { removeSelectedMessages, setChannelID, editMessage } from "../../entity/Message/slice/MessagesSlice";
+import { removeSelectedMessages, setPeerID, editMessage, clearAll } from "../../entity/Message/slice/MessagesSlice";
 import { ChatState } from "../../app/stores/ChatStore";
 import MainWebSocket from './../../shared/WebSocket/WebSocket'
 import { IDeletingMessage, IMessage } from "../../entity/Message/MessageTypes";
@@ -20,17 +20,18 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({companionID}) => {
     const componentIsMounted = useRef(true);
 
     const dispatch = useDispatch();
-    const {selectedMessages} = useSelector((state: ChatState) => state.chatMessages);
+    const {selectedMessages, channelID} = useSelector((state: ChatState) => state.chatMessages);
     const selectedMessagesCount = selectedMessages.length;
 
     function handleDeletingMessage() {
-        const userId: IMessage["user_id"] = (localStorage.getItem('user_id') || '0');
+        const userId: IMessage["user_id"] = (localStorage.getItem('user_id') || '67e018ff9d65eb861882040a');
 
         selectedMessages.forEach((selectedMessage: IMessage) => {
             const messageJSON: IDeletingMessage = {
                 "event": "EventText",
                 "user_id": userId,
-                "channel_id": companionID,
+                "peer_id": companionID,
+                "channel_id": channelID,
                 "type": "delete_message",
                 "message_id": selectedMessage.message_id,
             }
@@ -49,11 +50,11 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({companionID}) => {
         }
 
         GetProfile("2", companionGot);
-        dispatch(setChannelID(companionID));
+        dispatch(setPeerID(companionID));
 
         return () => {
             componentIsMounted.current = false;
-            dispatch(setChannelID(""));
+            dispatch(clearAll());
         };
     }, [dispatch, companionID]);
 

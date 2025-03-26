@@ -11,7 +11,7 @@ interface PropType {
 }
 
 const Message: React.FC<PropType> = ({message, isSelected}) => {
-    const user_id: IMessage["user_id"] = (localStorage.getItem('user_id') || "2");
+    const user_id: IMessage["user_id"] = (localStorage.getItem('user_id') || "67e018ff9d65eb861882040a");
     const messageTime: string = FormatHoursMinutes(new Date());
     const isOwnMessage = user_id === message.user_id;
     const dispatch = useDispatch();

@@ -8,7 +8,6 @@ class MainWebSocket {
         this.#socket = new WebSocket(WEBSOCKET_URL);
         this.#observers = {};
         this.#socket.onmessage = (event: WebSocketEventMap["message"]) => {
-            console.log(event.data);
             this.receivedMessage(event.data);
         }
     }

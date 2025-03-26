@@ -6,6 +6,7 @@ export interface MessagesState {
   messages: IMessage[],
   selectedMessages: IMessage[],
   channelID: string,
+  peerID: string,
   editingMessage: IMessage | null,
 }
 
@@ -13,6 +14,7 @@ const initialState: MessagesState = {
   messages: [],
   selectedMessages: [],
   channelID: "",
+  peerID: "",
   editingMessage: null,
 }
 
@@ -27,18 +29,37 @@ export const messagesSlice = createSlice({
     stopEditingMessage: (state: MessagesState) => {
       state.editingMessage = null;
     },
-    setChannelID: (state: MessagesState, action: PayloadAction<MessagesState["channelID"]>) => {
-      state.channelID = action.payload;
+    setPeerID: (state: MessagesState, action: PayloadAction<MessagesState["peerID"]>) => {
+      state.peerID = action.payload;
+    },
+    clearAll: (state: MessagesState) => {
+      state.peerID = "";
+      state.channelID = "";
+      state.messages = [];
+      state.selectedMessages = [];
+      state.editingMessage = null;
     },
     replaceMessages: (state: MessagesState, action: PayloadAction<IMessage[]>) => {
-        state.messages = action.payload;
+        const messages: IMessage[] = action.payload;
+
+        state.messages = messages;
         state.selectedMessages = [];
+
+        if (messages.length > 0) {
+          state.channelID = messages[0].channel_id!;
+        }
+
+        console.log(state.messages, state.channelID);
     },
     addMessage: (state: MessagesState, action: PayloadAction<IMessage>) => {
         const newMessage: IMessage = action.payload;
 
-        if (state.channelID !== newMessage.channel_id && state.channelID !== newMessage.user_id) {
+        if (state.channelID !== newMessage.channel_id) {
           return;
+        }
+
+        if (state.channelID === "") {
+          state.channelID = newMessage.channel_id;
         }
 
         state.messages = [action.payload, ...state.messages];
@@ -46,26 +67,21 @@ export const messagesSlice = createSlice({
     updateMessage: (state: MessagesState, action: PayloadAction<IMessage>) => {
       const updatedMessage: IMessage = action.payload;
 
-      console.log('jsad');
-
-      if (state.channelID !== updatedMessage.channel_id && state.channelID !== updatedMessage.user_id) {
+      if (state.channelID !== updatedMessage.channel_id) {
         return;
       }
 
-      console.log('jsad');
-
       const messageIndex: number = state.messages.findIndex((message) => message.message_id === updatedMessage.message_id);
 
-      console.log(messageIndex);
       if (messageIndex !== -1) {
-        console.log('here')
         state.messages = [...state.messages.slice(0, messageIndex), updatedMessage, ...state.messages.slice(messageIndex + 1)];
       }
+
     },
     deleteMessage: (state: MessagesState, action: PayloadAction<IMessage>) => {
       const messageForDelete: IMessage = action.payload;
 
-      if (state.channelID !== messageForDelete.channel_id && state.channelID !== messageForDelete.user_id) {
+      if (state.channelID !== messageForDelete.channel_id) {
         return;
       }
 
@@ -93,6 +109,6 @@ export const messagesSlice = createSlice({
   },
 })
 
-export const { addMessage, replaceMessages, toggleSelectedMessage, removeSelectedMessages, deleteMessage, setChannelID, editMessage, stopEditingMessage, updateMessage } = messagesSlice.actions
+export const { clearAll, addMessage, replaceMessages, toggleSelectedMessage, removeSelectedMessages, deleteMessage, setPeerID, editMessage, stopEditingMessage, updateMessage } = messagesSlice.actions
 
 export default messagesSlice.reducer
