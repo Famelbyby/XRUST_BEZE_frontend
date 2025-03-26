@@ -4,6 +4,7 @@ import React from "react";
 import { FormatHoursMinutes } from "../../../shared/Functions/FormatDate";
 import { ProfileType } from "../../../pages/Profile/ui/ProfileTypes";
 import User from "../../../entity/User/User";
+import { Skill } from "../../ProfileLeftColumn/ProfileLeftColumnTypes";
 
 const Dialog: React.FC<DialogProps> = ({dialog}) => {
     const navigateTo = useNavigate();
@@ -15,6 +16,14 @@ const Dialog: React.FC<DialogProps> = ({dialog}) => {
         if (dialogCompanion !== undefined) {
             companion = dialogCompanion;
         }
+    }
+
+    let dialogTags: string = '';
+
+    if (companion !== undefined) {
+        companion.skills_to_share.forEach((skill: Skill) => {
+            dialogTags += skill.name;
+        });
     }
 
     return (
@@ -69,7 +78,7 @@ const Dialog: React.FC<DialogProps> = ({dialog}) => {
             <div className="dialog-info">
                 {dialog !== undefined && 
                     <div className="dialog-info__tags">
-                        {companion?.skills_to_share.join(' ')}
+                        {dialogTags}
                     </div>
                 }
                 {dialog === undefined && 
