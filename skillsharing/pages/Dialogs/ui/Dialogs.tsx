@@ -19,49 +19,49 @@ const Dialogs: React.FC = () => {
     const componentIsMounted = useRef(true);
     const isRefreshed = useRef(false);
     const ownUserID: string = User.getUserID();
-
-    function handleSendingMessage(message: IMessage) {
-        const foundDialog: number = dialogs.findIndex((dialog: DialogItem) => dialog.channel_id === message.channel_id);
-
-        if (foundDialog === -1) {
-            return;
-        }
-
-        const updatedDialog: DialogItem = {
-            ...dialogs[foundDialog],
-            last_message: message,
-        };
-
-        setDialogs([...dialogs.slice(0, foundDialog), updatedDialog, ...dialogs.slice(foundDialog + 1)]);
-    }
-
-    function handleUpdatingMessage(message: IMessage) {
-        const foundDialog: number = dialogs.findIndex((dialog: DialogItem) => {
-            if (dialog.last_message === null) {
-                return false;
-            }
-
-            if (dialog.last_message.message_id === message.message_id) {
-                return true;
-            }
-        });
-
-        if (foundDialog === -1) {
-            return;
-        }
-
-        const updatedDialog: DialogItem = {
-            ...dialogs[foundDialog],
-            last_message: message,
-        };
-
-        setDialogs([...dialogs.slice(0, foundDialog), updatedDialog, ...dialogs.slice(foundDialog + 1)]);
-    }
     
     /**
      * Adds messages movement in chat
      */
     useEffect(() => {
+        function handleSendingMessage(message: IMessage) {
+            const foundDialog: number = dialogs.findIndex((dialog: DialogItem) => dialog.channel_id === message.channel_id);
+    
+            if (foundDialog === -1) {
+                return;
+            }
+    
+            const updatedDialog: DialogItem = {
+                ...dialogs[foundDialog],
+                last_message: message,
+            };
+    
+            setDialogs([...dialogs.slice(0, foundDialog), updatedDialog, ...dialogs.slice(foundDialog + 1)]);
+        }
+    
+        function handleUpdatingMessage(message: IMessage) {
+            const foundDialog: number = dialogs.findIndex((dialog: DialogItem) => {
+                if (dialog.last_message === null) {
+                    return false;
+                }
+    
+                if (dialog.last_message.message_id === message.message_id) {
+                    return true;
+                }
+            });
+    
+            if (foundDialog === -1) {
+                return;
+            }
+    
+            const updatedDialog: DialogItem = {
+                ...dialogs[foundDialog],
+                last_message: message,
+            };
+    
+            setDialogs([...dialogs.slice(0, foundDialog), updatedDialog, ...dialogs.slice(foundDialog + 1)]);
+        }
+
         MainWebSocket.addObserver('dialogs-messages', (data: string) => {
             const message: IMessage = JSON.parse(data);
             
@@ -78,9 +78,9 @@ const Dialogs: React.FC = () => {
         });
 
         return () => {
-            MainWebSocket.removeObserver('chat-messages');
+            MainWebSocket.removeObserver('dialogs-messages');
         };
-    }, []);
+    }, [dialogs]);
 
     useEffect(() => {
         function gotDialogs(dialogsData: DialogItem[]) {
