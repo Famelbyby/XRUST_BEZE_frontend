@@ -4,6 +4,7 @@ import './Message.scss'
 import { useDispatch } from 'react-redux';
 import {toggleSelectedMessage} from './slice/MessagesSlice'
 import { FormatHoursMinutes } from '../../shared/Functions/FormatDate';
+import User from '../User/User';
 
 interface PropType {
     message: IMessage,
@@ -11,7 +12,7 @@ interface PropType {
 }
 
 const Message: React.FC<PropType> = ({message, isSelected}) => {
-    const user_id: IMessage["user_id"] = (localStorage.getItem('user_id') || "67e3b36b9a36154096b4bbea");
+    const user_id: IMessage["user_id"] = User.getUserID();
     const messageTime: string = FormatHoursMinutes(new Date());
     const isOwnMessage = user_id === message.user_id;
     const dispatch = useDispatch();

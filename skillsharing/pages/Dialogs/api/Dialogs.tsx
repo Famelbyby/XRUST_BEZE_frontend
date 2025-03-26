@@ -15,7 +15,7 @@ const dialogsMock: DialogItem[] = [
     }
 ];
 
-export async function GetDialogs(userID: number, callback: (dialogsData: DialogItem[]) => void) {
+export async function GetDialogs(userID: string, callback: (dialogsData: DialogItem[]) => void) {
     (new Promise((resolve) => {
         setTimeout(() => {
             resolve(dialogsMock);

@@ -4,8 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './Dialogs.scss'
 import DialogsTags from "../../../widgets/DialogsTags/DialogsTags";
 import {GetDialogs} from '../api/Dialogs';
-
-const ownUserID = 2;
+import User from "../../../entity/User/User";
 
 const Dialogs: React.FC = () => {
     const [dialogs, setDialogs] = useState(Array<DialogItem>);
@@ -14,6 +13,8 @@ const Dialogs: React.FC = () => {
     const isRefreshed = useRef(false);
 
     useEffect(() => {
+        const ownUserID: string = User.getUserID();
+
         function gotDialogs(dialogsData: DialogItem[]) {
             if (componentIsMounted) {
                 setDialogs(dialogsData);

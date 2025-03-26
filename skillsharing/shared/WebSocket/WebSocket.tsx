@@ -1,12 +1,16 @@
 import { WEBSOCKET_URL } from "../Consts/NetworkConsts";
 
 class MainWebSocket {
-    #socket: WebSocket;
+    #socket: WebSocket | null;
     #observers: Record<string, (arg: string) => void>;
 
     constructor() {
-        this.#socket = new WebSocket(WEBSOCKET_URL);
         this.#observers = {};
+        this.#socket = null;
+    }
+
+    openSocket = (userID: string) =>  {
+        this.#socket = new WebSocket(WEBSOCKET_URL + userID);
         this.#socket.onmessage = (event: WebSocketEventMap["message"]) => {
             this.receivedMessage(event.data);
         }
@@ -21,7 +25,7 @@ class MainWebSocket {
     }
 
     sendMessage = (data: string) => {
-        this.#socket.send(data);
+        this.#socket!.send(data);
         this.receivedMessage(data);
     }
 

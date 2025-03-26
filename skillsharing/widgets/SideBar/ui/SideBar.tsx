@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router";
 import './SideBar.scss'
 import { comparePathnames } from "../../../shared/Functions/ComparePathnames";
+import User from "../../../entity/User/User";
 
 interface sideBarItem {
     id: number,
@@ -10,7 +11,7 @@ interface sideBarItem {
     linkTo: string,
 }
 
-const userID: string = "67e018ff9d65eb861882040a";
+const userID: string = User.getUserID();
 
 const sideBarItems: sideBarItem[] = [
     {

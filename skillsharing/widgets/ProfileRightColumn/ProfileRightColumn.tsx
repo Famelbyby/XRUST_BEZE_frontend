@@ -6,6 +6,12 @@ interface ProfileRightColumnPropTypes {
     profile: ProfileType | undefined,
 }
 
+const hrefs: string[] = [
+    "https://github.com",
+    "https://vk.com",
+    "https://twitch.com",
+];
+
 const ProfileRightColumn: React.FC<ProfileRightColumnPropTypes> = ({profile}) => {
     return (
         <div className="profile-right-column">
@@ -23,23 +29,30 @@ const ProfileRightColumn: React.FC<ProfileRightColumnPropTypes> = ({profile}) =>
                         {profile !== undefined && profile.bio}
                     </div>
                 </div>
-                {/* {profile && profile.hrefs.length > 0 &&
+                {profile !== undefined &&
                     <div className="profile-hrefs">
                         Ссылки
-                        <div className="profile-hrefs-examples">
-                            {profile.hrefs.map((href: string, index: number) => {
-                                return (
-                                    <div key={index} className="profile-hrefs-examples__href">
-                                        <a href={href} target="_blank">
-                                            {href}
-                                        </a>
-                                    </div>
-                                );
-                            })}
-                        </div>
+                        {hrefs.length > 0 && 
+                            <div className="profile-hrefs-examples">
+                                {hrefs.map((href: string, index: number) => {
+                                    return (
+                                        <div key={index} className="profile-hrefs-examples__href">
+                                            <a href={href} target="_blank">
+                                                {href}
+                                            </a>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        }
+                        {hrefs.length === 0 && 
+                            <div className="profile-hrefs__no-hrefs">
+                                Тут пусто
+                            </div>
+                        }
                     </div>   
                 }
-                <div className="profile-feedbacks">
+                {/*<div className="profile-feedbacks">
                     Отзывы
                     {profile !== undefined && profile.feedbacks.length > 0 &&
                         profile.feedbacks.map((_, index: number) => {

@@ -5,19 +5,22 @@ import SettingsRightColumn from "../../../widgets/SettingsRightColumn/SettingsRi
 import SettingsFooter from '../../../widgets/SettingsFooter/SettingsFooter';
 import './Settings.scss'
 import { GetProfile } from "../../Profile/api/Profile";
+import User from "../../../entity/User/User";
 
 const Settings: React.FC = () => {
     const [profile, setProfile] = useState<ProfileType>();
     const componentIsMounted = useRef(true);
 
     useEffect(() => {
+        const ownUserID: string = User.getUserID();
+
         function gotProfile(profile: ProfileType) {
             if (componentIsMounted) {
                 setProfile(profile);
             }
         }
 
-        GetProfile("67e018ff9d65eb861882040a", gotProfile);
+        GetProfile(ownUserID, gotProfile);
 
         return () => {
             componentIsMounted.current = false;

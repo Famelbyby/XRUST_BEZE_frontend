@@ -4,6 +4,7 @@ import MainWebSocket from '../../shared/WebSocket/WebSocket';
 import { useDispatch, useSelector } from "react-redux";
 import { ChatState } from "../../app/stores/ChatStore";
 import { stopEditingMessage } from "../../entity/Message/slice/MessagesSlice";
+import User from "../../entity/User/User";
 
 const TEXTAREA_INITIAL_HEIGHT: number = 23;
 const MESSAGE_MAX_LENGTH: number = 800;
@@ -11,8 +12,6 @@ const MESSAGE_MAX_LENGTH: number = 800;
 interface ChatFooterPropTypes {
     companionID: string,
 }
-
-const userId: string = (localStorage.getItem('user_id') || '0');
 
 function normalizeTextarea() {
     const textareaInput: HTMLElement | null = document.getElementById('textarea');
@@ -27,6 +26,7 @@ const ChatFooter: React.FC<ChatFooterPropTypes> = ({companionID}) => {
     const [inputText, setInputText] = useState('');
     const {editingMessage, channelID} = useSelector((state: ChatState) => state.chatMessages);
     const dispatch = useDispatch();
+    const userId: string = User.getUserID();
 
     useEffect(() => {
         if (editingMessage !== null) {

@@ -10,6 +10,7 @@ import { IDeletingMessage, IMessage } from "../../entity/Message/MessageTypes";
 import { ProfileType } from "../../pages/Profile/ui/ProfileTypes";
 import { FormatRelativeTimeInPastInDays } from "../../shared/Functions/FormatDate";
 import { Skill } from "../ProfileLeftColumn/ProfileLeftColumnTypes";
+import User from "../../entity/User/User";
 
 interface ChatHeaderPropTypes {
     companionID: string,
@@ -24,12 +25,10 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({companionID}) => {
     const selectedMessagesCount = selectedMessages.length;
 
     function handleDeletingMessage() {
-        const userId: IMessage["user_id"] = (localStorage.getItem('user_id') || '67e018ff9d65eb861882040a');
-
         selectedMessages.forEach((selectedMessage: IMessage) => {
             const messageJSON: IDeletingMessage = {
                 "event": "EventText",
-                "user_id": userId,
+                "user_id": User.getUserID(),
                 "peer_id": companionID,
                 "channel_id": channelID,
                 "type": "delete_message",
@@ -49,7 +48,7 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({companionID}) => {
             }
         }
 
-        GetProfile("67e3b3869a36154096b4bbeb", companionGot);
+        GetProfile(companionID, companionGot);
         dispatch(setPeerID(companionID));
 
         return () => {

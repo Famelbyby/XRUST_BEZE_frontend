@@ -1,8 +1,9 @@
 import axios from "axios";
 import { ProfileType } from "../ui/ProfileTypes";
+import User from "../../../entity/User/User";
 
 const userMock: ProfileType = {
-    id: "67e3b36b9a36154096b4bbea",
+    id: User.getUserID(),
     username: 'Shkaf Unichtojitel',
     avatar_url: '/Profile/avatar.png',
     bio: '[!i for i in [‘Красивый’, ‘Умный’, ‘Обаятельный’, ‘Спортсмен’]]',

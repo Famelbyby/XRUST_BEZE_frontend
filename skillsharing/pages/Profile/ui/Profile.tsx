@@ -5,14 +5,14 @@ import ProfileLeftColumn from '../../../widgets/ProfileLeftColumn/ProfileLeftCol
 import './Profile.scss'
 import { ProfileType } from "./ProfileTypes";
 import { GetProfile } from "../api/Profile";
-
-const ownUserID: string = "67e3b3869a36154096b4bbeb";
+import User from "../../../entity/User/User";
 
 const Profile: React.FC = () => {
     const params = useParams();
     const navigateTo = useNavigate();
     const [user, setUser] = useState<ProfileType | undefined>();
     const componentIsMounted = useRef(true);
+    const ownUserID: string = User.getUserID();
 
     useEffect(() => {
         const userID: string | undefined = params.userID;
@@ -32,7 +32,7 @@ const Profile: React.FC = () => {
         return () => {
             componentIsMounted.current = false;
         }
-    }, [params.userID, navigateTo])
+    }, [params.userID, navigateTo, ownUserID])
 
     return (
         <div className="profile-page">

@@ -2,13 +2,14 @@ import React, { use } from "react";
 import { Link } from "react-router";
 import { ProfileType } from "../../../pages/Profile/ui/ProfileTypes";
 import { FormatRelativeTimeInPastInDays } from "../../../shared/Functions/FormatDate";
+import User from "../../../entity/User/User";
 
 interface ProfileHeaderPropTypes {
     user: ProfileType | undefined,
 }
 
 const ProfileHeader: React.FC<ProfileHeaderPropTypes> = ({user}) => {
-    const ownUserID: string = "67e018ff9d65eb861882040a";
+    const ownUserID: string = User.getUserID();
     const lastSeen: Date | undefined = (user === undefined ? undefined : new Date(user.last_active_at));
 
     return (
@@ -28,6 +29,11 @@ const ProfileHeader: React.FC<ProfileHeaderPropTypes> = ({user}) => {
                     {user !== undefined && 
                         <>
                             {FormatRelativeTimeInPastInDays(lastSeen!)}
+                        </>
+                    }
+                    {user === undefined && 
+                        <>
+                        давно-давно...
                         </>
                     }
                 </div>

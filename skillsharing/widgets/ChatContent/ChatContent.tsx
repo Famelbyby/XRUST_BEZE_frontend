@@ -57,7 +57,7 @@ const ChatContent: React.FC<ChatContentPropTypes> = ({companionID}) => {
         return () => {
             componentIsMounted.current = false;
         };
-    }, [dispatch]);
+    }, [dispatch, companionID]);
 
     return (
         <div key={"chat-content"} id='chat-content' className='chat-content'>

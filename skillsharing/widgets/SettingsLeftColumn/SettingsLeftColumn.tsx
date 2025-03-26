@@ -42,6 +42,9 @@ const SettingsLeftColumn: React.FC<SettingsLeftColumnPropTypes> = ({profile, set
                                 fileInput.click();
                             }
                         }}>
+                            <div className="settings-avatar-set-add-img">
+                                <img className="settings-avatar-set-add-img__img" src="/shared/plus.png" alt="" />
+                            </div>
                             <img className="settings-avatar-set__img" src={profile.avatar_url} alt="" />
                         </div>
                         <input id="avatar__input" type="file" className="settings-avatar__input" alt="" />

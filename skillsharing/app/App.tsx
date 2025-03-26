@@ -7,8 +7,12 @@ import Dialogs from '../pages/Dialogs/ui/Dialogs'
 import Profile from '../pages/Profile/ui/Profile'
 import Settings from '../pages/Settings/ui/Settings'
 import { Routes } from 'react-router'
+import User from '../entity/User/User'
+import WebSocket from '../shared/WebSocket/WebSocket'
 
 function App() {
+  WebSocket.openSocket(User.getUserID());
+
   return (
     <BrowserRouter>
       <Header/>
