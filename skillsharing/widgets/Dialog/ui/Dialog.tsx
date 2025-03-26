@@ -20,7 +20,7 @@ const Dialog: React.FC<DialogProps> = ({dialog}) => {
     return (
         <div className="dialog" onClick={() => {
             if (dialog !== undefined) {
-                navigateTo(`/chat/${dialog.channel_id}`)};
+                navigateTo(`/chat/${companion?.id}`)};
             }
         }>
             <div className="dialog-user">
@@ -60,7 +60,7 @@ const Dialog: React.FC<DialogProps> = ({dialog}) => {
                     <div className="dialog-user-info__message-time">
                         {dialog !== undefined && 
                             <>
-                                {FormatHoursMinutes(new Date(dialog.last_message.createdAt))}
+                                {FormatHoursMinutes(new Date(dialog.last_message.created_at))}
                             </>
                         }
                     </div>
