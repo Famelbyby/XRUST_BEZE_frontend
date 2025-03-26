@@ -63,13 +63,15 @@ const Dialogs: React.FC = () => {
                 });
             }
 
-            if (isFiltered && dialog.last_message !== null) {
+            if (isFiltered) {
                 sortedDialogs.push(dialog);
             }
         });
 
         setFilteredDialogs(sortedDialogs);
     }
+
+    const sortedDialogs: DialogItem[] = filteredDialogs.filter((dialog: DialogItem) => dialog.last_message !== null);
 
     return (
         <div className="dialogs-page">
@@ -78,11 +80,11 @@ const Dialogs: React.FC = () => {
                     [0, 1, 2, 3, 4].map((index) => {
                         return <Dialog dialog={undefined} key={index} />
                     })}
-                {filteredDialogs.length > 0 && 
-                    filteredDialogs.map((dialog) => {
+                {sortedDialogs.length > 0 && 
+                    sortedDialogs.map((dialog) => {
                         return <Dialog dialog={dialog} key={dialog.channel_id} />
                     })}
-                {filteredDialogs.length === 0 && isRefreshed.current && 
+                {sortedDialogs.length === 0 && isRefreshed.current && 
                     <div className="dialogs__no-chats">
                         Чатов нет
                     </div>

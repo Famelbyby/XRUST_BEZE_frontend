@@ -5,7 +5,7 @@ export interface DialogItem {
     channel_id: string,
     user_ids: ProfileType["id"][],
     users: ProfileType[],
-    last_message: IMessage,
+    last_message: IMessage | null,
     created: number,
     updated: number,
 }

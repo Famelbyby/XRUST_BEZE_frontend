@@ -51,15 +51,7 @@ const dialogsMock: DialogItem[] = [
                 "preferred_format": "text"
             }
         ],
-        "last_message": {
-            "message_id": "67e3b3b42214705bdbedb877",
-            "channel_id": "67e3b3b42214705bdbedb876",
-            "user_id": "67e3b36b9a36154096b4bbea",
-            "peer_id": "67e3b3869a36154096b4bbeb",
-            "payload": "ev0000 kak",
-            "created_at": 1742975924,
-            "updated_at": 1742975924
-        },
+        "last_message": null,
         "created": 1742975924,
         "updated": 1742975924
     }
