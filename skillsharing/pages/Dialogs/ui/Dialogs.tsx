@@ -21,15 +21,7 @@ const Dialogs: React.FC = () => {
     const ownUserID: string = User.getUserID();
 
     function handleSendingMessage(message: IMessage) {
-        const foundDialog: number = dialogs.findIndex((dialog: DialogItem) => {
-            if (dialog.last_message === null) {
-                return false;
-            }
-
-            if (dialog.last_message.message_id === message.message_id) {
-                return true;
-            }
-        });
+        const foundDialog: number = dialogs.findIndex((dialog: DialogItem) => dialog.channel_id === message.channel_id);
 
         if (foundDialog === -1) {
             return;
