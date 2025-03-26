@@ -37,7 +37,7 @@ const ChatFooter: React.FC<ChatFooterPropTypes> = ({companionID}) => {
             return;
         }
 
-        const userId: string = (localStorage.getItem('user_id') || '0');
+        const userId: string = (localStorage.getItem('user_id') || '');
 
         let sendingText: string = inputText;
 

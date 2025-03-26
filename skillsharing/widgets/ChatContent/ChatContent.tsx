@@ -71,7 +71,7 @@ const ChatContent: React.FC<ChatContentPropTypes> = ({companionID}) => {
                     Сообщений нет
                 </div>
             }
-            {messages.map((message) => {
+            {messages.length > 0 && messages.map((message) => {
                 const isSelected: boolean = selectedMessages.find((selectedMessage) => selectedMessage.message_id === message.message_id) !== undefined;
 
                 return (
