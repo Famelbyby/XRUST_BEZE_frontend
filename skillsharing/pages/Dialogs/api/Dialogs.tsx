@@ -75,7 +75,7 @@ export async function GetDialogs(userID: string, callback: (dialogsData: DialogI
     //     callback(dialogsData as DialogItem[]);
     // })
 
-    const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/channels`);
+    const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/channels?user_id=` + userID);
 
     console.log(status, data);
 
