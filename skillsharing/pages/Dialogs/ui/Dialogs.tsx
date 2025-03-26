@@ -80,7 +80,9 @@ const Dialogs: React.FC = () => {
                     })}
                 {filteredDialogs.length > 0 && 
                     filteredDialogs.map((dialog) => {
-                        return <Dialog dialog={dialog} key={dialog.channel_id} />
+                        if (dialog !== undefined && dialog.last_message !== null) {
+                            return <Dialog dialog={dialog} key={dialog.channel_id} />
+                        }
                     })}
                 {filteredDialogs.length === 0 && isRefreshed.current && 
                     <div className="dialogs__no-chats">
