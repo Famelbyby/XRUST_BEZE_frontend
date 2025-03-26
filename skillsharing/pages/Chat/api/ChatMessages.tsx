@@ -96,19 +96,19 @@ const messagesMock: Array<IMessage> = [
 ]
 
 export async function GetChatMessages(channelID: number, callback: (messageData: IMessage[]) => void) {
-    (new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(messagesMock);
-        }, 3000);
-    })).then((messagesData) => {
-        callback(messagesData as IMessage[]);
-    });
+    // (new Promise((resolve) => {
+    //     setTimeout(() => {
+    //         resolve(messagesMock);
+    //     }, 3000);
+    // })).then((messagesData) => {
+    //     callback(messagesData as IMessage[]);
+    // });
 
-    // const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/${channelID}`);
+    const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/${channelID}`);
 
-    // console.log(status, data);
+    console.log(status, data);
 
-    // if (status === 200) {
-    //     callback(data as IMessage[]);
-    // }
+    if (status === 200) {
+        callback(data as IMessage[]);
+    }
 }
