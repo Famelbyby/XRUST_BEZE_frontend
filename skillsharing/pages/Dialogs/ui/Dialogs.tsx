@@ -8,6 +8,9 @@ import SkillsTags from "../../../features/SkillsTags/SkillsTags";
 import {GetDialogs} from '../api/Dialogs';
 import User from "../../../entity/User/User";
 import { GetProfile } from "../../Profile/api/Profile";
+import MainWebSocket from '../../../shared/WebSocket/WebSocket'
+import { IMessage } from "../../../entity/Message/MessageTypes";
+
 
 const Dialogs: React.FC = () => {
     const [dialogs, setDialogs] = useState(Array<DialogItem>);
@@ -16,6 +19,52 @@ const Dialogs: React.FC = () => {
     const componentIsMounted = useRef(true);
     const isRefreshed = useRef(false);
     const ownUserID: string = User.getUserID();
+
+    function handleUpdatingMessage(message: IMessage) {
+        const foundDialog: number = dialogs.findIndex((dialog: DialogItem) => {
+            if (dialog.last_message === null) {
+                return false;
+            }
+
+            if (dialog.last_message.message_id === message.message_id) {
+                return true;
+            }
+        });
+
+        if (foundDialog === -1) {
+            return;
+        }
+
+        const updatedDialog: DialogItem = {
+            ...dialogs[foundDialog],
+            last_message: message,
+        };
+
+        setDialogs([...dialogs.slice(0, foundDialog), updatedDialog, ...dialogs.slice(foundDialog + 1)]);
+    }
+    
+    /**
+     * Adds messages movement in chat
+     */
+    useEffect(() => {
+        MainWebSocket.addObserver('dialogs-messages', (data: string) => {
+            const message: IMessage = JSON.parse(data);
+            
+            switch (message.type) {
+                case 'send_message':
+                    break;
+                case 'update_message':
+                    handleUpdatingMessage(message);
+                    break;
+                case 'delete_message':
+                    break;
+            }
+        });
+
+        return () => {
+            MainWebSocket.removeObserver('chat-messages');
+        };
+    }, []);
 
     useEffect(() => {
         function gotDialogs(dialogsData: DialogItem[]) {
