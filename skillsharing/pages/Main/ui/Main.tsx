@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import MainContent from '../../../widgets/MainContent/MainContent'
 import MainHeader from '../../../widgets/MainHeader/MainHeader'
 import { ProfileType } from "../../Profile/ui/ProfileTypes";
 import { GetProfile } from "../../Profile/api/Profile";
@@ -25,6 +26,7 @@ const Main: React.FC = () => {
     return (
         <div className="main-page">
             <MainHeader user={user}/>
+            <MainContent user={user}/>
         </div>
     )
 };

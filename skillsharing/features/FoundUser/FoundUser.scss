@@ -1,0 +1,60 @@
+.found-user {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+    border-radius: 10px;
+
+    &:hover {
+        background-color: rgb(0 0 0 / 6%);
+    }
+
+    &-avatar {
+        display: flex;
+        width: 70px;
+        height: 70px;
+        border-radius: 5px;
+
+        &__img {
+            width: inherit;
+            height: inherit;
+            border-radius: inherit;
+        }
+    }
+
+    &-info {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        gap: 15px;
+    }
+
+    &-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+
+        &__name {
+            font-family: 'Inter';
+            font-size: 19px;
+        }
+
+        &__tags {
+            font-family: 'Inter';
+            font-size: 14px;
+            color: #00000075;
+        }
+    }
+
+    &-footer {
+        display: flex;
+        justify-content: space-between;
+        font-family: 'Inter';
+        font-size: 15px;
+
+        &__rate, &__helps, &__feedbacks {
+            display: flex;
+            gap: 10px;
+        }
+    }
+}
