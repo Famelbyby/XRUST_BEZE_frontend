@@ -68,7 +68,7 @@ const ProfileLeftColumn: React.FC<ProfileLeftColumnPropTypes> = ({profile}) => {
                 </div>
                 <div className="profile-tags-array">
                     {profile !== undefined &&
-                        profile.skills_to_learn.map((skill: Skill) => {
+                        profile.skills_to_share.map((skill: Skill) => {
                             return (
                                 <div className={`profile-tags-array__tag profile-tags-array__tag_${skill.level}`} title={`${CapitalizeString(skill.level)}`} key={skill.name}>
                                     {skill.name}
