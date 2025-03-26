@@ -20,7 +20,7 @@ const Dialog: React.FC<DialogProps> = ({dialog}) => {
     return (
         <div className="dialog" onClick={() => {
             if (dialog !== undefined) {
-                navigateTo(`/chat/${companion?.id}`)};
+                navigateTo(`/chat/${companion?.id}?channel_id=${dialog?.channel_id}`)};
             }
         }>
             <div className="dialog-user">

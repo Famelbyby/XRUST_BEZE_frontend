@@ -10,7 +10,7 @@ const TEXTAREA_INITIAL_HEIGHT: number = 23;
 const MESSAGE_MAX_LENGTH: number = 800;
 
 interface ChatFooterPropTypes {
-    companionID: string,
+    peerID: string,
 }
 
 function normalizeTextarea() {
@@ -22,7 +22,7 @@ function normalizeTextarea() {
     }
 }
 
-const ChatFooter: React.FC<ChatFooterPropTypes> = ({companionID}) => {
+const ChatFooter: React.FC<ChatFooterPropTypes> = ({peerID}) => {
     const [inputText, setInputText] = useState('');
     const {editingMessage, channelID} = useSelector((state: ChatState) => state.chatMessages);
     const dispatch = useDispatch();
@@ -45,7 +45,7 @@ const ChatFooter: React.FC<ChatFooterPropTypes> = ({companionID}) => {
             const messageJSON: ISendingMessage = {
                 "event": "EventText",
                 "user_id": userId,
-                "peer_id": companionID,
+                "peer_id": peerID,
                 "channel_id": channelID,
                 "payload": sendingText.slice(0, MESSAGE_MAX_LENGTH),
                 "type": "send_message",
@@ -59,7 +59,7 @@ const ChatFooter: React.FC<ChatFooterPropTypes> = ({companionID}) => {
         const messageJSON: ISendingMessage = {
             "event": "EventText",
             "user_id": userId,
-            "peer_id": companionID,
+            "peer_id": peerID,
             "channel_id": channelID,
             "payload": sendingText,
             "type": "send_message",
@@ -80,7 +80,7 @@ const ChatFooter: React.FC<ChatFooterPropTypes> = ({companionID}) => {
         const messageJSON: IUpdatingMessage = {
             "event": "EventText",
             "user_id": userId,
-            "peer_id": companionID,
+            "peer_id": peerID,
             "channel_id": channelID,
             "payload": inputText,
             "type": "update_message",

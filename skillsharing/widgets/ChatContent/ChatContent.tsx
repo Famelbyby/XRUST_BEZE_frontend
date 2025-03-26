@@ -8,10 +8,10 @@ import MainWebSocket from '../../shared/WebSocket/WebSocket'
 import { ChatState } from "../../app/stores/ChatStore";
 
 interface ChatContentPropTypes {
-    companionID: string,
+    channelID: string | null,
 }
 
-const ChatContent: React.FC<ChatContentPropTypes> = ({companionID}) => {
+const ChatContent: React.FC<ChatContentPropTypes> = ({channelID}) => {
     const {messages, selectedMessages} = useSelector((state: ChatState) => state.chatMessages);
     const dispatch = useDispatch();
     const componentIsMounted = useRef(true);
@@ -46,18 +46,24 @@ const ChatContent: React.FC<ChatContentPropTypes> = ({companionID}) => {
      * Gets chat messages
      */
     useEffect(() => {
-        GetChatMessages(companionID, (messagesData: IMessage[]) => {
-            if (componentIsMounted) {
-                dispatch(replaceMessages(messagesData));
+        if (channelID !== null) {
+            GetChatMessages(channelID, (messagesData: IMessage[]) => {
+                if (componentIsMounted) {
+                    dispatch(replaceMessages(messagesData));
+    
+                    isRefreshed.current = true;
+                }
+            });
+        } else {
+            dispatch(replaceMessages([]));
 
-                isRefreshed.current = true;
-            }
-        });
+            isRefreshed.current = true;
+        }
 
         return () => {
             componentIsMounted.current = false;
         };
-    }, [dispatch, companionID]);
+    }, [dispatch, channelID]);
 
     return (
         <div key={"chat-content"} id='chat-content' className='chat-content'>

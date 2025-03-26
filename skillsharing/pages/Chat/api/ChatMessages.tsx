@@ -15,8 +15,8 @@ const messagesMock: Array<IMessage> = [
         peer_id: "67e3b36b9a36154096b4bbea", 
         user_id: OWN_USER_ID_MOCK,
         payload: "Добрый день, Shkaf! Видел Вашу анкету, ваши познания в CS:GO и Dota 2 меня поразили, не могли бы Вы рассказать как занимать банан на Инферно и коннектор на Мираже?",
-        createdAt: 1231231,
-        updatedAt: 1231231,
+        created_at: 1231231,
+        updated_at: 1231231,
     },
     {
         type: "send_message",
@@ -26,8 +26,8 @@ const messagesMock: Array<IMessage> = [
         user_id: OWN_USER_ID_MOCK,
         peer_id: "1",
         payload: "Приветствую! Да, с превеликим удовольствием. Сейчас составлю Вам план (с помощью встроенной функции)",
-        createdAt: 1231231,
-        updatedAt: 1231231,
+        created_at: 1231231,
+        updated_at: 1231231,
     },
     {
         type: "send_message",
@@ -37,8 +37,8 @@ const messagesMock: Array<IMessage> = [
         user_id: OWN_USER_ID_MOCK,
         peer_id: "2",
         payload: "Приветствую! Да, с превеликим удовольствием. Сейчас составлю Вам план (с помощью встроенной функции)",
-        createdAt: 1231231,
-        updatedAt: 1231231,
+        created_at: 1231231,
+        updated_at: 1231231,
     },
     {
         type: "send_message",
@@ -48,8 +48,8 @@ const messagesMock: Array<IMessage> = [
         user_id: OWN_USER_ID_MOCK,
         peer_id: "2",
         payload: "Приветствую! Да, с превеликим удовольствием. Сейчас составлю Вам план (с помощью встроенной функции)",
-        createdAt: 1231231,
-        updatedAt: 1231231,
+        created_at: 1231231,
+        updated_at: 1231231,
     },
     {
         type: "send_message",
@@ -59,8 +59,8 @@ const messagesMock: Array<IMessage> = [
         user_id: OWN_USER_ID_MOCK,
         peer_id: "2",
         payload: "Приветствую! Да, с превеликим удовольствием. Сейчас составлю Вам план (с помощью встроенной функции)",
-        createdAt: 1231231,
-        updatedAt: 1231231,
+        created_at: 1231231,
+        updated_at: 1231231,
     },
     {
         type: "send_message",
@@ -70,8 +70,8 @@ const messagesMock: Array<IMessage> = [
         user_id: OWN_USER_ID_MOCK,
         peer_id: "2",
         payload: "Приветствую! Да, с превеликим удовольствием. Сейчас составлю Вам план (с помощью встроенной функции)",
-        createdAt: 1231231,
-        updatedAt: 1231231,
+        created_at: 1231231,
+        updated_at: 1231231,
     },
     {
         type: "send_message",
@@ -81,8 +81,8 @@ const messagesMock: Array<IMessage> = [
         user_id: OWN_USER_ID_MOCK,
         peer_id: "2",
         payload: "Приветствую! Да, с превеликим удовольствием. Сейчас составлю Вам план (с помощью встроенной функции)",
-        createdAt: 1231231,
-        updatedAt: 1231231,
+        created_at: 1231231,
+        updated_at: 1231231,
     },
     {
         type: "send_message",
@@ -92,12 +92,12 @@ const messagesMock: Array<IMessage> = [
         user_id: OWN_USER_ID_MOCK,
         peer_id: "2",
         payload: "Приветствую! Да, с превеликим удовольствием. Сейчас составлю Вам план (с помощью встроенной функции)",
-        createdAt: 1231231,
-        updatedAt: 1231231,
+        created_at: 1231231,
+        updated_at: 1231231,
     },
 ]
 
-export async function GetChatMessages(companionID: string, callback: (messageData: IMessage[]) => void) {
+export async function GetChatMessages(channelID: string, callback: (messageData: IMessage[]) => void) {
     // (new Promise((resolve) => {
     //     setTimeout(() => {
     //         resolve(messagesMock);
@@ -106,7 +106,7 @@ export async function GetChatMessages(companionID: string, callback: (messageDat
     //     callback(messagesData as IMessage[]);
     // });
 
-    const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/${companionID}`);
+    const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/${channelID}`);
 
     console.log(status, data);
 

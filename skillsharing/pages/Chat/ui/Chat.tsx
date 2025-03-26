@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './Chat.scss'
 import ChatFooter from '../../../widgets/ChatFooter/ChatFooter';
 import ChatHeader from '../../../widgets/ChatHeader/ChatHeader'
-import { useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams, useSearchParams } from 'react-router';
 import { Provider } from 'react-redux';
 import {chatStore} from '../../../app/stores/ChatStore'
 import ChatContent from '../../../widgets/ChatContent/ChatContent';
@@ -22,9 +22,10 @@ function handleEnter(event: KeyboardEvent) {
 const Chat: React.FC = () => {
     const navigateTo = useNavigate();
     const params = useParams();
-    const companionID: string | undefined = params.chatID;
+    const [query] = useSearchParams();
+    const peerID: string | undefined = params.chatID;
     
-    if (companionID === undefined || Number.isNaN(+companionID)) {
+    if (peerID === undefined) {
         navigateTo('/chats');
     }
 
@@ -39,6 +40,8 @@ const Chat: React.FC = () => {
         }
     }, []);
 
+    const channelID: string | null = query.get('channel_id');
+
     return (
         <Provider store={chatStore}>
             <div className='chat-page'>
@@ -50,9 +53,9 @@ const Chat: React.FC = () => {
                     </div>
                 </div>
                 <div className='chat-dialog'>
-                    <ChatHeader companionID={companionID!}/>
-                    <ChatContent companionID={companionID!} />
-                    <ChatFooter companionID={companionID!}/>
+                    <ChatHeader peerID={peerID!}/>
+                    <ChatContent channelID={channelID} />
+                    <ChatFooter peerID={peerID!}/>
                 </div>
             </div>
         </Provider>

@@ -13,10 +13,10 @@ import { Skill } from "../ProfileLeftColumn/ProfileLeftColumnTypes";
 import User from "../../entity/User/User";
 
 interface ChatHeaderPropTypes {
-    companionID: string,
+    peerID: string,
 }
 
-const ChatHeader: React.FC<ChatHeaderPropTypes> = ({companionID}) => {
+const ChatHeader: React.FC<ChatHeaderPropTypes> = ({peerID}) => {
     const [companion, setCompanion] = useState<ProfileType>();
     const componentIsMounted = useRef(true);
 
@@ -29,7 +29,7 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({companionID}) => {
             const messageJSON: IDeletingMessage = {
                 "event": "EventText",
                 "user_id": User.getUserID(),
-                "peer_id": companionID,
+                "peer_id": peerID,
                 "channel_id": channelID,
                 "type": "delete_message",
                 "message_id": selectedMessage.message_id,
@@ -48,14 +48,14 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({companionID}) => {
             }
         }
 
-        GetProfile(companionID, companionGot);
-        dispatch(setPeerID(companionID));
+        GetProfile(peerID, companionGot);
+        dispatch(setPeerID(peerID));
 
         return () => {
             componentIsMounted.current = false;
             dispatch(clearAll());
         };
-    }, [dispatch, companionID]);
+    }, [dispatch, peerID]);
 
     let companionTags: string = '';
 
