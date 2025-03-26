@@ -1,5 +1,5 @@
 export interface DialogItem {
-    id: number,
+    id: string,
     name: string,
     avatar: string,
     seen: boolean,

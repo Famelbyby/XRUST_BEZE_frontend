@@ -1,8 +1,9 @@
+import User from "../../../entity/User/User";
 import { DialogItem } from "../../../widgets/Dialog/ui/DialogTypes";
 
 const dialogsMock: DialogItem[] = [
     {
-        id: 1,
+        id: User.getUserID(),
         name: "Michael Portman",
         avatar: "/Dialogs/mate.png",
         time: 0,
