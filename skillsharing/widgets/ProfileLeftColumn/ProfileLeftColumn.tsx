@@ -13,10 +13,6 @@ const profileStatistics: StatisticItem[] = [
         title: 'Помощей',
         userKey: 'helps',
     },
-    {
-        title: 'Рейтинг',
-        userKey: 'rating',
-    },
 ];
 
 interface ProfileLeftColumnPropTypes {
@@ -50,6 +46,9 @@ const ProfileLeftColumn: React.FC<ProfileLeftColumnPropTypes> = ({profile}) => {
                                         <div className="profile-stats-item__example-spinner">
                                         </div>
                                     </div>
+                                }
+                                {profile !== undefined && 
+                                    0
                                 }
                             </div>
                         </div>

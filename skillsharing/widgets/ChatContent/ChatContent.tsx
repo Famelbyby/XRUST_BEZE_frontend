@@ -48,7 +48,7 @@ const ChatContent: React.FC<ChatContentPropTypes> = ({channelID}) => {
     useEffect(() => {
         if (channelID !== null) {
             GetChatMessages(channelID, (messagesData: IMessage[]) => {
-                if (componentIsMounted) {
+                if (componentIsMounted.current) {
                     dispatch(replaceMessages(messagesData));
     
                     isRefreshed.current = true;

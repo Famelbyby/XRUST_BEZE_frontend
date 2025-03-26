@@ -43,7 +43,7 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({peerID}) => {
 
     useEffect(() => {
         function companionGot(companionData: ProfileType) {
-            if (componentIsMounted) {
+            if (componentIsMounted.current) {
                 setCompanion(companionData);
             }
         }
@@ -71,7 +71,7 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({peerID}) => {
                 <>
                     <Link to={companion === undefined ? window.location.href : `/profile/${companion.id}`}>
                         <div className='chat-header-user'>
-                            {companion && <img className='chat-header-user__avatar' src='/Dialog/mate.png' alt='' />}
+                            {companion && <img className='chat-header-user__avatar' src='/Dialogs/mate.png' alt='' />}
                             {(companion === undefined) && 
                                 <div className="chat-header-user__avatar chat-header-user__avatar-mock">
                                     <div className="chat-header-spinner">

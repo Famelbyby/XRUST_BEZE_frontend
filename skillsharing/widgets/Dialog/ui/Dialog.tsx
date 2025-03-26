@@ -25,7 +25,7 @@ const Dialog: React.FC<DialogProps> = ({dialog}) => {
         }>
             <div className="dialog-user">
                 {dialog !== undefined && 
-                    <img className="dialog-user__avatar" src='/Dialog/mate.png' alt="" />
+                    <img className="dialog-user__avatar" src='/Dialogs/mate.png' alt="" />
                 }
                 {dialog === undefined && 
                     <div className="dialog-user__avatar dialog-user__avatar-mock">

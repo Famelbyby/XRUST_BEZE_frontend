@@ -17,11 +17,18 @@
         }
     }
 
-    &-title {
+    &__title {
+        display: flex;
+        gap: 40px;
+
         font-family: 'Inter';
         font-weight: bold;
         font-size: 23px;
         margin-bottom: 20px;
+    }
+
+    &__count {
+        color: #00000078;
     }
 
     &-examples {

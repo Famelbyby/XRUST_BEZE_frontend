@@ -1,12 +1,15 @@
 import React from "react";
 import './Header.scss'
+import { Link } from "react-router";
 
 const Header: React.FC = () => {
     return (
         <div className="header">
-            <div className="header-logo">
-                SkillSharing
-            </div>
+            <Link to={'/'} >
+                <div className="header-logo">
+                    SkillSharing
+                </div>
+            </Link>
             <div className="header-searchbar">
                 <img className="header-searchbar__img" src="/Header/search.png" alt=""/>
                 <input type="text" placeholder="Поиск" className="header-searchbar__input" />

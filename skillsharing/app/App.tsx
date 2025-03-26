@@ -5,6 +5,7 @@ import SideBar from '../widgets/SideBar/ui/SideBar'
 import Chat from '../pages/Chat/ui/Chat'
 import Dialogs from '../pages/Dialogs/ui/Dialogs'
 import Profile from '../pages/Profile/ui/Profile'
+import Main from '../pages/Main/ui/Main'
 import Settings from '../pages/Settings/ui/Settings'
 import { Routes } from 'react-router'
 import User from '../entity/User/User'
@@ -22,6 +23,7 @@ function App() {
       <div className='main-part'>
         <SideBar/>
         <Routes>
+          <Route index element={<Main />} />
           <Route path='/profile/:userID' element={<Profile />} />
           <Route path='/settings' element={<Settings />} />
           <Route path='/chat/:chatID' element={<Chat/>} />
