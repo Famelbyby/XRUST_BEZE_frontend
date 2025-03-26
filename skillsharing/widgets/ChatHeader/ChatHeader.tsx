@@ -60,7 +60,7 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({peerID}) => {
     let companionTags: string = '';
 
     if (companion !== undefined) {
-        companion.skills_to_learn.forEach((skill_to_learn: Skill) => {
+        companion.skills_to_share.forEach((skill_to_learn: Skill) => {
             companionTags += skill_to_learn.name + ' ';
         })
     }

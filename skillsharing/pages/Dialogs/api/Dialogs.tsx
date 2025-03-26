@@ -1,5 +1,4 @@
 import axios from "axios";
-import User from "../../../entity/User/User";
 import { DialogItem } from "../../../widgets/Dialog/ui/DialogTypes";
 import { BACK_URL } from "../../../shared/Consts/NetworkConsts";
 

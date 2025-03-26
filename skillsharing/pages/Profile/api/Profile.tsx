@@ -38,18 +38,18 @@ const userMock: ProfileType = {
 }
 
 export async function GetProfile (userID: string, callback: (profileData: ProfileType) => void) {
-    (new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(userMock);
-        }, 2000)
-    })).then((profileData) => {
-        (profileData as ProfileType).id = userID;
-        callback(profileData as ProfileType);
-    });
+    // (new Promise((resolve) => {
+    //     setTimeout(() => {
+    //         resolve(userMock);
+    //     }, 2000)
+    // })).then((profileData) => {
+    //     (profileData as ProfileType).id = userID;
+    //     callback(profileData as ProfileType);
+    // });
 
-    // const {status, data} = await axios.get(`http://localhost:3001/api/v1/users/${userID}`);
+    const {status, data} = await axios.get(`http://localhost:3001/api/v1/users/${userID}`);
 
-    // if (status === 200) {
-    //     callback(data as ProfileType);
-    // }
+    if (status === 200) {
+        callback(data as ProfileType);
+    }
 };
