@@ -95,7 +95,7 @@ const messagesMock: Array<IMessage> = [
     },
 ]
 
-export async function GetChatMessages(channelID: number, callback: (messageData: IMessage[]) => void) {
+export async function GetChatMessages(companionID: string, callback: (messageData: IMessage[]) => void) {
     // (new Promise((resolve) => {
     //     setTimeout(() => {
     //         resolve(messagesMock);
@@ -104,7 +104,7 @@ export async function GetChatMessages(channelID: number, callback: (messageData:
     //     callback(messagesData as IMessage[]);
     // });
 
-    const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/${channelID}`);
+    const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/${companionID}`);
 
     console.log(status, data);
 

@@ -34,7 +34,7 @@ const ProfileLeftColumn: React.FC<ProfileLeftColumnPropTypes> = ({profile}) => {
                     </div>
                 }
                 {profile !== undefined &&
-                    <img className="profile-avatar__img" src={profile.avatar_url} alt="avatar"/>
+                    <img className="profile-avatar__img" src={'/shared/avatar.png'} alt="avatar"/>
                 }
             </div>
             <div className="profile-stats">

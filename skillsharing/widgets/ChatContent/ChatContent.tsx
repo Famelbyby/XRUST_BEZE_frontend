@@ -7,7 +7,11 @@ import { addMessage, replaceMessages, deleteMessage, updateMessage } from "../..
 import MainWebSocket from '../../shared/WebSocket/WebSocket'
 import { ChatState } from "../../app/stores/ChatStore";
 
-const ChatContent: React.FC = () => {
+interface ChatContentPropTypes {
+    companionID: string,
+}
+
+const ChatContent: React.FC<ChatContentPropTypes> = ({companionID}) => {
     const {messages, selectedMessages} = useSelector((state: ChatState) => state.chatMessages);
     const dispatch = useDispatch();
     const componentIsMounted = useRef(true);
@@ -42,7 +46,7 @@ const ChatContent: React.FC = () => {
      * Gets chat messages
      */
     useEffect(() => {
-        GetChatMessages(2, (messagesData: IMessage[]) => {
+        GetChatMessages(companionID, (messagesData: IMessage[]) => {
             if (componentIsMounted) {
                 dispatch(replaceMessages(messagesData));
 

@@ -51,7 +51,7 @@ const Chat: React.FC = () => {
                 </div>
                 <div className='chat-dialog'>
                     <ChatHeader companionID={companionID!}/>
-                    <ChatContent />
+                    <ChatContent companionID={companionID!} />
                     <ChatFooter companionID={companionID!}/>
                 </div>
             </div>
