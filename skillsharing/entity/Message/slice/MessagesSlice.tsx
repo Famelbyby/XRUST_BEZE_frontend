@@ -54,12 +54,12 @@ export const messagesSlice = createSlice({
     addMessage: (state: MessagesState, action: PayloadAction<IMessage>) => {
         const newMessage: IMessage = action.payload;
 
-        if (state.channelID !== newMessage.channel_id) {
-          return;
+        if (state.channelID === "") {
+          state.channelID = newMessage.channel_id!;
         }
 
-        if (state.channelID === "") {
-          state.channelID = newMessage.channel_id;
+        if (state.channelID !== newMessage.channel_id) {
+          return;
         }
 
         state.messages = [action.payload, ...state.messages];
