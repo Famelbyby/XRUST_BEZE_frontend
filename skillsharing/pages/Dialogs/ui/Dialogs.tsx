@@ -4,7 +4,7 @@ import { Skill } from "../../../widgets/ProfileLeftColumn/ProfileLeftColumnTypes
 import Dialog from "../../../widgets/Dialog/ui/Dialog";
 import React, { useEffect, useRef, useState } from 'react';
 import './Dialogs.scss'
-import DialogsTags from "../../../widgets/DialogsTags/DialogsTags";
+import SkillsTags from "../../../features/SkillsTags/SkillsTags";
 import {GetDialogs} from '../api/Dialogs';
 import User from "../../../entity/User/User";
 import { GetProfile } from "../../Profile/api/Profile";
@@ -51,14 +51,17 @@ const Dialogs: React.FC = () => {
 
         const sortedDialogs: DialogItem[] = [];
 
-        dialogs.forEach((dialog) => {
-            const isFiltered: boolean = false;
+        dialogs.forEach((dialog: DialogItem) => {
+            let isFiltered: boolean = false;
+            const companion: ProfileType | undefined= dialog.users.find((user: ProfileType) => user.id !== ownUserID);
 
-            // tags.forEach((tag) => {
-            //     if (dialog.us.includes(tag)) {
-            //         isFiltered = true;
-            //     }
-            // });
+            if (companion !== undefined) {
+                tags.forEach((tag: Skill) => {
+                    if (companion.skills_to_share.includes(tag)) {
+                        isFiltered = true;
+                    }
+                });
+            }
 
             if (isFiltered) {
                 sortedDialogs.push(dialog);
@@ -85,7 +88,7 @@ const Dialogs: React.FC = () => {
                     </div>
                 }
             </div>
-            <DialogsTags handleCheckingTag={handleFilteringDialogs} tags={tags}/>
+            <SkillsTags handleCheckingTag={handleFilteringDialogs} tags={tags}/>
         </div>
     )
 };

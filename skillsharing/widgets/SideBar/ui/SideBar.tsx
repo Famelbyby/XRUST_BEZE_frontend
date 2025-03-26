@@ -26,12 +26,12 @@ const sideBarItems: sideBarItem[] = [
         title: 'Чаты',
         linkTo: '/chats',
     },
-    {
-        id: 3,
-        icon:'/SideBar/medal.png',
-        title: 'Рейтинг',
-        linkTo: '/rating',
-    },
+    // {
+    //     id: 3,
+    //     icon:'/SideBar/medal.png',
+    //     title: 'Рейтинг',
+    //     linkTo: '/rating',
+    // },
 ];
 
 const SideBar: React.FC = () => {

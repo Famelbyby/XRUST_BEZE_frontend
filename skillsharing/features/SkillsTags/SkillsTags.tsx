@@ -1,19 +1,9 @@
 import React, { useState } from "react";
-import './DialogsTags.scss';
-import { DialogTagsPropTypes } from "./DialogsTagsTypes";
-import { Skill } from "../ProfileLeftColumn/ProfileLeftColumnTypes";
+import './SkillsTags.scss';
+import { SkillsTagsPropTypes } from "./SkillsTagsTypes";
+import { Skill } from "../../widgets/ProfileLeftColumn/ProfileLeftColumnTypes";
 
-const tagsExamples: string[] = [
-    'Golang',
-    'JavaScript',
-    'SQL',
-    'Nginx',
-    'Figma',
-    'Docker',
-    'Kafka',
-];
-
-const DialogsTags: React.FC<DialogTagsPropTypes> = ({handleCheckingTag, tags}) => {
+const SkillsTags: React.FC<SkillsTagsPropTypes> = ({handleCheckingTag, tags}) => {
     const [checkedTags, setCheckedTags] = useState<Skill[]>([]);
 
     return (
@@ -29,7 +19,7 @@ const DialogsTags: React.FC<DialogTagsPropTypes> = ({handleCheckingTag, tags}) =
                     const tagIndex: number = checkedTags.indexOf(tag);
 
                     return (
-                        <div key={`${tag}id`}className={"dialogs-tags__tag" + (tagIndex !== -1 ? " dialogs-tags__tag_selected" : "")} onClick={() => {
+                        <div key={`${tag.name}id`}className={"dialogs-tags__tag" + (tagIndex !== -1 ? " dialogs-tags__tag_selected" : "")} onClick={() => {
                             let nextCheckedTags: Skill[] = [];
                             
                             if (tagIndex !== -1) {
@@ -50,4 +40,4 @@ const DialogsTags: React.FC<DialogTagsPropTypes> = ({handleCheckingTag, tags}) =
     );
 };
 
-export default DialogsTags;
+export default SkillsTags;

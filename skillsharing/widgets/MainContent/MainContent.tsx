@@ -4,6 +4,7 @@ import { ProfileType } from "../../pages/Profile/ui/ProfileTypes";
 import User from "../../entity/User/User";
 import {GetMatchedUsers} from '../../pages/Main/api/Main'
 import FoundUser from '../../features/FoundUser/FoundUser'
+import { Skill } from "../ProfileLeftColumn/ProfileLeftColumnTypes";
 
 interface MainContentPropTypes {
     user: ProfileType | undefined,
@@ -11,6 +12,7 @@ interface MainContentPropTypes {
 
 const MainContent: React.FC<MainContentPropTypes> = ({user}) => {
     const [foundUsers, setFoundUsers] = useState<ProfileType[]>([]);
+    const [filteredUsers, setFilteredUsers] = useState<ProfileType[]>([]);
     const componentIsMounted = useRef(true);
     const isRefreshed = useRef(false);
 
@@ -18,6 +20,7 @@ const MainContent: React.FC<MainContentPropTypes> = ({user}) => {
         function gotUsers(profilesData: ProfileType[]) {
             if (componentIsMounted.current) {
                 setFoundUsers(profilesData);
+                setFilteredUsers(profilesData);
                 isRefreshed.current = true;
             }
         }
@@ -30,6 +33,31 @@ const MainContent: React.FC<MainContentPropTypes> = ({user}) => {
         }
     }, [])
 
+    function handleFilteringDialogs(tags: Skill[]) {
+        if (tags.length === 0) {
+            setFilteredUsers(foundUsers);
+            return;
+        }
+
+        const sortedUsers: ProfileType[] = [];
+
+        foundUsers.forEach((foundUser: ProfileType) => {
+            let isFiltered: boolean = true;
+
+            tags.forEach((tag: Skill) => {
+                if (foundUser.skills_to_share.find((skill: Skill) => skill.name === tag.name) === undefined) {
+                    isFiltered = false;
+                }
+            });
+
+            if (isFiltered) {
+                sortedUsers.push(foundUser);
+            }
+        });
+
+        setFilteredUsers(sortedUsers);
+    }
+
     return (
         <div className="main-content">
             <div className="main-results">
@@ -38,18 +66,18 @@ const MainContent: React.FC<MainContentPropTypes> = ({user}) => {
                         Обрабатываем Ваш запрос, секундочку
                     </div>
                 }
-                {isRefreshed.current && foundUsers.length === 0 && 
+                {isRefreshed.current && filteredUsers.length === 0 && 
                     <div className="main-results__no-results">
-                        К сожалению, подходящих навыков найдено не было
+                        К сожалению, подходящих экспертов найдено не было
                     </div>
                 }
-                {isRefreshed.current && foundUsers.length > 0 && 
-                    foundUsers.map((foundUser: ProfileType, index: number) => {
-                        return <FoundUser key={index} user={foundUser}/>;
+                {isRefreshed.current && filteredUsers.length > 0 && 
+                    filteredUsers.map((filteredUser: ProfileType, index: number) => {
+                        return <FoundUser key={index} user={filteredUser}/>;
                     })
                 }
             </div>
-            <MainRightSidebar user={user}/>
+            <MainRightSidebar handleFilteringDialogs={handleFilteringDialogs} user={user}/>
         </div>
     )
 };

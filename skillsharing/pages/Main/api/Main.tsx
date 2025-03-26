@@ -31,22 +31,22 @@ const userMock: ProfileType[] = [{
     ],
     skills_to_share: [
         {
-            name: 'Figma',
+            name: 'Docker',
             description: '',
             level: 'intermediate',
         },
         {
-            name: 'Nginx',
+            name: 'C++',
             description: '',
             level: 'beginner',
         },
         {
-            name: 'Docker',
+            name: 'Python',
             description: '',
             level: 'advanced',
         },
         {
-            name: 'JavaScript',
+            name: 'Anime',
             description: '',
             level: 'advanced',
         },
