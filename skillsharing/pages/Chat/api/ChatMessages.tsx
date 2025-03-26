@@ -10,7 +10,7 @@ const messagesMock: Array<IMessage> = [
         message_id: "1",
         event: "EventText",
         channel_id: "0",
-        peer_id: "67e018ff9d65eb861882040a", 
+        peer_id: "67e3b36b9a36154096b4bbea", 
         user_id: "2",
         payload: "Добрый день, Shkaf! Видел Вашу анкету, ваши познания в CS:GO и Dota 2 меня поразили, не могли бы Вы рассказать как занимать банан на Инферно и коннектор на Мираже?",
         createdAt: 1231231,
@@ -21,7 +21,7 @@ const messagesMock: Array<IMessage> = [
         message_id: "2",
         event: "EventText",
         channel_id: "0",
-        user_id: "67e018ff9d65eb861882040a",
+        user_id: "67e3b36b9a36154096b4bbea",
         peer_id: "1",
         payload: "Приветствую! Да, с превеликим удовольствием. Сейчас составлю Вам план (с помощью встроенной функции)",
         createdAt: 1231231,
@@ -32,7 +32,7 @@ const messagesMock: Array<IMessage> = [
         message_id: "3",
         event: "EventText",
         channel_id: "0",
-        user_id: "67e018ff9d65eb861882040a",
+        user_id: "67e3b36b9a36154096b4bbea",
         peer_id: "2",
         payload: "Приветствую! Да, с превеликим удовольствием. Сейчас составлю Вам план (с помощью встроенной функции)",
         createdAt: 1231231,
@@ -43,7 +43,7 @@ const messagesMock: Array<IMessage> = [
         message_id: "4",
         event: "EventText",
         channel_id: "0",
-        user_id: "67e018ff9d65eb861882040a",
+        user_id: "67e3b36b9a36154096b4bbea",
         peer_id: "2",
         payload: "Приветствую! Да, с превеликим удовольствием. Сейчас составлю Вам план (с помощью встроенной функции)",
         createdAt: 1231231,
@@ -54,7 +54,7 @@ const messagesMock: Array<IMessage> = [
         message_id: "5",
         event: "EventText",
         channel_id: "0",
-        user_id: "67e018ff9d65eb861882040a",
+        user_id: "67e3b36b9a36154096b4bbea",
         peer_id: "2",
         payload: "Приветствую! Да, с превеликим удовольствием. Сейчас составлю Вам план (с помощью встроенной функции)",
         createdAt: 1231231,
@@ -65,7 +65,7 @@ const messagesMock: Array<IMessage> = [
         message_id: "6",
         event: "EventText",
         channel_id: "0",
-        user_id: "67e018ff9d65eb861882040a",
+        user_id: "67e3b36b9a36154096b4bbea",
         peer_id: "2",
         payload: "Приветствую! Да, с превеликим удовольствием. Сейчас составлю Вам план (с помощью встроенной функции)",
         createdAt: 1231231,
@@ -76,7 +76,7 @@ const messagesMock: Array<IMessage> = [
         message_id: "7",
         event: "EventText",
         channel_id: "0",
-        user_id: "67e018ff9d65eb861882040a",
+        user_id: "67e3b36b9a36154096b4bbea",
         peer_id: "2",
         payload: "Приветствую! Да, с превеликим удовольствием. Сейчас составлю Вам план (с помощью встроенной функции)",
         createdAt: 1231231,
@@ -87,7 +87,7 @@ const messagesMock: Array<IMessage> = [
         message_id: "8",
         event: "EventText",
         channel_id: "0",
-        user_id: "67e018ff9d65eb861882040a",
+        user_id: "67e3b36b9a36154096b4bbea",
         peer_id: "2",
         payload: "Приветствую! Да, с превеликим удовольствием. Сейчас составлю Вам план (с помощью встроенной функции)",
         createdAt: 1231231,
@@ -109,6 +109,6 @@ export async function GetChatMessages(companionID: string, callback: (messageDat
     console.log(status, data);
 
     if (status === 200) {
-        callback(data.messages as IMessage[]);
+        callback(data?.messages as IMessage[]);
     }
 }

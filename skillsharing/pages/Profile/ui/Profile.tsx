@@ -6,7 +6,7 @@ import './Profile.scss'
 import { ProfileType } from "./ProfileTypes";
 import { GetProfile } from "../api/Profile";
 
-const ownUserID: string = "67e018ff9d65eb861882040a";
+const ownUserID: string = "67e3b3869a36154096b4bbeb";
 
 const Profile: React.FC = () => {
     const params = useParams();
