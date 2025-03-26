@@ -9,9 +9,12 @@ import Settings from '../pages/Settings/ui/Settings'
 import { Routes } from 'react-router'
 import User from '../entity/User/User'
 import WebSocket from '../shared/WebSocket/WebSocket'
+import { useEffect } from 'react'
 
 function App() {
-  WebSocket.openSocket(User.getUserID());
+  useEffect(() => {
+    WebSocket.openSocket(User.getUserID());
+  }, []);
 
   return (
     <BrowserRouter>

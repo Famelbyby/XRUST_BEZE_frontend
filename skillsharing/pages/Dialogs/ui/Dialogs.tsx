@@ -39,13 +39,13 @@ const Dialogs: React.FC = () => {
         const sortedDialogs: DialogItem[] = [];
 
         dialogs.forEach((dialog) => {
-            let isFiltered: boolean = false;
+            const isFiltered: boolean = false;
 
-            tags.forEach((tag) => {
-                if (dialog.tags.includes(tag)) {
-                    isFiltered = true;
-                }
-            });
+            // tags.forEach((tag) => {
+            //     if (dialog.us.includes(tag)) {
+            //         isFiltered = true;
+            //     }
+            // });
 
             if (isFiltered) {
                 sortedDialogs.push(dialog);
@@ -64,7 +64,7 @@ const Dialogs: React.FC = () => {
                     })}
                 {filteredDialogs.length > 0 && 
                     filteredDialogs.map((dialog) => {
-                        return <Dialog dialog={dialog} key={dialog.id} />
+                        return <Dialog dialog={dialog} key={dialog.channel_id} />
                     })}
                 {filteredDialogs.length === 0 && isRefreshed.current && 
                     <div className="dialogs__no-chats">

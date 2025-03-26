@@ -2,20 +2,30 @@ import { useNavigate } from "react-router";
 import { DialogProps } from "./DialogTypes";
 import React from "react";
 import { FormatHoursMinutes } from "../../../shared/Functions/FormatDate";
+import { ProfileType } from "../../../pages/Profile/ui/ProfileTypes";
+import User from "../../../entity/User/User";
 
 const Dialog: React.FC<DialogProps> = ({dialog}) => {
-    const dialogTime: string = FormatHoursMinutes(new Date());
     const navigateTo = useNavigate();
+    let companion: ProfileType | undefined = undefined;
+
+    if (dialog !== undefined) {
+        const dialogCompanion: ProfileType | undefined = dialog.users.find((user: ProfileType) => user.id != User.getUserID());
+
+        if (dialogCompanion !== undefined) {
+            companion = dialogCompanion;
+        }
+    }
 
     return (
         <div className="dialog" onClick={() => {
             if (dialog !== undefined) {
-                navigateTo(`/chat/${dialog?.id}`)};
+                navigateTo(`/chat/${dialog.channel_id}`)};
             }
         }>
             <div className="dialog-user">
                 {dialog !== undefined && 
-                    <img className="dialog-user__avatar" src={dialog.avatar} alt="" />
+                    <img className="dialog-user__avatar" src={companion?.avatar_url} alt="" />
                 }
                 {dialog === undefined && 
                     <div className="dialog-user__avatar dialog-user__avatar-mock">
@@ -32,7 +42,7 @@ const Dialog: React.FC<DialogProps> = ({dialog}) => {
                     }
                     {dialog !== undefined && 
                         <div className="dialog-user-info__name">
-                            {dialog.name}
+                            {companion?.username}
                         </div>
                     }
                     {dialog === undefined &&
@@ -43,19 +53,23 @@ const Dialog: React.FC<DialogProps> = ({dialog}) => {
                     }
                     {dialog !== undefined && 
                         <span className="dialog-user-info__last-message">
-                            {dialog.text}
+                            {dialog.last_message.payload}
                         </span>
                     }
                     
                     <div className="dialog-user-info__message-time">
-                        {dialogTime}
+                        {dialog !== undefined && 
+                            <>
+                                {FormatHoursMinutes(new Date(dialog.last_message.createdAt))}
+                            </>
+                        }
                     </div>
                 </div>
             </div>
             <div className="dialog-info">
                 {dialog !== undefined && 
                     <div className="dialog-info__tags">
-                        {dialog.tags.join(' ')}
+                        {companion?.skills_to_share.join(' ')}
                     </div>
                 }
                 {dialog === undefined && 

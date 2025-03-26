@@ -24,7 +24,7 @@ const Message: React.FC<PropType> = ({message, isSelected}) => {
                     {message.payload}
                 </div>
                 <div className='chat-content__time'>
-                    {message.updatedAt !== message.createdAt && 
+                    {message.updated_at !== message.created_at && 
                         <div className='chat-content__time_redacted'>
                             ред.
                         </div>
