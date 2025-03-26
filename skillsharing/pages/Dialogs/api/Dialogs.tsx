@@ -67,19 +67,19 @@ const dialogsMock: DialogItem[] = [
 ];
 
 export async function GetDialogs(userID: string, callback: (dialogsData: DialogItem[]) => void) {
-    (new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(dialogsMock);
-        }, 2000);
-    })).then((dialogsData) => {
-        callback(dialogsData as DialogItem[]);
-    })
+    // (new Promise((resolve) => {
+    //     setTimeout(() => {
+    //         resolve(dialogsMock);
+    //     }, 2000);
+    // })).then((dialogsData) => {
+    //     callback(dialogsData as DialogItem[]);
+    // })
 
-    // const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/channels?user_id=` + userID);
+    const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/channels?user_id=` + userID);
 
-    // console.log(status, data);
+    console.log(status, data);
 
-    // if (status === 200) {
-    //     callback(data?.channels as DialogItem[]);
-    // }
+    if (status === 200) {
+        callback(data?.channels as DialogItem[]);
+    }
 }
