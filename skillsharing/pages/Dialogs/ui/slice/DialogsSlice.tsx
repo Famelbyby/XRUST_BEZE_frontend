@@ -8,14 +8,12 @@ import { Skill } from '../../../../widgets/ProfileLeftColumn/ProfileLeftColumnTy
 export interface Dialogs {
   dialogs: DialogItem[],
   filteredDialogs: DialogItem[],
-  selectedTags: string[],
   userID: string,
 }
 
 const initialState: Dialogs = {
   dialogs: [],
   filteredDialogs: [],
-  selectedTags: [],
   userID: User.getUserID(),
 }
 
@@ -23,27 +21,16 @@ export const dialogsSlice = createSlice({
   name: 'dialogs',
   initialState,
   reducers: {
-    setSelectedTags: (state: Dialogs, action: PayloadAction<string[]>) => {
-      state.selectedTags = action.payload;
-    },
-    toggleSelectedTag: (state: Dialogs, action: PayloadAction<string>) => {
-      const toggledTag: string = action.payload;
-      const tagIndex: number = state.selectedTags.findIndex((selectedTag: string) => selectedTag === toggledTag);
-
-      if (tagIndex !== -1) {
-        state.selectedTags = [...state.selectedTags, toggledTag];
-      } else {
-        state.selectedTags = [...state.selectedTags.slice(0, tagIndex), ...state.selectedTags.slice(tagIndex + 1)];
-      }
-    },
     setDialogs: (state: Dialogs, action: PayloadAction<DialogItem[]>) => {
       const newDialogs: DialogItem[] = action.payload;
 
       state.dialogs = newDialogs.filter((dialog: DialogItem) => dialog.last_message !== null);
       state.filteredDialogs = state.dialogs;
     },
-    filterDialogs: (state: Dialogs) => {
-      if (state.selectedTags.length === 0) {
+    filterDialogs: (state: Dialogs, action: PayloadAction<string[]>) => {
+      const selectedTags: string[] = action.payload;
+      
+      if (selectedTags.length === 0) {
         state.filteredDialogs = state.dialogs;
 
         return;
@@ -58,7 +45,7 @@ export const dialogsSlice = createSlice({
 
         let isFiltered = false;
 
-        state.selectedTags.forEach((selectedTag: string) => {
+        selectedTags.forEach((selectedTag: string) => {
           isFiltered = isFiltered || (dialogCompanion.skills_to_share.find((skill: Skill) => skill.name === selectedTag) !== undefined);
         });
 
@@ -68,11 +55,10 @@ export const dialogsSlice = createSlice({
     clearAll: (state: Dialogs) => {
       state.dialogs = [];
       state.filteredDialogs = [];
-      state.selectedTags = [];
     },
   },
 })
 
-export const { setSelectedTags, toggleSelectedTag, setDialogs, filterDialogs, clearAll } = dialogsSlice.actions
+export const { setDialogs, filterDialogs, clearAll } = dialogsSlice.actions
 
 export default dialogsSlice.reducer
