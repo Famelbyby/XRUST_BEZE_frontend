@@ -33,7 +33,7 @@ const MainContent: React.FC<MainContentPropTypes> = ({user}) => {
         }
     }, [])
 
-    function handleFilteringDialogs(tags: Skill[]) {
+    function handleFilteringDialogs(tags: string[]) {
         if (tags.length === 0) {
             setFilteredUsers(foundUsers);
             return;
@@ -44,8 +44,8 @@ const MainContent: React.FC<MainContentPropTypes> = ({user}) => {
         foundUsers.forEach((foundUser: ProfileType) => {
             let isFiltered: boolean = true;
 
-            tags.forEach((tag: Skill) => {
-                if (foundUser.skills_to_share.find((skill: Skill) => skill.name === tag.name) === undefined) {
+            tags.forEach((tag: string) => {
+                if (foundUser.skills_to_share.find((skill: Skill) => skill.name === tag) === undefined) {
                     isFiltered = false;
                 }
             });
