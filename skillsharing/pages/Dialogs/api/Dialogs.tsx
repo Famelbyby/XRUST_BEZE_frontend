@@ -1,5 +1,5 @@
 import axios from "axios";
-import { DialogItem } from "../../../widgets/Dialog/ui/DialogTypes";
+import { DialogItem } from "../../../entity/Dialog/ui/DialogTypes";
 import { BACK_URL } from "../../../shared/Consts/NetworkConsts";
 
 const CHAT_URL = '/chat';

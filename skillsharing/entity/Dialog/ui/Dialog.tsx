@@ -4,7 +4,7 @@ import React from "react";
 import { FormatHoursMinutes } from "../../../shared/Functions/FormatDate";
 import { ProfileType } from "../../../pages/Profile/ui/ProfileTypes";
 import User from "../../../entity/User/User";
-import { Skill } from "../../ProfileLeftColumn/ProfileLeftColumnTypes";
+import { Skill } from "../../../widgets/ProfileLeftColumn/ProfileLeftColumnTypes";
 
 const Dialog: React.FC<DialogProps> = ({dialog}) => {
     const navigateTo = useNavigate();
@@ -62,14 +62,14 @@ const Dialog: React.FC<DialogProps> = ({dialog}) => {
                     }
                     {dialog !== undefined && 
                         <span className="dialog-user-info__last-message">
-                            {dialog.last_message.payload}
+                            {dialog.last_message!.payload}
                         </span>
                     }
                     
                     <div className="dialog-user-info__message-time">
                         {dialog !== undefined && 
                             <>
-                                {FormatHoursMinutes(new Date(dialog.last_message.created_at))}
+                                {FormatHoursMinutes(new Date(dialog.last_message!.created_at))}
                             </>
                         }
                     </div>

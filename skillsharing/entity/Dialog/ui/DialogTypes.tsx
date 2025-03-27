@@ -1,4 +1,4 @@
-import { IMessage } from "../../../entity/Message/MessageTypes";
+import { IMessage } from "../../Message/MessageTypes";
 import { ProfileType } from "../../../pages/Profile/ui/ProfileTypes";
 
 export interface DialogItem {
