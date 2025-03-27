@@ -1,21 +1,18 @@
 import React, { useRef, useEffect, useState } from "react";
 import './SkillsTags.scss';
 import { Skill } from "../../widgets/ProfileLeftColumn/ProfileLeftColumnTypes";
-import { useDispatch, useSelector } from "react-redux";
-import { DialogsState } from "../../app/stores/DialogsStore";
 import { ProfileType } from "../../pages/Profile/ui/ProfileTypes";
 import { GetProfile } from "../../pages/Profile/api/Profile";
 import {SkillsTagsPropTypes} from './SkillsTagsTypes';
+import User from "../../entity/User/User";
 
 const SkillsTags: React.FC<SkillsTagsPropTypes> = ({handleFilteringSomething}) => {
-    const {userID} = useSelector((state: DialogsState) => state.dialogs);
-
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [tags, setTags] = useState<string[]>([]);
-    const dispatch = useDispatch();
     const componentIsMounted = useRef(true);
 
     useEffect(() => {
+
         function gotProfile(profileData: ProfileType) {
             if (componentIsMounted.current) {
                 setTags(profileData.skills_to_learn.map((skill: Skill) => skill.name));
@@ -23,12 +20,12 @@ const SkillsTags: React.FC<SkillsTagsPropTypes> = ({handleFilteringSomething}) =
             }
         }
 
-        GetProfile(userID, gotProfile);
+        GetProfile(User.getUserID(), gotProfile);
 
         return () => {
             componentIsMounted.current = false;
         }
-    }, [userID, dispatch]);
+    }, []);
 
     return (
         <div className="skills-tags">
