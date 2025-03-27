@@ -25,7 +25,7 @@ const ProfileHeader: React.FC<ProfileHeaderPropTypes> = ({user}) => {
                     {user !== undefined && user.username}
                 </div>
                 <div className="profile-brief-last-seen">
-                    <img className="profile-brief-last-seen__img" src="/Profile/clock.png" alt="" />
+                    <img className="profile-brief-last-seen__img" src="/shared/clock.png" alt="" />
                     {user !== undefined && 
                         <>
                             {FormatRelativeTimeInPastInDays(lastSeen!)}

@@ -3,6 +3,7 @@ import {ProfileType} from '../../pages/Profile/ui/ProfileTypes'
 import { Link } from 'react-router';
 import './FoundUser.scss'
 import { Skill } from '../../widgets/ProfileLeftColumn/ProfileLeftColumnTypes';
+import { FormatRelativeTimeInPastInDays } from '../../shared/Functions/FormatDate';
 
 interface FoundUserPropTypes {
     user: ProfileType,
@@ -31,22 +32,28 @@ const FoundUser: React.FC<FoundUserPropTypes> = ({user}) => {
                         </div>
                     </div>
                     <div className='found-user-footer'>
-                        <div className='found-user-footer__rate'>
-                            Оценка
-                            <div className='found-user-footer__num'>
-                                0
-                            </div>
+                        <div className='found-user-last-seen'>
+                            <img className="found-user-last-seen__img" src="/shared/clock.png" alt="" />
+                            {FormatRelativeTimeInPastInDays(new Date(user.last_active_at))}
                         </div>
-                        <div className='found-user-footer__helps'>
-                            Помощей
-                            <div className='found-user-footer__num'>
-                                0
+                        <div className='found-user-stats'>
+                            <div className='found-user-footer__rate'>
+                                Оценка
+                                <div className='found-user-footer__num'>
+                                    0
+                                </div>
                             </div>
-                        </div>
-                        <div className='found-user-footer__feedbacks'>
-                            Отзывы
-                            <div className='found-user-footer__num'>
-                                0
+                            <div className='found-user-footer__helps'>
+                                Помощей
+                                <div className='found-user-footer__num'>
+                                    0
+                                </div>
+                            </div>
+                            <div className='found-user-footer__feedbacks'>
+                                Отзывы
+                                <div className='found-user-footer__num'>
+                                    0
+                                </div>
                             </div>
                         </div>
                     </div>
