@@ -2,7 +2,7 @@ import React from 'react'
 import { IMessage } from './MessageTypes';
 import './Message.scss'
 import { useDispatch } from 'react-redux';
-import {toggleSelectedMessage} from './slice/MessagesSlice'
+import {toggleSelectedMessage} from '../../pages/Chat/ui/slice/ChatSlice'
 import { FormatHoursMinutes } from '../../shared/Functions/FormatDate';
 import User from '../User/User';
 

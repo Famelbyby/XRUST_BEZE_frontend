@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import {IMessage} from '../MessageTypes'
+import {IMessage} from '../../../../entity/Message/MessageTypes'
 
 export interface MessagesState {
   messages: IMessage[],
@@ -18,7 +18,7 @@ const initialState: MessagesState = {
   editingMessage: null,
 }
 
-export const messagesSlice = createSlice({
+export const chatSlice = createSlice({
   name: 'chatMessages',
   initialState,
   reducers: {
@@ -109,6 +109,6 @@ export const messagesSlice = createSlice({
   },
 })
 
-export const { clearAll, addMessage, replaceMessages, toggleSelectedMessage, removeSelectedMessages, deleteMessage, setPeerID, editMessage, stopEditingMessage, updateMessage } = messagesSlice.actions
+export const { clearAll, addMessage, replaceMessages, toggleSelectedMessage, removeSelectedMessages, deleteMessage, setPeerID, editMessage, stopEditingMessage, updateMessage } = chatSlice.actions
 
-export default messagesSlice.reducer
+export default chatSlice.reducer

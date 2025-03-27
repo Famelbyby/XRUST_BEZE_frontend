@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import messagesReducer from '../../entity/Message/slice/MessagesSlice'
+import chatReducer from '../../pages/Chat/ui/slice/ChatSlice'
 
 export const chatStore = configureStore({
   reducer: {
-    chatMessages: messagesReducer,
+    chatMessages: chatReducer,
   },
 })
 

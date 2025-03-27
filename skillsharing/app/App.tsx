@@ -26,7 +26,9 @@ function App() {
           <Route index element={<Main />} />
           <Route path='/profile/:userID' element={<Profile />} />
           <Route path='/settings' element={<Settings />} />
-          <Route path='/chat/:chatID' element={<Chat/>} />
+          <Route path='/chat'>
+            <Route path='/:chatID' element={<Chat />} />
+          </Route>
           <Route path='/chats' element={<Dialogs />} />
         </Routes>
       </div>

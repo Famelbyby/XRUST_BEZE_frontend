@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Message from "../../entity/Message/Message"
 import { IMessage } from "../../entity/Message/MessageTypes";
 import { GetChatMessages } from "../../pages/Chat/api/ChatMessages";
-import { addMessage, replaceMessages, deleteMessage, updateMessage } from "../../entity/Message/slice/MessagesSlice";
+import { addMessage, replaceMessages, deleteMessage, updateMessage } from "../../pages/Chat/ui/slice/ChatSlice";
 import MainWebSocket from '../../shared/WebSocket/WebSocket'
 import { ChatState } from "../../app/stores/ChatStore";
 
@@ -62,6 +62,7 @@ const ChatContent: React.FC<ChatContentPropTypes> = ({channelID}) => {
 
         return () => {
             componentIsMounted.current = false;
+            isRefreshed.current = false;
         };
     }, [dispatch, channelID]);
 

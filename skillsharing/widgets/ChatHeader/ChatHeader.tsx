@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router";
 import { GetProfile } from "../../pages/Profile/api/Profile";
 import { useDispatch, useSelector } from "react-redux";
-import { removeSelectedMessages, setPeerID, editMessage, clearAll } from "../../entity/Message/slice/MessagesSlice";
+import { removeSelectedMessages, setPeerID, editMessage, clearAll } from "../../pages/Chat/ui/slice/ChatSlice";
 import { ChatState } from "../../app/stores/ChatStore";
 import MainWebSocket from './../../shared/WebSocket/WebSocket'
 import { IDeletingMessage, IMessage } from "../../entity/Message/MessageTypes";

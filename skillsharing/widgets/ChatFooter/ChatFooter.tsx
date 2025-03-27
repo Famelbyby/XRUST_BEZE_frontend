@@ -3,7 +3,7 @@ import { ISendingMessage, IUpdatingMessage } from "../../entity/Message/MessageT
 import MainWebSocket from '../../shared/WebSocket/WebSocket';
 import { useDispatch, useSelector } from "react-redux";
 import { ChatState } from "../../app/stores/ChatStore";
-import { stopEditingMessage } from "../../entity/Message/slice/MessagesSlice";
+import { stopEditingMessage } from "../../pages/Chat/ui/slice/ChatSlice";
 import User from "../../entity/User/User";
 
 const TEXTAREA_INITIAL_HEIGHT: number = 23;
