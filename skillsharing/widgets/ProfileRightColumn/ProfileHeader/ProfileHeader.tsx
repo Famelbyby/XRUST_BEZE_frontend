@@ -1,44 +1,47 @@
-import React, { use } from "react";
+import React from "react";
 import { Link } from "react-router";
 import { ProfileType } from "../../../pages/Profile/ui/ProfileTypes";
 import { FormatRelativeTimeInPastInDays } from "../../../shared/Functions/FormatDate";
-import User from "../../../entity/User/User";
+import { useSelector } from "react-redux";
+import { AppState } from "../../../app/AppStore";
+import './ProfileHeader.scss'
 
 interface ProfileHeaderPropTypes {
-    user: ProfileType | undefined,
+    profile: ProfileType | undefined,
 }
 
-const ProfileHeader: React.FC<ProfileHeaderPropTypes> = ({user}) => {
-    const ownUserID: string = User.getUserID();
-    const lastSeen: Date | undefined = (user === undefined ? undefined : new Date(user.last_active_at));
+const ProfileHeader: React.FC<ProfileHeaderPropTypes> = ({profile}) => {
+    const {user} = useSelector((state: AppState) => state.profile);
+    const ownUserID: ProfileType["id"] = user!.id;
+    const lastSeen: Date | undefined = (profile === undefined ? undefined : new Date(profile.last_active_at));
 
     return (
         <div className="profile-header">
             <div className="profile-brief">
                 <div className="profile-brief__name">
-                    {user === undefined && 
+                    {profile === undefined && 
                         <div className="profile-brief__name-mock">
                             <div className="profile-brief__name-spinner">
                             </div>
                         </div>
                     }
-                    {user !== undefined && user.username}
+                    {profile !== undefined && profile.username}
                 </div>
                 <div className="profile-brief-last-seen">
                     <img className="profile-brief-last-seen__img" src="/shared/clock.png" alt="" />
-                    {user !== undefined && 
+                    {profile !== undefined && 
                         <>
                             {FormatRelativeTimeInPastInDays(lastSeen!)}
                         </>
                     }
-                    {user === undefined && 
+                    {profile === undefined && 
                         <>
                         давно-давно...
                         </>
                     }
                 </div>
             </div>
-            { user !== undefined && ownUserID === user.id && 
+            { profile !== undefined && ownUserID === profile.id && 
                 <div className="profile-buttons">
                     <Link to={"/settings"}>
                         <div className="profile-buttons-edit">
@@ -52,13 +55,13 @@ const ProfileHeader: React.FC<ProfileHeaderPropTypes> = ({user}) => {
                     </div>
                 </div>
             }
-            { user !== undefined && ownUserID !== user.id && 
+            { profile !== undefined && ownUserID !== profile.id && 
                 <div className="profile-buttons profile-buttons_other">
                         <div className="profile-buttons-report">
                             <img className="profile-buttons-report__img" src="/Profile/report.png" alt="" />
                             Пожаловаться
                         </div>
-                    <Link to={`/chat/${user.id}`}>
+                    <Link to={`/chat/${profile.id}`}>
                         <div className="profile-buttons-chat">
                             <img className="profile-buttons-chat__img" src="/Profile/chat.png" alt="" />
                             Написать

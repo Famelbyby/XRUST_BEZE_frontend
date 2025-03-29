@@ -1,10 +1,58 @@
 import axios from "axios";
 import { IMessage } from "../../../entity/Message/MessageTypes";
-import { BACK_URL } from "../../../shared/Consts/NetworkConsts";
-import User from "../../../entity/User/User";
+import { BACK_URL } from "../../../shared/Consts/URLS";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const CHAT_URL = '/chat';
-const OWN_USER_ID_MOCK = User.getUserID();
+const OWN_USER_ID_MOCK = "67e3b36b9a36154096b4bbea";
+
+const notAuthedUserMock: ProfileType | undefined = undefined;
+
+const userMock: ProfileType = {
+    id: "67e3b36b9a36154096b4bbea",
+    username: 'Shkaf Unichtojitel',
+    avatar_url: '/Profile/avatar.png',
+    bio: '[!i for i in [‘Красивый’, ‘Умный’, ‘Обаятельный’, ‘Спортсмен’]]',
+    skills_to_learn: [
+        {
+            name: 'Figma',
+            description: '',
+            level: 'intermediate',
+        },
+        {
+            name: 'Nginx',
+            description: '',
+            level: 'beginner',
+        },
+        {
+            name: 'Docker',
+            description: '',
+            level: 'advanced',
+        },
+        {
+            name: 'JavaScript',
+            description: '',
+            level: 'advanced',
+        },
+    ],
+    skills_to_share: [
+        {
+            name: 'Kafka',
+            description: '',
+            level: 'beginner',
+        },
+        {
+            name: 'Networks',
+            description: '',
+            level: 'advanced',
+        },
+    ],
+    email: "ok",
+    created_at: "2025-01-03T00:00:00Z",
+    updated_at: "2025-01-03T00:00:00Z",
+    last_active_at: "2025-01-03T00:00:00Z",
+    preferred_format: "voice",
+}
 
 const messagesMock: Array<IMessage> = [
     {
@@ -97,20 +145,42 @@ const messagesMock: Array<IMessage> = [
     },
 ]
 
-export async function GetChatMessages(channelID: string, callback: (messageData: IMessage[]) => void) {
-    // (new Promise((resolve) => {
-    //     setTimeout(() => {
-    //         resolve(messagesMock);
-    //     }, 3000);
-    // })).then((messagesData) => {
-    //     callback(messagesData as IMessage[]);
-    // });
+export const GetCompanion = createAsyncThunk(
+    'chats/getCompanion',
+    async (peerID: string) => {
+        const response = await (new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(userMock);
+            }, 2000)
+        }));
 
-    const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/${channelID}`);
-
-    console.log(status, data);
-
-    if (status === 200) {
-        callback(data?.messages as IMessage[]);
+        return response;
+        
+        // const {status, data} = await axios.get(`http://localhost:3001/api/v1/users/${userID}`);
+    
+        // if (status === 200) {
+        //     callback(data as ProfileType);
+        // }
     }
-}
+);
+
+export const GetChatMessages = createAsyncThunk(
+    'chats/getChatMessages',
+    async (channelID: string) => {
+        const response = await (new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(messagesMock);
+            }, 3000);
+        }));
+
+        return response;
+
+        // const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/${channelID}`);
+
+        // console.log(status, data);
+
+        // if (status === 200) {
+        //     callback(data?.messages as IMessage[]);
+        // }
+    }
+);

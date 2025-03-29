@@ -1,83 +1,48 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import MainRightSidebar from "../MainRightSidebar/MainRightSidebar";
 import { ProfileType } from "../../pages/Profile/ui/ProfileTypes";
-import User from "../../entity/User/User";
 import {GetMatchedUsers} from '../../pages/Main/api/Main'
 import FoundUser from '../../features/FoundUser/FoundUser'
-import { Skill } from "../ProfileLeftColumn/ProfileLeftColumnTypes";
+import { useDispatch, useSelector } from "react-redux";
+import { clearFoundUsers } from "../../app/slices/MainSlice";
+import { AppDispatch, AppState } from "../../app/AppStore";
+import './MainContent.scss'
 
-interface MainContentPropTypes {
-    user: ProfileType | undefined,
-}
-
-const MainContent: React.FC<MainContentPropTypes> = ({user}) => {
-    const [foundUsers, setFoundUsers] = useState<ProfileType[]>([]);
-    const [filteredUsers, setFilteredUsers] = useState<ProfileType[]>([]);
-    const componentIsMounted = useRef(true);
-    const isRefreshed = useRef(false);
+const MainContent: React.FC = () => {
+    const { filteredUsers } = useSelector((state: AppState) => state.mainPageUsers);
+    const { user } = useSelector((state: AppState) => state.profile);
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
-        function gotUsers(profilesData: ProfileType[]) {
-            if (componentIsMounted.current) {
-                setFoundUsers(profilesData);
-                setFilteredUsers(profilesData);
-                isRefreshed.current = true;
-            }
+        if (user !== undefined) {
+            dispatch(GetMatchedUsers(user.id));
         }
-
-        GetMatchedUsers(User.getUserID(), gotUsers);
 
         return () => {
-            componentIsMounted.current = false;
-            isRefreshed.current = false;
+            dispatch(clearFoundUsers());
         }
-    }, [])
-
-    function handleFilteringDialogs(tags: string[]) {
-        if (tags.length === 0) {
-            setFilteredUsers(foundUsers);
-            return;
-        }
-
-        const sortedUsers: ProfileType[] = [];
-
-        foundUsers.forEach((foundUser: ProfileType) => {
-            let isFiltered: boolean = true;
-
-            tags.forEach((tag: string) => {
-                if (foundUser.skills_to_share.find((skill: Skill) => skill.name === tag) === undefined) {
-                    isFiltered = false;
-                }
-            });
-
-            if (isFiltered) {
-                sortedUsers.push(foundUser);
-            }
-        });
-
-        setFilteredUsers(sortedUsers);
-    }
+    }, [user, dispatch]);
 
     return (
         <div className="main-content">
             <div className="main-results">
-                {!isRefreshed.current && 
+                {filteredUsers === undefined && 
                     <div className="main-results__waiting">
                         Обрабатываем Ваш запрос, секундочку
                     </div>
                 }
-                {isRefreshed.current && filteredUsers.length === 0 && 
+                {filteredUsers !== undefined && filteredUsers.length === 0 && 
                     <div className="main-results__no-results">
                         К сожалению, подходящих экспертов найдено не было
                     </div>
                 }
-                {isRefreshed.current && filteredUsers.length > 0 && 
+                {filteredUsers !== undefined && filteredUsers.length > 0 && 
                     filteredUsers.map((filteredUser: ProfileType, index: number) => {
                         return <FoundUser key={index} user={filteredUser}/>;
                     })
                 }
             </div>
-            <MainRightSidebar handleFilteringDialogs={handleFilteringDialogs} user={user}/>
+            <MainRightSidebar />
         </div>
     )
 };

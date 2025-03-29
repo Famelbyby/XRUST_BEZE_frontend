@@ -3,15 +3,19 @@ import { DialogProps } from "./DialogTypes";
 import React from "react";
 import { FormatHoursMinutes } from "../../../shared/Functions/FormatDate";
 import { ProfileType } from "../../../pages/Profile/ui/ProfileTypes";
-import User from "../../../entity/User/User";
 import { Skill } from "../../../widgets/ProfileLeftColumn/ProfileLeftColumnTypes";
+import { useSelector } from "react-redux";
+import { AppState } from "../../../app/AppStore";
+import './Dialog.scss'
 
 const Dialog: React.FC<DialogProps> = ({dialog}) => {
     const navigateTo = useNavigate();
+    const {user} = useSelector((state: AppState) => state.profile);
+
     let companion: ProfileType | undefined = undefined;
 
     if (dialog !== undefined) {
-        const dialogCompanion: ProfileType | undefined = dialog.users.find((user: ProfileType) => user.id != User.getUserID());
+        const dialogCompanion: ProfileType | undefined = dialog.users.find((dialogUser: ProfileType) => dialogUser.id != user!.id);
 
         if (dialogCompanion !== undefined) {
             companion = dialogCompanion;

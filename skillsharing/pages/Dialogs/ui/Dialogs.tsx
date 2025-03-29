@@ -2,17 +2,17 @@ import React from 'react';
 import './Dialogs.scss'
 import SkillsTags from "../../../features/SkillsTags/SkillsTags";
 import DialogsContent from '../../../widgets/DialogsContent/DialogsContent'
-import { Provider } from "react-redux";
-import { dialogsStore } from "../../../app/stores/DialogsStore";
-import { filterDialogs } from './slice/DialogsSlice';
+import { filterDialogs } from '../../../app/slices/DialogsSlice';
+import { ProfileType } from '../../Profile/ui/ProfileTypes';
+import { useDispatch } from 'react-redux';
 
 const Dialogs: React.FC = () => {
+    const dispatch = useDispatch();
+
     return (
         <div className="dialogs-page">
-            <Provider store={dialogsStore}>
-                <DialogsContent />
-                <SkillsTags handleFilteringSomething={(tags: string[]) => dialogsStore.dispatch(filterDialogs(tags))} />
-            </Provider>
+            <DialogsContent />
+            <SkillsTags handleFilteringSomething={(selectedTags: string[], user: ProfileType) => dispatch(filterDialogs({selectedTags, user}))} />
         </div>
     )
 };

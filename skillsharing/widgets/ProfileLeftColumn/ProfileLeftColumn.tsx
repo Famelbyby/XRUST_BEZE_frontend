@@ -3,6 +3,7 @@ import {Skill, StatisticItem} from './ProfileLeftColumnTypes'
 import { ProfileType } from "../../pages/Profile/ui/ProfileTypes";
 import {CapitalizeString} from '../../shared/Functions/FormatStrings'
 import {PREFERRED_FORMAT_TRANSLATION} from '../../shared/Consts/Translations'
+import './ProfileLeftColumn.scss'
 
 const profileStatistics: StatisticItem[] = [
     {

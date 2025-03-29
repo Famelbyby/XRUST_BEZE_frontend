@@ -5,39 +5,40 @@ import ProfileLeftColumn from '../../../widgets/ProfileLeftColumn/ProfileLeftCol
 import './Profile.scss'
 import { ProfileType } from "./ProfileTypes";
 import { GetProfile } from "../api/Profile";
-import User from "../../../entity/User/User";
+import { useSelector } from "react-redux";
+import { AppState } from "../../../app/AppStore";
 
 const Profile: React.FC = () => {
     const params = useParams();
     const navigateTo = useNavigate();
-    const [user, setUser] = useState<ProfileType | undefined>();
+    const [profile, setProfile] = useState<ProfileType | undefined>();
     const componentIsMounted = useRef(true);
-    const ownUserID: string = User.getUserID();
+    const {user} = useSelector((state: AppState) => state.profile);
 
     useEffect(() => {
         const userID: string | undefined = params.userID;
 
         if (userID === undefined) {
-            navigateTo(`/profile/${ownUserID}`);
-        }
-
-        function profileGot(profileData: ProfileType) {
-            if (componentIsMounted.current) {
-                setUser(profileData);
+            navigateTo(`/profile/${user?.id}`);
+        } else {
+            function profileGot(profileData: ProfileType | undefined) {
+                if (componentIsMounted.current) {
+                    setProfile(profileData);
+                }
             }
-        }
 
-        GetProfile(userID!, profileGot);
+            GetProfile(userID, profileGot);
+        }
 
         return () => {
             componentIsMounted.current = false;
         }
-    }, [params.userID, navigateTo, ownUserID])
+    }, [params.userID, navigateTo, user?.id])
 
     return (
         <div className="profile-page">
-            <ProfileLeftColumn profile={user}/>
-            <ProfileRightColumn profile={user} />
+            <ProfileLeftColumn profile={profile}/>
+            <ProfileRightColumn profile={profile} />
         </div>
     );
 };

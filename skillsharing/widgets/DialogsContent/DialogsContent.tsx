@@ -1,47 +1,35 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import Dialog from '../../entity/Dialog/ui/Dialog';
 import { DialogItem } from '../../entity/Dialog/ui/DialogTypes';
 import { useDispatch, useSelector } from 'react-redux';
-import { DialogsState } from '../../app/stores/DialogsStore';
-import { clearAll, setDialogs } from '../../pages/Dialogs/ui/slice/DialogsSlice';
+import { clearAll } from '../../app/slices/DialogsSlice';
 import { GetDialogs } from '../../pages/Dialogs/api/Dialogs';
+import { AppDispatch, AppState } from '../../app/AppStore';
 
 const DialogsContent: React.FC = () => {
-    const {userID, filteredDialogs} = useSelector((state: DialogsState) => state.dialogs);
-    const dispatch = useDispatch();
-    const isRefreshed = useRef(false);
-    const componentIsMounted = useRef(true);
+    const {filteredDialogs} = useSelector((state: AppState) => state.dialogs);
+    const {user} = useSelector((state: AppState) => state.profile);
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
-        function gotDialogs(dialogsData: DialogItem[]) {
-            if (componentIsMounted.current) {
-                dispatch(setDialogs(dialogsData));
-
-                isRefreshed.current = true;
-            }
-        }
-
-        GetDialogs(userID, gotDialogs);
+        dispatch(GetDialogs(user!.id));
 
         return () => {
-            componentIsMounted.current = false;
-            isRefreshed.current = false;
-
             dispatch(clearAll());
         }
-    }, [dispatch, userID]);
+    }, [dispatch, user]);
 
     return (
         <div className="dialogs">
-            {!isRefreshed.current && 
+            {filteredDialogs === undefined && 
                 [0, 1, 2, 3, 4].map((index) => {
                     return <Dialog dialog={undefined} key={index} />
                 })}
-            {filteredDialogs.length > 0 && 
+            {filteredDialogs !== undefined && filteredDialogs.length > 0 && 
                 filteredDialogs.map((dialog: DialogItem) => {
                     return <Dialog dialog={dialog} key={dialog.channel_id} />
                 })}
-            {filteredDialogs.length === 0 && isRefreshed.current && 
+            {filteredDialogs !== undefined && filteredDialogs.length === 0 && 
                 <div className="dialogs__no-chats">
                     Чатов нет
                 </div>

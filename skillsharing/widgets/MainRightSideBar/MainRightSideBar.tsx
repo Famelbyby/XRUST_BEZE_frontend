@@ -1,17 +1,18 @@
 import React from "react";
-import { ProfileType } from "../../pages/Profile/ui/ProfileTypes";
 import SkillsTags from "../../features/SkillsTags/SkillsTags";
+import { useDispatch, useSelector } from "react-redux";
+import { filterUsers } from "../../app/slices/MainSlice";
+import { AppState } from "../../app/AppStore";
+import './MainRightSideBar.scss'
 
-interface MainRightSideBarPropTypes {
-    user: ProfileType | undefined,
-    handleFilteringDialogs: (tags: string[]) => void,
-}
+const MainRightSideBar: React.FC = () => {
+    const {user} = useSelector((state: AppState) => state.profile);
+    const dispatch = useDispatch();
 
-const MainRightSideBar: React.FC<MainRightSideBarPropTypes> = ({user, handleFilteringDialogs}) => {
     return (
         <div className="main-right-sidebar">
             {user !== undefined &&
-                <SkillsTags handleFilteringSomething={handleFilteringDialogs}/>
+                <SkillsTags handleFilteringSomething={(tags: string[]) => dispatch(filterUsers(tags))}/>
             }
         </div>
     )

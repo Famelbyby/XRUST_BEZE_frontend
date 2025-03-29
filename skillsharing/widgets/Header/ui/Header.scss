@@ -8,10 +8,15 @@
     align-items: center;
     background-color: rgba(217, 217, 217, 0.4);
 
+    &_none-user {
+        justify-content: start;
+    }
+
     &-logo {
         color: #6229ff;
         font-weight: 400;
         font-size: 26px;
+        font-family: Syncopate-Bold, sans-serif;
     }
 
     &-searchbar {

@@ -1,6 +1,7 @@
 import React from "react";
 import ProfileHeader from './ProfileHeader/ProfileHeader'
 import { ProfileType } from "../../pages/Profile/ui/ProfileTypes";
+import './ProfileRightColumn.scss'
 
 interface ProfileRightColumnPropTypes {
     profile: ProfileType | undefined,
@@ -15,7 +16,7 @@ const hrefs: string[] = [
 const ProfileRightColumn: React.FC<ProfileRightColumnPropTypes> = ({profile}) => {
     return (
         <div className="profile-right-column">
-            <ProfileHeader user={profile}/>
+            <ProfileHeader profile={profile}/>
             <div className="profile-content">
                 <div className="profile-description">
                     О себе

@@ -1,32 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { ISendingMessage, IUpdatingMessage } from "../../entity/Message/MessageTypes";
-import MainWebSocket from '../../shared/WebSocket/WebSocket';
 import { useDispatch, useSelector } from "react-redux";
-import { ChatState } from "../../app/stores/ChatStore";
-import { stopEditingMessage } from "../../pages/Chat/ui/slice/ChatSlice";
-import User from "../../entity/User/User";
+import { stopEditingMessage } from "../../app/slices/ChatSlice";
+import { AppState } from "../../app/AppStore";
+import { sendMessage } from "../../app/slices/WebSocketSlice";
+import {NormalizeTextarea} from '../../shared/Functions/FormatComponents'
+import './ChatFooter.scss'
 
 const TEXTAREA_INITIAL_HEIGHT: number = 23;
 const MESSAGE_MAX_LENGTH: number = 800;
 
-interface ChatFooterPropTypes {
-    peerID: string,
+function handleEnter(event: KeyboardEvent) {
+    if (event.key !== 'Enter') {
+        return;
+    }
+
+    const sendMessageButton: HTMLButtonElement | null = document.querySelector('#send-message');
+
+    if (sendMessageButton !== null) {
+        sendMessageButton.click();
+    }
 }
 
-function normalizeTextarea() {
-    const textareaInput: HTMLElement | null = document.getElementById('textarea');
-
-    if (textareaInput !== null) {
-        textareaInput.style.height = `${TEXTAREA_INITIAL_HEIGHT}px`;
-        textareaInput.style.height = textareaInput.scrollHeight + "px";
-    }
+interface ChatFooterPropTypes {
+    peerID: string | undefined,
 }
 
 const ChatFooter: React.FC<ChatFooterPropTypes> = ({peerID}) => {
     const [inputText, setInputText] = useState('');
-    const {editingMessage, channelID} = useSelector((state: ChatState) => state.chatMessages);
+    const {editingMessage, channelID} = useSelector((state: AppState) => state.chatMessages);
+    const {user} = useSelector((state: AppState) => state.profile);
     const dispatch = useDispatch();
-    const userId: string = User.getUserID();
+    const userId: string = user!.id;
+    
+    /**
+     * Adds eventListener on 'Enter' to send messages or confirm editing
+     */
+    useEffect(() => {
+        window.addEventListener('keypress', handleEnter);
+
+        return () => {
+            window.removeEventListener('keypress', handleEnter);
+        }
+    }, []);
 
     useEffect(() => {
         if (editingMessage !== null) {
@@ -45,13 +61,13 @@ const ChatFooter: React.FC<ChatFooterPropTypes> = ({peerID}) => {
             const messageJSON: ISendingMessage = {
                 "event": "EventText",
                 "user_id": userId,
-                "peer_id": peerID,
+                "peer_id": peerID!,
                 "channel_id": channelID,
                 "payload": sendingText.slice(0, MESSAGE_MAX_LENGTH),
                 "type": "send_message",
             }
     
-            MainWebSocket.sendMessage(JSON.stringify(messageJSON));
+            dispatch(sendMessage(JSON.stringify(messageJSON)));
 
             sendingText = sendingText.slice(MESSAGE_MAX_LENGTH);
         }
@@ -59,16 +75,16 @@ const ChatFooter: React.FC<ChatFooterPropTypes> = ({peerID}) => {
         const messageJSON: ISendingMessage = {
             "event": "EventText",
             "user_id": userId,
-            "peer_id": peerID,
+            "peer_id": peerID!,
             "channel_id": channelID,
             "payload": sendingText,
             "type": "send_message",
         }
 
-        MainWebSocket.sendMessage(JSON.stringify(messageJSON));
+        dispatch(sendMessage(JSON.stringify(messageJSON)));
 
         setInputText('');
-        normalizeTextarea();
+        NormalizeTextarea('textarea', TEXTAREA_INITIAL_HEIGHT);
     }
 
     function handleUpdatingMessage() {
@@ -80,17 +96,17 @@ const ChatFooter: React.FC<ChatFooterPropTypes> = ({peerID}) => {
         const messageJSON: IUpdatingMessage = {
             "event": "EventText",
             "user_id": userId,
-            "peer_id": peerID,
+            "peer_id": peerID!,
             "channel_id": channelID,
             "payload": inputText,
             "type": "update_message",
             "message_id": editingMessage!.message_id,
         }
 
-        MainWebSocket.sendMessage(JSON.stringify(messageJSON));
+        dispatch(sendMessage(JSON.stringify(messageJSON)));
 
         setInputText('');
-        normalizeTextarea();
+        NormalizeTextarea('textarea', TEXTAREA_INITIAL_HEIGHT);
         dispatch(stopEditingMessage());
     }
 
@@ -103,13 +119,13 @@ const ChatFooter: React.FC<ChatFooterPropTypes> = ({peerID}) => {
             return;
         }
 
-        normalizeTextarea();
+        NormalizeTextarea('textarea', TEXTAREA_INITIAL_HEIGHT);
 
         setInputText(textAreaInput.value);
     }
 
     useEffect(() => {
-        normalizeTextarea();
+        NormalizeTextarea('textarea', TEXTAREA_INITIAL_HEIGHT);
     });
 
     return (

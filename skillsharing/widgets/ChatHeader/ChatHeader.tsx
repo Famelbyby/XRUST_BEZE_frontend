@@ -1,60 +1,50 @@
-import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
 import { Link } from "react-router";
-import { GetProfile } from "../../pages/Profile/api/Profile";
 import { useDispatch, useSelector } from "react-redux";
-import { removeSelectedMessages, setPeerID, editMessage, clearAll } from "../../pages/Chat/ui/slice/ChatSlice";
-import { ChatState } from "../../app/stores/ChatStore";
-import MainWebSocket from './../../shared/WebSocket/WebSocket'
+import { removeSelectedMessages, editMessage } from "../../app/slices/ChatSlice";
 import { IDeletingMessage, IMessage } from "../../entity/Message/MessageTypes";
-import { ProfileType } from "../../pages/Profile/ui/ProfileTypes";
 import { FormatRelativeTimeInPastInDays } from "../../shared/Functions/FormatDate";
 import { Skill } from "../ProfileLeftColumn/ProfileLeftColumnTypes";
-import User from "../../entity/User/User";
+import { AppDispatch, AppState } from "../../app/AppStore";
+import { sendMessage } from "../../app/slices/WebSocketSlice";
+import { GetCompanion } from "../../pages/Chat/api/Chat";
+import './ChatHeader.scss'
 
 interface ChatHeaderPropTypes {
-    peerID: string,
+    peerID: string | undefined,
 }
 
 const ChatHeader: React.FC<ChatHeaderPropTypes> = ({peerID}) => {
-    const [companion, setCompanion] = useState<ProfileType>();
-    const componentIsMounted = useRef(true);
-
-    const dispatch = useDispatch();
-    const {selectedMessages, channelID} = useSelector((state: ChatState) => state.chatMessages);
-    const selectedMessagesCount = selectedMessages.length;
+    const dispatch = useDispatch<AppDispatch>();
+    const {user} = useSelector((state: AppState) => state.profile);
+    const {selectedMessages, channelID, companion} = useSelector((state: AppState) => state.chatMessages);
+    const selectedMessagesCount = (selectedMessages || []).length;
 
     function handleDeletingMessage() {
+        if (selectedMessages === undefined) {
+            return;
+        }
+
         selectedMessages.forEach((selectedMessage: IMessage) => {
             const messageJSON: IDeletingMessage = {
                 "event": "EventText",
-                "user_id": User.getUserID(),
-                "peer_id": peerID,
+                "user_id": user!.id,
+                "peer_id": peerID!,
                 "channel_id": channelID,
                 "type": "delete_message",
                 "message_id": selectedMessage.message_id,
             }
     
-            MainWebSocket.sendMessage(JSON.stringify(messageJSON));
+            dispatch(sendMessage(JSON.stringify(messageJSON)));
         })
         
         dispatch(removeSelectedMessages());
     }
 
     useEffect(() => {
-        function companionGot(companionData: ProfileType) {
-            if (componentIsMounted.current) {
-                setCompanion(companionData);
-            }
+        if (peerID !== undefined) {
+            dispatch(GetCompanion(peerID));
         }
-
-        GetProfile(peerID, companionGot);
-        dispatch(setPeerID(peerID));
-
-        return () => {
-            componentIsMounted.current = false;
-            dispatch(clearAll());
-        };
     }, [dispatch, peerID]);
 
     let companionTags: string = '';
@@ -118,7 +108,7 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({peerID}) => {
                         {selectedMessagesCount}
                     </div>
                     <div className="chat-header-controls">
-                        {selectedMessagesCount === 1 &&
+                        {selectedMessages !== undefined && selectedMessagesCount === 1 &&
                             <>
                                 <img className="chat-header-controls__img chat-header-controls__edit" src="/shared/pen.png" alt="Изменить сообщение" onClick={() => {
                                     dispatch(editMessage());

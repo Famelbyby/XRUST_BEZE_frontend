@@ -1,9 +1,9 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import {ProfileType} from '../../Profile/ui/ProfileTypes'
-import User from '../../../entity/User/User'
 import axios from 'axios';
 
 const userMock: ProfileType[] = [{
-    id: User.getUserID(),
+    id: "67e3b36b9a36154096b4bbea",
     username: 'Shkaf Unichtojitel',
     avatar_url: '/Profile/avatar.png',
     bio: '[!i for i in [‘Красивый’, ‘Умный’, ‘Обаятельный’, ‘Спортсмен’]]',
@@ -58,19 +58,21 @@ const userMock: ProfileType[] = [{
     preferred_format: "voice",
 }];
 
+export const GetMatchedUsers = createAsyncThunk(
+    'main/getMatchedUsers',
+    async (userID: string) => {
+        const response = await (new Promise((resolve) => {
+            setTimeout(() => {
+                resolve([...userMock,...userMock,...userMock,...userMock, ...userMock, ...userMock, ...userMock, ...userMock, ...userMock]);
+            }, 2000)
+        }));
 
-export async function GetMatchedUsers(userID: string, callback: (profilesData: ProfileType[]) => void) {
-    // (new Promise((resolve) => {
-    //     setTimeout(() => {
-    //         resolve([...userMock,...userMock,...userMock,...userMock, ...userMock, ...userMock, ...userMock, ...userMock, ...userMock]);
-    //     }, 2000)
-    // })).then((profileData) => {
-    //     callback(profileData as ProfileType[]);
-    // });
-
-    const {status, data} = await axios.get(`http://localhost:3001/api/v1/users/match/${userID}`);
-
-    if (status === 200) {
-        callback(data as ProfileType[]);
+        return response;
+    
+        // const {status, data} = await axios.get(`http://localhost:3001/api/v1/users/match/${userID}`);
+    
+        // if (status === 200) {
+        //     callback(data as ProfileType[]);
+        // }
     }
-}
+);

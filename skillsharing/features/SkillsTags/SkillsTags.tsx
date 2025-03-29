@@ -1,31 +1,21 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import './SkillsTags.scss';
 import { Skill } from "../../widgets/ProfileLeftColumn/ProfileLeftColumnTypes";
-import { ProfileType } from "../../pages/Profile/ui/ProfileTypes";
-import { GetProfile } from "../../pages/Profile/api/Profile";
 import {SkillsTagsPropTypes} from './SkillsTagsTypes';
-import User from "../../entity/User/User";
+import { useSelector } from "react-redux";
+import { AppState } from "../../app/AppStore";
 
 const SkillsTags: React.FC<SkillsTagsPropTypes> = ({handleFilteringSomething}) => {
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [tags, setTags] = useState<string[]>([]);
-    const componentIsMounted = useRef(true);
+    const {user} = useSelector((state: AppState) => state.profile);
 
     useEffect(() => {
-
-        function gotProfile(profileData: ProfileType) {
-            if (componentIsMounted.current) {
-                setTags(profileData.skills_to_learn.map((skill: Skill) => skill.name));
-                setSelectedTags([]);
-            }
+        if (user !== undefined) {
+            setTags(user.skills_to_learn.map((skill: Skill) => skill.name));
+            setSelectedTags([]);
         }
-
-        GetProfile(User.getUserID(), gotProfile);
-
-        return () => {
-            componentIsMounted.current = false;
-        }
-    }, []);
+    }, [user]);
 
     return (
         <div className="skills-tags">
@@ -50,7 +40,7 @@ const SkillsTags: React.FC<SkillsTagsPropTypes> = ({handleFilteringSomething}) =
                                 newSelectedTags = [...selectedTags.slice(0, tagIndex), ...selectedTags.slice(tagIndex + 1)];
                             }
 
-                            handleFilteringSomething(newSelectedTags);
+                            handleFilteringSomething(newSelectedTags, user!);
                             setSelectedTags(newSelectedTags);
                         }}>
                             {tag}

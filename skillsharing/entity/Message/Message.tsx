@@ -1,10 +1,10 @@
 import React from 'react'
 import { IMessage } from './MessageTypes';
 import './Message.scss'
-import { useDispatch } from 'react-redux';
-import {toggleSelectedMessage} from '../../pages/Chat/ui/slice/ChatSlice'
+import { useDispatch, useSelector } from 'react-redux';
+import {toggleSelectedMessage} from '../../app/slices/ChatSlice'
 import { FormatHoursMinutes } from '../../shared/Functions/FormatDate';
-import User from '../User/User';
+import { AppState } from '../../app/AppStore';
 
 interface PropType {
     message: IMessage,
@@ -12,7 +12,8 @@ interface PropType {
 }
 
 const Message: React.FC<PropType> = ({message, isSelected}) => {
-    const user_id: IMessage["user_id"] = User.getUserID();
+    const {user} = useSelector((state: AppState) => state.profile);
+    const user_id: IMessage["user_id"] = user!.id;
     const messageTime: string = FormatHoursMinutes(new Date());
     const isOwnMessage = user_id === message.user_id;
     const dispatch = useDispatch();

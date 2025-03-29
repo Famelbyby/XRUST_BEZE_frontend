@@ -1,12 +1,11 @@
 import React from 'react';
-import { ProfileType } from '../../pages/Profile/ui/ProfileTypes';
 import '../../pages/Main/ui/Main.scss'
+import { useSelector } from 'react-redux';
+import { AppState } from '../../app/AppStore';
 
-interface MainHeaderPropTypes {
-    user: ProfileType | undefined,
-}
+const MainHeader: React.FC = () => {
+    const {user} = useSelector((state: AppState) => state.profile);
 
-const MainHeader: React.FC<MainHeaderPropTypes> = ({user}) => {
     return (
         <div className='main-header'>
             <div className='main-header-hello'>

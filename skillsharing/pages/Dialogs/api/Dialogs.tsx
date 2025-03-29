@@ -1,6 +1,7 @@
 import axios from "axios";
 import { DialogItem } from "../../../entity/Dialog/ui/DialogTypes";
-import { BACK_URL } from "../../../shared/Consts/NetworkConsts";
+import { BACK_URL } from "../../../shared/Consts/URLS";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const CHAT_URL = '/chat';
 
@@ -23,7 +24,13 @@ const dialogsMock: DialogItem[] = [
                         "description": ""
                     }
                 ],
-                "skills_to_share": [],
+                "skills_to_share": [
+                    {
+                        "name": "sosal",
+                        "level": "advanced",
+                        "description": ""
+                    },
+                ],
                 "bio": "",
                 "avatar_url": "",
                 "created_at": "2025-03-26T07:57:31.91Z",
@@ -42,7 +49,13 @@ const dialogsMock: DialogItem[] = [
                         "description": ""
                     }
                 ],
-                "skills_to_share": [],
+                "skills_to_share": [
+                    {
+                        "name": "sosal",
+                        "level": "advanced",
+                        "description": ""
+                    },
+                ],
                 "bio": "",
                 "avatar_url": "",
                 "created_at": "2025-03-26T07:57:58.253Z",
@@ -51,26 +64,37 @@ const dialogsMock: DialogItem[] = [
                 "preferred_format": "text"
             }
         ],
-        "last_message": null,
+        "last_message": {
+            channel_id: "67e3b3b42214705bdbedb876",
+            message_id: "32",
+            user_id: "67e3b36b9a36154096b4bbea",
+            payload: "ARIVIDERCHI",
+            peer_id: "67e3b3869a36154096b4bbeb",
+            created_at: 213232,
+            updated_at: 3232322,
+        },
         "created": 1742975924,
         "updated": 1742975924
     }
 ];
 
-export async function GetDialogs(userID: string, callback: (dialogsData: DialogItem[]) => void) {
-    // (new Promise((resolve) => {
-    //     setTimeout(() => {
-    //         resolve(dialogsMock);
-    //     }, 2000);
-    // })).then((dialogsData) => {
-    //     callback(dialogsData as DialogItem[]);
-    // })
+export const GetDialogs = createAsyncThunk(
+    'dialogs/getDialogs',
+    async (userID: string) => {
+        const response = await (new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(dialogsMock);
+            }, 2000);
+        }));
 
-    const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/channels?user_id=` + userID);
+        return response;
 
-    console.log(status, data);
+        // const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/channels?user_id=` + userID);
 
-    if (status === 200) {
-        callback(data?.channels as DialogItem[]);
+        // console.log(status, data);
+
+        // if (status === 200) {
+        //     callback(data?.channels as DialogItem[]);
+        // }
     }
-}
+);
