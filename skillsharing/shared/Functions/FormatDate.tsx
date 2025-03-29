@@ -50,6 +50,11 @@ function DaysEndingInRussian(days: number): string {
     }
 }
 
+/**
+ * Formats date in `hours:minutes`
+ * @param date - Given date
+ * @returns Date in format `hours:minutes`
+ */
 export function FormatHoursMinutes(date: Date): string {
     const hours: string = String(date.getHours());
     const minutes: string = String(date.getMinutes());
@@ -57,6 +62,11 @@ export function FormatHoursMinutes(date: Date): string {
     return hours.padStart(2, "0") + ":" + minutes.padStart(2, "0");
 }
 
+/**
+ * Formats date in past related to current date
+ * @param date - Given date
+ * @returns Date in format `minutes|hours|days ago`
+ */
 export function FormatRelativeTimeInPastInDays(date: Date): string {
     const currentDate: Date = new Date();
     const currTimestamp: number = currentDate.getTime();
