@@ -1,0 +1,21 @@
+.log-in {
+    &-page {
+       display: flex;
+        flex-direction: column;
+        gap: 15px;
+        align-items: center; 
+    }
+
+    &__button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 8px 50px;
+        background-color: #ffffff;
+        color: black;
+        font-family: 'Inter';
+        margin-top: 20px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,127 @@
+@mixin box-spinner{
+    border-radius: inherit;
+    background-color: #ffffff47;
+    animation-name: avatar-spinner;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.chat-header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 20px 5px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #000f3a1f;
+    min-height: 60px;
+    align-items: center;
+
+    &-user {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+
+        &__name {
+            font-size: 20px;
+
+            &-mock {
+                width: 100px;
+                height: 20px;
+                border-radius: 5px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgb(128 128 128 / 34%);
+            }
+
+            &-spinner {
+                @include box-spinner;
+            }
+        }
+
+        &__online {
+            color: rgba(0, 0, 0, 0.6);
+
+            &-mock {
+                margin-top: 10px;
+                width: 50px;
+                height: 10px;
+                border-radius: 5px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgb(128 128 128 / 34%);
+            }
+        }
+
+        &-info {
+            font-family: 'Inria-sans';
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            gap: 8px;
+            height: 100%;
+        }
+
+        &__avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+
+            &-mock {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgb(128 128 128 / 34%);
+            }
+        }
+    }
+
+    &-spinner {
+        @include box-spinner;
+    }
+
+    &-chat-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        gap: 7px;
+        align-items: end;
+
+        &__tags {
+            font-family: 'Inter';
+            color: rgba(0, 0, 0, 0.4);
+        }
+
+        &__rating {
+            color: rgba(0, 0, 0, 0.6);
+        }
+    }
+
+    &-remove-selection {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        color: #1c2fd1c2;
+        font-size: 25px;
+
+        &__img {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+    }
+
+    &-controls {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        &__img {
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+        }
+    }
+}

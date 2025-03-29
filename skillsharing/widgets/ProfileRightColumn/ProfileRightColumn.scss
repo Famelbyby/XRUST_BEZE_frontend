@@ -1,0 +1,104 @@
+@mixin box-spinner{
+    border-radius: inherit;
+    background-color: #ffffff47;
+    animation-name: avatar-spinner;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.profile {
+    &-right-column {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding-right: 50px;
+    }
+
+    &-content {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    &-description {
+        font-family: 'Inter';
+        font-size: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: start;
+
+        &__field {
+            box-sizing: border-box;
+            display: flex;
+            padding: 17px;
+            color: rgba(0, 0, 0, 0.8);
+            font-size: 16px;
+            background-color: rgba(217, 217, 217, 0.3);
+            border-radius: 10px;
+            max-width: 80%;
+            min-width: 80%;
+            min-height: 100px;
+
+            &-mock {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgb(128 128 128 / 34%);
+            }
+
+            &-spinner {
+                @include box-spinner;
+            }
+        }
+    }
+
+    &-hrefs {
+        font-family: "Inter";
+        font-size: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: start;
+
+        &-examples {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+
+            &__href {
+                color: #0000ffb8;
+                text-decoration: underline;
+                font-size: 17px;
+                padding: 5px 12px;
+            }
+        }
+
+        &__no-hrefs {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #00000073;
+        }
+    }
+
+    &-feedbacks {
+        font-family: "Inter";
+        font-size: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: start;
+
+        &__no-feedbacks {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            color: rgba(0, 0, 0, 0.7);
+            font-size: 17px;
+        }
+    }
+}

@@ -1,0 +1,39 @@
+.auth {
+    &-page {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &-window {
+        display: flex;
+        flex-direction: column;
+        padding: 30px;
+        background: linear-gradient(44deg, #004dff8a, #00ecff6b);
+        border-radius: 20px;
+        gap: 20px;
+        font-size: 19px;
+    }
+
+    &-header {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        font-family: 'Inter';
+        align-items: center;
+        margin: 0 20px;
+    }
+
+    &-log-in, &-sign-up {
+        display: flex;
+        padding: 6px 15px;
+        border-radius: 10px;
+        color: white;
+
+        &_selected {
+            background-color: white;
+            color: black;
+        }
+    }
+}
