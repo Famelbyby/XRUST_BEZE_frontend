@@ -55,10 +55,9 @@ const userMock: ProfileType = {
 export const TryAuth = createAsyncThunk(
     'auth/tryAuth',
     async ({username, password}: AuthRequest) => {
-        console.log('op');
+
         const response = await (new Promise((resolve) => {
             setTimeout(() => {
-                console.log('aga');
                 resolve(userMock);
             }, 2000)
         }));

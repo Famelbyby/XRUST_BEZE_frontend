@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import './FoundUser.scss'
 import { Skill } from '../../widgets/ProfileLeftColumn/ProfileLeftColumnTypes';
 import { FormatRelativeTimeInPastInDays } from '../../shared/Functions/FormatDate';
+import { AVATAR_URL } from '../../shared/Consts/URLS';
 
 interface FoundUserPropTypes {
     user: ProfileType,
@@ -20,7 +21,7 @@ const FoundUser: React.FC<FoundUserPropTypes> = ({user}) => {
         <Link to={`/profile/${user.id}`}>
             <div className='found-user'>
                 <div className="found-user-avatar">
-                    <img className="found-user-avatar__img" src='/Dialogs/mate.png' alt="" />
+                    <img className="found-user-avatar__img" src={AVATAR_URL + user.avatar} alt="" />
                 </div>
                 <div className='found-user-info'>
                     <div className="found-user-header">
