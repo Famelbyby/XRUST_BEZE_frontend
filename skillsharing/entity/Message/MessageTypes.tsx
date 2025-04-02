@@ -29,6 +29,7 @@ export interface IUpdatingMessage {
     event?: string,
     message_id: string,
     payload: string,
+    created_at: number,
 }
 
 export interface ISendingMessage {

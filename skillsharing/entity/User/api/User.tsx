@@ -1,10 +1,13 @@
-import {ProfileType} from '../../../pages/Profile/ui/ProfileTypes'
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import {ProfileType} from '../../../pages/Profile/ui/ProfileTypes'
+import axios from 'axios';
+import { BACK_URL } from '../../../shared/Consts/URLS';
+import { CODE_OK } from '../../../shared/Consts/Codes';
 
 const notAuthedUserMock: ProfileType | undefined = undefined;
 
 const userMock: ProfileType = {
-    id: "67e3b36b9a36154096b4bbea",
+    id: "67ed4e0a66ab0aab711f8476",
     username: 'Shkaf Unichtojitel',
     avatar_url: '/Profile/avatar.png',
     bio: '[!i for i in [‘Красивый’, ‘Умный’, ‘Обаятельный’, ‘Спортсмен’]]',
@@ -49,23 +52,29 @@ const userMock: ProfileType = {
     preferred_format: "voice",
 }
 
-export const GetUser = createAsyncThunk(
-  'users/fetchUser',
-  async(userID: string) => {
-    console.log('op');
-    const response = await (new Promise((resolve) => {
-        setTimeout(() => {
-            console.log('aga');
-            resolve(userMock);
-        }, 2000)
-    }));
+export const GetUserByCookie = createAsyncThunk(
+    'users/getUserByCookie',
+    async () => {
+        const response = await (new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(userMock);
+            }, 20)
+        }));
 
-    return response;
+        return {user: response as ProfileType, status: CODE_OK};
 
-    // const {status, data} = await axios.get(`http://localhost:3001/api/v1/users/${userID}`);
+        // const {status, data} = await axios.get(BACK_URL + `/auth`, 
+        //     {
+        //         withCredentials: true,
+        //     }
+        // );
 
-    // if (status === 200) {
-    //     callback(data as ProfileType);
-    // }
-  }
+        // switch(status) {
+        //     case CODE_OK:
+        //         return {user: data as ProfileType, status};
+        //     case 404:
+        //     default:
+        //         return {user: undefined, status};
+        // }
+    }
 );

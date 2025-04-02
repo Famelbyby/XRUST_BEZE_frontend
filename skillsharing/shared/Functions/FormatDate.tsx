@@ -1,6 +1,4 @@
-const MINUTE_IN_MILLISECONDS: number = 60 * 1000;
-const HOUR_IN_MILLISECONDS: number = 60 * MINUTE_IN_MILLISECONDS;
-const DAY_IN_MILLISECONDS: number = 24 * HOUR_IN_MILLISECONDS;
+import { MINUTE_IN_MILLISECONDS, HOUR_IN_MILLISECONDS, DAY_IN_MILLISECONDS, RUSSIAN_MONTHS } from "../Consts/ValidatorsConts";
 
 /**
  * Returns ending of Russian words related to minutes
@@ -88,4 +86,18 @@ export function FormatRelativeTimeInPastInDays(date: Date): string {
         default:
             return `${daysPassed} ${DaysEndingInRussian(daysPassed)} назад`;
     }
+}
+
+/**
+ * Formats date in 'day month year'
+ * @param date - Given date
+ * @returns Date in format `day month (if not this year => year)`
+ */
+export function FormatDayMonthYear(date: Date): string {
+    const day: string = String(date.getDate());
+    const month: number = date.getMonth();
+    const year: number = date.getFullYear();
+    const currentYear: number = (new Date()).getFullYear();
+
+    return day.padStart(2, "0") + " " + RUSSIAN_MONTHS[month] + (currentYear === year ? "" : ` ${year}`);
 }

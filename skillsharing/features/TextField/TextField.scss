@@ -1,0 +1,36 @@
+.text-field {
+    font-family: 'Inter';
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    color: white;
+    border: 2px solid rgba(0, 0, 0, 0);
+
+    &-content{
+        &__input {
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+            font-family: 'Inter';
+
+            &:focus-visible {
+                outline: none;
+            }
+
+            &_errored {
+                border: 2px solid red;
+            }
+        }
+    }
+
+    &__error {
+        font-size: 12px;
+        color: #cf0000;
+        font-family: 'Inter';
+        max-width: 200px;
+    }
+}

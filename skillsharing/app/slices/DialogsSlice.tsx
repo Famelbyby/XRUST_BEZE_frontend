@@ -4,6 +4,8 @@ import {DialogItem} from '../../entity/Dialog/ui/DialogTypes'
 import { ProfileType } from '../../pages/Profile/ui/ProfileTypes'
 import { Skill } from '../../widgets/ProfileLeftColumn/ProfileLeftColumnTypes'
 import { GetDialogs } from '../../pages/Dialogs/api/Dialogs'
+import { DialogsResponse } from '../../shared/Consts/Interfaces'
+import { CODE_OK } from '../../shared/Consts/Codes'
 
 export interface DialogsState {
   dialogs: DialogItem[] | undefined,
@@ -57,7 +59,17 @@ export const dialogsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(GetDialogs.fulfilled, (state: DialogsState, action) => {
-      const newDialogs: DialogItem[] = action.payload as DialogItem[];
+      const data = action.payload as DialogsResponse;
+
+      if (data.status !== CODE_OK) {
+        return;
+      }
+
+      if (data.dialogs === null) {
+        data.dialogs = [];
+      }
+
+      const newDialogs: DialogItem[] = data.dialogs;
 
       state.dialogs = newDialogs.filter((dialog: DialogItem) => dialog.last_message !== null);
       state.filteredDialogs = state.dialogs;

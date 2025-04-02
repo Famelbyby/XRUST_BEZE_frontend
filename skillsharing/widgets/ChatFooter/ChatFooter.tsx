@@ -3,9 +3,9 @@ import { ISendingMessage, IUpdatingMessage } from "../../entity/Message/MessageT
 import { useDispatch, useSelector } from "react-redux";
 import { stopEditingMessage } from "../../app/slices/ChatSlice";
 import { AppState } from "../../app/AppStore";
-import { sendMessage } from "../../app/slices/WebSocketSlice";
 import {NormalizeTextarea} from '../../shared/Functions/FormatComponents'
 import './ChatFooter.scss'
+import MainWebSocket from '../../shared/WebSocket'
 
 const TEXTAREA_INITIAL_HEIGHT: number = 23;
 const MESSAGE_MAX_LENGTH: number = 800;
@@ -67,7 +67,7 @@ const ChatFooter: React.FC<ChatFooterPropTypes> = ({peerID}) => {
                 "type": "send_message",
             }
     
-            dispatch(sendMessage(JSON.stringify(messageJSON)));
+            MainWebSocket.sendMessage(JSON.stringify(messageJSON));
 
             sendingText = sendingText.slice(MESSAGE_MAX_LENGTH);
         }
@@ -81,7 +81,7 @@ const ChatFooter: React.FC<ChatFooterPropTypes> = ({peerID}) => {
             "type": "send_message",
         }
 
-        dispatch(sendMessage(JSON.stringify(messageJSON)));
+        MainWebSocket.sendMessage(JSON.stringify(messageJSON));
 
         setInputText('');
         NormalizeTextarea('textarea', TEXTAREA_INITIAL_HEIGHT);
@@ -100,10 +100,11 @@ const ChatFooter: React.FC<ChatFooterPropTypes> = ({peerID}) => {
             "channel_id": channelID,
             "payload": inputText,
             "type": "update_message",
+            "created_at": editingMessage!.created_at,
             "message_id": editingMessage!.message_id,
         }
 
-        dispatch(sendMessage(JSON.stringify(messageJSON)));
+        MainWebSocket.sendMessage(JSON.stringify(messageJSON));
 
         setInputText('');
         NormalizeTextarea('textarea', TEXTAREA_INITIAL_HEIGHT);
@@ -142,6 +143,9 @@ const ChatFooter: React.FC<ChatFooterPropTypes> = ({peerID}) => {
                 {editingMessage !== null &&
                     <img id="update-message" className='chat-footer-controls__update-message' src='/Chat/check.png' alt='update-message' onClick={handleUpdatingMessage}/>
                 }
+            </div>
+            <div className="chat-footer-scrolldown">
+                <img className="chat-footer-scrolldown__button" src="/Chat/down-arrow.png" alt="Scroll to bottom" />
             </div>
         </div>
     );

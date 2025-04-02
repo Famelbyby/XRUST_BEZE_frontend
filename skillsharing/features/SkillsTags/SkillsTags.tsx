@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import './SkillsTags.scss';
-import { Skill } from "../../widgets/ProfileLeftColumn/ProfileLeftColumnTypes";
 import {SkillsTagsPropTypes} from './SkillsTagsTypes';
 import { useSelector } from "react-redux";
 import { AppState } from "../../app/AppStore";
+import { Skill } from "../../shared/Consts/Interfaces";
 
 const SkillsTags: React.FC<SkillsTagsPropTypes> = ({handleFilteringSomething}) => {
     const [selectedTags, setSelectedTags] = useState<string[]>([]);

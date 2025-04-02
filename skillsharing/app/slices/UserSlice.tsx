@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { ProfileType } from '../../pages/Profile/ui/ProfileTypes'
-import { GetUser } from '../../entity/User/api/User';
+import { GetUserByCookie } from '../../entity/User/api/User';
+import { TryAuth, TryRegister } from '../../pages/Auth/api/Auth';
+import {CODE_OK, CODE_CREATED, CODE_FORBIDDEN, CODE_NOT_AUTHED} from '../../shared/Consts/Codes';
+import { UserResponse } from '../../shared/Consts/Interfaces';
+import { GetProfile } from '../../pages/Profile/api/Profile';
 
 export interface UserState {
   user: ProfileType | undefined;
@@ -22,8 +26,42 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(GetUser.fulfilled, (state: UserState, action) => {
-      state.user = action.payload as ProfileType | undefined;
+    builder.addCase(GetUserByCookie.fulfilled, (state: UserState, action) => {
+      const data = action.payload as UserResponse;
+
+      if (data.status !== CODE_OK && data.status !== CODE_FORBIDDEN && data.status !== CODE_NOT_AUTHED) {
+        return;
+      }
+
+      state.isFetched = true;
+      state.user = data.user;
+    }).addCase(GetProfile.fulfilled, (state: UserState, action) => {
+      const data = action.payload as UserResponse;
+
+      if (data.status !== CODE_OK) {
+        return;
+      }
+
+      const profile = data.user;
+
+      if (profile !== undefined && state.user && profile.id === state.user.id) {
+        state.user = profile;
+      }
+    }).addCase(TryAuth.fulfilled, (state: UserState, action) => {
+      const data = action.payload as UserResponse;
+      
+      if (data.status === CODE_OK) {
+        state.user = data.user;
+      }
+      
+      state.isFetched = true;
+    }).addCase(TryRegister.fulfilled, (state: UserState, action) => {
+      const data = action.payload as UserResponse;
+
+      if (data.status === CODE_CREATED) {
+        state.user = data.user;
+      }
+      
       state.isFetched = true;
     });
   },

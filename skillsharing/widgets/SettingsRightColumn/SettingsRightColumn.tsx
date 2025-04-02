@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import {ProfileType} from '../../pages/Profile/ui/ProfileTypes'
+import './SettingsRightColumn.scss'
+import { useDispatch, useSelector } from "react-redux";
+import { AppState } from "../../app/AppStore";
+import { setBio, setUsername } from "../../app/slices/SettingsSlice";
 
 const BIO_MAX_LENGTH = 500;
 const USERNAME_MIN_LENGTH = 3;
@@ -10,28 +13,21 @@ const hrefsMock: string[] = [
     "https://twitch.com",
 ];
 
-interface SettingsRightColumnPropTypes {
-    profile: ProfileType | undefined,
-    setProfile: React.Dispatch<React.SetStateAction<ProfileType | undefined>>,
-}
-
-const SettingsRightColumn: React.FC<SettingsRightColumnPropTypes> = ({profile, setProfile}) => {
+const SettingsRightColumn: React.FC = () => {
     const [hrefs, setHrefs] = useState(hrefsMock);
+    const {user} = useSelector((state: AppState) => state.settings);
+    const dispatch = useDispatch();
 
     function handleChangingUsername(event: React.ChangeEvent<HTMLInputElement>) {
         event.preventDefault();
 
-        if (profile !== undefined) {
-            setProfile({...profile, username: event.target.value});
-        }
+        dispatch(setUsername(event.target.value));
     }
 
     function handleChangingTextarea(event: React.ChangeEvent<HTMLTextAreaElement>) {
         event.preventDefault();
         
-        if (profile !== undefined) {
-            setProfile({...profile, bio: event.target.value})
-        }
+        dispatch(setBio(event.target.value));
     }
 
     function handleRemovingHref(hrefForDeleting: string) {
@@ -45,15 +41,15 @@ const SettingsRightColumn: React.FC<SettingsRightColumnPropTypes> = ({profile, s
             <div className="settings-username">
                 Имя
                 <div className="settings-username-field">
-                    <input minLength={USERNAME_MIN_LENGTH} maxLength={USERNAME_MAX_LENGTH} className="settings-username__input" type="text" placeholder="Ваше имя" value={profile === undefined ? '' : profile.username} onChange={handleChangingUsername} />
-                    {profile === undefined && 
+                    <input minLength={USERNAME_MIN_LENGTH} maxLength={USERNAME_MAX_LENGTH} className="settings-username__input" type="text" placeholder="Ваше имя" value={user === undefined ? '' : user.username} onChange={handleChangingUsername} />
+                    {user === undefined && 
                         <>
                             0/{USERNAME_MAX_LENGTH}
                         </>
                     }
-                    {profile !== undefined && 
+                    {user !== undefined && 
                         <>
-                            {profile.username.length}/{USERNAME_MAX_LENGTH}
+                            {user.username.length}/{USERNAME_MAX_LENGTH}
                         </>
                     }
                 </div>
@@ -61,13 +57,13 @@ const SettingsRightColumn: React.FC<SettingsRightColumnPropTypes> = ({profile, s
             <div className="settings-bio">
                 О себе
                 <div className="settings-bio-field">
-                    <textarea maxLength={BIO_MAX_LENGTH} className="settings-bio__input" placeholder="Что-то интересненькое..." value={profile === undefined ? '' : profile.bio} onChange={handleChangingTextarea}/>
+                    <textarea maxLength={BIO_MAX_LENGTH} className="settings-bio__input" placeholder="Что-то интересненькое..." value={user === undefined ? '' : user.bio} onChange={handleChangingTextarea}/>
                     <div className="settings-bio__length">
-                        {profile === undefined ? 0 : profile.bio.length}/{BIO_MAX_LENGTH}
+                        {user === undefined ? 0 : user.bio.length}/{BIO_MAX_LENGTH}
                     </div>
                 </div>
             </div>
-            {profile &&
+            {user &&
                 <div className="settings-hrefs">
                     Ссылки
                     <div className="settings-hrefs-examples">

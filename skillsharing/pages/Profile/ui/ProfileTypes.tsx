@@ -4,7 +4,7 @@ export interface ProfileType {
     "id": string,
     "username": string,
     "email": string,
-    "avatar_url": string,
+    "avatar": string,
     "bio": string,
     "skills_to_learn": Skill[],
     "skills_to_share": Skill[],

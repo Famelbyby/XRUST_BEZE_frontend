@@ -1,0 +1,9 @@
+export const CODE_OK: number = 200;
+export const CODE_CREATED: number = 201;
+export const CODE_DELETED: number = 203;
+export const CODE_BAD: number = 400;
+export const CODE_NOT_FOUND: number = 404;
+export const CODE_NOT_AUTHED: number = 401;
+export const CODE_FORBIDDEN: number = 403;
+export const CODE_TOO_LARGE: number = 413;
+export const CODE_INTERNAL_SERVER: number = 500;

@@ -1,19 +1,21 @@
 import { configureStore } from '@reduxjs/toolkit'
-import authReducer from './slices/LogInSlice'
+import loginReducer from './slices/LogInSlice'
 import chatReducer from './slices/ChatSlice'
 import dialogsReducer from './slices/DialogsSlice'
 import mainReducer from './slices/MainSlice'
 import userReducer from './slices/UserSlice'
-import websocketReducer from './slices/WebSocketSlice'
+import signupReducer from './slices/SignUpSlice'
+import settingsReducer from './slices/SettingsSlice'
 
 export const appStore = configureStore({
   reducer: {
-    auth: authReducer,
+    login: loginReducer,
+    signup: signupReducer,
     profile: userReducer,
     chatMessages: chatReducer,
     dialogs: dialogsReducer,
     mainPageUsers: mainReducer,
-    websocket: websocketReducer,
+    settings: settingsReducer,
   },
 })
 

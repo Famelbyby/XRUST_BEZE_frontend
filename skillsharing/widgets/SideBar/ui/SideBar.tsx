@@ -1,8 +1,9 @@
 import React from "react";
 import { Link, useLocation } from "react-router";
 import './SideBar.scss'
-import { comparePathnames } from "../../../shared/Functions/ComparePathnames";
-import User from "../../../entity/User/User";
+import { ComparePathnames } from "../../../shared/Functions/ComparePathnames";
+import { useSelector } from "react-redux";
+import { AppState } from "../../../app/AppStore";
 
 interface sideBarItem {
     id: number,
@@ -11,38 +12,44 @@ interface sideBarItem {
     linkTo: string,
 }
 
-const userID: string = User.getUserID();
-
-const sideBarItems: sideBarItem[] = [
-    {
-        id: 1,
-        icon:'/SideBar/user.png',
-        title: 'Профиль',
-        linkTo: `/profile/${userID}`,
-    },
-    {
-        id: 2,
-        icon:'/SideBar/message.png',
-        title: 'Чаты',
-        linkTo: '/chats',
-    },
-    // {
-    //     id: 3,
-    //     icon:'/SideBar/medal.png',
-    //     title: 'Рейтинг',
-    //     linkTo: '/rating',
-    // },
-];
-
 const SideBar: React.FC = () => {
     const location = useLocation();
+
+    const {user} = useSelector((state: AppState) => state.profile);
+
+    const sideBarItems: sideBarItem[] = [
+        {
+            id: 0,
+            icon: '/Header/main.png',
+            title: 'Главная',
+            linkTo: '/main-page',
+        },
+        {
+            id: 1,
+            icon:'/SideBar/user.png',
+            title: 'Профиль',
+            linkTo: `/profile/${user?.id}`,
+        },
+        {
+            id: 2,
+            icon:'/SideBar/message.png',
+            title: 'Чаты',
+            linkTo: '/chats',
+        },
+        // {
+        //     id: 3,
+        //     icon:'/SideBar/medal.png',
+        //     title: 'Рейтинг',
+        //     linkTo: '/rating',
+        // },
+    ];
 
     return (
         <div className="sidebar">
             {sideBarItems.map((item) => {
                 return (
                     <Link to={item.linkTo} key={item.id}>
-                        <div className={"sidebar-item" + (comparePathnames(location.pathname, item.linkTo) ? " sidebar-item_selected" : "")}>
+                        <div className={"sidebar-item" + (ComparePathnames(location.pathname, item.linkTo) ? " sidebar-item_selected" : "")}>
                             <img className="sidebar-item__img" src={item.icon} alt=""/>
                             <div className="sidebar-item__title">
                                 {item.title}

@@ -2,6 +2,7 @@ import React from 'react';
 import '../../pages/Main/ui/Main.scss'
 import { useSelector } from 'react-redux';
 import { AppState } from '../../app/AppStore';
+import './MainHeader.scss'
 
 const MainHeader: React.FC = () => {
     const {user} = useSelector((state: AppState) => state.profile);

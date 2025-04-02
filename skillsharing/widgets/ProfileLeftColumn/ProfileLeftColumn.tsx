@@ -1,9 +1,11 @@
 import React from "react";
-import {Skill, StatisticItem} from './ProfileLeftColumnTypes'
+import { StatisticItem} from './ProfileLeftColumnTypes'
 import { ProfileType } from "../../pages/Profile/ui/ProfileTypes";
 import {CapitalizeString} from '../../shared/Functions/FormatStrings'
 import {PREFERRED_FORMAT_TRANSLATION} from '../../shared/Consts/Translations'
 import './ProfileLeftColumn.scss'
+import { Skill } from "../../shared/Consts/Interfaces";
+import { AVATAR_URL } from "../../shared/Consts/URLS";
 
 const profileStatistics: StatisticItem[] = [
     {
@@ -31,7 +33,7 @@ const ProfileLeftColumn: React.FC<ProfileLeftColumnPropTypes> = ({profile}) => {
                     </div>
                 }
                 {profile !== undefined &&
-                    <img className="profile-avatar__img" src={'/shared/avatar.png'} alt="avatar"/>
+                    <img className="profile-avatar__img" src={AVATAR_URL + profile.avatar} alt="avatar"/>
                 }
             </div>
             <div className="profile-stats">

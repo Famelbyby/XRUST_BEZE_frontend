@@ -1,0 +1,96 @@
+.sign-up {
+    &-page {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    &__button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 8px 50px;
+        background-color: #0000ff;
+        color: #ffffff;
+        font-family: "Inter";
+        margin-top: 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition-duration: 0.2s;
+        user-select: none;
+
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
+
+    &-avatar {
+        font-family: "Inter";
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        color: white;
+        align-items: start;
+
+        &-field {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+        }
+
+        &__preview {
+            font-size: 14px;
+            width: 150px;
+            height: 150px;
+            cursor: pointer;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        &_filtered {
+            filter: invert(1);
+        }
+
+        &__input {
+            display: none;
+        }
+        
+        &__error {
+            height: 12px;
+            font-size: 12px;
+            color: #cf0000;
+            font-family: "Inter";
+        }
+    }
+
+    &-preferred-format {
+        font-family: "Inter";
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        color: white;
+        align-items: start;
+
+        &-select {
+            border: none;
+            padding: 10px 5px;
+            font-family: 'Inter';
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+
+            &:focus {
+                outline: none;
+                border: none;
+            }
+        }
+    }
+}

@@ -5,8 +5,8 @@ import ProfileLeftColumn from '../../../widgets/ProfileLeftColumn/ProfileLeftCol
 import './Profile.scss'
 import { ProfileType } from "./ProfileTypes";
 import { GetProfile } from "../api/Profile";
-import { useSelector } from "react-redux";
-import { AppState } from "../../../app/AppStore";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, AppState } from "../../../app/AppStore";
 
 const Profile: React.FC = () => {
     const params = useParams();
@@ -14,6 +14,7 @@ const Profile: React.FC = () => {
     const [profile, setProfile] = useState<ProfileType | undefined>();
     const componentIsMounted = useRef(true);
     const {user} = useSelector((state: AppState) => state.profile);
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
         const userID: string | undefined = params.userID;
@@ -27,13 +28,13 @@ const Profile: React.FC = () => {
                 }
             }
 
-            GetProfile(userID, profileGot);
+            dispatch(GetProfile({userId: userID, callback: profileGot}));
         }
 
         return () => {
             componentIsMounted.current = false;
         }
-    }, [params.userID, navigateTo, user?.id])
+    }, [params.userID, navigateTo, user?.id, dispatch])
 
     return (
         <div className="profile-page">

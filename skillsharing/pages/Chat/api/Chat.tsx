@@ -2,6 +2,8 @@ import axios from "axios";
 import { IMessage } from "../../../entity/Message/MessageTypes";
 import { BACK_URL } from "../../../shared/Consts/URLS";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { ProfileType } from "../../Profile/ui/ProfileTypes";
+import { CODE_OK } from "../../../shared/Consts/Codes";
 
 const CHAT_URL = '/chat';
 const OWN_USER_ID_MOCK = "67e3b36b9a36154096b4bbea";
@@ -148,39 +150,35 @@ const messagesMock: Array<IMessage> = [
 export const GetCompanion = createAsyncThunk(
     'chats/getCompanion',
     async (peerID: string) => {
-        const response = await (new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(userMock);
-            }, 2000)
-        }));
+        // const response = await (new Promise((resolve) => {
+        //     setTimeout(() => {
+        //         resolve(userMock);
+        //     }, 2000)
+        // }));
 
-        return response;
+        // return {profile: response, status: CODE_OK};
         
-        // const {status, data} = await axios.get(`http://localhost:3001/api/v1/users/${userID}`);
-    
-        // if (status === 200) {
-        //     callback(data as ProfileType);
-        // }
+        try {
+            const {status, data} = await axios.get(BACK_URL + `/users/${peerID}`);
+
+            return {status: status, profile: data};
+        } catch(event) {
+            console.log(event);
+        }
+        
     }
 );
 
 export const GetChatMessages = createAsyncThunk(
     'chats/getChatMessages',
     async (channelID: string) => {
-        const response = await (new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(messagesMock);
-            }, 3000);
-        }));
-
-        return response;
-
-        // const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/${channelID}`);
-
-        // console.log(status, data);
-
-        // if (status === 200) {
-        //     callback(data?.messages as IMessage[]);
-        // }
+        try {
+            const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/${channelID}`);
+            
+            return {messages: data.messages, status: status};
+        } catch(event) {
+            console.log(event);
+        }
+        
     }
 );

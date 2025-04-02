@@ -3,6 +3,9 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import {IMessage} from '../../entity/Message/MessageTypes'
 import { GetChatMessages, GetCompanion } from '../../pages/Chat/api/Chat'
 import { ProfileType } from '../../pages/Profile/ui/ProfileTypes'
+import { ChatResponse } from '../../shared/Consts/Interfaces'
+import { CODE_OK } from '../../shared/Consts/Codes'
+import { UserResponse } from '../../entity/User/api/User'
 
 export interface MessagesState {
   messages: IMessage[] | undefined,
@@ -43,8 +46,8 @@ export const chatSlice = createSlice({
     clearAllMessages: (state: MessagesState) => {
       state.peerID = "";
       state.channelID = "";
-      state.messages = [];
-      state.selectedMessages = [];
+      state.messages = undefined;
+      state.selectedMessages = undefined;
       state.editingMessage = null;
     },
     replaceMessages: (state: MessagesState, action: PayloadAction<IMessage[]>) => {
@@ -56,8 +59,6 @@ export const chatSlice = createSlice({
         if (messages.length > 0) {
           state.channelID = messages[0].channel_id!;
         }
-
-        console.log(state.messages, state.channelID);
     },
     addMessage: (state: MessagesState, action: PayloadAction<IMessage>) => {
         const newMessage: IMessage = action.payload;
@@ -78,6 +79,8 @@ export const chatSlice = createSlice({
     },
     updateMessage: (state: MessagesState, action: PayloadAction<IMessage>) => {
       const updatedMessage: IMessage = action.payload;
+
+      console.log(updatedMessage)
 
       if (state.channelID !== updatedMessage.channel_id) {
         return;
@@ -133,7 +136,13 @@ export const chatSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(GetChatMessages.fulfilled, (state: MessagesState, action) => {
-      const messages: IMessage[] = action.payload as IMessage[];
+      const data = action.payload as ChatResponse;
+
+      if (data.status !== CODE_OK) {
+        return;
+      }
+
+      const messages: IMessage[] = data.messages;
 
       state.messages = messages;
       state.selectedMessages = [];
@@ -141,10 +150,14 @@ export const chatSlice = createSlice({
       if (messages.length > 0) {
         state.channelID = messages[0].channel_id!;
       }
-
-      console.log(state.messages, state.channelID);
     }).addCase(GetCompanion.fulfilled, (state: MessagesState, action) => {
-      const profile = action.payload as ProfileType | undefined
+      const data = action.payload as UserResponse;
+
+      if (data.status !== CODE_OK) {
+        return;
+      }
+
+      const profile: ProfileType = data.profile;
 
       state.companion = profile;
       

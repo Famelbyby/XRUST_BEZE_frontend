@@ -1,41 +1,33 @@
-// import React, { useEffect, useRef, useState } from "react";
-// import SettingsLeftColumn from "../../../widgets/SettingsLeftColumn/SettingsLeftColumn";
-// import { ProfileType } from "../../Profile/ui/ProfileTypes";
-// import SettingsRightColumn from "../../../widgets/SettingsRightColumn/SettingsRightColumn";
-// import SettingsFooter from '../../../widgets/SettingsFooter/SettingsFooter';
-// import './Settings.scss'
-// import { GetProfile } from "../../Profile/api/Profile";
+import React, { useEffect } from "react";
+import SettingsLeftColumn from "../../../widgets/SettingsLeftColumn/SettingsLeftColumn";
+import SettingsRightColumn from "../../../widgets/SettingsRightColumn/SettingsRightColumn";
+import SettingsFooter from '../../../widgets/SettingsFooter/SettingsFooter';
+import './Settings.scss'
+import { useDispatch, useSelector } from "react-redux";
+import { GetProfile } from "../../Profile/api/Profile";
+import { AppDispatch, AppState } from "../../../app/AppStore";
 
-// const Settings: React.FC = () => {
-//     const [profile, setProfile] = useState<ProfileType>();
-//     const componentIsMounted = useRef(true);
+const Settings: React.FC = () => {
+    const {user} = useSelector((state: AppState) => state.profile);
+    const dispatch = useDispatch<AppDispatch>();
 
-//     useEffect(() => {
-//         // const ownUserID: string = User.getUserID();
+    useEffect(() => {
+        if (user !== undefined) {
+            dispatch(GetProfile({userId: user.id, callback: () => {}}));
+        }
+        
+    }, [dispatch, user]);
 
-//         function gotProfile(profile: ProfileType) {
-//             if (componentIsMounted) {
-//                 setProfile(profile);
-//             }
-//         }
+    return (
+        <div className="settings-page">
+            <div className="settings-main">
+                <SettingsLeftColumn />
+                <SettingsRightColumn />
+            </div>
+            <SettingsFooter />
+        </div>
 
-//         GetProfile(ownUserID, gotProfile);
+    );
+}
 
-//         return () => {
-//             componentIsMounted.current = false;
-//         }
-//     }, []);
-
-//     return (
-//         <div className="settings-page">
-//             <div className="settings-main">
-//                 <SettingsLeftColumn profile={profile} setProfile={setProfile}/>
-//                 <SettingsRightColumn profile={profile} setProfile={setProfile}/>
-//             </div>
-//             <SettingsFooter />
-//         </div>
-
-//     );
-// }
-
-// export default Settings;
+export default Settings;

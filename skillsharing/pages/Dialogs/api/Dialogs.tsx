@@ -2,6 +2,7 @@ import axios from "axios";
 import { DialogItem } from "../../../entity/Dialog/ui/DialogTypes";
 import { BACK_URL } from "../../../shared/Consts/URLS";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { CODE_OK } from "../../../shared/Consts/Codes";
 
 const CHAT_URL = '/chat';
 
@@ -81,20 +82,20 @@ const dialogsMock: DialogItem[] = [
 export const GetDialogs = createAsyncThunk(
     'dialogs/getDialogs',
     async (userID: string) => {
-        const response = await (new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(dialogsMock);
-            }, 2000);
-        }));
+        // const response = await (new Promise((resolve) => {
+        //     setTimeout(() => {
+        //         resolve(dialogsMock);
+        //     }, 2000);
+        // }));
 
-        return response;
+        // return {dialogs: response, status: CODE_OK};
 
-        // const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/channels?user_id=` + userID);
-
-        // console.log(status, data);
-
-        // if (status === 200) {
-        //     callback(data?.channels as DialogItem[]);
-        // }
+        try {
+            const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/channels?user_id=` + userID);
+    
+            return {dialogs: data.channels, status: status};
+        } catch (event) {
+            console.log(event);
+        }
     }
 );

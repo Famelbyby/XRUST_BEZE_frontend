@@ -3,6 +3,8 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { ProfileType } from '../../pages/Profile/ui/ProfileTypes'
 import { Skill } from '../../widgets/ProfileLeftColumn/ProfileLeftColumnTypes'
 import { GetMatchedUsers } from '../../pages/Main/api/Main'
+import { MatchedUsersResponse } from '../../shared/Consts/Interfaces'
+import { CODE_OK } from '../../shared/Consts/Codes'
 
 export interface MainState {
   foundUsers: ProfileType[] | undefined,
@@ -52,7 +54,17 @@ export const mainSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(GetMatchedUsers.fulfilled, (state: MainState, action) => {
-      state.foundUsers = action.payload as ProfileType[];
+      const data = action.payload as MatchedUsersResponse;
+
+      if (data.status !== CODE_OK) {
+        return;
+      }
+
+      if (data.foundUsers === null) {
+        data.foundUsers = [];
+      }
+
+      state.foundUsers = data.foundUsers;
       state.filteredUsers = state.foundUsers;
     });
   },

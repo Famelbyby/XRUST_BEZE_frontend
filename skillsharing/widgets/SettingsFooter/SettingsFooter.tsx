@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router";
+import './SettingsFooter.scss'
 
 const SettingsFooter: React.FC = () => {
     const navigatoTo = useNavigate();

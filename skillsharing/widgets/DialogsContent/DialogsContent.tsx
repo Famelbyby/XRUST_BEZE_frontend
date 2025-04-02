@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearAll } from '../../app/slices/DialogsSlice';
 import { GetDialogs } from '../../pages/Dialogs/api/Dialogs';
 import { AppDispatch, AppState } from '../../app/AppStore';
+import './DialogsContent.scss'
 
 const DialogsContent: React.FC = () => {
     const {filteredDialogs} = useSelector((state: AppState) => state.dialogs);
@@ -12,7 +13,9 @@ const DialogsContent: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
-        dispatch(GetDialogs(user!.id));
+        if (user !== undefined) {
+            dispatch(GetDialogs(user.id));
+        }
 
         return () => {
             dispatch(clearAll());

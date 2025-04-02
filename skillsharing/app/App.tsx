@@ -12,18 +12,21 @@ import SignUp from '../widgets/SignUp/SignUp'
 import LogIn from '../widgets/LogIn/LogIn'
 import { Routes } from 'react-router'
 import { useEffect } from 'react'
-import { GetUser } from '../entity/User/api/User'
+import { GetUserByCookie } from '../entity/User/api/User'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from './AppStore'
-import { closeConnection, openConnection } from './slices/WebSocketSlice'
 import { clearProfile } from './slices/UserSlice'
+import Settings from '../pages/Settings/ui/Settings'
+import MainWebSocket from '../shared/WebSocket'
+
+//localStorage.getItem("user_id") || "67e3b36b9a36154096b4bbea"
 
 function App() {
   const {user, isFetched} = useSelector((state: AppState) => state.profile);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(GetUser(localStorage.getItem("user_id") || "67e3b36b9a36154096b4bbea"));
+    dispatch(GetUserByCookie());
 
     return () => {
       dispatch(clearProfile());
@@ -32,11 +35,11 @@ function App() {
 
   useEffect(() => {
     if (user !== undefined) {
-      dispatch(openConnection(user.id));
+      MainWebSocket.openConnection(user.id);
     }
 
     return () => {
-      dispatch(closeConnection());
+      MainWebSocket.closeConnection();
     }
   }, [user, dispatch]);
 
@@ -51,18 +54,18 @@ function App() {
           }
           {user === undefined && isFetched && 
             <Routes>
-              <Route path={'/'} element={<Auth />}>
+              <Route path='' element={<Auth />}>
                 <Route path='sign-up' element={<SignUp />} />
                 <Route path='log-in' element={<LogIn />} />
-                <Route path='*' element={<Navigate to='/' replace />} />
               </Route>
+              <Route path='*' element={<Navigate to='/log-in' replace />} />
             </Routes>
           }
           {user !== undefined && 
             <>
               <SideBar/>
               <Routes>
-                <Route index element={<Main />} />
+                <Route path='/main-page' element={<Main />} />
                 <Route path='/profile' >
                   <Route path=':userID' element={<Profile />} />
                 </Route>
@@ -71,7 +74,7 @@ function App() {
                   <Route path=':chatID' element={<Chat />} />
                 </Route>
                 <Route path='/chats' element={<Dialogs />} />
-                <Route path='*' element={<Navigate to='/' replace />} />
+                <Route path='*' element={<Navigate to='/main-page' replace />} />
               </Routes>
             </>
           }

@@ -4,11 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeSelectedMessages, editMessage } from "../../app/slices/ChatSlice";
 import { IDeletingMessage, IMessage } from "../../entity/Message/MessageTypes";
 import { FormatRelativeTimeInPastInDays } from "../../shared/Functions/FormatDate";
-import { Skill } from "../ProfileLeftColumn/ProfileLeftColumnTypes";
+import { Skill } from "../../shared/Consts/Interfaces";
 import { AppDispatch, AppState } from "../../app/AppStore";
-import { sendMessage } from "../../app/slices/WebSocketSlice";
 import { GetCompanion } from "../../pages/Chat/api/Chat";
 import './ChatHeader.scss'
+import { AVATAR_URL } from "../../shared/Consts/URLS";
+import MainWebSocket from '../../shared/WebSocket'
 
 interface ChatHeaderPropTypes {
     peerID: string | undefined,
@@ -35,7 +36,7 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({peerID}) => {
                 "message_id": selectedMessage.message_id,
             }
     
-            dispatch(sendMessage(JSON.stringify(messageJSON)));
+            MainWebSocket.sendMessage(JSON.stringify(messageJSON));
         })
         
         dispatch(removeSelectedMessages());
@@ -61,7 +62,7 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({peerID}) => {
                 <>
                     <Link to={companion === undefined ? window.location.href : `/profile/${companion.id}`}>
                         <div className='chat-header-user'>
-                            {companion && <img className='chat-header-user__avatar' src='/Dialogs/mate.png' alt='' />}
+                            {companion && <img className='chat-header-user__avatar' src={AVATAR_URL + companion.avatar} alt='' />}
                             {(companion === undefined) && 
                                 <div className="chat-header-user__avatar chat-header-user__avatar-mock">
                                     <div className="chat-header-spinner">
@@ -95,7 +96,7 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({peerID}) => {
                                 {companionTags}
                             </div>
                             <div className='chat-header-chat-info__rating'>
-                                Оценка 4.8
+                                Оценка 0
                             </div>
                         </div>
                     }

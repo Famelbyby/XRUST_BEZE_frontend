@@ -7,6 +7,7 @@ import { Skill } from "../../../widgets/ProfileLeftColumn/ProfileLeftColumnTypes
 import { useSelector } from "react-redux";
 import { AppState } from "../../../app/AppStore";
 import './Dialog.scss'
+import { AVATAR_URL } from "../../../shared/Consts/URLS";
 
 const Dialog: React.FC<DialogProps> = ({dialog}) => {
     const navigateTo = useNavigate();
@@ -38,7 +39,7 @@ const Dialog: React.FC<DialogProps> = ({dialog}) => {
         }>
             <div className="dialog-user">
                 {dialog !== undefined && 
-                    <img className="dialog-user__avatar" src='/Dialogs/mate.png' alt="" />
+                    <img className="dialog-user__avatar" src={AVATAR_URL + companion?.avatar} alt="" />
                 }
                 {dialog === undefined && 
                     <div className="dialog-user__avatar dialog-user__avatar-mock">

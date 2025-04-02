@@ -3,6 +3,7 @@ import './Header.scss'
 import { Link } from "react-router";
 import { useSelector } from "react-redux";
 import { AppState } from "../../../app/AppStore";
+import { AVATAR_URL } from "../../../shared/Consts/URLS";
 
 const Header: React.FC = () => {
     const {user} = useSelector((state: AppState) => state.profile);
@@ -22,7 +23,7 @@ const Header: React.FC = () => {
                     </div>
                     <div className="header-profile">
                         <Link to={`/profile/${user.id}`} >
-                            <img className="header-profile__avatar" src="/shared/avatar.png" alt="profile" />
+                            <img className="header-profile__avatar" src={AVATAR_URL + user.avatar} alt="profile" />
                         </Link>
                         <img className="header-profile__notifications" src="/Header/bell.png" alt="notifications"/>
                     </div>

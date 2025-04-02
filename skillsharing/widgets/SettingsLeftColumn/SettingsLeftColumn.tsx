@@ -1,39 +1,32 @@
 import React from "react";
-import {ProfileType} from '../../pages/Profile/ui/ProfileTypes'
-import { CommunicationFormat } from "../ProfileLeftColumn/ProfileLeftColumnTypes";
-import {PREFERRED_FORMAT_TRANSLATION} from '../../shared/Consts/Translations'
+import {PREFERRED_FORMAT_TRANSLATION, PREFERRED_FORMAT_TYPES} from '../../shared/Consts/Translations'
+import {CommunicationFormat} from '../../shared/Consts/Interfaces'
+import './SettingsLeftColumn.scss'
+import { useDispatch, useSelector } from "react-redux";
+import { setPreferredFormat } from "../../app/slices/SettingsSlice";
+import { AppState } from "../../app/AppStore";
 
-const PREFERRED_FORMAT_TYPES: CommunicationFormat[] = [
-    "text",
-    "video",
-    "voice",
-]
+const SettingsLeftColumn: React.FC = () => {
+    const {user} = useSelector((state: AppState) => state.settings);
+    const dispatch = useDispatch();
 
-interface SettingsLeftColumnPropTypes {
-    profile: ProfileType | undefined,
-    setProfile: React.Dispatch<React.SetStateAction<ProfileType | undefined>>,
-}
-
-const SettingsLeftColumn: React.FC<SettingsLeftColumnPropTypes> = ({profile, setProfile}) => {
     function handleChangingSelect(event: React.ChangeEvent<HTMLSelectElement>) {
         event.preventDefault();
 
-        if (profile !== undefined) {
-            setProfile({...profile, preferred_format: event.target.value as CommunicationFormat})
-        }
+        dispatch(setPreferredFormat(event.target.value as CommunicationFormat));
     }
 
     return (
         <div className="settings-left-column">
             <div className="settings-avatar">
                 Аватар
-                {profile === undefined && 
+                {user === undefined && 
                     <div className="settings-avatar-set settings-avatar-set-mock">
                         <div className="settings-avatar-set-spinner">
                         </div>
                     </div>
                 }
-                {profile !== undefined &&
+                {user !== undefined &&
                     <>
                         <div className="settings-avatar-set" onClick={() => {
                             const fileInput = document.getElementById('avatar__input');
@@ -45,7 +38,7 @@ const SettingsLeftColumn: React.FC<SettingsLeftColumnPropTypes> = ({profile, set
                             <div className="settings-avatar-set-add-img">
                                 <img className="settings-avatar-set-add-img__img" src="/shared/plus.png" alt="" />
                             </div>
-                            <img className="settings-avatar-set__img" src={profile.avatar_url} alt="" />
+                            <img className="settings-avatar-set__img" src={user.avatar_url} alt="" />
                         </div>
                         <input id="avatar__input" type="file" className="settings-avatar__input" alt="" />
                     </>
@@ -59,7 +52,7 @@ const SettingsLeftColumn: React.FC<SettingsLeftColumnPropTypes> = ({profile, set
                 Предпочитаю общаться
                 <select className="settings-preferred-format-select" onChange={handleChangingSelect}>
                     {PREFERRED_FORMAT_TYPES.map((format: CommunicationFormat) => {
-                        if (profile && profile.preferred_format === format) {
+                        if (user && user.preferred_format === format) {
                             return (
                                 <option selected className="settings-preferred-formata-select__option" value={format} key={format}>
                                     {PREFERRED_FORMAT_TRANSLATION[format]}
