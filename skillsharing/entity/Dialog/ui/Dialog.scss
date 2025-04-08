@@ -13,8 +13,8 @@
         //flex-grow: 1;
 
         &__avatar {
-            width: 55px;
-            height: 55px;
+            width: 65px;
+            height: 65px;
             flex-shrink: 0;
             border-radius: 10px;
             object-fit: cover;
@@ -43,9 +43,9 @@
             width: 100%;
 
             &__name {
-                font-family: 'Inria-sans';
-                margin-bottom: 8px;
-                font-size: 18px;
+                font-family: 'Inter';
+                margin-bottom: 10px;
+                font-size: 20px;
                 height: 18px;
 
                 &-mock {
@@ -69,11 +69,13 @@
 
             &__last-message {
                 margin-bottom: 5px;
-                height: 17px;
-                max-width: 20vw;
+                height: 22px;
+                max-width: 40vw;
+                font-family: 'Open Sans';
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
+                font-size: 14px;
 
                 &-mock {
                     display: flex;
@@ -99,6 +101,7 @@
                 &-time {
                     font-size: 10px;
                     color: gray;
+                    font-family: 'Inter';
                 }
             }
         }

@@ -63,7 +63,7 @@ const ProfileHeader: React.FC<ProfileHeaderPropTypes> = ({profile}) => {
                         </div>
                     <Link to={`/chat/${profile.id}`}>
                         <div className="profile-buttons-chat">
-                            <img className="profile-buttons-chat__img" src="/Profile/chat.png" alt="" />
+                            <img className="profile-buttons-chat__img" src="/Profile/chat2.png" alt="" />
                             Написать
                         </div>
                     </Link>

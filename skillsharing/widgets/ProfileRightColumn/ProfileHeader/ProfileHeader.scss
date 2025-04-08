@@ -44,6 +44,9 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            font-family: 'Inter';
+            font-size: 13px;
+            color: #0000008a;
 
             &__img {
                 width: 17px;
@@ -63,12 +66,18 @@
         }
 
         &-exit {
-            background-color: rgba(0, 0, 255, 0.7);
+            background-color: #8787ff;
             color: white;
             border: none;
         }
 
-        &-edit, &-report, &-chat {
+        &-chat {
+            background: #8787ff;
+            color: white;
+            border: none;
+        }
+
+        &-edit, &-report {
             border: 1px solid #00000066;
         }
 

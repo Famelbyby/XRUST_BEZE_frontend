@@ -42,6 +42,8 @@
 
         &__online {
             color: rgba(0, 0, 0, 0.6);
+            font-family: 'Inter';
+            font-size: 12px;
 
             &-mock {
                 margin-top: 10px;
@@ -56,7 +58,7 @@
         }
 
         &-info {
-            font-family: 'Inria-sans';
+            font-family: 'Inter';
             display: flex;
             flex-direction: column;
             justify-content: start;
@@ -97,6 +99,8 @@
 
         &__rating {
             color: rgba(0, 0, 0, 0.6);
+            font-family: 'Inter';
+            font-size: 12px;
         }
     }
 
