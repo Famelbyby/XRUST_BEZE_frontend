@@ -11,7 +11,7 @@ import { AVATAR_URL } from "../../../shared/Consts/URLS";
 
 const Dialog: React.FC<DialogProps> = ({dialog}) => {
     const navigateTo = useNavigate();
-    const {user} = useSelector((state: AppState) => state.profile);
+    const {user} = useSelector((state: AppState) => state.user);
 
     let companion: ProfileType | undefined = undefined;
 
@@ -27,14 +27,14 @@ const Dialog: React.FC<DialogProps> = ({dialog}) => {
 
     if (companion !== undefined) {
         companion.skills_to_share.forEach((skill: Skill) => {
-            dialogTags += skill.name;
+            dialogTags += skill.name + ' ';
         });
     }
 
     return (
         <div className="dialog" onClick={() => {
             if (dialog !== undefined) {
-                navigateTo(`/chat/${companion?.id}?channel_id=${dialog?.channel_id}`)};
+                navigateTo(`/chat/${companion?.id}`)};
             }
         }>
             <div className="dialog-user">

@@ -3,11 +3,12 @@ import {PREFERRED_FORMAT_TRANSLATION, PREFERRED_FORMAT_TYPES} from '../../shared
 import {CommunicationFormat} from '../../shared/Consts/Interfaces'
 import './SettingsLeftColumn.scss'
 import { useDispatch, useSelector } from "react-redux";
-import { setPreferredFormat } from "../../app/slices/SettingsSlice";
+import { setAvatar, setPreferredFormat } from "../../app/slices/SettingsSlice";
 import { AppState } from "../../app/AppStore";
+import { AVATAR_URL } from "../../shared/Consts/URLS";
 
 const SettingsLeftColumn: React.FC = () => {
-    const {user} = useSelector((state: AppState) => state.settings);
+    const {user, avatar} = useSelector((state: AppState) => state.settings);
     const dispatch = useDispatch();
 
     function handleChangingSelect(event: React.ChangeEvent<HTMLSelectElement>) {
@@ -35,18 +36,24 @@ const SettingsLeftColumn: React.FC = () => {
                                 fileInput.click();
                             }
                         }}>
-                            <div className="settings-avatar-set-add-img">
-                                <img className="settings-avatar-set-add-img__img" src="/shared/plus.png" alt="" />
-                            </div>
-                            <img className="settings-avatar-set__img" src={user.avatar_url} alt="" />
+                            <img className="settings-avatar-set__img" src={user.avatar !== '' ? (AVATAR_URL + user.avatar) : URL.createObjectURL(avatar.file!)} alt="" />
                         </div>
-                        <input id="avatar__input" type="file" className="settings-avatar__input" alt="" />
+                        <input id="avatar__input" type="file" className="settings-avatar__input" alt="" onChange={(event) => {
+                            const fileInput = event.target;
+                            
+                            if (fileInput.files === null) {
+                                return;
+                            }
+
+                            dispatch(setAvatar(fileInput.files[0]));
+                        }}/>
+                        {avatar.error !== undefined && 
+                            <div className="setting-avatar__error">
+                                {avatar.error}
+                            </div>
+                        }
                     </>
                 }
-            </div>
-            <div className="settings-skills-to-share">
-                Теги
-                <img className="profile-tags-header__img" title="Выберите навыки, которыми можете поделиться с другими" src="/shared/question.png" alt=""/>
             </div>
             <div className="settings-preferred-format">
                 Предпочитаю общаться

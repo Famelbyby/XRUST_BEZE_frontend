@@ -8,7 +8,7 @@ import { Skill } from "../../shared/Consts/Interfaces";
 const SkillsTags: React.FC<SkillsTagsPropTypes> = ({handleFilteringSomething}) => {
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [tags, setTags] = useState<string[]>([]);
-    const {user} = useSelector((state: AppState) => state.profile);
+    const {user} = useSelector((state: AppState) => state.user);
 
     useEffect(() => {
         if (user !== undefined) {

@@ -1,4 +1,5 @@
-import { CommunicationFormat, Skill } from "../../../widgets/ProfileLeftColumn/ProfileLeftColumnTypes";
+import { CommunicationFormat, Skill } from "../../../shared/Consts/Interfaces";
+
 
 export interface ProfileType {
     "id": string,

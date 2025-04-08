@@ -2,37 +2,54 @@ import React, { useEffect } from 'react';
 import './Chat.scss'
 import ChatFooter from '../../../widgets/ChatFooter/ChatFooter';
 import ChatHeader from '../../../widgets/ChatHeader/ChatHeader'
-import { useNavigate, useParams, useSearchParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import ChatContent from '../../../widgets/ChatContent/ChatContent';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, AppState } from '../../../app/AppStore';
+import NotFound from '../../../features/404/404';
+import { clearAllMessages } from '../../../app/slices/ChatSlice';
+import { GetChannelByIds } from '../api/Chat';
 
 const Chat: React.FC = () => {
     const navigateTo = useNavigate();
     const params = useParams();
-    const [query] = useSearchParams();
     const peerID: string | undefined = params.chatID;
-    
-    useEffect(() => {
-        if (peerID === undefined) {
-            navigateTo('/chats');
-        }
-    }, [peerID, navigateTo]);
+    const dispatch = useDispatch<AppDispatch>();
+    const {noPeerError} = useSelector((state: AppState) => state.chatMessages);
+    const {user} = useSelector((state: AppState) => state.user);
+    //const {isFetched, companion} = useSelector((state: AppState) => state.chatMessages);
 
-    const channelID: string | null = query.get('channel_id');
+    useEffect(() => {
+        if (user !== undefined) {
+            dispatch(GetChannelByIds({userId: user.id, peerId: peerID!}));
+        }
+
+        return () => {
+            dispatch(clearAllMessages());
+        }
+    }, [user, peerID, dispatch]);
 
     return (
         <div className='chat-page'>
-            <div className='chat-go-back'>
-                <div className='chat-go-back-wrapper' onClick={() => {
-                    navigateTo(-1);
-                }}>
-                    <img className='chat-go-back__img' src='/Chat/go-back.png' alt='' />
-                </div>
-            </div>
-            <div className='chat-dialog'>
-                <ChatHeader peerID={peerID}/>
-                <ChatContent channelID={channelID} />
-                <ChatFooter peerID={peerID}/>
-            </div>
+            {!noPeerError &&
+                <>
+                    <div className='chat-go-back'>
+                        <div className='chat-go-back-wrapper' onClick={() => {
+                            navigateTo(-1);
+                        }}>
+                            <img className='chat-go-back__img' src='/shared/go-back.png' alt='' />
+                        </div>
+                    </div>
+                    <div className='chat-dialog'>
+                        <ChatHeader />
+                        <ChatContent />
+                        <ChatFooter />
+                    </div>
+                </> 
+            }
+            {noPeerError && 
+                <NotFound />
+            }
         </div>
     )
 }

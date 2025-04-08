@@ -99,5 +99,5 @@ export function FormatDayMonthYear(date: Date): string {
     const year: number = date.getFullYear();
     const currentYear: number = (new Date()).getFullYear();
 
-    return day.padStart(2, "0") + " " + RUSSIAN_MONTHS[month] + (currentYear === year ? "" : ` ${year}`);
+    return day + " " + RUSSIAN_MONTHS[month] + (currentYear === year ? "" : ` ${year}`);
 }

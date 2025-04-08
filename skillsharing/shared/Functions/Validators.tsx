@@ -1,4 +1,4 @@
-import {MIN_USERNAME_LENGTH, MAX_PASSWORD_LENGTH, MAX_USERNAME_LENGTH, MIN_PASSWORD_LENGTH, VALID_AVATAR_EXTENSIONS} from '../Consts/ValidatorsConts'
+import {MIN_USERNAME_LENGTH, MAX_PASSWORD_LENGTH, MAX_USERNAME_LENGTH, MIN_PASSWORD_LENGTH, VALID_AVATAR_EXTENSIONS, AVATAR_MAX_SIZE} from '../Consts/ValidatorsConts'
 
 /**
  * Validates username on next rules: min length - 3, max length - 50, can't include [!/|\0-9+=?]
@@ -35,11 +35,11 @@ export function ValidateEmail(email: string): boolean {
 }
 
 /**
- * Validates avatar file
+ * Validates avatar file by extension
  * @param file - Avatar file
  * @returns is valid
  */
-export function ValidateAvatar(file: File): boolean {
+export function ValidateAvatarExtension(file: File): boolean {
     let isValid = false;
     
     VALID_AVATAR_EXTENSIONS.forEach((extension: string) => {
@@ -47,6 +47,15 @@ export function ValidateAvatar(file: File): boolean {
     });
 
     return isValid;
+}
+
+/**
+ * Validates avatar file by size
+ * @param file - Avatar file
+ * @returns is valid
+ */
+export function ValidateAvatarSize(file: File): boolean {
+    return file.size < AVATAR_MAX_SIZE;
 }
 
 /**

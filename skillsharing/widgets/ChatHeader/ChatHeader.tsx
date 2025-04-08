@@ -1,25 +1,42 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { removeSelectedMessages, editMessage } from "../../app/slices/ChatSlice";
-import { IDeletingMessage, IMessage } from "../../entity/Message/MessageTypes";
+import { removeSelectedMessages, editMessage, hideDeletingModal, showDeletingModal, hideStructurizedModal, showStructurizedModal } from "../../app/slices/ChatSlice";
+import { IDeletingMessage, IMessage, IStructurizeMessage } from "../../entity/Message/MessageTypes";
 import { FormatRelativeTimeInPastInDays } from "../../shared/Functions/FormatDate";
 import { Skill } from "../../shared/Consts/Interfaces";
 import { AppDispatch, AppState } from "../../app/AppStore";
-import { GetCompanion } from "../../pages/Chat/api/Chat";
 import './ChatHeader.scss'
 import { AVATAR_URL } from "../../shared/Consts/URLS";
 import MainWebSocket from '../../shared/WebSocket'
+import { createPortal } from "react-dom";
+import ModalWindow from '../../features/ModalWindow/ModalWindow'
 
-interface ChatHeaderPropTypes {
-    peerID: string | undefined,
+function handleDeletePressing(event: KeyboardEvent) {
+    if (event.key !== 'Delete') {
+        return;
+    }
+
+    const deleteButton = document.querySelector('#delete-messages') as HTMLElement;
+
+    if (deleteButton !== null) {
+        deleteButton.click();
+    }
 }
 
-const ChatHeader: React.FC<ChatHeaderPropTypes> = ({peerID}) => {
+const ChatHeader: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const {user} = useSelector((state: AppState) => state.profile);
-    const {selectedMessages, channelID, companion} = useSelector((state: AppState) => state.chatMessages);
+    const {user} = useSelector((state: AppState) => state.user);
+    const {selectedMessages, channelID, companion, peerID, isHiddenDeletingModal, isHiddenStructurizedModal} = useSelector((state: AppState) => state.chatMessages);
     const selectedMessagesCount = (selectedMessages || []).length;
+
+    useEffect(() => {
+        window.addEventListener('keydown', handleDeletePressing);
+
+        return () => {
+            window.removeEventListener('keydown', handleDeletePressing);
+        }
+    }, []);
 
     function handleDeletingMessage() {
         if (selectedMessages === undefined) {
@@ -42,11 +59,16 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({peerID}) => {
         dispatch(removeSelectedMessages());
     }
 
-    useEffect(() => {
-        if (peerID !== undefined) {
-            dispatch(GetCompanion(peerID));
+    function structurizeMessage(messageId: string) {
+        const messageJSON: IStructurizeMessage = {
+            "event": "EventStructurization",
+            "message_id": messageId,
         }
-    }, [dispatch, peerID]);
+
+        MainWebSocket.sendMessage(JSON.stringify(messageJSON));
+        
+        dispatch(removeSelectedMessages());
+    }
 
     let companionTags: string = '';
 
@@ -56,6 +78,16 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({peerID}) => {
         })
     }
 
+    let isMyMessages: boolean = true;
+
+    if (selectedMessages !== undefined) {
+        selectedMessages.forEach((selectedMessage) => {
+            if (user !== undefined) {
+                isMyMessages = isMyMessages && selectedMessage.user_id === user.id;
+            }
+        });
+    }
+    
     return (
         <div className='chat-header'>
             {selectedMessagesCount === 0 &&
@@ -111,9 +143,14 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({peerID}) => {
                     <div className="chat-header-controls">
                         {selectedMessages !== undefined && selectedMessagesCount === 1 &&
                             <>
-                                <img className="chat-header-controls__img chat-header-controls__edit" src="/shared/pen.png" alt="Изменить сообщение" onClick={() => {
-                                    dispatch(editMessage());
+                                <img className="chat-header-controls__img chat-header-controls__ai" src="/Chat/ai.png" alt="Структуризировать" title="Структуризировать сообщение" onClick={() => {
+                                    dispatch(showStructurizedModal());
                                 }}/>
+                                {isMyMessages && 
+                                    <img className="chat-header-controls__img chat-header-controls__edit" src="/shared/pen.png" alt="Изменить сообщение" onClick={() => {
+                                        dispatch(editMessage());
+                                    }}/>
+                                }
                                 <img className="chat-header-controls__img chat-header-controls__copy" src="/Chat/copy.png" alt="Копировать сообщение" onClick={() => {
                                     navigator.clipboard.writeText(selectedMessages[0].payload);
 
@@ -121,7 +158,17 @@ const ChatHeader: React.FC<ChatHeaderPropTypes> = ({peerID}) => {
                                 }} />
                             </>   
                         }
-                        <img className="chat-header-controls__img chat-header-controls__delete" src="/Chat/delete.png" alt="Удалить сообщения" onClick={handleDeletingMessage} />
+                        {isMyMessages && 
+                            <>
+                                <img id='delete-messages' className="chat-header-controls__img chat-header-controls__delete" src="/Chat/delete.png" alt="Удалить сообщения" onClick={() => dispatch(showDeletingModal())} />
+                                {!isHiddenDeletingModal && 
+                                    createPortal(<ModalWindow modalType={'delete'} closeModal={() => dispatch(hideDeletingModal())} agreeTitle="Удалить" cancelTitle="Отменить" agreeFunc={handleDeletingMessage} windowTitle="Вы уверены, что хотите удалить выделенные сообщения?"/>, document.querySelector('#root')!)
+                                }
+                            </>
+                        }
+                        {!isHiddenStructurizedModal && 
+                            createPortal(<ModalWindow modalType={'structurize'} closeModal={() => dispatch(hideStructurizedModal())} agreeTitle="Да" cancelTitle="Отменить" agreeFunc={() => structurizeMessage(selectedMessages![0].message_id)} windowTitle="Вы уверены, что хотите структуризировать выделенное сообщение? Это может занять несколько минут"/>, document.querySelector('#root')!)
+                        }
                     </div>
                 </>
             }

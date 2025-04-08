@@ -1,11 +1,11 @@
 import axios from "axios";
 import { IMessage } from "../../../entity/Message/MessageTypes";
-import { BACK_URL } from "../../../shared/Consts/URLS";
+import { BACK_URL, CHAT_URL } from "../../../shared/Consts/URLS";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ProfileType } from "../../Profile/ui/ProfileTypes";
-import { CODE_OK } from "../../../shared/Consts/Codes";
+import { CODE_BAD, CODE_OK } from "../../../shared/Consts/Codes";
+import { ChannelRequest } from "../../../shared/Consts/Interfaces";
 
-const CHAT_URL = '/chat';
 const OWN_USER_ID_MOCK = "67e3b36b9a36154096b4bbea";
 
 const notAuthedUserMock: ProfileType | undefined = undefined;
@@ -13,7 +13,7 @@ const notAuthedUserMock: ProfileType | undefined = undefined;
 const userMock: ProfileType = {
     id: "67e3b36b9a36154096b4bbea",
     username: 'Shkaf Unichtojitel',
-    avatar_url: '/Profile/avatar.png',
+    avatar: '/Profile/avatar.png',
     bio: '[!i for i in [‘Красивый’, ‘Умный’, ‘Обаятельный’, ‘Спортсмен’]]',
     skills_to_learn: [
         {
@@ -147,38 +147,17 @@ const messagesMock: Array<IMessage> = [
     },
 ]
 
-export const GetCompanion = createAsyncThunk(
-    'chats/getCompanion',
-    async (peerID: string) => {
-        // const response = await (new Promise((resolve) => {
-        //     setTimeout(() => {
-        //         resolve(userMock);
-        //     }, 2000)
-        // }));
-
-        // return {profile: response, status: CODE_OK};
-        
+export const GetChannelByIds = createAsyncThunk(
+    'chats/getChannelByIds',
+    async ({userId, peerId}: ChannelRequest) => {
         try {
-            const {status, data} = await axios.get(BACK_URL + `/users/${peerID}`);
-
-            return {status: status, profile: data};
-        } catch(event) {
-            console.log(event);
-        }
-        
-    }
-);
-
-export const GetChatMessages = createAsyncThunk(
-    'chats/getChatMessages',
-    async (channelID: string) => {
-        try {
-            const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/${channelID}`);
+            const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/channels/by-peer?user_id=${userId}&peer_id=${peerId}`);
             
-            return {messages: data.messages, status: status};
+            return {channelData: {...data, userId}, status: status};
         } catch(event) {
             console.log(event);
+
+            return {channelData: undefined, status: CODE_BAD, userId};
         }
-        
     }
-);
+)

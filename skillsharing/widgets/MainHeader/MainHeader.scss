@@ -9,9 +9,30 @@
 
 .main-header {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     width: 100%;
-    gap: 20px;
+
+    &-left {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        flex-grow: 1;
+    }
+
+    &-right {
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        width: 250px;
+    }
+
+    &__searching-input {
+        border: 1px solid rgba(0, 0, 0, 0.2196078431);
+        border-radius: 10px;
+        padding: 10px;
+        font-family: 'Inter';
+        font-size: 13px;
+    }
 
     &-hello {
         display: flex;

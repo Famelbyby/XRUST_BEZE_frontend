@@ -1,15 +1,14 @@
 import axios from 'axios';
 import {BACK_URL} from '../../../shared/Consts/URLS'
 import {ProfileType} from '../../../pages/Profile/ui/ProfileTypes'
-import {UserResponse} from '../../../entity/User/api/User'
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { CODE_CREATED, CODE_OK } from '../../../shared/Consts/Codes';
-import { AuthRequest, RegisterRequest } from '../../../shared/Consts/Interfaces';
+import { AuthRequest, Category, LoadAvatarRequest, RegisterRequest } from '../../../shared/Consts/Interfaces';
 
 const userMock: ProfileType = {
-    id: "67e3b36b9a36154096b4bbea",
+    id: localStorage.getItem('user-id') || "67ed4e0a66ab0aab711f8476",
     username: 'Shkaf Unichtojitel',
-    avatar_url: '/Profile/avatar.png',
+    avatar: '/Profile/avatar.png',
     bio: '[!i for i in [‘Красивый’, ‘Умный’, ‘Обаятельный’, ‘Спортсмен’]]',
     skills_to_learn: [
         {
@@ -74,45 +73,66 @@ const avatarURLMock: string = 'http://lolkek.com/ava.jpeg';
 
 export const LoadAvatar = createAsyncThunk(
     'auth/loadAvatar',
-    async (avatar: File) => {
-        const response = await (new Promise((resolve) => {
-            setTimeout(() => {
-                console.log('aga');
-                resolve(avatarURLMock);
-            }, 2000);
-        }));
+    async ({avatar}: LoadAvatarRequest) => {
+        // const response = await (new Promise((resolve) => {
+        //     setTimeout(() => {
+        //         console.log('aga');
+        //         resolve(avatarURLMock);
+        //     }, 2000);
+        // }));
 
-        return {avatarURL: response, status: CODE_OK};
+        // return {avatarURL: response, status: CODE_OK};
 
-        // const formData = new FormData();
-        // formData.append('file', avatar, avatar.name);
+        const formData = new FormData();
+        formData.append('file', avatar, avatar.name);
 
-        // const {status, data} = await axios.post(BACK_URL + '/file/temp', formData, {
-        //     headers: {
-        //         "Content-Type": "mulpipart/form-data",
-        //     }
-        // });
+        const {status, data} = await axios.post(BACK_URL + '/file/temp', formData, {
+            headers: {
+                "Content-Type": "mulpipart/form-data",
+            }
+        });
 
-        // return {avatarURL: data as string, status};
+        console.log(status, data);
+
+        return {avatarURL: data.filename as string, status};
     }
 );
 
 export const TryRegister = createAsyncThunk(
     'auth/tryRegister',
-    async ({username, password, email, avatar_url, preferred_format}: RegisterRequest) => {
-        console.log('op');
+    async ({username, password, email, avatar_url, preferred_format, bio, skills_to_learn, skills_to_share}: RegisterRequest) => {
+        // console.log('op');
 
-        const response = await (new Promise((resolve) => {
-            setTimeout(() => {
-                console.log('asjdkas');
-                resolve(userMock);
-            }, 2000)
-        }));
+        // const response = await (new Promise((resolve) => {
+        //     setTimeout(() => {
+        //         console.log('asjdkas');
+        //         resolve(userMock);
+        //     }, 2000)
+        // }));
 
-        return {user: response as ProfileType, status: CODE_CREATED};
+        // return {user: response as ProfileType, status: CODE_CREATED};
 
-        // const response = await axios.post(BACK_URL + '/users', JSON.stringify({password, username, email, avatar_url, preferred_format, skills_to_learn, skills_to_share}));
+        try {
+            const {status, data} = await axios.post(BACK_URL + '/users', JSON.stringify({password, username, email, avatar_url, preferred_format, bio, skills_to_learn, skills_to_share}));
 
-        // return {user: response.data as ProfileType, status: response.status};
+            console.log(status, data);
+
+            return {user: data as ProfileType, status};
+        } catch(event) {
+            console.log(event);
+        }
+    }
+)
+
+export const GetCategories = createAsyncThunk(
+    'auth/getCategories', 
+    async () => {
+        try {
+            const {status, data} = await axios.get(BACK_URL + '/skills');
+
+            return {categories: data as Category[], status: status};
+        } catch(event) {
+            console.log(event);
+        }
     }
 )

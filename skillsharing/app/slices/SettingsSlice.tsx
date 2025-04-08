@@ -1,23 +1,37 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ProfileType } from '../../pages/Profile/ui/ProfileTypes'
 import { CODE_CREATED, CODE_OK } from '../../shared/Consts/Codes';
-import { TryAuth, TryRegister } from '../../pages/Auth/api/Auth';
-import { CommunicationFormat, UserResponse } from '../../shared/Consts/Interfaces';
+import { GetCategories, LoadAvatar, TryAuth, TryRegister } from '../../pages/Auth/api/Auth';
+import { AvatarFieldState, CategoryResponse, CommunicationFormat, LoadAvatarResponse, SkillLevel, UserResponse } from '../../shared/Consts/Interfaces';
 import { GetUserByCookie } from '../../entity/User/api/User';
-import { ValidateUsername } from '../../shared/Functions/Validators';
+import { ValidateAvatarExtension, ValidateAvatarSize, ValidateUsername } from '../../shared/Functions/Validators';
+import { GetProfile } from '../../pages/Profile/api/Profile';
+import { UpdateProfile } from '../../pages/Settings/api/Settings';
 
 export interface SettingsState {
     user: ProfileType | undefined,
     usernameError: string | undefined,
+    isUpdated: boolean,
+    globalSkills: string[],
+    avatar: AvatarFieldState,
+    isPending: boolean,
 }
 
 const initialState: SettingsState = {
     user: undefined,
     usernameError: undefined,
+    isUpdated: false,
+    globalSkills: [],
+    avatar: {
+        URL: undefined,
+        error: undefined,
+        file: undefined,
+    },
+    isPending: false,
 }
 
 export const settingsSlice = createSlice({
-  name: 'user',
+  name: 'structurizedMessage',
   initialState,
   reducers: {
     setPreferredFormat: (state: SettingsState, action: PayloadAction<CommunicationFormat>) => {
@@ -38,6 +52,8 @@ export const settingsSlice = createSlice({
 
         if (!isValid) {
             state.usernameError = 'Длина имени - от 3 до 25 символов. Содержит только кириллицу и символы латинского алфавита'
+        } else {
+            state.usernameError = undefined;
         }
     },
     setBio: (state: SettingsState, action: PayloadAction<string>) => {
@@ -47,9 +63,126 @@ export const settingsSlice = createSlice({
 
         state.user.bio = action.payload;
     },
+    clearUpdated: (state: SettingsState) => {
+        state.isUpdated = false;
+    },
+    addSkillToLearn: (state: SettingsState) => {
+        if (state.user === undefined) {
+            return;
+        }
+
+        state.user.skills_to_learn.push({name: state.globalSkills[0], level: "beginner", description: ''});
+    },
+    deleteSkillFromLearn: (state: SettingsState, action: PayloadAction<string>) => {
+        const skillName: string = action.payload;
+
+        if (state.user === undefined) {
+            return;
+        }
+
+        const index: number = state.user.skills_to_learn.findIndex((skill) => skill.name === skillName);
+
+        if (index === -1) {
+            return;
+        }
+
+        state.user.skills_to_learn = [...state.user.skills_to_learn.slice(0, index), ...state.user.skills_to_learn.slice(index + 1)];
+    },
+    editedSkillToLearn: (state: SettingsState, action: PayloadAction<[number, string]>) => {
+        const [index, skillName] = action.payload;
+
+        if (state.user === undefined) {
+            return;
+        }
+
+        state.user.skills_to_learn[index].name = skillName;
+    },
+    editedSkillToLearnLevel: (state: SettingsState, action: PayloadAction<[number, string]>) => {
+        const [index, skillLevel] = action.payload;
+
+        if (state.user === undefined) {
+            return;
+        }
+
+        state.user.skills_to_learn[index].level = skillLevel as SkillLevel;
+    },
+    addSkillToShare: (state: SettingsState) => {
+        if (state.user === undefined) {
+            return;
+        }
+
+        state.user.skills_to_share.push({name: state.globalSkills[0], level: "beginner", description: ''});
+    },
+    deleteSkillFromShare: (state: SettingsState, action: PayloadAction<string>) => {
+        const skillName: string = action.payload;
+
+        if (state.user === undefined) {
+            return;
+        }
+
+        const index: number = state.user.skills_to_share.findIndex((skill) => skill.name === skillName);
+
+        if (index === -1) {
+            return;
+        }
+
+        state.user.skills_to_share = [...state.user.skills_to_share.slice(0, index), ...state.user.skills_to_share.slice(index + 1)];
+    },
+    editedSkillToShare: (state: SettingsState, action: PayloadAction<[number, string]>) => {
+        const [index, skillName] = action.payload;
+
+        if (state.user === undefined) {
+            return;
+        }
+
+        state.user.skills_to_share[index].name = skillName;
+    },
+    editedSkillToShareLevel: (state: SettingsState, action: PayloadAction<[number, string]>) => {
+        const [index, skillLevel] = action.payload;
+
+        if (state.user === undefined) {
+            return;
+        }
+
+        state.user.skills_to_share[index].level = skillLevel as SkillLevel;
+    },
+    setAvatar: (state: SettingsState, action: PayloadAction<File>) => {
+        const avatarFile = action.payload;
+        let isValid = ValidateAvatarExtension(avatarFile);
+
+        if (state.user !== undefined) {
+            state.user.avatar = '';
+        }
+
+        state.avatar.URL = undefined;
+
+        if (!isValid) {
+            state.avatar.error = 'Неправильный формат файла: доступны только jpg, jpeg, webp и png';
+            state.avatar.file = undefined;
+        } else {
+            isValid = ValidateAvatarSize(avatarFile);
+
+            if (!isValid) {
+                state.avatar.error = "Максимальный размер - 5Мб";
+                state.avatar.file = undefined;
+            } else {
+                state.avatar.error = undefined;
+                state.avatar.file = avatarFile;
+            }
+        }
+    },
+    clearSettings: (state: SettingsState) => {
+        state.isUpdated = false;
+        state.avatar.URL = undefined;
+        state.avatar.file = undefined;
+        state.avatar.error = undefined;
+        state.usernameError = undefined;
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(GetUserByCookie.fulfilled, (state: SettingsState, action) => {
+    builder.addCase(LoadAvatar.pending, (state: SettingsState) => {
+        state.isPending = true;
+    }).addCase(GetUserByCookie.fulfilled, (state: SettingsState, action) => {
         const data = action.payload as UserResponse;
 
         if (data.status !== CODE_OK) {
@@ -69,10 +202,64 @@ export const settingsSlice = createSlice({
         if (data.status === CODE_CREATED) {
             state.user = data.user;
         }
+    }).addCase(GetProfile.fulfilled, (state: SettingsState, action) => {
+        const data = action.payload as UserResponse;
+
+        if (data.status !== CODE_OK) {
+            return;
+        }
+
+        const profile = data.user;
+
+        if (profile !== undefined && state.user !== undefined && profile.id === state.user.id) {
+            state.user = profile;
+        }
+
+        state.avatar.URL = undefined;
+        state.avatar.error = undefined;
+        state.avatar.file = undefined;
+        state.usernameError = undefined;
+    }).addCase(UpdateProfile.fulfilled, (state: SettingsState, action) => {
+        state.isPending = false;
+
+        const data = action.payload as UserResponse;
+
+        if (data.status !== CODE_OK) {
+            return;
+        }
+
+        state.user = data.user;
+        state.isUpdated = true;
+    }).addCase(LoadAvatar.fulfilled, (state: SettingsState, action) => {
+        const data = action.payload as LoadAvatarResponse;
+
+        if (data.status !== CODE_OK) {
+            return;
+        }
+
+        state.avatar.URL = data.avatarURL;
+
+        if (state.user !== undefined) {
+            state.user.avatar = '';
+        }
+
+        console.log(state.avatar.URL);
+    }).addCase(GetCategories.fulfilled, (state: SettingsState, action) => {
+        const data = action.payload as CategoryResponse;
+
+        if (data.status !== CODE_OK) {
+            return;
+        }
+
+        data.categories.forEach((category) => {
+            state.globalSkills = [...state.globalSkills, ...category.skills]
+        });
+
+        state.globalSkills = state.globalSkills.filter((value, index, array) => array.indexOf(value) === index).sort((a, b) => a.charCodeAt(0) - b.charCodeAt(0));
     });
   },
 })
 
-export const { setBio, setUsername, setPreferredFormat } = settingsSlice.actions
+export const { clearSettings, setAvatar, setBio, setUsername, setPreferredFormat, clearUpdated, editedSkillToLearn, editedSkillToLearnLevel, editedSkillToShare, editedSkillToShareLevel, addSkillToLearn, addSkillToShare, deleteSkillFromLearn, deleteSkillFromShare } = settingsSlice.actions
 
 export default settingsSlice.reducer

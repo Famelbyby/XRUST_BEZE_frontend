@@ -6,16 +6,20 @@ import mainReducer from './slices/MainSlice'
 import userReducer from './slices/UserSlice'
 import signupReducer from './slices/SignUpSlice'
 import settingsReducer from './slices/SettingsSlice'
+import profileReducer from './slices/ProfileSlice'
+import structurizedMessageReducer from './slices/StructurizedMessageSlice'
 
 export const appStore = configureStore({
   reducer: {
     login: loginReducer,
     signup: signupReducer,
-    profile: userReducer,
+    user: userReducer,
     chatMessages: chatReducer,
     dialogs: dialogsReducer,
     mainPageUsers: mainReducer,
     settings: settingsReducer,
+    profile: profileReducer,
+    structurizedMessage: structurizedMessageReducer,
   },
 })
 

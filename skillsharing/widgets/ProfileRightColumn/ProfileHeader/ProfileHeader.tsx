@@ -11,7 +11,7 @@ interface ProfileHeaderPropTypes {
 }
 
 const ProfileHeader: React.FC<ProfileHeaderPropTypes> = ({profile}) => {
-    const {user} = useSelector((state: AppState) => state.profile);
+    const {user} = useSelector((state: AppState) => state.user);
     const ownUserID: ProfileType["id"] | undefined = user?.id;
     const lastSeen: Date | undefined = (profile === undefined ? undefined : new Date(profile.last_active_at));
 

@@ -1,11 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import {IMessage} from '../../entity/Message/MessageTypes'
-import { GetChatMessages, GetCompanion } from '../../pages/Chat/api/Chat'
 import { ProfileType } from '../../pages/Profile/ui/ProfileTypes'
-import { ChatResponse } from '../../shared/Consts/Interfaces'
-import { CODE_OK } from '../../shared/Consts/Codes'
-import { UserResponse } from '../../entity/User/api/User'
+import { ChannelReponse } from '../../shared/Consts/Interfaces'
+import { CODE_BAD, CODE_OK } from '../../shared/Consts/Codes'
+import { GetChannelByIds } from '../../pages/Chat/api/Chat'
 
 export interface MessagesState {
   messages: IMessage[] | undefined,
@@ -14,6 +13,10 @@ export interface MessagesState {
   peerID: string | undefined,
   editingMessage: IMessage | null,
   companion: ProfileType | undefined,
+  isFetched: boolean,
+  noPeerError: boolean,
+  isHiddenDeletingModal: boolean,
+  isHiddenStructurizedModal: boolean,
 }
 
 const initialState: MessagesState = {
@@ -23,6 +26,10 @@ const initialState: MessagesState = {
   peerID: undefined,
   editingMessage: null,
   companion: undefined,
+  isFetched: false,
+  noPeerError: false,
+  isHiddenDeletingModal: true,
+  isHiddenStructurizedModal: true,
 }
 
 export const chatSlice = createSlice({
@@ -40,15 +47,13 @@ export const chatSlice = createSlice({
     stopEditingMessage: (state: MessagesState) => {
       state.editingMessage = null;
     },
-    setPeerID: (state: MessagesState, action: PayloadAction<MessagesState["peerID"]>) => {
-      state.peerID = action.payload;
-    },
     clearAllMessages: (state: MessagesState) => {
       state.peerID = "";
       state.channelID = "";
       state.messages = undefined;
       state.selectedMessages = undefined;
       state.editingMessage = null;
+      state.noPeerError = false;
     },
     replaceMessages: (state: MessagesState, action: PayloadAction<IMessage[]>) => {
         const messages: IMessage[] = action.payload;
@@ -79,8 +84,6 @@ export const chatSlice = createSlice({
     },
     updateMessage: (state: MessagesState, action: PayloadAction<IMessage>) => {
       const updatedMessage: IMessage = action.payload;
-
-      console.log(updatedMessage)
 
       if (state.channelID !== updatedMessage.channel_id) {
         return;
@@ -133,41 +136,55 @@ export const chatSlice = createSlice({
     removeSelectedMessages: (state: MessagesState) => {
       state.selectedMessages = [];
     },
+    hideDeletingModal: (state: MessagesState) => {
+      state.isHiddenDeletingModal = true;
+    },
+    showDeletingModal: (state: MessagesState) => {
+      state.isHiddenDeletingModal = false;
+    },
+    hideStructurizedModal: (state: MessagesState) => {
+      state.isHiddenStructurizedModal = true;
+    },
+    showStructurizedModal: (state: MessagesState) => {
+      state.isHiddenStructurizedModal = false;
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(GetChatMessages.fulfilled, (state: MessagesState, action) => {
-      const data = action.payload as ChatResponse;
+    builder.addCase(GetChannelByIds.fulfilled, (state: MessagesState, action) => {
+      const response = action.payload as unknown as ChannelReponse;
 
-      if (data.status !== CODE_OK) {
+      if (response.status === CODE_BAD) {
+        state.noPeerError = true;
         return;
       }
 
-      const messages: IMessage[] = data.messages;
+      const data = response.channelData;
 
-      state.messages = messages;
+      state.channelID = data.channel.channel_id;
+
+      const messages = data.messages;
+
+      if (messages === undefined || messages === null) {
+        state.messages = [];
+      } else {
+        state.messages = messages;
+      }
+
       state.selectedMessages = [];
+      
+      const companion = data.channel.users.find((user: ProfileType) => user.id !== data.userId);
 
-      if (messages.length > 0) {
-        state.channelID = messages[0].channel_id!;
-      }
-    }).addCase(GetCompanion.fulfilled, (state: MessagesState, action) => {
-      const data = action.payload as UserResponse;
-
-      if (data.status !== CODE_OK) {
+      if (companion === undefined) {
+        state.noPeerError = true;
         return;
       }
 
-      const profile: ProfileType = data.profile;
-
-      state.companion = profile;
-      
-      if (profile !== undefined) {
-        state.peerID = profile.id;
-      }
+      state.companion = companion;
+      state.peerID = companion.id;
     });
   },
 })
 
-export const { clearAllMessages, addMessage, replaceMessages, toggleSelectedMessage, removeSelectedMessages, deleteMessage, setPeerID, editMessage, stopEditingMessage, updateMessage } = chatSlice.actions
+export const { hideStructurizedModal, showStructurizedModal, showDeletingModal, hideDeletingModal, clearAllMessages, addMessage, replaceMessages, toggleSelectedMessage, removeSelectedMessages, deleteMessage, editMessage, stopEditingMessage, updateMessage } = chatSlice.actions
 
 export default chatSlice.reducer

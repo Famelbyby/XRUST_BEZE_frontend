@@ -16,6 +16,15 @@ export interface Skill {
     description: string,
 }
 
+export interface Category {
+    category: string,
+    skills: string[],
+}
+
+export interface CategoryResponse extends AnyAPIResponse {
+    categories: Category[],
+}
+
 export interface PasswordFieldState extends TextFieldState{
     isHidden: boolean,
 }
@@ -34,8 +43,9 @@ export interface RegisterRequest extends AuthRequest {
     email: string,
     avatar_url: File | string | undefined,
     preferred_format: CommunicationFormat,
-    // skills_to_learn: Skill[],
-    // skills_to_share: Skill[],
+    bio: string,
+    skills_to_learn: Skill[],
+    skills_to_share: Skill[],
 }
 
 export interface AuthRequest {
@@ -46,6 +56,51 @@ export interface AuthRequest {
 export interface ProfileRequest {
     userId: string,
     callback: (profileData: ProfileType | undefined) => void,
+}
+
+export interface MessageRequest {
+    messageId: string,
+    userId: string,
+}
+
+export interface MessageResponse extends AnyAPIResponse {
+    messageData: {
+        message: IMessage,
+        userId: string,
+    }
+}
+
+export interface MatchUserRequest {
+    userId: string,
+    callback: () => void,
+}
+
+export interface FindByNameUsersRequest {
+    userId: string,
+    query: string,
+    callback: () => void,
+}
+
+export interface ChannelRequest {
+    userId: string,
+    peerId: string,
+}
+
+export interface LoadAvatarRequest {
+    avatar: File,
+}
+
+export interface UpdateProfileRequest {
+    user: ProfileType,
+    avatar: string | undefined,
+}
+
+export interface ChannelReponse extends AnyAPIResponse {
+    channelData: {
+        channel: DialogItem,
+        messages: IMessage[],
+        userId: string,
+    }
 }
 
 export interface MatchedUsersResponse extends AnyAPIResponse {

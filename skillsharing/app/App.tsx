@@ -6,7 +6,6 @@ import Chat from '../pages/Chat/ui/Chat'
 import Dialogs from '../pages/Dialogs/ui/Dialogs'
 import Profile from '../pages/Profile/ui/Profile'
 import Main from '../pages/Main/ui/Main'
-//import Settings from '../pages/Settings/ui/Settings'
 import Auth from '../pages/Auth/ui/Auth'
 import SignUp from '../widgets/SignUp/SignUp'
 import LogIn from '../widgets/LogIn/LogIn'
@@ -15,21 +14,22 @@ import { useEffect } from 'react'
 import { GetUserByCookie } from '../entity/User/api/User'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from './AppStore'
-import { clearProfile } from './slices/UserSlice'
+import { clearUser } from './slices/UserSlice'
 import Settings from '../pages/Settings/ui/Settings'
+import StructurizedMessage from '../pages/StructurizedMessage/ui/StructurizedMessage'
 import MainWebSocket from '../shared/WebSocket'
 
 //localStorage.getItem("user_id") || "67e3b36b9a36154096b4bbea"
 
 function App() {
-  const {user, isFetched} = useSelector((state: AppState) => state.profile);
+  const {user, isFetched} = useSelector((state: AppState) => state.user);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(GetUserByCookie());
 
     return () => {
-      dispatch(clearProfile());
+      dispatch(clearUser());
     }
   }, [dispatch]);
 
@@ -69,11 +69,14 @@ function App() {
                 <Route path='/profile' >
                   <Route path=':userID' element={<Profile />} />
                 </Route>
-                {/* <Route path='/settings' element={<Settings />} /> */}
+                <Route path='/settings' element={<Settings />} />
                 <Route path='/chat'>
                   <Route path=':chatID' element={<Chat />} />
                 </Route>
                 <Route path='/chats' element={<Dialogs />} />
+                <Route path='/structurized-messages'>
+                  <Route path=':messageId' element={<StructurizedMessage />} />
+                </Route>
                 <Route path='*' element={<Navigate to='/main-page' replace />} />
               </Routes>
             </>

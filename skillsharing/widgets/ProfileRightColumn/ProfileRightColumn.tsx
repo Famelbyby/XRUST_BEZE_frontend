@@ -1,11 +1,8 @@
 import React from "react";
 import ProfileHeader from './ProfileHeader/ProfileHeader'
-import { ProfileType } from "../../pages/Profile/ui/ProfileTypes";
 import './ProfileRightColumn.scss'
-
-interface ProfileRightColumnPropTypes {
-    profile: ProfileType | undefined,
-}
+import { useSelector } from "react-redux";
+import { AppState } from "../../app/AppStore";
 
 const hrefs: string[] = [
     "https://github.com",
@@ -13,24 +10,26 @@ const hrefs: string[] = [
     "https://twitch.com",
 ];
 
-const ProfileRightColumn: React.FC<ProfileRightColumnPropTypes> = ({profile}) => {
+const ProfileRightColumn: React.FC = () => {
+    const {user} = useSelector((state: AppState) => state.profile);
+
     return (
         <div className="profile-right-column">
-            <ProfileHeader profile={profile}/>
+            <ProfileHeader profile={user}/>
             <div className="profile-content">
                 <div className="profile-description">
                     О себе
                     <div className="profile-description__field">
-                        {profile === undefined && 
+                        {user === undefined && 
                             <div className="profile-description__field-mock">
                                 <div className="profile-description__field-spinner">
                                 </div>
                             </div>
                         }
-                        {profile !== undefined && profile.bio}
+                        {user !== undefined && user.bio}
                     </div>
                 </div>
-                {profile !== undefined &&
+                {user !== undefined &&
                     <div className="profile-hrefs">
                         Ссылки
                         {hrefs.length > 0 && 

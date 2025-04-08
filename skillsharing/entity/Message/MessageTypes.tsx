@@ -10,6 +10,7 @@ export interface IMessage extends ISendingMessage, IDeletingMessage, IUpdatingMe
     peer_id: string,
     created_at: number,
     updated_at: number,
+    structurized?: string,
 }
 
 export interface IDeletingMessage {
@@ -18,6 +19,11 @@ export interface IDeletingMessage {
     channel_id?: string,
     peer_id: string,
     event?: string,
+    message_id: string,
+}
+
+export interface IStructurizeMessage {
+    event: string,
     message_id: string,
 }
 

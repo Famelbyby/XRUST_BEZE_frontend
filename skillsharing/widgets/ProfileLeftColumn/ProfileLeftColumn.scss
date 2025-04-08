@@ -27,6 +27,8 @@
             width: 200px;
             height: 200px;
             border-radius: 7px;
+            box-shadow: 2px 2px 7px 0px #00000057;
+            object-fit: cover;
 
             &-mock {
                 display: flex;

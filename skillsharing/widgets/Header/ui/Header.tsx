@@ -6,7 +6,7 @@ import { AppState } from "../../../app/AppStore";
 import { AVATAR_URL } from "../../../shared/Consts/URLS";
 
 const Header: React.FC = () => {
-    const {user} = useSelector((state: AppState) => state.profile);
+    const {user} = useSelector((state: AppState) => state.user);
 
     return (
         <div className={"header" + (user === undefined ? " header_none-user" : "")}>
@@ -17,10 +17,10 @@ const Header: React.FC = () => {
             </Link>
             {user !== undefined && 
                 <>
-                    <div className="header-searchbar">
+                    {/* <div className="header-searchbar">
                         <img className="header-searchbar__img" src="/Header/search.png" alt=""/>
                         <input type="text" placeholder="Поиск" className="header-searchbar__input" />
-                    </div>
+                    </div> */}
                     <div className="header-profile">
                         <Link to={`/profile/${user.id}`} >
                             <img className="header-profile__avatar" src={AVATAR_URL + user.avatar} alt="profile" />

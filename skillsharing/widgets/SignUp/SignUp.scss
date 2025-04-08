@@ -5,6 +5,8 @@
         gap: 15px;
         align-items: center;
         overflow-y: scroll;
+        overflow-x: hidden;
+        width: 430px;
 
         &::-webkit-scrollbar {
             display: none;
@@ -12,21 +14,39 @@
     }
 
     &__button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 8px 50px;
-        background-color: #0000ff;
-        color: #ffffff;
-        font-family: "Inter";
-        margin-top: 20px;
-        border-radius: 10px;
-        cursor: pointer;
-        transition-duration: 0.2s;
-        user-select: none;
+        &-reg, &-next {
+            background-color: #0000ff;
+            color: white;
+        }
 
-        &:hover {
-            transform: scale(1.05);
+        &-reg {
+            padding: 8px 20px;
+        }
+
+        &-reg, &-next, &-prev {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Inter";
+            margin-top: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition-duration: 0.2s;
+            user-select: none;
+
+            &:hover {
+                transform: scale(1.05);
+            }
+        }
+
+        &-next, &-prev {
+            padding: 8px 50px;
+        }
+
+        &-prev {
+            background-color: white;
+            color: black;
+            border: 1px solid black;
         }
     }
 
@@ -36,7 +56,7 @@
         flex-direction: column;
         gap: 10px;
         width: 100%;
-        color: white;
+        color: black;
         align-items: start;
 
         &-field {
@@ -76,7 +96,7 @@
         flex-direction: column;
         gap: 10px;
         width: 100%;
-        color: white;
+        color: black;
         align-items: start;
 
         &-select {
@@ -92,5 +112,111 @@
                 border: none;
             }
         }
+    }
+
+    &-bio {
+        font-family: "Inter";
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        color: black;
+
+        &-field {
+            background-color: white;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: end;
+            padding: 7px 10px 5px;
+            height: 150px;
+            gap: 5px;
+        }
+
+        &__input {
+            border: none;
+            background: inherit;
+            font-family: inherit;
+            resize: none;
+            width: 100%;
+            flex-grow: 1;
+
+            &:focus {
+                outline: none;
+            }
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+        }
+    }
+
+    &-sktl {
+        font-family: "Inter";
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        color: black;
+        align-items: start;
+
+        &-case {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px;
+            box-sizing: border-box;
+
+            &__delete-img {
+                width: 10px;
+                height: 10px;
+                cursor: pointer;
+            }
+
+            &-select-skill {
+                border: none;
+                padding: 3px;
+                border-radius: 6px;
+                font-family: 'Inter';
+                font-size: 14px;
+            }
+
+            &-select-level {
+                border: none;
+                padding: 3px;
+                border-radius: 6px;
+                font-family: 'Inter';
+                font-size: 14px;
+            }
+        }
+
+        &-cases {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            &-add-skill {
+                display: flex;
+                width: 20px;
+                box-sizing: border-box;
+                padding: 5px;
+                border-radius: 50%;
+                background: #dcdcdc;
+                cursor: pointer;
+                opacity: 0.5;
+
+                &__img {
+                    width: 10px;
+                    height: 10px;
+                    border-radius: inherit;
+                }
+            }
+        }
+    }
+
+    &-footer {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
     }
 }

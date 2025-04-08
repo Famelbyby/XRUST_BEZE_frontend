@@ -1,20 +1,15 @@
-import React, { useEffect, useId } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../../entity/Message/Message"
 import { IMessage } from "../../entity/Message/MessageTypes";
-import { GetChatMessages } from "../../pages/Chat/api/Chat";
-import { addMessage, replaceMessages, deleteMessage, updateMessage, clearAllMessages } from "../../app/slices/ChatSlice";
+import { addMessage, deleteMessage, updateMessage } from "../../app/slices/ChatSlice";
 import { AppDispatch, AppState } from "../../app/AppStore";
 import './ChatContent.scss'
-import { DAY_IN_MILLISECONDS } from "../../shared/Consts/ValidatorsConts";
 import { FormatDayMonthYear } from "../../shared/Functions/FormatDate";
 import MainWebSocket from '../../shared/WebSocket'
+import { DAY_IN_MILLISECONDS } from "../../shared/Consts/ValidatorsConts";
 
-interface ChatContentPropTypes {
-    channelID: string | null,
-}
-
-const ChatContent: React.FC<ChatContentPropTypes> = ({channelID}) => {
+const ChatContent: React.FC = () => {
     const {messages, selectedMessages} = useSelector((state: AppState) => state.chatMessages);
     const dispatch = useDispatch<AppDispatch>();
 
@@ -42,21 +37,6 @@ const ChatContent: React.FC<ChatContentPropTypes> = ({channelID}) => {
             MainWebSocket.removeObserver('chat-messages');
         };
     }, [dispatch]);
-
-    /**
-     * Gets chat messages
-     */
-    useEffect(() => {
-        if (channelID !== null) {
-            dispatch(GetChatMessages(channelID));
-        } else {
-            dispatch(replaceMessages([]));
-        }
-
-        return () => {
-            dispatch(clearAllMessages());
-        };
-    }, [dispatch, channelID]);
 
     useEffect(() => {
         const chatContent = document.querySelector('.chat-content');
@@ -93,8 +73,17 @@ const ChatContent: React.FC<ChatContentPropTypes> = ({channelID}) => {
                 const isSelected: boolean = selectedMessages!.find((selectedMessage) => selectedMessage.message_id === message.message_id) !== undefined;
                 
                 let needTime: boolean = false;
-                if (index === messages.length - 1 || messages[index + 1].created_at - message.created_at > (DAY_IN_MILLISECONDS / 1000)) {
+
+                const messTime = new Date(message.created_at * 1000);
+
+                if (index === messages.length - 1) {
                     needTime = true;
+                } else {
+                        const nextMessTime = new Date(messages[index + 1].created_at * 1000);
+                        
+                        if (!(nextMessTime.getDate() == messTime.getDate() && (nextMessTime.getMilliseconds() - messTime.getMilliseconds() < DAY_IN_MILLISECONDS))) {
+                            needTime = true;
+                        }
                 }
 
                 return (
@@ -103,7 +92,7 @@ const ChatContent: React.FC<ChatContentPropTypes> = ({channelID}) => {
                         {needTime && 
                             <div className="chat-content-day-field" key={message.message_id}>
                                 <div className="chat-content-day-field__day">
-                                    {FormatDayMonthYear(new Date(message.created_at * 1000))}
+                                    {FormatDayMonthYear(messTime)}
                                 </div>
                             </div>
                         }

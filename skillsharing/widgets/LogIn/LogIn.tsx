@@ -6,6 +6,7 @@ import TextField from "../../features/TextField/TextField";
 import PasswordField from '../../features/PasswordField/PasswordField'
 import './LogIn.scss'
 import { TryAuth} from '../../pages/Auth/api/Auth'
+import Loader from '../../features/Loader/Loader'
 
 const LogInEnterButton: React.FC = () => {
     const {identifier, password, isPending} = useSelector((state: AppState) => state.login);
@@ -24,8 +25,7 @@ const LogInEnterButton: React.FC = () => {
             dispatch(TryAuth({username: identifier.value, password: password.value}));
         }}>
             {isPending && 
-                <div className="log-in__button_pending">
-                </div>
+                <Loader />
             }
             {!isPending &&
                 <>

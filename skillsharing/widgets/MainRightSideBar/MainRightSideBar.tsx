@@ -6,7 +6,7 @@ import { AppState } from "../../app/AppStore";
 import './MainRightSideBar.scss'
 
 const MainRightSideBar: React.FC = () => {
-    const {user} = useSelector((state: AppState) => state.profile);
+    const {user} = useSelector((state: AppState) => state.user);
     const dispatch = useDispatch();
 
     return (

@@ -1,11 +1,12 @@
 import React from "react";
 import { StatisticItem} from './ProfileLeftColumnTypes'
-import { ProfileType } from "../../pages/Profile/ui/ProfileTypes";
 import {CapitalizeString} from '../../shared/Functions/FormatStrings'
 import {PREFERRED_FORMAT_TRANSLATION} from '../../shared/Consts/Translations'
 import './ProfileLeftColumn.scss'
-import { Skill } from "../../shared/Consts/Interfaces";
+import { CommunicationFormat, Skill } from "../../shared/Consts/Interfaces";
 import { AVATAR_URL } from "../../shared/Consts/URLS";
+import { useSelector } from "react-redux";
+import { AppState } from "../../app/AppStore";
 
 const profileStatistics: StatisticItem[] = [
     {
@@ -18,22 +19,20 @@ const profileStatistics: StatisticItem[] = [
     },
 ];
 
-interface ProfileLeftColumnPropTypes {
-    profile: ProfileType | undefined,
-}
+const ProfileLeftColumn: React.FC = () => {
+    const {user} = useSelector((state: AppState) => state.profile);
 
-const ProfileLeftColumn: React.FC<ProfileLeftColumnPropTypes> = ({profile}) => {
     return (
         <div className="profile-left-column">
             <div className="profile-avatar">
-                {profile === undefined && 
+                {user === undefined && 
                     <div className="profile-avatar__img profile-avatar__img-mock">
                         <div className="profile-avatar__img-spinner">
                         </div>
                     </div>
                 }
-                {profile !== undefined &&
-                    <img className="profile-avatar__img" src={AVATAR_URL + profile.avatar} alt="avatar"/>
+                {user !== undefined &&
+                    <img className="profile-avatar__img" src={AVATAR_URL + user.avatar} alt="avatar"/>
                 }
             </div>
             <div className="profile-stats">
@@ -44,13 +43,13 @@ const ProfileLeftColumn: React.FC<ProfileLeftColumnPropTypes> = ({profile}) => {
                                 {stat.title}
                             </div>
                             <div className="profile-stats-item__example-value">
-                                {profile === undefined && 
+                                {user === undefined && 
                                     <div className="profile-stats-item__example-mock">
                                         <div className="profile-stats-item__example-spinner">
                                         </div>
                                     </div>
                                 }
-                                {profile !== undefined && 
+                                {user !== undefined && 
                                     0
                                 }
                             </div>
@@ -61,17 +60,17 @@ const ProfileLeftColumn: React.FC<ProfileLeftColumnPropTypes> = ({profile}) => {
             <div className="profile-tags">
                 <div className="profile-tags-header">
                     <div className="profile-tags-header__title">
-                        Теги
+                        Навыки
                         <img className="profile-tags-header__img" title="Пользователь делится следующими навыками" src="/shared/question.png" alt=""/>
                     </div>
                     <div className="profile-tags-header__count">
-                        {profile === undefined && 0}
-                        {profile !== undefined && profile.skills_to_learn.length}
+                        {user === undefined && 0}
+                        {user !== undefined && user.skills_to_share.length}
                     </div>
                 </div>
                 <div className="profile-tags-array">
-                    {profile !== undefined &&
-                        profile.skills_to_share.map((skill: Skill) => {
+                    {user !== undefined &&
+                        user.skills_to_share.map((skill: Skill) => {
                             return (
                                 <div className={`profile-tags-array__tag profile-tags-array__tag_${skill.level}`} title={`${CapitalizeString(skill.level)}`} key={skill.name}>
                                     {skill.name}
@@ -81,11 +80,11 @@ const ProfileLeftColumn: React.FC<ProfileLeftColumnPropTypes> = ({profile}) => {
                     }
                 </div>
             </div>
-            {profile !== undefined && 
+            {user !== undefined && 
                 <div className="profile-preferred-format">
                     Предпочитает общаться
                     <div className="profile-preferred-format__example">
-                        {PREFERRED_FORMAT_TRANSLATION[profile.preferred_format]}
+                        {PREFERRED_FORMAT_TRANSLATION[user.preferred_format as CommunicationFormat]}
                     </div>
                 </div>
             }

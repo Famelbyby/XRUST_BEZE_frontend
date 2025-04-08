@@ -2,15 +2,53 @@ import React, { useEffect } from 'react';
 import Dialog from '../../entity/Dialog/ui/Dialog';
 import { DialogItem } from '../../entity/Dialog/ui/DialogTypes';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearAll } from '../../app/slices/DialogsSlice';
-import { GetDialogs } from '../../pages/Dialogs/api/Dialogs';
+import { clearAll, replaceNewMessage, replaceUpdatedMessage } from '../../app/slices/DialogsSlice';
+import { GetDialogs, GetLastMessage } from '../../pages/Dialogs/api/Dialogs';
 import { AppDispatch, AppState } from '../../app/AppStore';
 import './DialogsContent.scss'
+import MainWebSocket from '../../shared/WebSocket'
+import { IMessage } from '../../entity/Message/MessageTypes';
 
 const DialogsContent: React.FC = () => {
-    const {filteredDialogs} = useSelector((state: AppState) => state.dialogs);
-    const {user} = useSelector((state: AppState) => state.profile);
+    const {dialogs, filteredDialogs} = useSelector((state: AppState) => state.dialogs);
+    const {user} = useSelector((state: AppState) => state.user);
     const dispatch = useDispatch<AppDispatch>();
+
+    /**
+     * Adds messages movement in chat
+     */
+    useEffect(() => {
+        MainWebSocket.addObserver('dialog-messages', (data: string) => {
+            const message: IMessage = JSON.parse(data);
+            
+            switch (message.type) {
+                case 'send_message':
+                    if (dialogs !== undefined) {
+                        const foundDialog = dialogs.find((dialog) => dialog.channel_id === message.channel_id);
+
+                        if (foundDialog) {
+                            dispatch(replaceNewMessage(message));
+                        } else {
+                            if (user !== undefined) {
+                                dispatch(GetDialogs(user.id));
+                            }
+                        }
+                    }
+                    
+                    break;
+                case 'update_message':
+                    dispatch(replaceUpdatedMessage(message));
+                    break;
+                case 'delete_message':
+                    dispatch(GetLastMessage(message.channel_id!));
+                    break;
+            }
+        });
+
+        return () => {
+            MainWebSocket.removeObserver('chat-messages');
+        };
+    }, [dispatch, dialogs, user]);
 
     useEffect(() => {
         if (user !== undefined) {
@@ -21,6 +59,8 @@ const DialogsContent: React.FC = () => {
             dispatch(clearAll());
         }
     }, [dispatch, user]);
+
+    filteredDialogs?.sort((a, b) => (a.last_message!.created_at - b.last_message!.created_at));
 
     return (
         <div className="dialogs">

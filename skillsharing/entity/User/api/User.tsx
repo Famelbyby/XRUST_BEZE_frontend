@@ -7,9 +7,9 @@ import { CODE_OK } from '../../../shared/Consts/Codes';
 const notAuthedUserMock: ProfileType | undefined = undefined;
 
 const userMock: ProfileType = {
-    id: "67ed4e0a66ab0aab711f8476",
+    id: localStorage.getItem('user-id') || "67ed4e0a66ab0aab711f8476",
     username: 'Shkaf Unichtojitel',
-    avatar_url: '/Profile/avatar.png',
+    avatar: '/Profile/avatar.png',
     bio: '[!i for i in [‘Красивый’, ‘Умный’, ‘Обаятельный’, ‘Спортсмен’]]',
     skills_to_learn: [
         {

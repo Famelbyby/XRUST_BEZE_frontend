@@ -2,15 +2,14 @@ import axios from "axios";
 import { ProfileType } from "../ui/ProfileTypes";
 import { CODE_OK } from "../../../shared/Consts/Codes";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ProfileRequest } from "../../../shared/Consts/Interfaces";
-import { BACK_URL } from "../../../shared/Consts/URLS";
+import { BACK_URL, USERS_URL } from "../../../shared/Consts/URLS";
 
 const notAuthedUserMock: ProfileType | undefined = undefined;
 
 const userMock: ProfileType = {
     id: "67e3b36b9a36154096b4bbea",
     username: 'Shkaf Unichtojitel',
-    avatar_url: '/Profile/avatar.png',
+    avatar: '/Profile/avatar.png',
     bio: '[!i for i in [‘Красивый’, ‘Умный’, ‘Обаятельный’, ‘Спортсмен’]]',
     skills_to_learn: [
         {
@@ -55,7 +54,7 @@ const userMock: ProfileType = {
 
 export const GetProfile = createAsyncThunk(
     'profile/getProfileByID',
-    async ({userId, callback}: ProfileRequest) => {
+    async (userId: string) => {
         // const response = await (new Promise((resolve) => {
         //     setTimeout(() => {
         //         resolve(userMock);
@@ -66,16 +65,13 @@ export const GetProfile = createAsyncThunk(
 
         // return {user: response, status: CODE_OK};
         try {
-            const {status, data} = await axios.get(BACK_URL + `/users/${userId}`);
-
-            if (status === CODE_OK) {
-                callback(data as ProfileType | undefined);
-            }
+            const {status, data} = await axios.get(BACK_URL + USERS_URL + `/${userId}`);
     
             return {user: data, status: status};
         }
         catch (event) {
             console.log(event);
+            return {user: undefined, status};
         }
     }
 );

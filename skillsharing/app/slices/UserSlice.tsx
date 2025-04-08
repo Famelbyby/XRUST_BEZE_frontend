@@ -5,6 +5,7 @@ import { TryAuth, TryRegister } from '../../pages/Auth/api/Auth';
 import {CODE_OK, CODE_CREATED, CODE_FORBIDDEN, CODE_NOT_AUTHED} from '../../shared/Consts/Codes';
 import { UserResponse } from '../../shared/Consts/Interfaces';
 import { GetProfile } from '../../pages/Profile/api/Profile';
+import { UpdateProfile } from '../../pages/Settings/api/Settings';
 
 export interface UserState {
   user: ProfileType | undefined;
@@ -17,10 +18,10 @@ const initialState: UserState = {
 }
 
 export const userSlice = createSlice({
-  name: 'user',
+  name: 'structurizedMessage',
   initialState,
   reducers: {
-    clearProfile: (state: UserState) => {
+    clearUser: (state: UserState) => {
         state.user = undefined;
         state.isFetched = false;
     },
@@ -63,10 +64,18 @@ export const userSlice = createSlice({
       }
       
       state.isFetched = true;
+    }).addCase(UpdateProfile.fulfilled, (state: UserState, action) => {
+      const data = action.payload as UserResponse;
+
+      if (data.status !== CODE_OK) {
+        return;
+      }
+
+      state.user = data.user;
     });
   },
 })
 
-export const { clearProfile } = userSlice.actions
+export const { clearUser } = userSlice.actions
 
 export default userSlice.reducer

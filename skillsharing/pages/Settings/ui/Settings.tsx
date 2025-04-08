@@ -6,17 +6,34 @@ import './Settings.scss'
 import { useDispatch, useSelector } from "react-redux";
 import { GetProfile } from "../../Profile/api/Profile";
 import { AppDispatch, AppState } from "../../../app/AppStore";
+import { clearSettings, clearUpdated } from "../../../app/slices/SettingsSlice";
+import { useNavigate } from "react-router";
+import { GetCategories } from "../../Auth/api/Auth";
 
 const Settings: React.FC = () => {
-    const {user} = useSelector((state: AppState) => state.profile);
+    const {user, isFetched} = useSelector((state: AppState) => state.user);
+    const {isUpdated} = useSelector((state: AppState) => state.settings);
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if (user !== undefined) {
-            dispatch(GetProfile({userId: user.id, callback: () => {}}));
+        if (user !== undefined && !isFetched) {
+            dispatch(GetProfile(user.id));
         }
-        
-    }, [dispatch, user]);
+
+        return () => {
+            dispatch(clearSettings());
+        }
+    }, [dispatch, user, isFetched]);
+
+    useEffect(() => {
+        dispatch(GetCategories());
+
+        if (isUpdated) {
+            dispatch(clearUpdated());
+            navigate('/profile/' + user!.id);
+        }
+    }, [isUpdated, dispatch, navigate, user]);
 
     return (
         <div className="settings-page">

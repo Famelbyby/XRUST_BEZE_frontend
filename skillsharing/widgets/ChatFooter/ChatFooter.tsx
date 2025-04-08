@@ -15,6 +15,8 @@ function handleEnter(event: KeyboardEvent) {
         return;
     }
 
+    event.preventDefault();
+
     const sendMessageButton: HTMLButtonElement | null = document.querySelector('#send-message');
 
     if (sendMessageButton !== null) {
@@ -22,14 +24,10 @@ function handleEnter(event: KeyboardEvent) {
     }
 }
 
-interface ChatFooterPropTypes {
-    peerID: string | undefined,
-}
-
-const ChatFooter: React.FC<ChatFooterPropTypes> = ({peerID}) => {
+const ChatFooter: React.FC = () => {
     const [inputText, setInputText] = useState('');
-    const {editingMessage, channelID} = useSelector((state: AppState) => state.chatMessages);
-    const {user} = useSelector((state: AppState) => state.profile);
+    const {editingMessage, channelID, peerID} = useSelector((state: AppState) => state.chatMessages);
+    const {user} = useSelector((state: AppState) => state.user);
     const dispatch = useDispatch();
     const userId: string = user!.id;
     

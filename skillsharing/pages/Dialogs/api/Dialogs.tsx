@@ -1,10 +1,8 @@
 import axios from "axios";
 import { DialogItem } from "../../../entity/Dialog/ui/DialogTypes";
-import { BACK_URL } from "../../../shared/Consts/URLS";
+import { BACK_URL, CHAT_URL } from "../../../shared/Consts/URLS";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CODE_OK } from "../../../shared/Consts/Codes";
-
-const CHAT_URL = '/chat';
 
 const dialogsMock: DialogItem[] = [
     {
@@ -33,7 +31,7 @@ const dialogsMock: DialogItem[] = [
                     },
                 ],
                 "bio": "",
-                "avatar_url": "",
+                "avatar": "",
                 "created_at": "2025-03-26T07:57:31.91Z",
                 "updated_at": "2025-03-26T07:57:31.91Z",
                 "last_active_at": "2025-03-26T07:57:31.91Z",
@@ -58,7 +56,7 @@ const dialogsMock: DialogItem[] = [
                     },
                 ],
                 "bio": "",
-                "avatar_url": "",
+                "avatar": "",
                 "created_at": "2025-03-26T07:57:58.253Z",
                 "updated_at": "2025-03-26T07:57:58.253Z",
                 "last_active_at": "2025-03-26T07:57:58.253Z",
@@ -94,6 +92,19 @@ export const GetDialogs = createAsyncThunk(
             const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/channels?user_id=` + userID);
     
             return {dialogs: data.channels, status: status};
+        } catch (event) {
+            console.log(event);
+        }
+    }
+);
+
+export const GetLastMessage = createAsyncThunk(
+    'dialogs/getLastMessage',
+    async (channelId: string) => {
+        try {
+            const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/${channelId}?limit=1`);
+    
+            return {messages: data.messages, channelId, status};
         } catch (event) {
             console.log(event);
         }

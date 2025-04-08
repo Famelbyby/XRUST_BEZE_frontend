@@ -15,7 +15,7 @@ interface sideBarItem {
 const SideBar: React.FC = () => {
     const location = useLocation();
 
-    const {user} = useSelector((state: AppState) => state.profile);
+    const {user} = useSelector((state: AppState) => state.user);
 
     const sideBarItems: sideBarItem[] = [
         {

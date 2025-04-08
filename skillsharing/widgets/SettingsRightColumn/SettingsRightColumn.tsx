@@ -1,21 +1,137 @@
 import React, { useState } from "react";
 import './SettingsRightColumn.scss'
 import { useDispatch, useSelector } from "react-redux";
-import { AppState } from "../../app/AppStore";
-import { setBio, setUsername } from "../../app/slices/SettingsSlice";
+import { AppDispatch, AppState } from "../../app/AppStore";
+import { addSkillToLearn, addSkillToShare, deleteSkillFromLearn, deleteSkillFromShare, editedSkillToLearn, editedSkillToLearnLevel, editedSkillToShare, editedSkillToShareLevel, setBio, setUsername } from "../../app/slices/SettingsSlice";
+import { BIO_MAX_LENGTH, MAX_USERNAME_LENGTH, MIN_USERNAME_LENGTH } from "../../shared/Consts/ValidatorsConts";
 
-const BIO_MAX_LENGTH = 500;
-const USERNAME_MIN_LENGTH = 3;
-const USERNAME_MAX_LENGTH = 25;
 const hrefsMock: string[] = [
     "https://github.com",
     "https://vk.com",
     "https://twitch.com",
 ];
 
+const SettingsSkillToLearn: React.FC = () => {
+    const {user, globalSkills} = useSelector((state: AppState) => state.settings);
+    const dispatch = useDispatch<AppDispatch>();
+
+    return (
+        <div className='sign-up-sktl'>
+            Выберите навыки для изучения
+            <div className='sign-up-sktl-cases'>
+                {user !== undefined && user.skills_to_learn.map((skill, index) => {
+                    return (
+                        <div className='sign-up-sktl-case' key={index}>
+                            <select className='sign-up-sktl-case-select-skill' onChange={(event) => {
+                                dispatch(editedSkillToLearn([index, event.target.value]));
+                            }}>
+                                {globalSkills.map((glSkill) => {
+                                    return (
+                                        <>
+                                            {glSkill === skill.name && 
+                                                <option value={glSkill} selected key={index}>{glSkill}</option>
+                                            }
+                                            {glSkill !== skill.name && 
+                                                <option value={glSkill} key={index}>{glSkill}</option>
+                                            }
+                                        </>
+                                    )
+                                })}
+                            </select>
+                            <select className='sign-up-sktl-case-select-level' onChange={(event) => {
+                                dispatch(editedSkillToLearnLevel([index, event.target.value]));
+                            }}>
+                                {["beginner", "intermediate", "advanced"].map((level) => {
+                                    return (
+                                        <>
+                                            {level === skill.level && 
+                                                <option value={level} selected key={index}>{level}</option>
+                                            }
+                                            {level !== skill.level && 
+                                                <option value={level} key={index}>{level}</option>
+                                            }
+                                        </>
+                                    )
+                                })}
+                            </select>
+                            {!(user.skills_to_learn.length === 1) && 
+                                <img className='sign-up-sktl-case__delete-img' src='/shared/cancel.png' alt='Удалить навык' onClick={() => dispatch(deleteSkillFromLearn(skill.name))}/>
+                            }
+                        </div>
+                    )
+                })}
+                {user !== undefined && user.skills_to_learn.length < 5 && 
+                    <div className='sign-up-sktl-cases-add-skill' onClick={() => dispatch(addSkillToLearn())}>
+                        <img className='sign-up-sktl-cases-add-skill__img' src='/shared/plus.png' alt='Добавить навык для изучения'/>
+                    </div>
+                }
+            </div>
+        </div>
+    )
+};
+
+const SettingsSkillToShare: React.FC = () => {
+    const {user, globalSkills} = useSelector((state: AppState) => state.settings);
+    const dispatch = useDispatch<AppDispatch>();
+
+    return (
+        <div className='sign-up-sktl'>
+            Выберите навыки, которыми хотите обучать
+            <div className='sign-up-sktl-cases'>
+                {user !== undefined && user.skills_to_share.map((skill, index) => {
+                    return (
+                        <div className='sign-up-sktl-case' key={index}>
+                            <select className='sign-up-sktl-case-select-skill' onChange={(event) => {
+                                dispatch(editedSkillToShare([index, event.target.value]));
+                            }}>
+                                {globalSkills.map((glSkill) => {
+                                    return (
+                                        <>
+                                            {glSkill === skill.name && 
+                                                <option value={glSkill} selected key={index}>{glSkill}</option>
+                                            }
+                                            {glSkill !== skill.name && 
+                                                <option value={glSkill} key={index}>{glSkill}</option>
+                                            }
+                                        </>
+                                    )
+                                })}
+                            </select>
+                            <select className='sign-up-sktl-case-select-level' onChange={(event) => {
+                                dispatch(editedSkillToShareLevel([index, event.target.value]));
+                            }}>
+                                {["beginner", "intermediate", "advanced"].map((level) => {
+                                    return (
+                                        <>
+                                            {level === skill.level && 
+                                                <option value={level} selected key={index}>{level}</option>
+                                            }
+                                            {level !== skill.level && 
+                                                <option value={level} key={index}>{level}</option>
+                                            }
+                                        </>
+                                    )
+                                })}
+                            </select>
+                            {!(user.skills_to_share.length === 1) && 
+                                <img className='sign-up-sktl-case__delete-img' src='/shared/cancel.png' alt='Удалить навык' onClick={() => dispatch(deleteSkillFromShare(skill.name))}/>
+                            }
+                        </div>
+                    )
+                })}
+                {user !== undefined && user.skills_to_share.length < 5 && 
+                    <div className='sign-up-sktl-cases-add-skill' onClick={() => dispatch(addSkillToShare())}>
+                        <img className='sign-up-sktl-cases-add-skill__img' src='/shared/plus.png' alt='Добавить навык для обучения'/>
+                    </div>
+                }
+            </div>
+        </div>
+    )
+};
+
 const SettingsRightColumn: React.FC = () => {
     const [hrefs, setHrefs] = useState(hrefsMock);
-    const {user} = useSelector((state: AppState) => state.settings);
+    const {user, usernameError} = useSelector((state: AppState) => state.settings);
     const dispatch = useDispatch();
 
     function handleChangingUsername(event: React.ChangeEvent<HTMLInputElement>) {
@@ -41,18 +157,23 @@ const SettingsRightColumn: React.FC = () => {
             <div className="settings-username">
                 Имя
                 <div className="settings-username-field">
-                    <input minLength={USERNAME_MIN_LENGTH} maxLength={USERNAME_MAX_LENGTH} className="settings-username__input" type="text" placeholder="Ваше имя" value={user === undefined ? '' : user.username} onChange={handleChangingUsername} />
+                    <input minLength={MIN_USERNAME_LENGTH} maxLength={MAX_USERNAME_LENGTH} className="settings-username__input" type="text" placeholder="Ваше имя" value={user === undefined ? '' : user.username} onChange={handleChangingUsername} />
                     {user === undefined && 
                         <>
-                            0/{USERNAME_MAX_LENGTH}
+                            0/{MAX_USERNAME_LENGTH}
                         </>
                     }
                     {user !== undefined && 
                         <>
-                            {user.username.length}/{USERNAME_MAX_LENGTH}
+                            {user.username.length}/{MAX_USERNAME_LENGTH}
                         </>
                     }
                 </div>
+                {usernameError !== undefined &&
+                    <div className="settings-username-field__error">
+                        {usernameError}
+                    </div>
+                }
             </div>
             <div className="settings-bio">
                 О себе
@@ -63,6 +184,8 @@ const SettingsRightColumn: React.FC = () => {
                     </div>
                 </div>
             </div>
+            <SettingsSkillToLearn />
+            <SettingsSkillToShare />
             {user &&
                 <div className="settings-hrefs">
                     Ссылки
@@ -73,7 +196,7 @@ const SettingsRightColumn: React.FC = () => {
                                     <a href={href} target="_blank">
                                         {href}
                                     </a>
-                                    <img className="settings-hrefs-examples__img" src="/Settings/cancel.png" alt="Удалить ссылку" onClick={() => handleRemovingHref(href)}/>
+                                    <img className="settings-hrefs-examples__img" src="/shared/cancel.png" alt="Удалить ссылку" onClick={() => handleRemovingHref(href)}/>
                                 </div>
                             );
                         })}

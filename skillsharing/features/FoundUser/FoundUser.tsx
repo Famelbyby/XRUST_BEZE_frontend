@@ -2,7 +2,7 @@ import React from 'react';
 import {ProfileType} from '../../pages/Profile/ui/ProfileTypes'
 import { Link } from 'react-router';
 import './FoundUser.scss'
-import { Skill } from '../../widgets/ProfileLeftColumn/ProfileLeftColumnTypes';
+import { Skill } from '../../shared/Consts/Interfaces';
 import { FormatRelativeTimeInPastInDays } from '../../shared/Functions/FormatDate';
 import { AVATAR_URL } from '../../shared/Consts/URLS';
 

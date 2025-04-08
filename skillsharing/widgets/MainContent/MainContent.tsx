@@ -10,12 +10,12 @@ import './MainContent.scss'
 
 const MainContent: React.FC = () => {
     const { filteredUsers } = useSelector((state: AppState) => state.mainPageUsers);
-    const { user } = useSelector((state: AppState) => state.profile);
+    const { user } = useSelector((state: AppState) => state.user);
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
         if (user !== undefined) {
-            dispatch(GetMatchedUsers(user.id));
+            dispatch(GetMatchedUsers({userId: user.id, callback: () => {}}));
         }
 
         return () => {

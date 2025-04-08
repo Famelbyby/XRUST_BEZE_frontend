@@ -2,10 +2,10 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import {DialogItem} from '../../entity/Dialog/ui/DialogTypes'
 import { ProfileType } from '../../pages/Profile/ui/ProfileTypes'
-import { Skill } from '../../widgets/ProfileLeftColumn/ProfileLeftColumnTypes'
-import { GetDialogs } from '../../pages/Dialogs/api/Dialogs'
-import { DialogsResponse } from '../../shared/Consts/Interfaces'
+import { GetDialogs, GetLastMessage } from '../../pages/Dialogs/api/Dialogs'
+import { DialogsResponse, Skill } from '../../shared/Consts/Interfaces'
 import { CODE_OK } from '../../shared/Consts/Codes'
+import { IMessage } from '../../entity/Message/MessageTypes'
 
 export interface DialogsState {
   dialogs: DialogItem[] | undefined,
@@ -56,6 +56,32 @@ export const dialogsSlice = createSlice({
       state.dialogs = undefined;
       state.filteredDialogs = undefined;
     },
+    replaceNewMessage: (state: DialogsState, action: PayloadAction<IMessage>) => {
+      if (state.filteredDialogs === undefined) {
+        return;
+      }
+
+      const newMessage = action.payload;
+
+      state.filteredDialogs.forEach((filteredDialog, index) => {
+        if (filteredDialog.channel_id === newMessage.channel_id) {
+          state.filteredDialogs![index].last_message = newMessage;
+        }
+      });
+    },
+    replaceUpdatedMessage: (state: DialogsState, action: PayloadAction<IMessage>) => {
+      if (state.filteredDialogs === undefined) {
+        return;
+      }
+
+      const newMessage = action.payload;
+
+      state.filteredDialogs.forEach((filteredDialog, index) => {
+        if (filteredDialog.channel_id === newMessage.channel_id && filteredDialog.last_message!.message_id === newMessage.message_id) {
+          state.filteredDialogs![index].last_message = newMessage;
+        }
+      });
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(GetDialogs.fulfilled, (state: DialogsState, action) => {
@@ -73,10 +99,39 @@ export const dialogsSlice = createSlice({
 
       state.dialogs = newDialogs.filter((dialog: DialogItem) => dialog.last_message !== null);
       state.filteredDialogs = state.dialogs;
+    }).addCase(GetLastMessage.fulfilled, (state: DialogsState, action) => {
+      const data = action.payload;
+
+      if (state.filteredDialogs === undefined) {
+        return;
+      }
+
+      if (data!.messages.length === 0) {
+        state.dialogs!.forEach((dialog, index) => {
+          if (dialog.channel_id === data!.channelId) {
+            state.dialogs = [...state.dialogs!.slice(0, index), ...state.dialogs!.slice(index + 1)];
+          }
+        })
+        state.filteredDialogs.forEach((filteredDialog, index) => {
+          if (filteredDialog.channel_id === data!.channelId) {
+            state.filteredDialogs = [...state.filteredDialogs!.slice(0, index), ...state.filteredDialogs!.slice(index + 1)];
+          }
+        });
+
+        return;
+      }
+
+      const newLastMessage = data!.messages[0] as IMessage;
+
+      state.filteredDialogs.forEach((filteredDialog, index) => {
+        if (filteredDialog.channel_id === newLastMessage.channel_id) {
+          state.filteredDialogs![index].last_message = newLastMessage;
+        }
+      });
     });
   },
 })
 
-export const { filterDialogs, clearAll } = dialogsSlice.actions
+export const { filterDialogs, clearAll, replaceNewMessage, replaceUpdatedMessage } = dialogsSlice.actions
 
 export default dialogsSlice.reducer
