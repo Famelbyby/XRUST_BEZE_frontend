@@ -21,7 +21,13 @@ const Message: React.FC<PropType> = ({message, isSelected}) => {
     const dispatch = useDispatch();
 
     return (
-        <div className={'chat-message-field' + (isSelected ? " chat-message-field_selected" : "") + (isOwnMessage ? ' chat-message-field_right' : '')} onClick={() => dispatch(toggleSelectedMessage(message.message_id))}>
+        <div className={'chat-message-field' + (isSelected ? " chat-message-field_selected" : "") + (isOwnMessage ? ' chat-message-field_right' : '')} onClick={() => {
+            if (window.getSelection()?.toString() !== '') {
+                return;
+            }
+
+            dispatch(toggleSelectedMessage(message.message_id));
+        }}>
             <div className={'chat-message chat-message_' + (isOwnMessage ? 'right' : 'left')} key={message.message_id}>
                 <div className='chat-content__text'>
                     {message.payload}
