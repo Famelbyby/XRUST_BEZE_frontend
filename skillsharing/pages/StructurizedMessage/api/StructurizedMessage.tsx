@@ -24,7 +24,8 @@ export const GetMessageById = createAsyncThunk(
 
             return {status: CODE_OK, messageData: {message: data.message, userId}};
         } catch(event) {
-            console.log(event);
+            console.error(event);
+            return  {status, messageData: undefined};
         }
     }
 );
