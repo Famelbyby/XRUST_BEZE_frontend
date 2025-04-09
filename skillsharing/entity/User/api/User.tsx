@@ -57,24 +57,23 @@ export const GetUserByCookie = createAsyncThunk(
     async () => {
         const response = await (new Promise((resolve) => {
             setTimeout(() => {
-                resolve(userMock);
+                resolve(notAuthedUserMock);
             }, 20)
         }));
 
         return {user: response as ProfileType, status: CODE_OK};
 
-        // const {status, data} = await axios.get(BACK_URL + `/auth`, 
-        //     {
-        //         withCredentials: true,
-        //     }
-        // );
+        // try {
+        //     const {status, data} = await axios.get(BACK_URL + `/auth/validate`, 
+        //         {
+        //             withCredentials: true,
+        //         }
+        //     );
 
-        // switch(status) {
-        //     case CODE_OK:
-        //         return {user: data as ProfileType, status};
-        //     case 404:
-        //     default:
-        //         return {user: undefined, status};
+        //     return {user: data as ProfileType, status};
+        // } catch(event) {
+        //     console.log(event);
+        //     return {user: undefined, status};
         // }
     }
 );

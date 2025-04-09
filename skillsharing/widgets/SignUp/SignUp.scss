@@ -35,7 +35,8 @@
             user-select: none;
 
             &:hover {
-                transform: scale(1.05);
+                transform: translateY(-2px);
+                box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.3098039216);
             }
         }
 
@@ -46,7 +47,6 @@
         &-prev {
             background-color: white;
             color: black;
-            border: 1px solid black;
         }
     }
 

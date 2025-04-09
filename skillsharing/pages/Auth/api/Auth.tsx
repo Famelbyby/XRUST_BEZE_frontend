@@ -63,9 +63,14 @@ export const TryAuth = createAsyncThunk(
 
         return {user: response as ProfileType, status: 200};
 
-        // const response = await axios.post(BACK_URL, JSON.stringify({password, username}));
+        // try {
+        //     const {status, data} = await axios.post(BACK_URL + '/auth/login, JSON.stringify({password, username}));
 
-        // callback({user: response.data as ProfileType, status: response.status});
+        //     return {user: data as ProfileType, status};
+        // } catch(event) {
+        //     console.log(event);
+        //     return {user: undefined, status};
+        // }
     }
 );
 
@@ -113,7 +118,7 @@ export const TryRegister = createAsyncThunk(
         // return {user: response as ProfileType, status: CODE_CREATED};
 
         try {
-            const {status, data} = await axios.post(BACK_URL + '/users', JSON.stringify({password, username, email, avatar_url, preferred_format, bio, skills_to_learn, skills_to_share}));
+            const {status, data} = await axios.post(BACK_URL + '/auth/register', JSON.stringify({password, username, email, avatar_url, preferred_format, bio, skills_to_learn, skills_to_share}));
 
             console.log(status, data);
 
