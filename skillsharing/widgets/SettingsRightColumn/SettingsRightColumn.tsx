@@ -186,7 +186,7 @@ const SettingsRightColumn: React.FC = () => {
             </div>
             <SettingsSkillToLearn />
             <SettingsSkillToShare />
-            {user &&
+            {/* {user &&
                 <div className="settings-hrefs">
                     Ссылки
                     <div className="settings-hrefs-examples">
@@ -205,7 +205,7 @@ const SettingsRightColumn: React.FC = () => {
                         </div>
                     </div>
                 </div>
-            }
+            } */}
         </div>
     );
 };

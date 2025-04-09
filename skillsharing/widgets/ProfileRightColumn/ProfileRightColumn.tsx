@@ -29,7 +29,7 @@ const ProfileRightColumn: React.FC = () => {
                         {user !== undefined && user.bio}
                     </div>
                 </div>
-                {user !== undefined &&
+                {/* {user !== undefined &&
                     <div className="profile-hrefs">
                         Ссылки
                         {hrefs.length > 0 && 
@@ -51,7 +51,7 @@ const ProfileRightColumn: React.FC = () => {
                             </div>
                         }
                     </div>   
-                }
+                } */}
                 {/*<div className="profile-feedbacks">
                     Отзывы
                     {profile !== undefined && profile.feedbacks.length > 0 &&
