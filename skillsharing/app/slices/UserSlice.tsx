@@ -43,11 +43,11 @@ export const userSlice = createSlice({
         return;
       }
 
-      // const profile = data.user;
+      const profile = data.user;
 
-      // // if (profile !== undefined && state.user && profile.id === state.user.id) {
-      // //   state.user = profile;
-      // // }
+      if (profile !== undefined && state.user && profile.id === state.user.id) {
+        state.user = profile;
+      }
     }).addCase(TryAuth.fulfilled, (state: UserState, action) => {
       const data = action.payload as UserResponse;
       

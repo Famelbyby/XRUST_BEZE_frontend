@@ -36,9 +36,7 @@ function App() {
   useEffect(() => {
     if (user !== undefined) {
       MainWebSocket.openConnection(user.id);
-    }
-
-    return () => {
+    } else {
       MainWebSocket.closeConnection();
     }
   }, [user, dispatch]);
