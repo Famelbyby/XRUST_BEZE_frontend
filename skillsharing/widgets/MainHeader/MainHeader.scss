@@ -28,11 +28,16 @@
     }
 
     &__searching-input {
-        border: 1px solid rgba(0, 0, 0, 0.2196078431);
+        border: 1px solid rgba(0, 0, 0, 0.2);
         border-radius: 10px;
         padding: 10px;
         font-family: 'Inter';
         font-size: 13px;
+
+        &:focus-visible {
+            outline: none;
+            border: 1px solid rgba(0, 0, 0, 0.8);
+        }
     }
 
     &-hello {
