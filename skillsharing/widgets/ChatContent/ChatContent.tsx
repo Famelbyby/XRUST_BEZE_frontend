@@ -10,7 +10,7 @@ import MainWebSocket from '../../shared/WebSocket'
 import { DAY_IN_MILLISECONDS } from "../../shared/Consts/ValidatorsConts";
 
 const ChatContent: React.FC = () => {
-    const {messages, selectedMessages} = useSelector((state: AppState) => state.chatMessages);
+    const {messages, selectedMessages, structurizingMessages} = useSelector((state: AppState) => state.chatMessages);
     const dispatch = useDispatch<AppDispatch>();
 
     /**
@@ -71,6 +71,7 @@ const ChatContent: React.FC = () => {
             }
             {messages !== undefined && messages.length > 0 && messages.map((message, index) => {
                 const isSelected: boolean = selectedMessages!.find((selectedMessage) => selectedMessage.message_id === message.message_id) !== undefined;
+                const isStructurizing: boolean = structurizingMessages.includes(message.message_id);
                 
                 let needTime: boolean = false;
 
@@ -88,7 +89,7 @@ const ChatContent: React.FC = () => {
 
                 return (
                     <>
-                        <Message message={message} key={(new Date()).getMilliseconds()} isSelected={isSelected} />
+                        <Message isStructurizing={isStructurizing} message={message} key={(new Date()).getMilliseconds()} isSelected={isSelected} />
                         {needTime && 
                             <div className="chat-content-day-field" key={message.message_id}>
                                 <div className="chat-content-day-field__day">

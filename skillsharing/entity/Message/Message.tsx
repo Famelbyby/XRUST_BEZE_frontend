@@ -11,9 +11,10 @@ import { Link } from 'react-router';
 interface PropType {
     message: IMessage,
     isSelected: boolean,
+    isStructurizing: boolean,
 }
 
-const Message: React.FC<PropType> = ({message, isSelected}) => {
+const Message: React.FC<PropType> = ({message, isSelected, isStructurizing}) => {
     const {user} = useSelector((state: AppState) => state.user);
     const user_id: IMessage["user_id"] = user!.id;
     const messageTime: string = FormatHoursMinutes(new Date(message.created_at * 1000));
@@ -46,6 +47,11 @@ const Message: React.FC<PropType> = ({message, isSelected}) => {
                 </> 
                 }
                 <div className='chat-content__time'>
+                    {!isStructurizing && 
+                        <div className='chat-content__structurizing'>
+                            структуризуется
+                        </div>
+                    }
                     {message.updated_at !== message.created_at && 
                         <div className='chat-content__time_redacted'>
                             ред.

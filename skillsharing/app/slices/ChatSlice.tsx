@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import {IMessage} from '../../entity/Message/MessageTypes'
 import { ProfileType } from '../../pages/Profile/ui/ProfileTypes'
 import { ChannelReponse } from '../../shared/Consts/Interfaces'
-import { CODE_BAD, CODE_OK } from '../../shared/Consts/Codes'
+import { CODE_BAD } from '../../shared/Consts/Codes'
 import { GetChannelByIds } from '../../pages/Chat/api/Chat'
 
 export interface MessagesState {
@@ -17,6 +17,7 @@ export interface MessagesState {
   noPeerError: boolean,
   isHiddenDeletingModal: boolean,
   isHiddenStructurizedModal: boolean,
+  structurizingMessages: Array<string>,
 }
 
 const initialState: MessagesState = {
@@ -30,6 +31,7 @@ const initialState: MessagesState = {
   noPeerError: false,
   isHiddenDeletingModal: true,
   isHiddenStructurizedModal: true,
+  structurizingMessages: [],
 }
 
 export const chatSlice = createSlice({
@@ -85,6 +87,14 @@ export const chatSlice = createSlice({
     updateMessage: (state: MessagesState, action: PayloadAction<IMessage>) => {
       const updatedMessage: IMessage = action.payload;
 
+      if (updatedMessage.event === "EventStructurization") {
+        const messageIndex: number = state.structurizingMessages.indexOf(updatedMessage.message_id);
+        
+        if (messageIndex !== -1) {
+          state.structurizingMessages = [...state.structurizingMessages.slice(0, messageIndex), ...state.structurizingMessages.slice(messageIndex + 1)];
+        }
+      }
+
       if (state.channelID !== updatedMessage.channel_id) {
         return;
       }
@@ -116,6 +126,9 @@ export const chatSlice = createSlice({
       if (messageIndex !== -1) {
         state.messages = [...state.messages.slice(0, messageIndex), ...state.messages.slice(messageIndex + 1)];
       }
+    },
+    addStructurizingMessage: (state: MessagesState, action: PayloadAction<string>) => {
+      state.structurizingMessages.push(action.payload);
     },
     toggleSelectedMessage: (state: MessagesState, action: PayloadAction<string>) => {
       if (state.selectedMessages === undefined || state.messages === undefined) {
@@ -185,6 +198,6 @@ export const chatSlice = createSlice({
   },
 })
 
-export const { hideStructurizedModal, showStructurizedModal, showDeletingModal, hideDeletingModal, clearAllMessages, addMessage, replaceMessages, toggleSelectedMessage, removeSelectedMessages, deleteMessage, editMessage, stopEditingMessage, updateMessage } = chatSlice.actions
+export const { addStructurizingMessage, hideStructurizedModal, showStructurizedModal, showDeletingModal, hideDeletingModal, clearAllMessages, addMessage, replaceMessages, toggleSelectedMessage, removeSelectedMessages, deleteMessage, editMessage, stopEditingMessage, updateMessage } = chatSlice.actions
 
 export default chatSlice.reducer

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { removeSelectedMessages, editMessage, hideDeletingModal, showDeletingModal, hideStructurizedModal, showStructurizedModal } from "../../app/slices/ChatSlice";
+import { removeSelectedMessages, editMessage, hideDeletingModal, showDeletingModal, hideStructurizedModal, showStructurizedModal, addStructurizingMessage } from "../../app/slices/ChatSlice";
 import { IDeletingMessage, IMessage, IStructurizeMessage } from "../../entity/Message/MessageTypes";
 import { FormatRelativeTimeInPastInDays } from "../../shared/Functions/FormatDate";
 import { Skill } from "../../shared/Consts/Interfaces";
@@ -68,6 +68,7 @@ const ChatHeader: React.FC = () => {
         MainWebSocket.sendMessage(JSON.stringify(messageJSON));
         
         dispatch(removeSelectedMessages());
+        dispatch(addStructurizingMessage(messageId));
     }
 
     let companionTags: string = '';
