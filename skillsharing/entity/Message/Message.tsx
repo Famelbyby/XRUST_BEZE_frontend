@@ -47,7 +47,7 @@ const Message: React.FC<PropType> = ({message, isSelected, isStructurizing}) => 
                 </> 
                 }
                 <div className='chat-content__time'>
-                    {!isStructurizing && 
+                    {isStructurizing && 
                         <div className='chat-content__structurizing'>
                             структуризуется
                         </div>
