@@ -27,8 +27,6 @@ const MainHeader: React.FC = () => {
 
             setQuery(nextQuery);
             prevQuery.current = query;
-
-            console.log('here')
     
             if (user !== undefined) {
                 if (nextQuery === '') {

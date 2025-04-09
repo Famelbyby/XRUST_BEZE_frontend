@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import {TextFieldState, PasswordFieldState} from '../../shared/Consts/Interfaces'
-import {ValidatePassword} from '../../shared/Functions/Validators'
+import {ValidateEmail, ValidatePassword} from '../../shared/Functions/Validators'
 import { TryAuth } from '../../pages/Auth/api/Auth'
 import { UserResponse } from '../../entity/User/api/User'
 import { CODE_BAD, CODE_INTERNAL_SERVER, CODE_NOT_FOUND } from '../../shared/Consts/Codes'
@@ -42,6 +42,14 @@ export const loginSlice = createSlice({
     },
     editedIdentifierField: (state: LogInState, action: PayloadAction<string>) => {
         state.identifier.value = action.payload;
+
+        const isValid: boolean = ValidateEmail(state.identifier.value);
+
+        if (!isValid) {
+            state.identifier.error = 'Неправильный формат почты';
+        } else {
+            state.identifier.error = undefined;
+        }
     },
     toggleIsPasswordHidden: (state: LogInState) => {
         state.password.isHidden = !state.password.isHidden;

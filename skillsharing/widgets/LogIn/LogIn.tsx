@@ -41,7 +41,7 @@ const LogInIdentifier: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
 
     return (
-        <TextField title="Почта или имя" value={identifier.value} error={identifier.error} onChangingField={(data: string) => dispatch(editedIdentifierField(data))} placeholder="coolboy@always.com"/>
+        <TextField title="Почта" value={identifier.value} error={identifier.error} onChangingField={(data: string) => dispatch(editedIdentifierField(data))} placeholder="coolboy@always.com"/>
     )
 };
 
