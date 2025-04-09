@@ -25,6 +25,7 @@ export interface IDeletingMessage {
 export interface IStructurizeMessage {
     event: string,
     message_id: string,
+    channel_id: string,
 }
 
 export interface IUpdatingMessage {

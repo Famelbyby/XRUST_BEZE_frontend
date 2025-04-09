@@ -49,7 +49,7 @@ const Message: React.FC<PropType> = ({message, isSelected, isStructurizing}) => 
                 <div className='chat-content__time'>
                     {isStructurizing && 
                         <div className='chat-content__structurizing'>
-                            структуризуется
+                            структуризируется
                         </div>
                     }
                     {message.updated_at !== message.created_at && 

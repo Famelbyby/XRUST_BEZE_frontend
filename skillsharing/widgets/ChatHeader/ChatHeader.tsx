@@ -63,6 +63,7 @@ const ChatHeader: React.FC = () => {
         const messageJSON: IStructurizeMessage = {
             "event": "EventStructurization",
             "message_id": messageId,
+            "channel_id": channelID,
         }
 
         MainWebSocket.sendMessage(JSON.stringify(messageJSON));
