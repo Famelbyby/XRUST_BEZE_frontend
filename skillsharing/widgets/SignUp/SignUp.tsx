@@ -297,12 +297,8 @@ const SignUpNextStepButton: React.FC = () => {
             if (identifier.error !== undefined || password.error !== undefined || repeatPassword.error !== undefined || email.error !== undefined || password.value === "" || identifier.value === "" || email.value === "" || repeatPassword.value === "") {
                 return;
             }
-
-            if (avatar.URL === undefined && avatar.file !== undefined) {
-                dispatch(LoadAvatar({avatar: avatar.file}));
-            } else {
-                dispatch(increaseStep());
-            }
+            
+            dispatch(increaseStep());
         }}>
             Далее
         </div>
