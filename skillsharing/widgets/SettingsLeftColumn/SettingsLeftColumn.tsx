@@ -36,7 +36,7 @@ const SettingsLeftColumn: React.FC = () => {
                                 fileInput.click();
                             }
                         }}>
-                            <img className="settings-avatar-set__img" src={user.avatar !== '' ? (AVATAR_URL + user.avatar) : URL.createObjectURL(avatar.file!)} alt="" />
+                            <img className="settings-avatar-set__img" src={avatar.file === undefined ? (AVATAR_URL + user.avatar) : URL.createObjectURL(avatar.file!)} alt="" />
                         </div>
                         <input id="avatar__input" type="file" className="settings-avatar__input" alt="" onChange={(event) => {
                             const fileInput = event.target;
@@ -48,7 +48,7 @@ const SettingsLeftColumn: React.FC = () => {
                             dispatch(setAvatar(fileInput.files[0]));
                         }}/>
                         {avatar.error !== undefined && 
-                            <div className="setting-avatar__error">
+                            <div className="settings-avatar__error">
                                 {avatar.error}
                             </div>
                         }

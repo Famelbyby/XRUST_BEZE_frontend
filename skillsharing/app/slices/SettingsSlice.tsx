@@ -150,10 +150,6 @@ export const settingsSlice = createSlice({
         const avatarFile = action.payload;
         let isValid = ValidateAvatarExtension(avatarFile);
 
-        if (state.user !== undefined) {
-            state.user.avatar = '';
-        }
-
         state.avatar.URL = undefined;
 
         if (!isValid) {
@@ -238,11 +234,6 @@ export const settingsSlice = createSlice({
         }
 
         state.avatar.URL = data.avatarURL;
-
-        if (state.user !== undefined) {
-            state.user.avatar = '';
-        }
-
         console.log(state.avatar.URL);
     }).addCase(GetCategories.fulfilled, (state: SettingsState, action) => {
         const data = action.payload as CategoryResponse;
