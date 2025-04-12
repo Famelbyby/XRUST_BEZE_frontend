@@ -154,7 +154,7 @@ const ChatHeader: React.FC = () => {
                                     }}/>
                                 }
                                 <img className="chat-header-controls__img chat-header-controls__copy" src="/Chat/copy.png" alt="Копировать сообщение" onClick={() => {
-                                    navigator.clipboard.writeText(selectedMessages[0].payload);
+                                    navigator.clipboard.writeText(selectedMessages[0].payload || '');
 
                                     dispatch(removeSelectedMessages());
                                 }} />

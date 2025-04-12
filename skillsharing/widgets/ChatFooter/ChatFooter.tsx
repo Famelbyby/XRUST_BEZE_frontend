@@ -10,13 +10,11 @@ import { FormatMinutesSecondDuration } from "../../shared/Functions/FormatDate";
 import { clearRecorded, setIsPlayingRecord, setPlayerSource, setRecorded, startRecording, stopPlaying } from "../../app/slices/RecorderSlice";
 import { LoadAttachments, LoadVoiceRecord } from "../../pages/Chat/api/Chat";
 import { addAttachment, clearInputAndAttachments, setInputText } from "../../app/slices/ManageMessageSlice";
-import { SECOND_IN_MILLISECONDS } from "../../shared/Consts/ValidatorsConts";
 
 const TEXTAREA_INITIAL_HEIGHT: number = 15;
 const MESSAGE_MAX_LENGTH: number = 800;
 
-const mediaStream = await navigator.mediaDevices.getUserMedia({audio: true});
-const mediaRecorder = new MediaRecorder(mediaStream);
+let mediaRecorder: undefined | MediaRecorder;
 
 function handleEnter(event: KeyboardEvent) {
     if (event.key !== 'Enter') {
@@ -49,20 +47,26 @@ const ChatFooter: React.FC = () => {
         const recorder = document.querySelector('#record-voice-message') as HTMLElement;
 
         if (recorder !== null) {
-            recorder.addEventListener('mousedown', () => {
+            recorder.addEventListener('mousedown', async () => {
+                const mediaStream = await navigator.mediaDevices.getUserMedia({audio: true});
+                mediaRecorder = new MediaRecorder(mediaStream);
                 mediaRecorder.start();
 
                 dispatch(startRecording());
             });
 
             recorder.addEventListener('mouseup', () => {
-                mediaRecorder.stop();
+                if (mediaRecorder !== undefined) {
+                    mediaRecorder.stop();
 
-                mediaRecorder.ondataavailable = (event: BlobEvent) => {
-                    const blobchik = new Blob([event.data], {type: 'audio/mp3'});
+                    mediaRecorder.ondataavailable = (event: BlobEvent) => {
+                        const blobchik = new Blob([event.data], {type: 'audio/mp3'});
 
-                    dispatch(setRecorded(blobchik));
-                };
+                        dispatch(setRecorded(blobchik));
+                    };
+
+                    mediaRecorder = undefined;
+                }
             });
         }
 
@@ -79,7 +83,7 @@ const ChatFooter: React.FC = () => {
 
     useEffect(() => {
         if (editingMessage !== null) {
-            dispatch(setInputText(editingMessage.payload));
+            dispatch(setInputText(editingMessage.payload || ''));
         }
     }, [editingMessage, dispatch]);
 

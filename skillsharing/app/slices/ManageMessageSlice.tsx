@@ -8,6 +8,7 @@ import { LoadAttachmentsResponse } from '../../shared/Consts/Interfaces';
 export interface ManageMessageState {
     attachments: File[],
     inputText: string,
+    oldAttachments: string[],
     attachmentsUploaded: boolean,
     attachmentURLs: undefined | string[],
 }
@@ -15,6 +16,7 @@ export interface ManageMessageState {
 const initialState: ManageMessageState = {
     inputText: '',
     attachments: [],
+    oldAttachments: [],
     attachmentsUploaded: false,
     attachmentURLs: undefined,
 }
@@ -43,11 +45,15 @@ export const manageMessageSlice = createSlice({
     deleteAttachment: (state: ManageMessageState, action: PayloadAction<number>) => {
         const index = action.payload;
 
-        if (index < 0 || index >= state.attachments.length) {
+        if (index < 0) {
             return;
         }
 
-        state.attachments = [...state.attachments.slice(0, index), ...state.attachments.slice(index + 1)];
+        if (index > state.attachments.length) {
+            state.oldAttachments = [...state.oldAttachments.slice(0, index), ...state.oldAttachments.slice(index + 1)];
+        } else {
+            state.attachments = [...state.attachments.slice(0, index), ...state.attachments.slice(index + 1)];
+        }
     },
     clearInputAndAttachments: (state: ManageMessageState) => {
         state.attachments = [];

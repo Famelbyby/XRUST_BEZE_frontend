@@ -3,7 +3,6 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { LoadVoiceRecord } from '../../pages/Chat/api/Chat';
 import { LoadVoiceRecordResponse } from '../../shared/Consts/Interfaces';
 import { VOICE_URL } from '../../shared/Consts/URLS';
-import { SECOND_IN_MILLISECONDS } from '../../shared/Consts/ValidatorsConts';
 
 export interface RecorderState {
   isRecording: boolean,

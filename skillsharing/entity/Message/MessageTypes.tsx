@@ -6,7 +6,7 @@ export interface IMessage extends ISendingMessage, IDeletingMessage, IUpdatingMe
     event?: string,
     channel_id: string | undefined,
     user_id: string,
-    payload: string,
+    payload: string | undefined,
     peer_id: string,
     created_at: number,
     updated_at: number,
