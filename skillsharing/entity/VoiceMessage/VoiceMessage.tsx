@@ -36,6 +36,7 @@ const VoiceMessage: React.FC<PropType> = ({message, isSelected, isStructurizing}
                 const percentage = player.currentTime / message.voice_duration! * 100000;
 
                 if (messageTimer !== null) {
+                    console.log(player.currentTime);
                     messageTimer.innerText = FormatMinutesSecondDuration(player.currentTime);
                 }
 
@@ -81,7 +82,11 @@ const VoiceMessage: React.FC<PropType> = ({message, isSelected, isStructurizing}
                         }}/>
                     }
                     <div className="chat-voice-message-content__duration" id={`voice-message-${message.message_id}-duration`}>
-                        {FormatMinutesSecondDuration(message.voice_duration!)}
+                        {voiceMessageId === undefined && 
+                            <>
+                                {FormatMinutesSecondDuration(message.voice_duration!)}
+                            </>
+                        }
                     </div>
                 </div>
                 <div className='chat-content__time'>

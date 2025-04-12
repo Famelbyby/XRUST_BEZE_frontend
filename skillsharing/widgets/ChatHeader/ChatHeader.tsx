@@ -148,7 +148,7 @@ const ChatHeader: React.FC = () => {
                                 <img className="chat-header-controls__img chat-header-controls__ai" src="/Chat/ai.png" alt="Структуризировать" title="Структуризировать сообщение" onClick={() => {
                                     dispatch(showStructurizedModal());
                                 }}/>
-                                {isMyMessages && 
+                                {isMyMessages && selectedMessages[0].voice === undefined && 
                                     <img className="chat-header-controls__img chat-header-controls__edit" src="/shared/pen.png" alt="Изменить сообщение" onClick={() => {
                                         dispatch(editMessage());
                                     }}/>
