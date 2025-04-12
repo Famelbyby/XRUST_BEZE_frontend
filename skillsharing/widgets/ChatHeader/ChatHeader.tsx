@@ -45,7 +45,7 @@ const ChatHeader: React.FC = () => {
 
         selectedMessages.forEach((selectedMessage: IMessage) => {
             const messageJSON: IDeletingMessage = {
-                "event": "EventText",
+                "event": (selectedMessage.voice === undefined ? "EventText" : 'EventVoice'),
                 "user_id": user!.id,
                 "peer_id": peerID!,
                 "channel_id": channelID,

@@ -34,6 +34,7 @@
         padding: 10px 0 20px;
         box-sizing: border-box;
         margin: 0 20px;
+        position: relative;
     }
 
     &-go-back {
@@ -49,16 +50,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 30px;
-            height: 31px;
+            width: 35px;
+            height: 36px;
             padding-right: 2px;
             border-radius: 50%;
             background-color: inherit;
             cursor: pointer;
-            transition-duration: 0.2s;
+            transition-duration: 0.4s;
 
             &:hover {
-                background-color: rgb(128 128 128 / 30%);
+                background-color: rgba(193, 193, 193, 0.3);
             }
         }
     }

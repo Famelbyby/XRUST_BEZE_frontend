@@ -86,6 +86,14 @@ export interface ChannelRequest {
     peerId: string,
 }
 
+export interface LoadAttachmentsResponse extends AnyAPIResponse {
+    resultURLs: {status: number, data: {filename: string}}[];
+}
+
+export interface LoadVoiceRecordResponse extends AnyAPIResponse {
+    recordURL: string | undefined,
+}
+
 export interface LoadAvatarRequest {
     avatar: File,
 }

@@ -35,7 +35,7 @@ const initialState: MessagesState = {
 }
 
 export const chatSlice = createSlice({
-  name: 'chatMessages',
+  name: 'recorder',
   initialState,
   reducers: {
     editMessage: (state: MessagesState) => {

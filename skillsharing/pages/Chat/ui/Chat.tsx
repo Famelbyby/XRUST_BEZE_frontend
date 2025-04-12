@@ -9,6 +9,8 @@ import { AppDispatch, AppState } from '../../../app/AppStore';
 import NotFound from '../../../features/404/404';
 import { clearAllMessages } from '../../../app/slices/ChatSlice';
 import { GetChannelByIds } from '../api/Chat';
+import RecorderBar from '../../../widgets/RecorderBar/RecorderBar';
+import { finishVoiceMessage } from '../../../app/slices/RecorderSlice';
 
 const Chat: React.FC = () => {
     const navigateTo = useNavigate();
@@ -17,6 +19,7 @@ const Chat: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const {noPeerError} = useSelector((state: AppState) => state.chatMessages);
     const {user} = useSelector((state: AppState) => state.user);
+    const {voiceMessageId} = useSelector((state: AppState) => state.recorder);
     //const {isFetched, companion} = useSelector((state: AppState) => state.chatMessages);
 
     useEffect(() => {
@@ -26,6 +29,7 @@ const Chat: React.FC = () => {
 
         return () => {
             dispatch(clearAllMessages());
+            dispatch(finishVoiceMessage());
         }
     }, [user, peerID, dispatch]);
 
@@ -41,6 +45,9 @@ const Chat: React.FC = () => {
                         </div>
                     </div>
                     <div className='chat-dialog'>
+                        {voiceMessageId !== undefined && 
+                            <RecorderBar />
+                        }
                         <ChatHeader />
                         <ChatContent />
                         <ChatFooter />

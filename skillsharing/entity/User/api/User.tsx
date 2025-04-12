@@ -57,7 +57,7 @@ export const GetUserByCookie = createAsyncThunk(
     async () => {
         const response = await (new Promise((resolve) => {
             setTimeout(() => {
-                resolve(notAuthedUserMock);
+                resolve(userMock);
             }, 20)
         }));
 

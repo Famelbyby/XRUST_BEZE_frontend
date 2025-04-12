@@ -11,6 +11,8 @@ export interface IMessage extends ISendingMessage, IDeletingMessage, IUpdatingMe
     created_at: number,
     updated_at: number,
     structurized?: string,
+    voice?: string,
+    voice_duration?: number,
 }
 
 export interface IDeletingMessage {
@@ -39,11 +41,17 @@ export interface IUpdatingMessage {
     created_at: number,
 }
 
+export interface ISendingVoiceMessage extends ISendingMessage {
+    voice: string,
+    voice_duration: number,
+}
+
 export interface ISendingMessage {
     type?: MessageType,
     event?: string,
     peer_id: string, //mocked = 2 - this is a mate's ID
     channel_id?: string, 
     user_id: string, //mocked = from local storage
-    payload: string, //text message content
+    payload: string, //text message content,
+    attachments?: string[],
 }

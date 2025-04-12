@@ -7,6 +7,8 @@ import { FormatHoursMinutes } from '../../shared/Functions/FormatDate';
 import { AppState } from '../../app/AppStore';
 import StructurizedMessageContent from '../../widgets/StructurizedMessageContent/StructurizedMessageContent';
 import { Link } from 'react-router';
+import { SECOND_IN_MILLISECONDS } from '../../shared/Consts/ValidatorsConts';
+import { ATTACHMENTS_URL } from '../../shared/Consts/URLS';
 
 interface PropType {
     message: IMessage,
@@ -17,7 +19,7 @@ interface PropType {
 const Message: React.FC<PropType> = ({message, isSelected, isStructurizing}) => {
     const {user} = useSelector((state: AppState) => state.user);
     const user_id: IMessage["user_id"] = user!.id;
-    const messageTime: string = FormatHoursMinutes(new Date(message.created_at * 1000));
+    const messageTime: string = FormatHoursMinutes(new Date(message.created_at * SECOND_IN_MILLISECONDS));
     const isOwnMessage = user_id === message.user_id;
     const dispatch = useDispatch();
 
@@ -45,6 +47,19 @@ const Message: React.FC<PropType> = ({message, isSelected, isStructurizing}) => 
                         </div>
                     </Link>
                 </> 
+                }
+                {message.attachments !== undefined && 
+                    <div className='chat-content-message-attachments'>
+                        {message.attachments.map((attachment) => {
+                            return (
+                                <div key={attachment} className='chat-content-message-attachments-item'>
+                                    <a href={ATTACHMENTS_URL + attachment} download={attachment}>
+                                        <img className="chat-content-message-attachments-item__img" src="/Chat/download.png" alt="" />
+                                    </a>
+                                </div>
+                            );
+                        })}
+                    </div>
                 }
                 <div className='chat-content__time'>
                     {isStructurizing && 

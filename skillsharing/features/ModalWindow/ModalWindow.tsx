@@ -38,19 +38,29 @@ const ModalWindow: React.FC<ModalWindowProps> = ({windowTitle, agreeTitle, cance
         }
     }, []);
 
+    function handleClosing() {
+        setTimeout(closeModal, 500)
+
+        const modalWrapper = document.getElementById('modal-wrapper') as HTMLElement;
+
+        if (modalWrapper !== null) {
+            modalWrapper.classList.add('modal-wrapper_closing');
+        }
+    }
+
     return (
-        <div className='modal-wrapper'>
+        <div id='modal-wrapper' className='modal-wrapper'>
             <div id='modal-window' className='modal-window'>
                 <div className='modal-window__content'>
                     {windowTitle}
                 </div>
                 <div className='modal-window-footer'>
-                    <div className='modal-window-footer__cancel-button' onClick={closeModal}>
+                    <div className='modal-window-footer__cancel-button' onClick={handleClosing}>
                         {cancelTitle}
                     </div>
                     <div className={'modal-window-footer__agree-button modal-window-footer__agree-button_' + modalType} onClick={() => {
-                        agreeFunc();
-                        closeModal();
+                        setTimeout(agreeFunc, 500);
+                        handleClosing();
                     }}>
                         {agreeTitle}
                     </div>

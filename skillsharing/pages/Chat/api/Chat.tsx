@@ -152,7 +152,7 @@ export const GetChannelByIds = createAsyncThunk(
     async ({userId, peerId}: ChannelRequest) => {
         try {
             const {status, data} = await axios.get(BACK_URL + CHAT_URL + `/channels/by-peer?user_id=${userId}&peer_id=${peerId}`);
-            
+
             return {channelData: {...data, userId}, status: status};
         } catch(event) {
             console.log(event);
@@ -161,3 +161,49 @@ export const GetChannelByIds = createAsyncThunk(
         }
     }
 )
+
+export const LoadVoiceRecord = createAsyncThunk(
+    'chats/loadVoiceRecord',
+    async (record: Blob) => {
+        try {
+            const formData = new FormData();
+            formData.append('file', record);
+
+            const {status, data} = await axios.post(BACK_URL + '/file/temp', formData, {
+                headers: {
+                    "Content-Type": "mulpipart/form-data",
+                }
+            });
+
+            console.log(status, data);
+
+            return {recordURL: data.filename as string, status};
+        } catch(event) {
+            console.log(event);
+
+            return {recordURL: undefined, status};
+        }
+    }
+);
+
+export const LoadAttachments = createAsyncThunk(
+    'chats/loadAttachments',
+    async (attachments: File[]) => {
+        const promises: Promise<{status: number, data: {filename: string}}>[] = [];
+
+        attachments.forEach((attachment) => {
+            const formData = new FormData();
+            formData.append('file', attachment, attachment.name);
+
+            promises.push(axios.post(BACK_URL + '/file/temp', formData, {
+                headers: {
+                    "Content-Type": "mulpipart/form-data",
+                }
+            }));
+        });
+
+        const resultURLs = await Promise.all(promises);
+
+        return {resultURLs};
+    }
+);

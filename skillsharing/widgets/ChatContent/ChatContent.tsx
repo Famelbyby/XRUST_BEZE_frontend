@@ -1,16 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../../entity/Message/Message"
+import VoiceMessage from '../../entity/VoiceMessage/VoiceMessage'
 import { IMessage } from "../../entity/Message/MessageTypes";
 import { addMessage, deleteMessage, updateMessage } from "../../app/slices/ChatSlice";
 import { AppDispatch, AppState } from "../../app/AppStore";
 import './ChatContent.scss'
 import { FormatDayMonthYear } from "../../shared/Functions/FormatDate";
 import MainWebSocket from '../../shared/WebSocket'
-import { DAY_IN_MILLISECONDS } from "../../shared/Consts/ValidatorsConts";
+import { DAY_IN_MILLISECONDS, SECOND_IN_MILLISECONDS } from "../../shared/Consts/ValidatorsConts";
+import { deleteAttachment } from "../../app/slices/ManageMessageSlice";
+import { RoundSize } from "../../shared/Functions/FormatStrings";
 
 const ChatContent: React.FC = () => {
     const {messages, selectedMessages, structurizingMessages} = useSelector((state: AppState) => state.chatMessages);
+    const {attachments} = useSelector((state: AppState) => state.manageMessage);
     const dispatch = useDispatch<AppDispatch>();
 
     /**
@@ -59,6 +63,23 @@ const ChatContent: React.FC = () => {
 
     return (
         <div id='chat-content' className='chat-content'>
+            {attachments.length !== 0 && 
+                <div className="chat-content-attachments">
+                    {attachments.map((attachment, index) => {
+                        return (
+                            <div className="chat-content-attachments-item">
+                                <img className="chat-content-attachments-item__img" src="/Chat/download.png" alt="" />
+                                <div className="chat-content-attachments-item__size">
+                                    {RoundSize(attachment.size)}
+                                </div>
+                                <img className="chat-content-attachments-item__delete" src="/shared/cancel_black.png" alt="" onClick={() => {
+                                    dispatch(deleteAttachment(index));
+                                }}/>
+                            </div>
+                        );
+                    })}
+                </div>
+            }
             {messages === undefined && 
                 <div className='chat-content__mock'>
                     <div className='chat-content__spinner'>
@@ -75,12 +96,12 @@ const ChatContent: React.FC = () => {
                 
                 let needTime: boolean = false;
 
-                const messTime = new Date(message.created_at * 1000);
+                const messTime = new Date(message.created_at * SECOND_IN_MILLISECONDS);
 
                 if (index === messages.length - 1) {
                     needTime = true;
                 } else {
-                        const nextMessTime = new Date(messages[index + 1].created_at * 1000);
+                        const nextMessTime = new Date(messages[index + 1].created_at * SECOND_IN_MILLISECONDS);
                         
                         if (!(nextMessTime.getDate() == messTime.getDate() && (nextMessTime.getMilliseconds() - messTime.getMilliseconds() < DAY_IN_MILLISECONDS))) {
                             needTime = true;
@@ -89,7 +110,12 @@ const ChatContent: React.FC = () => {
 
                 return (
                     <>
-                        <Message isStructurizing={isStructurizing} message={message} key={(new Date()).getMilliseconds()} isSelected={isSelected} />
+                        {message.voice !== undefined && 
+                            <VoiceMessage isSelected={isSelected} message={message} key={(new Date()).getMilliseconds()} isStructurizing={isStructurizing} />
+                        }
+                        {message.voice === undefined && 
+                            <Message isStructurizing={isStructurizing} message={message} key={(new Date()).getMilliseconds()} isSelected={isSelected} />
+                        }
                         {needTime && 
                             <div className="chat-content-day-field" key={message.message_id}>
                                 <div className="chat-content-day-field__day">

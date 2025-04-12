@@ -1,0 +1,71 @@
+.recorder {
+    &-field {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        width: 100%;
+        top: 80px;
+        z-index: 1;
+    }
+
+    &-bar {
+        display: flex;
+        padding: 10px 20px;
+        justify-content: space-between;
+        align-items: center;
+        width: 70%;
+        margin: auto;
+        border-radius: 25px;
+        background: linear-gradient(45deg, #D4DFFF, #B4D7FF);
+        box-sizing: border-box;
+
+        animation-name: recorder-bar;
+        animation-duration: 0.3s;
+        animation-iteration-count: 1;
+        animation-direction: normal;
+
+        &__toggler {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            transition-duration: 0.5s;
+
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+
+        &-volume {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            &__img {
+                width: 17px;
+                height: 17px;
+            }
+        }
+
+        &-speed {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-family: 'Inter';
+            font-size: 12px;
+            color: #0000007d;
+        }
+
+        &__close-img {
+            width: 15px;
+            height: 15px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition-duration: 0.5s;
+
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+    }
+}

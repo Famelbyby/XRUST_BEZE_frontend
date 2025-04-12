@@ -8,6 +8,8 @@ import signupReducer from './slices/SignUpSlice'
 import settingsReducer from './slices/SettingsSlice'
 import profileReducer from './slices/ProfileSlice'
 import structurizedMessageReducer from './slices/StructurizedMessageSlice'
+import recorderReducer from './slices/RecorderSlice'
+import manageMessageReducer from './slices/ManageMessageSlice'
 
 export const appStore = configureStore({
   reducer: {
@@ -20,6 +22,8 @@ export const appStore = configureStore({
     settings: settingsReducer,
     profile: profileReducer,
     structurizedMessage: structurizedMessageReducer,
+    recorder: recorderReducer,
+    manageMessage: manageMessageReducer,
   },
 })
 

@@ -1,0 +1,59 @@
+$borderRad: 15px;
+
+.chat {
+    &-voice-message {
+        display: flex;
+        flex-direction: column;
+        max-width: 300px;
+        padding: 8px;
+        border-radius: $borderRad $borderRad 0 0;
+        gap: 4px;
+        cursor: pointer;
+
+        &_left {
+            background-color: #D4E2FF;
+            border-radius: $borderRad $borderRad $borderRad 0;
+            align-items: start;
+
+            &::before {
+                content: "";
+                width: 5px;
+                border-radius: 12px;
+            }
+        }
+
+        &_right {
+            background-color: rgba(0, 30, 222, 0.29);
+            border-radius: $borderRad $borderRad 0 $borderRad;
+            align-items: end;
+        }
+
+        &-content {
+            display: flex;
+            padding: 0 5px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3px;
+
+            &__img {
+                width: 20px;
+                height: 20px;
+                cursor: pointer;
+                transition-duration: 0.5s;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+
+            &__duration {
+                font-family: 'Inter';
+                font-size: 13px;
+            }
+
+            &__plot {
+                width: 100px;
+            }
+        }
+    }
+}

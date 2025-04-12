@@ -1,4 +1,4 @@
-import { MINUTE_IN_MILLISECONDS, HOUR_IN_MILLISECONDS, DAY_IN_MILLISECONDS, RUSSIAN_MONTHS } from "../Consts/ValidatorsConts";
+import { MINUTE_IN_MILLISECONDS, HOUR_IN_MILLISECONDS, DAY_IN_MILLISECONDS, RUSSIAN_MONTHS, SECOND_IN_MILLISECONDS } from "../Consts/ValidatorsConts";
 
 /**
  * Returns ending of Russian words related to minutes
@@ -100,4 +100,17 @@ export function FormatDayMonthYear(date: Date): string {
     const currentYear: number = (new Date()).getFullYear();
 
     return day + " " + RUSSIAN_MONTHS[month] + (currentYear === year ? "" : ` ${year}`);
+}
+
+/**
+ * Formats duration of voice message
+ * 
+ * @param time - Duration of voice message
+ * @returns format in `minutes:seconds`
+ */
+export function FormatMinutesSecondDuration(time: number): string {
+    const minutes: number = Math.floor(time / MINUTE_IN_MILLISECONDS);
+    const seconds: number = Math.floor((time % MINUTE_IN_MILLISECONDS) / SECOND_IN_MILLISECONDS);
+
+    return minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0");
 }

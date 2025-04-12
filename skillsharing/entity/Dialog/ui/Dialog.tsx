@@ -64,8 +64,8 @@ const Dialog: React.FC<DialogProps> = ({dialog}) => {
                         </div>
                     }
                     {dialog !== undefined && 
-                        <span className="dialog-user-info__last-message">
-                            {dialog.last_message!.payload}
+                        <span className={"dialog-user-info__last-message" + (dialog.last_message!.voice ? ' dialog-user-info__last-message_voiced' : '')}>
+                            {dialog.last_message!.voice !== undefined ? 'Голосовое сообщение' : dialog.last_message!.payload}
                         </span>
                     }
                     

@@ -8,6 +8,18 @@
         height: 100vh;
         font-family: 'Inter';
         background: #0000003b;
+
+        animation-name: modal-wrapper;
+        animation-duration: 0.5s;
+        animation-iteration-count: 1;
+        animation-direction: normal;
+
+        &_closing {
+            animation-name: modal-wrapper-closing;
+            animation-duration: 0.5s;
+            animation-iteration-count: 1;
+            animation-direction: normal;
+        }
     }
 
     &-window {
@@ -57,5 +69,23 @@
                 }
             }
         }
+    }
+}
+
+@keyframes modal-wrapper {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes modal-wrapper-closing {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
     }
 }

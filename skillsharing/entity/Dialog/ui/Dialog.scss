@@ -101,6 +101,10 @@
                     animation-iteration-count: infinite;
                     animation-direction: alternate;
                 }
+
+                &_voiced {
+                    color: #6161ff;
+                }
             }
 
             &__message {
