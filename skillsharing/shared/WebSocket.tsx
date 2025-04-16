@@ -3,24 +3,18 @@ import {WEBSOCKET_URL} from './Consts/URLS'
 class MainWebSocket {
     private socket: WebSocket | undefined;
     private observers: Record<string, (arg: string) => void>;
-    private isOpened: boolean;
 
     constructor() {
         this.socket = undefined;
         this.observers = {};
-        this.isOpened = false;
     }
 
     openConnection = (userId: string) => {
-        if (this.isOpened) {
+        if (this.socket !== undefined) {
             return;
         }
 
         this.socket = new WebSocket(WEBSOCKET_URL + userId);
-
-        this.socket.onopen = () => {
-            this.isOpened = true;
-        }
 
         this.socket.onmessage = (event: WebSocketEventMap["message"]) => {
             this.receivedMessage(event.data);
