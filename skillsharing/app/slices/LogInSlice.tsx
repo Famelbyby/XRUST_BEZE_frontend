@@ -37,7 +37,7 @@ export const loginSlice = createSlice({
         const isValid: boolean = ValidatePassword(state.password.value);
 
         if (!isValid) {
-            state.password.error = 'Длина пароля - от 6 до 12 символов';
+            state.password.error = 'Длина пароля - от 8 до 64 символов. Должны быть хотя бы одна заглавная буква, одна строчная, одна цифра и один спецсимвол';
         } else {
             state.password.error = undefined;
         }

@@ -122,6 +122,12 @@
         width: 100%;
         color: black;
 
+        &__length {
+            font-size: 10px;
+            color: #0000007d;
+            font-family: Inter;
+        }
+
         &-field {
             background-color: white;
             border-radius: 10px;

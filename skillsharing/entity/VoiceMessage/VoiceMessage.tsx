@@ -97,7 +97,7 @@ const VoiceMessage: React.FC<PropType> = ({message, isSelected}) => {
             </div>
             {isSelected && 
                 <div className={'chat-message-checked-mark chat-message-checked-mark_' + (isOwnMessage ? 'right' : 'left')}>
-                    <img className='chat-message-checked-mark__img' src='/Chat/selected.png' alt='selected' />
+                    <img className='chat-message-checked-mark__img' src='/ChatPage/selected.png' alt='selected' />
                 </div>
             }
         </div>

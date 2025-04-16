@@ -21,6 +21,7 @@ const profileStatistics: StatisticItem[] = [
 
 const ProfileLeftColumn: React.FC = () => {
     const {user} = useSelector((state: AppState) => state.profile);
+    const {user: myUser} = useSelector((state: AppState) => state.user);
 
     return (
         <div className="profile-left-column">
@@ -80,6 +81,26 @@ const ProfileLeftColumn: React.FC = () => {
                     }
                 </div>
             </div>
+            {myUser?.id === user?.id && 
+                <div className="profile-to-learn">
+                    <div className="profile-to-learn-header">
+                        <div className="profile-to-learn-header__title">
+                            Я хочу изучить
+                        </div>
+                    </div>
+                    <div className="profile-to-learn-array">
+                        {user !== undefined &&
+                            user.skills_to_learn.map((skill: Skill) => {
+                                return (
+                                    <div className={`profile-to-learn-array__tag profile-to-learn-array__tag_${skill.level}`} title={`${CapitalizeString(skill.level)}`} key={skill.name}>
+                                        {skill.name}
+                                    </div>
+                                );
+                            })
+                        }
+                    </div>
+                </div>
+            }
             {user !== undefined && 
                 <div className="profile-preferred-format">
                     Предпочитает общаться

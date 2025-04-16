@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {ProfileType} from '../../../pages/Profile/ui/ProfileTypes'
 import axios from 'axios';
 import { BACK_URL } from '../../../shared/Consts/URLS';
+import { CODE_OK } from '../../../shared/Consts/Codes';
 // import { UserResponse } from '../../../shared/Consts/Interfaces';
 
 // const notAuthedUserMock: ProfileType | undefined = undefined;
@@ -91,3 +92,22 @@ export const GetUserByCookie = createAsyncThunk(
         return {error, user: data as ProfileType, status};
     }
 );
+
+export const Logout = createAsyncThunk(
+    'user/logout',
+    async () => {
+        let status: number = CODE_OK;
+
+        await axios.get(BACK_URL + `/auth/logout`, 
+            {
+                withCredentials: true,
+            }
+        ).then((response) => {
+            status = response.status;
+        }).catch(({response}) => {
+            status = response.status;
+        });
+
+        return {status};
+    }
+)

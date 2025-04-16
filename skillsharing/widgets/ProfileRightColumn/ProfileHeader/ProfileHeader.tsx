@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router";
 import { FormatRelativeTimeInPastInDays } from "../../../shared/Functions/FormatDate";
-import { useSelector } from "react-redux";
-import { AppState } from "../../../app/AppStore";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, AppState } from "../../../app/AppStore";
 import './ProfileHeader.scss'
 import { ProfileType } from "../../../pages/Profile/ui/ProfileTypes";
+import { Logout } from "../../../entity/User/api/User";
 
 interface ProfileHeaderPropTypes {
     profile: ProfileType | undefined,
@@ -14,6 +15,7 @@ const ProfileHeader: React.FC<ProfileHeaderPropTypes> = ({profile}) => {
     const {user} = useSelector((state: AppState) => state.user);
     const ownUserID: ProfileType["id"] | undefined = user?.id;
     const lastSeen: Date | undefined = (profile === undefined ? undefined : new Date(profile.last_active_at));
+    const dispatch = useDispatch<AppDispatch>();
 
     return (
         <div className="profile-header">
@@ -50,7 +52,9 @@ const ProfileHeader: React.FC<ProfileHeaderPropTypes> = ({profile}) => {
                         </div>
                     </Link>
                     <div className="profile-buttons-exit">
-                        <img className="profile-buttons-exit__img" src="/ProfilePage/exit.png" alt="" />
+                        <img className="profile-buttons-exit__img" src="/ProfilePage/exit.png" alt="" onClick={() => {
+                            dispatch(Logout());
+                        }} />
                         Выйти
                     </div>
                 </div>

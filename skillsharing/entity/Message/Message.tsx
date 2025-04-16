@@ -54,7 +54,7 @@ const Message: React.FC<PropType> = ({message, isSelected, isStructurizing}) => 
                             return (
                                 <div key={attachment} className='chat-content-message-attachments-item'>
                                     <a href={ATTACHMENTS_URL + attachment} download={attachment}>
-                                        <img className="chat-content-message-attachments-item__img" src="/Chat/download.png" alt="" />
+                                        <img className="chat-content-message-attachments-item__img" src="/ChatPage/download.png" alt="" />
                                     </a>
                                 </div>
                             );
@@ -77,7 +77,7 @@ const Message: React.FC<PropType> = ({message, isSelected, isStructurizing}) => 
             </div>
             {isSelected && 
                 <div className={'chat-message-checked-mark chat-message-checked-mark_' + (isOwnMessage ? 'right' : 'left')}>
-                    <img className='chat-message-checked-mark__img' src='/Chat/selected.png' alt='selected' />
+                    <img className='chat-message-checked-mark__img' src='/ChatPage/selected.png' alt='selected' />
                 </div>
             }
         </div>
