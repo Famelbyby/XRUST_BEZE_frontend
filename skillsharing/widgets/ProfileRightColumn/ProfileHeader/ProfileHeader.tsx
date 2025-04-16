@@ -51,10 +51,10 @@ const ProfileHeader: React.FC<ProfileHeaderPropTypes> = ({profile}) => {
                             Изменить
                         </div>
                     </Link>
-                    <div className="profile-buttons-exit">
-                        <img className="profile-buttons-exit__img" src="/ProfilePage/exit.png" alt="" onClick={() => {
+                    <div className="profile-buttons-exit" onClick={() => {
                             dispatch(Logout());
-                        }} />
+                        }}>
+                        <img className="profile-buttons-exit__img" src="/ProfilePage/exit.png" alt="" />
                         Выйти
                     </div>
                 </div>

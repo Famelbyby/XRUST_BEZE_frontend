@@ -98,7 +98,7 @@ export const Logout = createAsyncThunk(
     async () => {
         let status: number = CODE_OK;
 
-        await axios.get(BACK_URL + `/auth/logout`, 
+        await axios.post(BACK_URL + `/auth/logout`, 
             {
                 withCredentials: true,
             }
