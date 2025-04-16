@@ -46,7 +46,7 @@ const DialogsContent: React.FC = () => {
         });
 
         return () => {
-            MainWebSocket.removeObserver('chat-messages');
+            MainWebSocket.removeObserver('dialog-messages');
         };
     }, [dispatch, dialogs, user]);
 
@@ -60,7 +60,9 @@ const DialogsContent: React.FC = () => {
         }
     }, [dispatch, user]);
 
-    filteredDialogs?.sort((a, b) => (a.last_message!.created_at - b.last_message!.created_at));
+    if (filteredDialogs !== undefined && filteredDialogs.length > 1) {
+        filteredDialogs.sort((a, b) => (a.last_message!.created_at - b.last_message!.created_at));
+    }
 
     return (
         <div className="dialogs">
