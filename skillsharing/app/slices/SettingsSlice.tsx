@@ -246,14 +246,46 @@ export const settingsSlice = createSlice({
     }).addCase(TryAuth.fulfilled, (state: SettingsState, action) => {
         const data = action.payload as UserResponse;
         
-        if (data.status === CODE_OK) {
-            state.user = data.user;
+        if (data.status !== CODE_OK) {
+            return;
+        }
+
+        state.user = data.user;
+        state.avatar.URL = undefined;
+        state.avatar.error = undefined;
+        state.avatar.file = undefined;
+        state.usernameError = undefined;
+        state.hrefs = [];
+
+        if (state.user !== undefined) {
+            state.user.hrefs?.forEach((href) => {
+                state.hrefs.push({
+                    value: href,
+                    error: (ValidateHref(href) ? undefined : WRONG_HREF),
+                })
+            });
         }
     }).addCase(TryRegister.fulfilled, (state: SettingsState, action) => {
         const data = action.payload as UserResponse;
 
-        if (data.status === CODE_CREATED) {
-            state.user = data.user;
+        if (data.status !== CODE_OK) {
+            return;
+        }
+
+        state.user = data.user;
+        state.avatar.URL = undefined;
+        state.avatar.error = undefined;
+        state.avatar.file = undefined;
+        state.usernameError = undefined;
+        state.hrefs = [];
+
+        if (state.user !== undefined) {
+            state.user.hrefs?.forEach((href) => {
+                state.hrefs.push({
+                    value: href,
+                    error: (ValidateHref(href) ? undefined : WRONG_HREF),
+                })
+            });
         }
     }).addCase(GetProfile.fulfilled, (state: SettingsState, action) => {
         const data = action.payload as UserResponse;
