@@ -26,14 +26,12 @@ function App() {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    if (user === undefined) {
-      dispatch(GetUserByCookie());
-    }    
+    dispatch(GetUserByCookie());
 
     return () => {
       dispatch(clearUser());
     }
-  }, [user, dispatch]);
+  }, [dispatch]);
 
   useEffect(() => {
     if (user !== undefined) {
@@ -41,9 +39,7 @@ function App() {
     } else {
       MainWebSocket.closeConnection();
     }
-  }, [user, dispatch]);
-  
-  console.log('here', isFetched, user);
+  }, [user]);
 
   return (
       <>

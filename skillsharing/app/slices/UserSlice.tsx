@@ -29,7 +29,6 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(GetUserByCookie.fulfilled, (state: UserState, action) => {
       const data = action.payload as UserResponse;
-      console.log('ahah');
 
       if (data.status !== CODE_OK && data.status !== CODE_FORBIDDEN && data.status !== CODE_NOT_AUTHED) {
         return;
@@ -83,7 +82,6 @@ export const userSlice = createSlice({
       }
 
       state.user = undefined;
-      state.isFetched = false;
     });
   },
 })
