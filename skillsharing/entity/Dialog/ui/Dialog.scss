@@ -123,6 +123,8 @@
 
         &__tags {
             height: 20px;
+            display: flex;
+            gap: 5px;
 
             &-mock {
                 display: flex;

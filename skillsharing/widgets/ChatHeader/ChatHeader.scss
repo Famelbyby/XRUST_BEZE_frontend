@@ -96,6 +96,8 @@
         &__tags {
             font-family: 'Inter';
             color: rgba(0, 0, 0, 0.4);
+            display: flex;
+            gap: 5px;
         }
 
         &__rating {
