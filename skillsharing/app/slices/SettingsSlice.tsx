@@ -221,8 +221,6 @@ export const settingsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(LoadAvatar.pending, (state: SettingsState) => {
         state.isPending = true;
-    }).addCase(LoadAvatar.fulfilled, (state: SettingsState) => {
-        state.isPending = false;
     }).addCase(GetUserByCookie.fulfilled, (state: SettingsState, action) => {
         const data = action.payload as UserResponse;
 
@@ -317,6 +315,8 @@ export const settingsSlice = createSlice({
                 })
             });
         }
+    }).addCase(UpdateProfile.pending, (state: SettingsState) => {
+        state.isPending = true;
     }).addCase(UpdateProfile.fulfilled, (state: SettingsState, action) => {
         state.isPending = false;
 
@@ -329,6 +329,7 @@ export const settingsSlice = createSlice({
         state.user = data.user;
         state.isUpdated = true;
     }).addCase(LoadAvatar.fulfilled, (state: SettingsState, action) => {
+        state.isPending = false;
         const data = action.payload as LoadAvatarResponse;
 
         if (data.status !== CODE_OK) {
