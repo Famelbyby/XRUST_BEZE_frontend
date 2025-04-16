@@ -1,9 +1,9 @@
 import axios from "axios";
 // import { IMessage } from "../../../entity/Message/MessageTypes";
-import { BACK_URL, CHAT_URL } from "../../../shared/Consts/URLS";
+import { BACK_URL, CHAT_URL, USERS_URL } from "../../../shared/Consts/URLS";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 // import { ProfileType } from "../../Profile/ui/ProfileTypes";
-import { CODE_BAD } from "../../../shared/Consts/Codes";
+import { CODE_BAD, CODE_OK } from "../../../shared/Consts/Codes";
 import { ChannelRequest } from "../../../shared/Consts/Interfaces";
 
 // const OWN_USER_ID_MOCK = "67e3b36b9a36154096b4bbea";
@@ -205,5 +205,32 @@ export const LoadAttachments = createAsyncThunk(
         const resultURLs = await Promise.all(promises);
 
         return {resultURLs};
+    }
+);
+
+export const GetCompanion = createAsyncThunk(
+    'chat/getCompanionByID',
+    async (peerId: string) => {
+        // const response = await (new Promise((resolve) => {
+        //     setTimeout(() => {
+        //         resolve(userMock);
+        //     }, 2000)
+        // }));
+        
+        // callback(response as ProfileType | undefined);
+
+        // return {user: response, status: CODE_OK};
+        let data: unknown;
+        let status: number = CODE_OK;
+
+        await axios.get(BACK_URL + USERS_URL + `/${peerId}`)
+        .then((response) => {
+            ({status, data} = response);
+        }).catch(({response}) => {
+            status = response.status;
+            data = undefined;
+        });
+
+        return {user: data, status};
     }
 );

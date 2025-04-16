@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, AppState } from '../../../app/AppStore';
 import NotFound from '../../../features/404/404';
 import { clearAllMessages } from '../../../app/slices/ChatSlice';
-import { GetChannelByIds } from '../api/Chat';
+import { GetChannelByIds, GetCompanion } from '../api/Chat';
 import RecorderBar from '../../../widgets/RecorderBar/RecorderBar';
 import { finishVoiceMessage } from '../../../app/slices/RecorderSlice';
 
@@ -17,7 +17,7 @@ const Chat: React.FC = () => {
     const params = useParams();
     const peerID: string | undefined = params.chatID;
     const dispatch = useDispatch<AppDispatch>();
-    const {noPeerError} = useSelector((state: AppState) => state.chatMessages);
+    const {noPeerError, noChatError} = useSelector((state: AppState) => state.chatMessages);
     const {user} = useSelector((state: AppState) => state.user);
     const {voiceMessageId} = useSelector((state: AppState) => state.recorder);
     //const {isFetched, companion} = useSelector((state: AppState) => state.chatMessages);
@@ -32,6 +32,12 @@ const Chat: React.FC = () => {
             dispatch(finishVoiceMessage());
         }
     }, [user, peerID, dispatch]);
+
+    useEffect(() => {
+        if (noChatError) {
+            dispatch(GetCompanion(peerID!));
+        }
+    }, [noChatError]);
 
     return (
         <div className='chat-page'>

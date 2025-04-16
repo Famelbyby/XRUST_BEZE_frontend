@@ -2,9 +2,9 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import {IMessage} from '../../entity/Message/MessageTypes'
 import { ProfileType } from '../../pages/Profile/ui/ProfileTypes'
-import { ChannelReponse } from '../../shared/Consts/Interfaces'
+import { ChannelReponse, UserResponse } from '../../shared/Consts/Interfaces'
 import { CODE_BAD } from '../../shared/Consts/Codes'
-import { GetChannelByIds } from '../../pages/Chat/api/Chat'
+import { GetChannelByIds, GetCompanion } from '../../pages/Chat/api/Chat'
 
 export interface MessagesState {
   messages: IMessage[] | undefined,
@@ -15,6 +15,7 @@ export interface MessagesState {
   companion: ProfileType | undefined,
   isFetched: boolean,
   noPeerError: boolean,
+  noChatError: boolean,
   isHiddenDeletingModal: boolean,
   isHiddenStructurizedModal: boolean,
   structurizingMessages: Array<string>,
@@ -29,6 +30,7 @@ const initialState: MessagesState = {
   companion: undefined,
   isFetched: false,
   noPeerError: false,
+  noChatError: false,
   isHiddenDeletingModal: true,
   isHiddenStructurizedModal: true,
   structurizingMessages: [],
@@ -56,6 +58,7 @@ export const chatSlice = createSlice({
       state.selectedMessages = undefined;
       state.editingMessage = null;
       state.noPeerError = false;
+      state.noChatError = false;
     },
     replaceMessages: (state: MessagesState, action: PayloadAction<IMessage[]>) => {
         const messages: IMessage[] = action.payload;
@@ -167,7 +170,9 @@ export const chatSlice = createSlice({
       const response = action.payload as unknown as ChannelReponse;
 
       if (response.status === CODE_BAD) {
-        state.noPeerError = true;
+        state.noChatError = true;
+        state.messages = [];
+        state.selectedMessages = [];
         return;
       }
 
@@ -186,6 +191,18 @@ export const chatSlice = createSlice({
       state.selectedMessages = [];
       
       const companion = data.channel.users.find((user: ProfileType) => user.id !== data.userId);
+
+      if (companion === undefined) {
+        state.noPeerError = true;
+        return;
+      }
+
+      state.companion = companion;
+      state.peerID = companion.id;
+    }).addCase(GetCompanion.fulfilled, (state: MessagesState, action) => {
+      const data = action as unknown as UserResponse;
+
+      const companion = data.user;
 
       if (companion === undefined) {
         state.noPeerError = true;
