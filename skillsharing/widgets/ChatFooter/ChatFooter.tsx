@@ -284,14 +284,14 @@ const ChatFooter: React.FC = () => {
                     }}/>
                 }
                 {editingMessage === null && 
-                    <img id="send-message" className='chat-footer-controls__send-message' src='/Chat/send.png' alt='send-message' onClick={handleSending}/>
+                    <img id="send-message" className='chat-footer-controls__send-message' src='/ChatPage/send.png' alt='send-message' onClick={handleSending}/>
                 }
                 {editingMessage !== null &&
-                    <img id="update-message" className='chat-footer-controls__update-message' src='/Chat/check.png' alt='update-message' onClick={handleSending}/>
+                    <img id="update-message" className='chat-footer-controls__update-message' src='/ChatPage/check.png' alt='update-message' onClick={handleSending}/>
                 }
             </div>
             <div className="chat-footer-scrolldown">
-                <img className="chat-footer-scrolldown__button" src="/Chat/down-arrow.png" alt="Scroll to bottom" />
+                <img className="chat-footer-scrolldown__button" src="/ChatPage/down-arrow.png" alt="Scroll to bottom" />
             </div>
         </div>
     );

@@ -139,13 +139,13 @@ const ChatHeader: React.FC = () => {
             {selectedMessagesCount > 0 && 
                 <>
                     <div className="chat-header-remove-selection">
-                        <img className="chat-header-remove-selection__img" src="/Chat/cross.png" alt="Отменить выделение" onClick={() => dispatch(removeSelectedMessages())}/>
+                        <img className="chat-header-remove-selection__img" src="/ChatPage/cross.png" alt="Отменить выделение" onClick={() => dispatch(removeSelectedMessages())}/>
                         {selectedMessagesCount}
                     </div>
                     <div className="chat-header-controls">
                         {selectedMessages !== undefined && selectedMessagesCount === 1 &&
                             <>
-                                <img className="chat-header-controls__img chat-header-controls__ai" src="/Chat/ai.png" alt="Структуризировать" title="Структуризировать сообщение" onClick={() => {
+                                <img className="chat-header-controls__img chat-header-controls__ai" src="/ChatPage/ai.png" alt="Структуризировать" title="Структуризировать сообщение" onClick={() => {
                                     dispatch(showStructurizedModal());
                                 }}/>
                                 {isMyMessages && selectedMessages[0].voice === undefined && 
@@ -153,7 +153,7 @@ const ChatHeader: React.FC = () => {
                                         dispatch(editMessage());
                                     }}/>
                                 }
-                                <img className="chat-header-controls__img chat-header-controls__copy" src="/Chat/copy.png" alt="Копировать сообщение" onClick={() => {
+                                <img className="chat-header-controls__img chat-header-controls__copy" src="/ChatPage/copy.png" alt="Копировать сообщение" onClick={() => {
                                     navigator.clipboard.writeText(selectedMessages[0].payload || '');
 
                                     dispatch(removeSelectedMessages());
@@ -162,7 +162,7 @@ const ChatHeader: React.FC = () => {
                         }
                         {isMyMessages && 
                             <>
-                                <img id='delete-messages' className="chat-header-controls__img chat-header-controls__delete" src="/Chat/delete.png" alt="Удалить сообщения" onClick={() => dispatch(showDeletingModal())} />
+                                <img id='delete-messages' className="chat-header-controls__img chat-header-controls__delete" src="/ChatPage/delete.png" alt="Удалить сообщения" onClick={() => dispatch(showDeletingModal())} />
                                 {!isHiddenDeletingModal && 
                                     createPortal(<ModalWindow modalType={'delete'} closeModal={() => dispatch(hideDeletingModal())} agreeTitle="Удалить" cancelTitle="Отменить" agreeFunc={handleDeletingMessage} windowTitle="Вы уверены, что хотите удалить выделенные сообщения?"/>, document.querySelector('#root')!)
                                 }

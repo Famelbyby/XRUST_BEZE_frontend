@@ -68,7 +68,7 @@ const ChatContent: React.FC = () => {
                     {attachments.map((attachment, index) => {
                         return (
                             <div className="chat-content-attachments-item">
-                                <img className="chat-content-attachments-item__img" src="/Chat/download.png" alt="" />
+                                <img className="chat-content-attachments-item__img" src="/ChatPage/download.png" alt="" />
                                 <div className="chat-content-attachments-item__size">
                                     {RoundSize(attachment.size)}
                                 </div>
