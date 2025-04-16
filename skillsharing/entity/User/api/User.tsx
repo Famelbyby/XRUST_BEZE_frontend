@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {ProfileType} from '../../../pages/Profile/ui/ProfileTypes'
 import axios from 'axios';
 import { BACK_URL } from '../../../shared/Consts/URLS';
-import { CODE_NOT_AUTHED } from '../../../shared/Consts/Codes';
 // import { UserResponse } from '../../../shared/Consts/Interfaces';
 
 // const notAuthedUserMock: ProfileType | undefined = undefined;
@@ -74,20 +73,19 @@ export const GetUserByCookie = createAsyncThunk(
         await axios.get(BACK_URL + `/auth/validate`, 
             {
                 withCredentials: true,
-                validateStatus: function(status) {
-                    return status < 500;
-                },
             }
         ).then((response) => {
+            console.log('wau wau', response);
+
             status = response.status;
             data = response.data;
             error = undefined;
         }).catch(({response}) => {
-            console.log(response);
+            console.log('opop', response);
 
-            status = CODE_NOT_AUTHED;//status = response.status;
+            status = response.status;
             data = undefined;
-            error = "no session found";//error = response.data;
+            error = response.data.error;
         })
 
         return {error, user: data as ProfileType, status};

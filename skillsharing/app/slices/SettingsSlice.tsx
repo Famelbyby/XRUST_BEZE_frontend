@@ -224,8 +224,6 @@ export const settingsSlice = createSlice({
     }).addCase(GetUserByCookie.fulfilled, (state: SettingsState, action) => {
         const data = action.payload as UserResponse;
 
-        console.log(data);
-
         if (data.status !== CODE_OK) {
             return;
         }

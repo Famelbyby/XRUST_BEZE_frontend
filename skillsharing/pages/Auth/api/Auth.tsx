@@ -68,11 +68,7 @@ export const TryAuth = createAsyncThunk(
         let data: unknown;
         let error: string | undefined;
 
-        await axios.post(BACK_URL + '/auth/login', JSON.stringify({password, email, username}), {
-            validateStatus(status) {
-                return status < 500;
-            },
-        }).then((response) => {
+        await axios.post(BACK_URL + '/auth/login', JSON.stringify({password, email, username})).then((response) => {
             status = response.status;
             data = response.data;
             error = undefined;
