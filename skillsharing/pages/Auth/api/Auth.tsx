@@ -131,7 +131,7 @@ export const TryRegister = createAsyncThunk(
         let error: string | undefined;
 
         await axios.post(BACK_URL + '/auth/register', 
-            JSON.stringify({password, username, email, avatar_url, preferred_format, bio, skills_to_learn, skills_to_share, hrefs})
+            JSON.stringify({password, username, email, avatar: avatar_url, preferred_format, bio, skills_to_learn, skills_to_share, hrefs})
         ).then((response) => {
             status = response.status;
             data = response.data;
