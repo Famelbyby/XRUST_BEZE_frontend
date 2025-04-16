@@ -60,11 +60,6 @@ const DialogsContent: React.FC = () => {
         }
     }, [dispatch, user]);
 
-    if (filteredDialogs !== undefined && filteredDialogs.length > 1) {
-        console.log(filteredDialogs);
-        filteredDialogs.sort((a, b) => (a.last_message!.created_at - b.last_message!.created_at));
-    }
-
     return (
         <div className="dialogs">
             {filteredDialogs === undefined && 
