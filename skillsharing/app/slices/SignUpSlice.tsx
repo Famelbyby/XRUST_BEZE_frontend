@@ -112,7 +112,7 @@ export const signupSlice = createSlice({
         const isValid: boolean = ValidateUsername(state.identifier.value);
 
         if (!isValid) {
-            state.identifier.error = 'Длина имени - от 3 до 25 символов. Содержит только символы латинского алфавита, нижние подчеркивания, точки и дефис';
+            state.identifier.error = 'Длина имени - от 3 до 25 символов. Содержит только символы латинского алфавита, нижние подчеркивания и точки';
         } else {
             state.identifier.error = undefined;
         }

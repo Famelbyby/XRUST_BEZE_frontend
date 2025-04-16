@@ -171,6 +171,7 @@ export const chatSlice = createSlice({
 
       if (response.status === CODE_BAD) {
         state.noChatError = true;
+        state.noPeerError = false;
         state.messages = [];
         state.selectedMessages = [];
         return;
@@ -201,6 +202,8 @@ export const chatSlice = createSlice({
       state.peerID = companion.id;
     }).addCase(GetCompanion.fulfilled, (state: MessagesState, action) => {
       const data = action as unknown as UserResponse;
+
+      console.log('received companion', data);
 
       const companion = data.user;
 

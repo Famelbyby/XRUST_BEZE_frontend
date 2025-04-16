@@ -22,7 +22,7 @@ export function ValidateUsername(username: string): boolean {
         return false;
     }
 
-    if (username.match(/(.)*[|!\\/+={}[*^&$%#@№`~()?\]](.)*/)) {
+    if (username.match(/(.)*[|!\\/+=\-{}[*^&$%#@№`~()?\]](.)*/)) {
         return false;
     }
 
