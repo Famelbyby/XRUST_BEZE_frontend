@@ -4,11 +4,11 @@ import './ProfileRightColumn.scss'
 import { useSelector } from "react-redux";
 import { AppState } from "../../app/AppStore";
 
-const hrefs: string[] = [
-    "https://github.com",
-    "https://vk.com",
-    "https://twitch.com",
-];
+// const hrefs: string[] = [
+//     "https://github.com",
+//     "https://vk.com",
+//     "https://twitch.com",
+// ];
 
 const ProfileRightColumn: React.FC = () => {
     const {user} = useSelector((state: AppState) => state.profile);
@@ -29,12 +29,12 @@ const ProfileRightColumn: React.FC = () => {
                         {user !== undefined && user.bio}
                     </div>
                 </div>
-                {/* {user !== undefined &&
+                {user !== undefined &&
                     <div className="profile-hrefs">
                         Ссылки
-                        {hrefs.length > 0 && 
+                        {user.hrefs && user.hrefs.length > 0 && 
                             <div className="profile-hrefs-examples">
-                                {hrefs.map((href: string, index: number) => {
+                                {user.hrefs.map((href: string, index: number) => {
                                     return (
                                         <div key={index} className="profile-hrefs-examples__href">
                                             <a href={href} target="_blank">
@@ -45,13 +45,13 @@ const ProfileRightColumn: React.FC = () => {
                                 })}
                             </div>
                         }
-                        {hrefs.length === 0 && 
+                        {((user.hrefs === null) || (user.hrefs && user.hrefs.length === 0)) && 
                             <div className="profile-hrefs__no-hrefs">
                                 Тут пусто
                             </div>
                         }
                     </div>   
-                } */}
+                }
                 {/*<div className="profile-feedbacks">
                     Отзывы
                     {profile !== undefined && profile.feedbacks.length > 0 &&

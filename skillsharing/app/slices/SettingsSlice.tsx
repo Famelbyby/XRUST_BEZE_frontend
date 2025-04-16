@@ -4,9 +4,10 @@ import { CODE_CREATED, CODE_OK } from '../../shared/Consts/Codes';
 import { GetCategories, LoadAvatar, TryAuth, TryRegister } from '../../pages/Auth/api/Auth';
 import { AvatarFieldState, CategoryResponse, CommunicationFormat, LoadAvatarResponse, SkillLevel, UserResponse } from '../../shared/Consts/Interfaces';
 import { GetUserByCookie } from '../../entity/User/api/User';
-import { ValidateAvatarExtension, ValidateAvatarSize, ValidateUsername } from '../../shared/Functions/Validators';
+import { ValidateAvatarExtension, ValidateAvatarSize, ValidateHref, ValidateUsername } from '../../shared/Functions/Validators';
 import { GetProfile } from '../../pages/Profile/api/Profile';
 import { UpdateProfile } from '../../pages/Settings/api/Settings';
+import { MAX_HREFS_COUNT, WRONG_HREF } from '../../shared/Consts/ValidatorsConts';
 
 export interface SettingsState {
     user: ProfileType | undefined,
@@ -15,6 +16,10 @@ export interface SettingsState {
     globalSkills: string[],
     avatar: AvatarFieldState,
     isPending: boolean,
+    hrefs: {
+        value: string,
+        error: string | undefined,
+    }[],
 }
 
 const initialState: SettingsState = {
@@ -28,6 +33,7 @@ const initialState: SettingsState = {
         file: undefined,
     },
     isPending: false,
+    hrefs: [],
 }
 
 export const settingsSlice = createSlice({
@@ -173,6 +179,43 @@ export const settingsSlice = createSlice({
         state.avatar.file = undefined;
         state.avatar.error = undefined;
         state.usernameError = undefined;
+        state.hrefs = [];
+    },
+    addHrefSettings: (state: SettingsState) => {
+        if (state.hrefs.length === MAX_HREFS_COUNT) {
+            return;
+        }
+
+        state.hrefs.push({
+            value: 'https://',
+            error: WRONG_HREF,
+        });
+    },
+    deleteHrefSettings: (state: SettingsState, action: PayloadAction<number>) => {
+        const index = action.payload;
+
+        if (index < 0 || index >= state.hrefs.length) {
+            return;
+        }
+
+        state.hrefs = [...state.hrefs.slice(0, index), ...state.hrefs.slice(index + 1)];
+    },
+    changeHrefSettings: (state: SettingsState, action: PayloadAction<{index: number, nextValue: string}>) => {
+        const {index, nextValue} = action.payload;
+
+        if (index < 0 || index >= state.hrefs.length) {
+            return;
+        }
+
+        state.hrefs[index].value = nextValue;
+
+        const isValid: boolean = ValidateHref(nextValue);
+
+        if (!isValid) {
+            state.hrefs[index].error = WRONG_HREF;
+        } else {
+            state.hrefs[index].error = undefined;
+        }
     },
   },
   extraReducers: (builder) => {
@@ -181,11 +224,27 @@ export const settingsSlice = createSlice({
     }).addCase(GetUserByCookie.fulfilled, (state: SettingsState, action) => {
         const data = action.payload as UserResponse;
 
+        console.log(data);
+
         if (data.status !== CODE_OK) {
             return;
         }
 
         state.user = data.user;
+        state.avatar.URL = undefined;
+        state.avatar.error = undefined;
+        state.avatar.file = undefined;
+        state.usernameError = undefined;
+        state.hrefs = [];
+
+        if (state.user !== undefined) {
+            state.user.hrefs?.forEach((href) => {
+                state.hrefs.push({
+                    value: href,
+                    error: (ValidateHref(href) ? undefined : WRONG_HREF),
+                })
+            });
+        }
     }).addCase(TryAuth.fulfilled, (state: SettingsState, action) => {
         const data = action.payload as UserResponse;
         
@@ -206,6 +265,7 @@ export const settingsSlice = createSlice({
         }
 
         const profile = data.user;
+        console.log(data);
 
         if (profile !== undefined && state.user !== undefined && profile.id === state.user.id) {
             state.user = profile;
@@ -215,6 +275,16 @@ export const settingsSlice = createSlice({
         state.avatar.error = undefined;
         state.avatar.file = undefined;
         state.usernameError = undefined;
+        state.hrefs = [];
+
+        if (state.user !== undefined) {
+            state.user.hrefs?.forEach((href) => {
+                state.hrefs.push({
+                    value: href,
+                    error: (ValidateHref(href) ? undefined : WRONG_HREF),
+                })
+            });
+        }
     }).addCase(UpdateProfile.fulfilled, (state: SettingsState, action) => {
         state.isPending = false;
 
@@ -251,6 +321,6 @@ export const settingsSlice = createSlice({
   },
 })
 
-export const { clearSettings, setAvatar, setBio, setUsername, setPreferredFormat, clearUpdated, editedSkillToLearn, editedSkillToLearnLevel, editedSkillToShare, editedSkillToShareLevel, addSkillToLearn, addSkillToShare, deleteSkillFromLearn, deleteSkillFromShare } = settingsSlice.actions
+export const { addHrefSettings, deleteHrefSettings, changeHrefSettings, clearSettings, setAvatar, setBio, setUsername, setPreferredFormat, clearUpdated, editedSkillToLearn, editedSkillToLearnLevel, editedSkillToShare, editedSkillToShareLevel, addSkillToLearn, addSkillToShare, deleteSkillFromLearn, deleteSkillFromShare } = settingsSlice.actions
 
 export default settingsSlice.reducer

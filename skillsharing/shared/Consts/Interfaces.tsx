@@ -37,6 +37,7 @@ export interface AvatarFieldState {
 
 export interface AnyAPIResponse {
     status: number,
+    error: string | undefined,
 }
 
 export interface RegisterRequest extends AuthRequest {
@@ -46,11 +47,13 @@ export interface RegisterRequest extends AuthRequest {
     bio: string,
     skills_to_learn: Skill[],
     skills_to_share: Skill[],
+    hrefs: string[],
 }
 
 export interface AuthRequest {
     username: string,
     password: string,
+    email: string,
 }
 
 export interface ProfileRequest {
@@ -101,6 +104,7 @@ export interface LoadAvatarRequest {
 export interface UpdateProfileRequest {
     user: ProfileType,
     avatar: string | undefined,
+    hrefs: string[],
 }
 
 export interface ChannelReponse extends AnyAPIResponse {

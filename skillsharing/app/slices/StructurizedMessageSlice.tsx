@@ -3,7 +3,6 @@ import { IMessage } from '../../entity/Message/MessageTypes';
 import { GetMessageById } from '../../pages/StructurizedMessage/api/StructurizedMessage';
 import { MessageResponse } from '../../shared/Consts/Interfaces';
 import { CODE_OK } from '../../shared/Consts/Codes';
-import { GetFoundByNameUsers } from '../../pages/Main/api/Main';
 
 export interface StructurizedMessageState {
     message: IMessage | undefined,

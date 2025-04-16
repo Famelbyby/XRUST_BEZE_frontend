@@ -2,9 +2,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {ProfileType} from '../../../pages/Profile/ui/ProfileTypes'
 import axios from 'axios';
 import { BACK_URL } from '../../../shared/Consts/URLS';
-import { CODE_OK } from '../../../shared/Consts/Codes';
+import { CODE_NOT_AUTHED } from '../../../shared/Consts/Codes';
+// import { UserResponse } from '../../../shared/Consts/Interfaces';
 
-const notAuthedUserMock: ProfileType | undefined = undefined;
+// const notAuthedUserMock: ProfileType | undefined = undefined;
 
 const userMock: ProfileType = {
     id: localStorage.getItem('user-id') || "67ed4e0a66ab0aab711f8476",
@@ -50,30 +51,45 @@ const userMock: ProfileType = {
     updated_at: "2025-01-03T00:00:00Z",
     last_active_at: "2025-01-03T00:00:00Z",
     preferred_format: "voice",
+    hrefs: [
+        'mail.ru',
+        'github.com',
+    ]
 }
 
 export const GetUserByCookie = createAsyncThunk(
     'users/getUserByCookie',
     async () => {
-        const response = await (new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(userMock);
-            }, 20)
-        }));
+        // const response = await (new Promise((resolve) => {
+        //     setTimeout(() => {
+        //         resolve(userMock);
+        //     }, 20)
+        // }));
 
-        return {user: response as ProfileType, status: CODE_OK};
+        // return {user: response as ProfileType, status: 200};
+        let status: number = 200;
+        let data: unknown;
+        let error: string | undefined;
 
-        // try {
-        //     const {status, data} = await axios.get(BACK_URL + `/auth/validate`, 
-        //         {
-        //             withCredentials: true,
-        //         }
-        //     );
+        await axios.get(BACK_URL + `/auth/validate`, 
+            {
+                withCredentials: true,
+                validateStatus: function(status) {
+                    return status < 500;
+                },
+            }
+        ).then((response) => {
+            status = response.status;
+            data = response.data;
+            error = undefined;
+        }).catch(({response}) => {
+            console.log(response);
 
-        //     return {user: data as ProfileType, status};
-        // } catch(event) {
-        //     console.log(event);
-        //     return {user: undefined, status};
-        // }
+            status = CODE_NOT_AUTHED;//status = response.status;
+            data = undefined;
+            error = "no session found";//error = response.data;
+        })
+
+        return {error, user: data as ProfileType, status: 200};
     }
 );

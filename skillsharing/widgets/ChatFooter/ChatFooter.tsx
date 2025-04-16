@@ -9,10 +9,10 @@ import MainWebSocket from '../../shared/WebSocket'
 import { FormatMinutesSecondDuration } from "../../shared/Functions/FormatDate";
 import { clearRecorded, setIsPlayingRecord, setPlayerSource, setRecorded, startRecording, stopPlaying } from "../../app/slices/RecorderSlice";
 import { LoadAttachments, LoadVoiceRecord } from "../../pages/Chat/api/Chat";
-import { addAttachment, clearInputAndAttachments, setInputText } from "../../app/slices/ManageMessageSlice";
+import { addAttachment, clearInputAndAttachments, setInputText, setUpdate } from "../../app/slices/ManageMessageSlice";
 
-const TEXTAREA_INITIAL_HEIGHT: number = 15;
-const MESSAGE_MAX_LENGTH: number = 800;
+const TEXTAREA_INITIAL_HEIGHT = 15;
+const MESSAGE_MAX_LENGTH = 800;
 
 let mediaRecorder: undefined | MediaRecorder;
 
@@ -33,7 +33,7 @@ function handleEnter(event: KeyboardEvent) {
 const ChatFooter: React.FC = () => {
     const {editingMessage, channelID, peerID} = useSelector((state: AppState) => state.chatMessages);
     const {isRecorded, recordDuration, isPlayingRecord, isRecording, audioPlayer, voiceBlob, recordURL} = useSelector((state: AppState) => state.recorder);
-    const {attachmentURLs, attachments, attachmentsUploaded, inputText} = useSelector((state: AppState) => state.manageMessage);
+    const {isUpdating, attachmentURLs, attachments, attachmentsUploaded, inputText} = useSelector((state: AppState) => state.manageMessage);
     const {user} = useSelector((state: AppState) => state.user);
     const dispatch = useDispatch<AppDispatch>();
     const userId: string = user!.id;
@@ -84,6 +84,7 @@ const ChatFooter: React.FC = () => {
     useEffect(() => {
         if (editingMessage !== null) {
             dispatch(setInputText(editingMessage.payload || ''));
+            dispatch(setUpdate());
         }
     }, [editingMessage, dispatch]);
 
@@ -120,66 +121,68 @@ const ChatFooter: React.FC = () => {
     }, [recordURL, dispatch, peerID, userId, channelID, recordDuration]);
 
     useEffect(() => {
-        if ((inputText.trim() === '' && attachments.length === 0) || !attachmentsUploaded) {
-            return;
-        }
+        if (!isUpdating) {
+            if ((inputText.trim() === '' && attachments.length === 0) || !attachmentsUploaded) {
+                return;
+            }
 
-        let sendingText: string = inputText;
+            let sendingText: string = inputText;
 
-        while (sendingText.length > MESSAGE_MAX_LENGTH) {
+            while (sendingText.length > MESSAGE_MAX_LENGTH) {
+                const messageJSON: ISendingMessage = {
+                    "event": "EventText",
+                    "user_id": userId,
+                    "peer_id": peerID!,
+                    "channel_id": channelID,
+                    "payload": sendingText.slice(0, MESSAGE_MAX_LENGTH),
+                    "type": "send_message",
+                }
+        
+                MainWebSocket.sendMessage(JSON.stringify(messageJSON));
+
+                sendingText = sendingText.slice(MESSAGE_MAX_LENGTH);
+            }
+
             const messageJSON: ISendingMessage = {
                 "event": "EventText",
                 "user_id": userId,
                 "peer_id": peerID!,
                 "channel_id": channelID,
-                "payload": sendingText.slice(0, MESSAGE_MAX_LENGTH),
+                "payload": sendingText,
                 "type": "send_message",
+                "attachments": attachmentURLs,
+            }
+
+            MainWebSocket.sendMessage(JSON.stringify(messageJSON));
+
+            dispatch(clearInputAndAttachments());
+            NormalizeTextarea('textarea', TEXTAREA_INITIAL_HEIGHT);
+        } else {
+            if ((inputText.trim() === '' && attachments.length === 0) || !attachmentsUploaded) {
+                dispatch(stopEditingMessage());
+                return;
+            }
+    
+            const messageJSON: IUpdatingMessage = {
+                "event": "EventText",
+                "user_id": userId,
+                "peer_id": peerID!,
+                "channel_id": channelID,
+                "payload": inputText,
+                "type": "update_message",
+                "created_at": editingMessage!.created_at,
+                "message_id": editingMessage!.message_id,
             }
     
             MainWebSocket.sendMessage(JSON.stringify(messageJSON));
-
-            sendingText = sendingText.slice(MESSAGE_MAX_LENGTH);
-        }
-
-        const messageJSON: ISendingMessage = {
-            "event": "EventText",
-            "user_id": userId,
-            "peer_id": peerID!,
-            "channel_id": channelID,
-            "payload": sendingText,
-            "type": "send_message",
-            "attachments": attachmentURLs,
-        }
-
-        MainWebSocket.sendMessage(JSON.stringify(messageJSON));
-
-        dispatch(clearInputAndAttachments());
-        NormalizeTextarea('textarea', TEXTAREA_INITIAL_HEIGHT);
-    }, [dispatch, channelID, inputText, peerID, userId, attachmentsUploaded, attachmentURLs, attachments.length]);
-
-    function handleUpdatingMessage() {
-        if (inputText.trim() === '') {
+    
+            dispatch(clearInputAndAttachments());
+            NormalizeTextarea('textarea', TEXTAREA_INITIAL_HEIGHT);
             dispatch(stopEditingMessage());
-            return;
         }
 
-        const messageJSON: IUpdatingMessage = {
-            "event": "EventText",
-            "user_id": userId,
-            "peer_id": peerID!,
-            "channel_id": channelID,
-            "payload": inputText,
-            "type": "update_message",
-            "created_at": editingMessage!.created_at,
-            "message_id": editingMessage!.message_id,
-        }
-
-        MainWebSocket.sendMessage(JSON.stringify(messageJSON));
-
-        dispatch(clearInputAndAttachments());
-        NormalizeTextarea('textarea', TEXTAREA_INITIAL_HEIGHT);
-        dispatch(stopEditingMessage());
-    }
+        
+    }, [dispatch, channelID, inputText, peerID, userId, attachmentsUploaded, attachmentURLs, attachments.length, isUpdating, editingMessage]);
 
     function handleChangingTextareaInput(event: React.ChangeEvent<HTMLTextAreaElement>) {
         event.preventDefault();
@@ -284,7 +287,7 @@ const ChatFooter: React.FC = () => {
                     <img id="send-message" className='chat-footer-controls__send-message' src='/Chat/send.png' alt='send-message' onClick={handleSending}/>
                 }
                 {editingMessage !== null &&
-                    <img id="update-message" className='chat-footer-controls__update-message' src='/Chat/check.png' alt='update-message' onClick={handleUpdatingMessage}/>
+                    <img id="update-message" className='chat-footer-controls__update-message' src='/Chat/check.png' alt='update-message' onClick={handleSending}/>
                 }
             </div>
             <div className="chat-footer-scrolldown">

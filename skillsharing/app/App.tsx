@@ -40,6 +40,8 @@ function App() {
       MainWebSocket.closeConnection();
     }
   }, [user, dispatch]);
+  
+  console.log('here', isFetched, user);
 
   return (
       <>

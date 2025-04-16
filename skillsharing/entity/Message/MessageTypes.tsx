@@ -37,7 +37,8 @@ export interface IUpdatingMessage {
     peer_id: string,
     event?: string,
     message_id: string,
-    payload: string,
+    payload: string | undefined,
+    attachments?: string[],
     created_at: number,
 }
 
@@ -52,6 +53,6 @@ export interface ISendingMessage {
     peer_id: string, //mocked = 2 - this is a mate's ID
     channel_id?: string, 
     user_id: string, //mocked = from local storage
-    payload: string, //text message content,
+    payload: string | undefined, //text message content,
     attachments?: string[],
 }

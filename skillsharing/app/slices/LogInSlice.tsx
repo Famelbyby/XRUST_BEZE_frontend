@@ -1,15 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import {TextFieldState, PasswordFieldState} from '../../shared/Consts/Interfaces'
-import {ValidateEmail, ValidatePassword} from '../../shared/Functions/Validators'
+import {TextFieldState, PasswordFieldState, UserResponse} from '../../shared/Consts/Interfaces'
+import {ValidateEmail, ValidatePassword, ValidateUsername} from '../../shared/Functions/Validators'
 import { TryAuth } from '../../pages/Auth/api/Auth'
-import { UserResponse } from '../../entity/User/api/User'
-import { CODE_BAD, CODE_INTERNAL_SERVER, CODE_NOT_FOUND } from '../../shared/Consts/Codes'
+import { CODE_OK } from '../../shared/Consts/Codes'
+import {AUTH_LOGIN_NOT_EXIST, AUTH_LOGIN_WRONG_PASSWORD} from '../../shared/Consts/Errors';
 
 export interface LogInState {
     identifier: TextFieldState,
     password: PasswordFieldState,
     isPending: boolean,
+    isEmailValid: boolean,
 }
 
 const initialState: LogInState = {
@@ -23,6 +24,7 @@ const initialState: LogInState = {
         isHidden: true,
     },
     isPending: false,
+    isEmailValid: false,
 }
 
 export const loginSlice = createSlice({
@@ -43,12 +45,20 @@ export const loginSlice = createSlice({
     editedIdentifierField: (state: LogInState, action: PayloadAction<string>) => {
         state.identifier.value = action.payload;
 
-        const isValid: boolean = ValidateEmail(state.identifier.value);
+        const isValidEmail: boolean = ValidateEmail(state.identifier.value);
+        const isValidUsername: boolean = ValidateUsername(state.identifier.value);
 
-        if (!isValid) {
-            state.identifier.error = 'Неправильный формат почты';
+        if (!isValidEmail && !isValidUsername) {
+            state.isEmailValid = false;
+            state.identifier.error = 'Неправильный формат имени/почты';
         } else {
             state.identifier.error = undefined;
+        }
+
+        if (!isValidEmail) {
+            state.isEmailValid = false;
+        } else {
+            state.isEmailValid = true;
         }
     },
     toggleIsPasswordHidden: (state: LogInState) => {
@@ -62,15 +72,16 @@ export const loginSlice = createSlice({
         state.isPending = false;
         const data = action.payload as UserResponse;
 
-        switch (data.status) {
-            case CODE_BAD:
-                state.password.error = "Пользователь с такими именем/паролем уже существует";
+        if (data.status === CODE_OK) {
+            return;
+        }
+
+        switch (data.error) {
+            case AUTH_LOGIN_WRONG_PASSWORD:
+                state.password.error = "Неправильный пароль";
                 break;
-            case CODE_NOT_FOUND:
-                state.identifier.error = "Такого пользователя не существует";
-                break;
-            case CODE_INTERNAL_SERVER:
-                state.identifier.error = "Неожиданная ошибка";
+            case AUTH_LOGIN_NOT_EXIST:
+                state.identifier.error = "Не существует такого пользователя";
                 break;
         }
       });

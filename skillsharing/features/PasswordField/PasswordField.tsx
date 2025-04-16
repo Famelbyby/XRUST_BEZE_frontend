@@ -18,7 +18,7 @@ const TextField: React.FC<PasswordFieldPropTypes<string>> = ({title, onChangingF
                 <input type={isHidden ? "password" : "text"} className="password-field-content__input" placeholder="" value={value} autoComplete="off" onChange={(event) => {
                     onChangingField(event.target.value);
                 }}/>
-                <img className="password-field__eye-img" src={"/Auth/" + (isHidden ? "" : "closed-") + "eye.png"} alt={isHidden ? "Show password" : "Hide password"} onClick={toggleIsHidden}/>
+                <img className="password-field__eye-img" src={"/AuthPage/" + (isHidden ? "" : "closed-") + "eye.png"} alt={isHidden ? "Show password" : "Hide password"} onClick={toggleIsHidden}/>
             </div>
             <div className="password-field__error">
                 {error === undefined ? "" : error} 

@@ -4,6 +4,6 @@
  * @param pathname - Given pathname
  * @returns True if starts; otherwise false
  */
-export const ComparePathnames: (location: string, pathname: string) => boolean = (location: string, pathname: string) => {
+export function ComparePathnames(location: string, pathname: string) {
     return location.startsWith(pathname);
 };

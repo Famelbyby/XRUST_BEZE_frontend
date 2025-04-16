@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router";
-import { ProfileType } from "../../../pages/Profile/ui/ProfileTypes";
 import { FormatRelativeTimeInPastInDays } from "../../../shared/Functions/FormatDate";
 import { useSelector } from "react-redux";
 import { AppState } from "../../../app/AppStore";
 import './ProfileHeader.scss'
+import { ProfileType } from "../../../pages/Profile/ui/ProfileTypes";
 
 interface ProfileHeaderPropTypes {
     profile: ProfileType | undefined,
@@ -50,7 +50,7 @@ const ProfileHeader: React.FC<ProfileHeaderPropTypes> = ({profile}) => {
                         </div>
                     </Link>
                     <div className="profile-buttons-exit">
-                        <img className="profile-buttons-exit__img" src="/Profile/exit.png" alt="" />
+                        <img className="profile-buttons-exit__img" src="/ProfilePage/exit.png" alt="" />
                         Выйти
                     </div>
                 </div>
@@ -58,12 +58,12 @@ const ProfileHeader: React.FC<ProfileHeaderPropTypes> = ({profile}) => {
             { profile !== undefined && ownUserID !== profile.id && 
                 <div className="profile-buttons profile-buttons_other">
                         <div className="profile-buttons-report">
-                            <img className="profile-buttons-report__img" src="/Profile/report.png" alt="" />
+                            <img className="profile-buttons-report__img" src="/ProfilePage/report.png" alt="" />
                             Пожаловаться
                         </div>
                     <Link to={`/chat/${profile.id}`}>
                         <div className="profile-buttons-chat">
-                            <img className="profile-buttons-chat__img" src="/Profile/chat2.png" alt="" />
+                            <img className="profile-buttons-chat__img" src="/ProfilePage/chat2.png" alt="" />
                             Написать
                         </div>
                     </Link>

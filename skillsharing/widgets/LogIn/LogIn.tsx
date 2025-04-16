@@ -9,7 +9,7 @@ import { TryAuth} from '../../pages/Auth/api/Auth'
 import Loader from '../../features/Loader/Loader'
 
 const LogInEnterButton: React.FC = () => {
-    const {identifier, password, isPending} = useSelector((state: AppState) => state.login);
+    const {identifier, password, isPending, isEmailValid} = useSelector((state: AppState) => state.login);
     const dispatch = useDispatch<AppDispatch>();
 
     return (
@@ -22,7 +22,12 @@ const LogInEnterButton: React.FC = () => {
                 return;
             }
 
-            dispatch(TryAuth({username: identifier.value, password: password.value}));
+            if (isEmailValid) {
+                dispatch(TryAuth({email: identifier.value, password: password.value, username: ""}));
+            } else {
+                dispatch(TryAuth({username: identifier.value, password: password.value, email: ""}));
+            }
+            
         }}>
             {isPending && 
                 <Loader />
@@ -41,7 +46,7 @@ const LogInIdentifier: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
 
     return (
-        <TextField title="Почта" value={identifier.value} error={identifier.error} onChangingField={(data: string) => dispatch(editedIdentifierField(data))} placeholder="coolboy@always.com"/>
+        <TextField title="Почта или имя" value={identifier.value} error={identifier.error} onChangingField={(data: string) => dispatch(editedIdentifierField(data))} placeholder="coolboy@always.com"/>
     )
 };
 

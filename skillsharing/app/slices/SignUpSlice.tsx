@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import {TextFieldState, PasswordFieldState, AvatarFieldState, LoadAvatarResponse, UserResponse, CommunicationFormat, Skill, CategoryResponse, SkillLevel} from '../../shared/Consts/Interfaces'
-import {MatchPasswords, ValidateAvatarExtension, ValidateAvatarSize, ValidateEmail, ValidatePassword, ValidateUsername} from '../../shared/Functions/Validators'
+import {MatchPasswords, ValidateAvatarExtension, ValidateAvatarSize, ValidateEmail, ValidateHref, ValidatePassword, ValidateUsername} from '../../shared/Functions/Validators'
 import { GetCategories, LoadAvatar, TryRegister } from '../../pages/Auth/api/Auth'
-import { CODE_BAD, CODE_INTERNAL_SERVER, CODE_NOT_FOUND, CODE_OK } from '../../shared/Consts/Codes'
+import { CODE_OK } from '../../shared/Consts/Codes'
+import { AUTH_SIGNUP_MODERATION, AUTH_SIGNUP_EMAIL_EXIST, AUTH_SIGNUP_USERNAME_EXIST } from '../../shared/Consts/Errors'
+import { MAX_HREFS_COUNT, WRONG_HREF } from '../../shared/Consts/ValidatorsConts'
 
 type SignUpStep = 1 | 2 | 3;
 
@@ -20,6 +22,10 @@ export interface SignUpState {
     skills_to_learn: Skill[],
     skills_to_share: Skill[],
     step: SignUpStep,
+    hrefs: {
+        value: string,
+        error: undefined | string,
+    }[],
 }
 
 const initialState: SignUpState = {
@@ -56,6 +62,7 @@ const initialState: SignUpState = {
     skills_to_learn: [],
     skills_to_share: [],
     step: 1,
+    hrefs: [],
 }
 
 export const signupSlice = createSlice({
@@ -202,6 +209,42 @@ export const signupSlice = createSlice({
 
         state.skills_to_share[index].level = skillLevel as SkillLevel;
     },
+    addHref: (state: SignUpState) => {
+        if (state.hrefs.length === MAX_HREFS_COUNT) {
+            return;
+        }
+
+        state.hrefs.push({
+            value: "https://",
+            error: WRONG_HREF,
+        });
+    },
+    deleteHref: (state: SignUpState, action: PayloadAction<number>) => {
+        const index = action.payload;
+
+        if (index < 0 || index >= state.hrefs.length) {
+            return;
+        }
+
+        state.hrefs = [...state.hrefs.slice(0, index), ...state.hrefs.slice(index + 1)];
+    },
+    changeHref: (state: SignUpState, action: PayloadAction<{index: number, nextValue: string}>) => {
+        const {index, nextValue} = action.payload;
+
+        if (index < 0 || index >= state.hrefs.length) {
+            return;
+        }
+
+        state.hrefs[index].value = nextValue;
+
+        const isValid = ValidateHref(nextValue);
+
+        if (!isValid) {
+            state.hrefs[index].error = WRONG_HREF;
+        } else {
+            state.hrefs[index].error = undefined;
+        }
+    },
     increaseStep: (state: SignUpState) => {
         state.step += 1;
     },
@@ -226,15 +269,22 @@ export const signupSlice = createSlice({
         
         const data = action.payload as UserResponse;
 
-        switch (data.status) {
-            case CODE_BAD:
-                state.identifier.error = "Пользователь с такими именем/паролем уже существует";
+        if (data.status === CODE_OK) {
+            return;
+        }
+
+        switch (data.error) {
+            case AUTH_SIGNUP_EMAIL_EXIST:
+                state.email.error = "Пользователь с такой почтой уже существует";
+                state.step = 1;
                 break;
-            case CODE_NOT_FOUND:
-                state.identifier.error = "Такого пользователя не существует";
-                break;
-            case CODE_INTERNAL_SERVER:
-                state.identifier.error = "Неожиданная ошибка";
+            case AUTH_SIGNUP_USERNAME_EXIST:
+                state.identifier.error = "Пользователь с таким именем уже существует";
+                state.step = 1;
+                break; 
+            case AUTH_SIGNUP_MODERATION:
+                state.identifier.error = "Неподходящее имя";
+                state.step = 1;
                 break;
         }
     }).addCase(GetCategories.fulfilled, (state: SignUpState, action) => {
@@ -258,6 +308,6 @@ export const signupSlice = createSlice({
   },
 })
 
-export const { increaseStep, decreaseStep, addSkillToShare, deleteSkillFromShare, editedSkillToShare, editedSkillToShareLevel, editedSkillToLearnLevel, editedSkillToLearn, deleteSkillFromLearn, setCommunicationFormat, editedBioField, editedPasswordField, editedRepeatPasswordField, editedIdentifierField, editedEmailField, editedAvatarField, toggleIsPasswordHidden, toggleIsRepeatPasswordHidden, addSkillToLearn } = signupSlice.actions
+export const { addHref, deleteHref, changeHref, increaseStep, decreaseStep, addSkillToShare, deleteSkillFromShare, editedSkillToShare, editedSkillToShareLevel, editedSkillToLearnLevel, editedSkillToLearn, deleteSkillFromLearn, setCommunicationFormat, editedBioField, editedPasswordField, editedRepeatPasswordField, editedIdentifierField, editedEmailField, editedAvatarField, toggleIsPasswordHidden, toggleIsRepeatPasswordHidden, addSkillToLearn } = signupSlice.actions
 
 export default signupSlice.reducer

@@ -15,7 +15,7 @@ interface PropType {
     isStructurizing: boolean,
 }
 
-const VoiceMessage: React.FC<PropType> = ({message, isSelected, isStructurizing}) => {
+const VoiceMessage: React.FC<PropType> = ({message, isSelected}) => {
     const {user} = useSelector((state: AppState) => state.user);
     const {voiceMessageId, isPlayingMessage, audioPlayer} = useSelector((state: AppState) => state.recorder);
     const user_id: IMessage["user_id"] = user!.id;
@@ -26,23 +26,25 @@ const VoiceMessage: React.FC<PropType> = ({message, isSelected, isStructurizing}
 
     useEffect(() => {
         let deleteIndex: undefined | number;
-        const messageTimer = document.getElementById(`voice-message-${message.message_id}-duration`) as HTMLElement;
-        const messageRangeBar = document.getElementById(`voice-range-bar-${message.message_id}`) as HTMLInputElement;
         //const messageDuration = document.getElementById(`voice-message-content-${message.message_id}`) as HTMLElement;
 
         if (isPlayingMessage && message.message_id === voiceMessageId) {
+            const messageTimer = document.getElementById(`voice-message-${message.message_id}-duration`) as HTMLElement;
+            const messageRangeBar = document.getElementById(`voice-range-bar-${message.message_id}`) as HTMLInputElement;
+
             deleteIndex = setInterval(() => {
                 const player = audioPlayer as HTMLAudioElement;
                 const percentage = player.currentTime / message.voice_duration! * 100000;
 
                 if (messageTimer !== null) {
-                    console.log(player.currentTime);
-                    messageTimer.innerText = FormatMinutesSecondDuration(player.currentTime);
+                    messageTimer.innerHTML = FormatMinutesSecondDuration(player.currentTime * SECOND_IN_MILLISECONDS);
                 }
 
                 if (messageRangeBar !== null) {
                     messageRangeBar.style.backgroundSize = `${percentage}% 100%`;
                 }
+
+                dispatch(setCurrentTime(player.currentTime.toString()));
             }, 50);
         }
 

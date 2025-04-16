@@ -11,6 +11,7 @@ export interface ManageMessageState {
     oldAttachments: string[],
     attachmentsUploaded: boolean,
     attachmentURLs: undefined | string[],
+    isUpdating: boolean,
 }
 
 const initialState: ManageMessageState = {
@@ -19,6 +20,7 @@ const initialState: ManageMessageState = {
     oldAttachments: [],
     attachmentsUploaded: false,
     attachmentURLs: undefined,
+    isUpdating: false,
 }
 
 export const manageMessageSlice = createSlice({
@@ -27,6 +29,9 @@ export const manageMessageSlice = createSlice({
   reducers: {
     setInputText: (state: ManageMessageState, action: PayloadAction<string>) => {
         state.inputText = action.payload;
+    },
+    setUpdate: (state: ManageMessageState) => {
+        state.isUpdating = true;
     },
     addAttachment: (state: ManageMessageState, action: PayloadAction<File>) => {
         if (state.attachments.length === MAX_ATTACHMENTS_LENGTH) {
@@ -72,6 +77,6 @@ export const manageMessageSlice = createSlice({
   },
 })
 
-export const { clearInputAndAttachments, deleteAttachment, addAttachment, setInputText } = manageMessageSlice.actions
+export const { setUpdate, clearInputAndAttachments, deleteAttachment, addAttachment, setInputText } = manageMessageSlice.actions
 
 export default manageMessageSlice.reducer

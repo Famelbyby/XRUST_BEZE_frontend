@@ -9,13 +9,13 @@ import Loader from "../../features/Loader/Loader";
 
 const SettingsFooter: React.FC = () => {
     const navigatoTo = useNavigate();
-    const {user, usernameError, avatar, isPending} = useSelector((state: AppState) => state.settings);
+    const {user, usernameError, avatar, isPending, hrefs} = useSelector((state: AppState) => state.settings);
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
         if (avatar.URL !== undefined) {
             console.log(user!);
-            dispatch(UpdateProfile({user: user!, avatar: avatar.URL}));
+            dispatch(UpdateProfile({user: user!, avatar: avatar.URL, hrefs: hrefs.map((href) => href.value)}));
         }
     }, [dispatch, avatar.URL]);
 
@@ -26,14 +26,14 @@ const SettingsFooter: React.FC = () => {
                     Отменить
                 </div>
                 <div className="settings-footer__save" onClick={() => {
-                    if (usernameError || avatar.error !== undefined) {
+                    if (usernameError || avatar.error !== undefined || hrefs.find((href) => href.error !== undefined)) {
                         return;
                     }
 
                     if (avatar.file !== undefined && avatar.URL === undefined) {
                         dispatch(LoadAvatar({avatar: avatar.file}));
                     } else {
-                        dispatch(UpdateProfile({user: user!, avatar: avatar.URL}));
+                        dispatch(UpdateProfile({user: user!, avatar: avatar.URL, hrefs: hrefs.map((href) => href.value)}));
                     }
                 }}>
                     {isPending && 

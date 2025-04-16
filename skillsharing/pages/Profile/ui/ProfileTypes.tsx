@@ -13,4 +13,5 @@ export interface ProfileType {
     "updated_at": string,
     "last_active_at": string,
     "preferred_format": CommunicationFormat,
+    "hrefs": string[] | null,
 };

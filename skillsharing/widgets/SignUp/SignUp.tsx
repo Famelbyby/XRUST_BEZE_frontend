@@ -2,13 +2,13 @@ import React, {useEffect} from 'react';
 import TextField from '../../features/TextField/TextField';
 import PasswordField from '../../features/PasswordField/PasswordField';
 import { useDispatch, useSelector } from 'react-redux';
-import { editedAvatarField, editedEmailField, editedIdentifierField, editedPasswordField, editedRepeatPasswordField, toggleIsPasswordHidden, toggleIsRepeatPasswordHidden, setCommunicationFormat, editedBioField, addSkillToLearn, deleteSkillFromLearn, editedSkillToLearn, editedSkillToLearnLevel, editedSkillToShare, editedSkillToShareLevel, addSkillToShare, deleteSkillFromShare, increaseStep, decreaseStep } from '../../app/slices/SignUpSlice';
+import { editedAvatarField, editedEmailField, editedIdentifierField, editedPasswordField, editedRepeatPasswordField, toggleIsPasswordHidden, toggleIsRepeatPasswordHidden, setCommunicationFormat, editedBioField, addSkillToLearn, deleteSkillFromLearn, editedSkillToLearn, editedSkillToLearnLevel, editedSkillToShare, editedSkillToShareLevel, addSkillToShare, deleteSkillFromShare, increaseStep, decreaseStep, deleteHref, addHref, changeHref } from '../../app/slices/SignUpSlice';
 import { AppDispatch, AppState } from '../../app/AppStore';
 import './SignUp.scss';
 import { GetCategories, LoadAvatar, TryRegister } from '../../pages/Auth/api/Auth';
 import { PREFERRED_FORMAT_TRANSLATION, PREFERRED_FORMAT_TYPES } from '../../shared/Consts/Translations';
 import { CommunicationFormat } from '../../shared/Consts/Interfaces';
-import { BIO_MAX_LENGTH } from '../../shared/Consts/ValidatorsConts';
+import { BIO_MAX_LENGTH, MAX_HREFS_COUNT } from '../../shared/Consts/ValidatorsConts';
 import Loader from '../../features/Loader/Loader';
 
 const SignUpAvatar: React.FC = () => {
@@ -19,7 +19,7 @@ const SignUpAvatar: React.FC = () => {
         <div className='sign-up-avatar'>
             Выберите аватарку
             <div className='sign-up-avatar-field'>
-                <img className={'sign-up-avatar__preview' + (avatar.file === undefined ? " sign-up-avatar_filtered" : '')} src={avatar.file === undefined ? '/Auth/default_avatar.png' : URL.createObjectURL(avatar.file)} alt='Preview' onClick={() => {
+                <img className={'sign-up-avatar__preview' + (avatar.file === undefined ? " sign-up-avatar_filtered" : '')} src={avatar.file === undefined ? '/AuthPage/default_avatar.png' : URL.createObjectURL(avatar.file)} alt='Preview' onClick={() => {
                     const avatarInput = document.querySelector('.sign-up-avatar__input') as HTMLElement;
 
                     if (avatarInput !== null) {
@@ -74,12 +74,14 @@ const SignUpPreferredFormat: React.FC = () => {
 };
 
 const SignUpRegisterButton: React.FC = () => {
-    const {identifier, password, email, repeatPassword, avatar, preferred_format, isPending, bio, skills_to_learn, skills_to_share} = useSelector((state: AppState) => state.signup);
+    const {identifier, password, email, repeatPassword, avatar, preferred_format, isPending, bio, skills_to_learn, skills_to_share, hrefs} = useSelector((state: AppState) => state.signup);
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
         if (avatar.URL !== undefined) {
-            dispatch(TryRegister({skills_to_learn, skills_to_share, username: identifier.value, email: email.value, password: password.value, avatar_url: avatar.URL, preferred_format, bio: bio.value}));
+            dispatch(TryRegister({skills_to_learn, skills_to_share, username: identifier.value, email: email.value, password: password.value, avatar_url: avatar.URL, preferred_format, bio: bio.value, 
+                hrefs: hrefs.map((href) => href.value),
+            }));
         }
     }, [avatar.URL, dispatch]);
 
@@ -89,14 +91,16 @@ const SignUpRegisterButton: React.FC = () => {
                 return;
             }
 
-            if (identifier.error !== undefined || password.error !== undefined || repeatPassword.error !== undefined || email.error !== undefined || password.value === "" || identifier.value === "" || email.value === "" || repeatPassword.value === "") {
+            if (identifier.error !== undefined || password.error !== undefined || repeatPassword.error !== undefined || email.error !== undefined || password.value === "" || identifier.value === "" || email.value === "" || repeatPassword.value === "" || hrefs.find((href) => href.error !== undefined)) {
                 return;
             }
 
             if (avatar.URL === undefined && avatar.file !== undefined) {
                 dispatch(LoadAvatar({avatar: avatar.file}));
             } else {
-                dispatch(TryRegister({skills_to_learn, skills_to_share, username: identifier.value, email: email.value, password: password.value, avatar_url: avatar.URL, preferred_format, bio: bio.value}));
+                dispatch(TryRegister({skills_to_learn, skills_to_share, username: identifier.value, email: email.value, password: password.value, avatar_url: avatar.URL, preferred_format, bio: bio.value,
+                    hrefs: hrefs.map((href) => href.value),
+                }));
             }
         }}>
             {!isPending && 
@@ -289,12 +293,12 @@ const SignUpSkillToShare: React.FC = () => {
 };
 
 const SignUpNextStepButton: React.FC = () => {
-    const {identifier, password, email, repeatPassword, avatar} = useSelector((state: AppState) => state.signup);
+    const {identifier, password, email, repeatPassword, hrefs} = useSelector((state: AppState) => state.signup);
     const dispatch = useDispatch<AppDispatch>();
 
     return (
         <div className="sign-up__button-next" onClick={() => {
-            if (identifier.error !== undefined || password.error !== undefined || repeatPassword.error !== undefined || email.error !== undefined || password.value === "" || identifier.value === "" || email.value === "" || repeatPassword.value === "") {
+            if (identifier.error !== undefined || password.error !== undefined || repeatPassword.error !== undefined || email.error !== undefined || password.value === "" || identifier.value === "" || email.value === "" || repeatPassword.value === "" || hrefs.find((href) => href.error !== undefined)) {
                 return;
             }
             
@@ -313,6 +317,41 @@ const SignUpPreviousStepButton: React.FC = () => {
             dispatch(decreaseStep());
         }}>
             Назад
+        </div>
+    )
+};
+
+const SignUpHrefs: React.FC = () => {
+    const {hrefs} = useSelector((state: AppState) => state.signup);
+    const dispatch = useDispatch();
+
+    return (
+        <div className="sign-up-hrefs">
+            Ссылки
+            <div className="sign-up-hrefs-examples">
+                {hrefs.map((href: {value: string, error: string | undefined}, index: number) => {
+                    return (
+                        <div key={index} className="sign-up-hrefs-examples-item">
+                            <div className='sign-up-hrefs-examples-item-field'>
+                                <input className='sign-up-hrefs-examples-item__input' type='text' value={href.value} onChange={(event) => 
+                                    dispatch(changeHref({
+                                        index, 
+                                        nextValue: event.target.value
+                                    }))}/>
+                                <img className="sign-up-hrefs-examples-item__img" src="/shared/cancel.png" alt="Удалить ссылку" onClick={() => dispatch(deleteHref(index))}/>
+                            </div>
+                            <div className='sign-up-hrefs-examples-item__error'>
+                                {href.error === undefined ? '' : href.error}
+                            </div>
+                        </div>
+                    );
+                })}
+                {hrefs.length < MAX_HREFS_COUNT && 
+                    <div className="sign-up-hrefs-examples-add-href" onClick={() => dispatch(addHref())}>
+                        <img className="sign-up-hrefs-examples-add-href__img" src="/shared/plus.png" alt="Добавить ссылку"/>
+                    </div>
+                }
+            </div>
         </div>
     )
 };
@@ -346,6 +385,7 @@ const SignUp: React.FC = () => {
                 <>
                     <SignUpSkillToLearn />
                     <SignUpSkillToShare />
+                    <SignUpHrefs />
                 </>
             }
             <div className='sign-up-footer'>

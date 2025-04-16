@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, {  } from "react";
 import './SettingsRightColumn.scss'
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, AppState } from "../../app/AppStore";
-import { addSkillToLearn, addSkillToShare, deleteSkillFromLearn, deleteSkillFromShare, editedSkillToLearn, editedSkillToLearnLevel, editedSkillToShare, editedSkillToShareLevel, setBio, setUsername } from "../../app/slices/SettingsSlice";
-import { BIO_MAX_LENGTH, MAX_USERNAME_LENGTH, MIN_USERNAME_LENGTH } from "../../shared/Consts/ValidatorsConts";
+import { addHrefSettings, addSkillToLearn, addSkillToShare, changeHrefSettings, deleteHrefSettings, deleteSkillFromLearn, deleteSkillFromShare, editedSkillToLearn, editedSkillToLearnLevel, editedSkillToShare, editedSkillToShareLevel, setBio, setUsername } from "../../app/slices/SettingsSlice";
+import { BIO_MAX_LENGTH, MAX_HREFS_COUNT, MAX_USERNAME_LENGTH, MIN_USERNAME_LENGTH } from "../../shared/Consts/ValidatorsConts";
 
-const hrefsMock: string[] = [
-    "https://github.com",
-    "https://vk.com",
-    "https://twitch.com",
-];
+// const hrefsMock: string[] = [
+//     "https://github.com",
+//     "https://vk.com",
+//     "https://twitch.com",
+// ];
 
 const SettingsSkillToLearn: React.FC = () => {
     const {user, globalSkills} = useSelector((state: AppState) => state.settings);
@@ -129,8 +129,65 @@ const SettingsSkillToShare: React.FC = () => {
     )
 };
 
-const SettingsRightColumn: React.FC = () => {
-    const [hrefs, setHrefs] = useState(hrefsMock);
+const SettingsBio: React.FC = () => {
+    const {user} = useSelector((state: AppState) => state.settings);
+    const dispatch = useDispatch();
+
+    function handleChangingTextarea(event: React.ChangeEvent<HTMLTextAreaElement>) {
+        event.preventDefault();
+        
+        dispatch(setBio(event.target.value));
+    }
+
+    return (
+        <div className="settings-bio">
+            О себе
+            <div className="settings-bio-field">
+                <textarea maxLength={BIO_MAX_LENGTH} className="settings-bio__input" placeholder="Что-то интересненькое..." value={user === undefined ? '' : user.bio} onChange={handleChangingTextarea}/>
+                <div className="settings-bio__length">
+                    {user === undefined ? 0 : user.bio.length}/{BIO_MAX_LENGTH}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const SettingsHrefs: React.FC = () => {
+    const {hrefs} = useSelector((state: AppState) => state.settings);
+    const dispatch = useDispatch();
+
+    return (
+        <div className="settings-hrefs">
+            Ссылки
+            <div className="settings-hrefs-examples">
+                {hrefs.map((href: {value: string, error: string | undefined}, index: number) => {
+                    return (
+                        <div key={index} className="settings-hrefs-examples-item">
+                            <div className='settings-hrefs-examples-item-field'>
+                                <input className='settings-hrefs-examples-item__input' type='text' value={href.value} onChange={(event) => 
+                                    dispatch(changeHrefSettings({
+                                        index, 
+                                        nextValue: event.target.value
+                                    }))}/>
+                                <img className="settings-hrefs-examples-item__img" src="/shared/cancel.png" alt="Удалить ссылку" onClick={() => dispatch(deleteHrefSettings(index))}/>
+                            </div>
+                            <div className='settings-hrefs-examples-item__error'>
+                                {href.error === undefined ? '' : href.error}
+                            </div>
+                        </div>
+                    );
+                })}
+                {hrefs.length < MAX_HREFS_COUNT && 
+                    <div className="settings-hrefs-examples-add-href" onClick={() => dispatch(addHrefSettings())}>
+                        <img className="settings-hrefs-examples-add-href__img" src="/shared/plus.png" alt="Добавить ссылку"/>
+                    </div>
+                }
+            </div>
+        </div>
+    )
+};
+
+const SettingsUsername: React.FC = () => {
     const {user, usernameError} = useSelector((state: AppState) => state.settings);
     const dispatch = useDispatch();
 
@@ -140,72 +197,40 @@ const SettingsRightColumn: React.FC = () => {
         dispatch(setUsername(event.target.value));
     }
 
-    function handleChangingTextarea(event: React.ChangeEvent<HTMLTextAreaElement>) {
-        event.preventDefault();
-        
-        dispatch(setBio(event.target.value));
-    }
-
-    function handleRemovingHref(hrefForDeleting: string) {
-        const hrefIndex: number = hrefs.findIndex((href) => href === hrefForDeleting);
-
-        setHrefs([...hrefs.slice(0, hrefIndex), ...hrefs.slice(hrefIndex + 1)]);
-    }
 
     return (
-        <div className="settings-right-column">
-            <div className="settings-username">
-                Имя
-                <div className="settings-username-field">
-                    <input minLength={MIN_USERNAME_LENGTH} maxLength={MAX_USERNAME_LENGTH} className="settings-username__input" type="text" placeholder="Ваше имя" value={user === undefined ? '' : user.username} onChange={handleChangingUsername} />
-                    {user === undefined && 
-                        <>
-                            0/{MAX_USERNAME_LENGTH}
-                        </>
-                    }
-                    {user !== undefined && 
-                        <>
-                            {user.username.length}/{MAX_USERNAME_LENGTH}
-                        </>
-                    }
-                </div>
-                {usernameError !== undefined &&
-                    <div className="settings-username-field__error">
-                        {usernameError}
-                    </div>
+        <div className="settings-username">
+            Имя
+            <div className="settings-username-field">
+                <input minLength={MIN_USERNAME_LENGTH} maxLength={MAX_USERNAME_LENGTH} className="settings-username__input" type="text" placeholder="Ваше имя" value={user === undefined ? '' : user.username} onChange={handleChangingUsername} />
+                {user === undefined && 
+                    <>
+                        0/{MAX_USERNAME_LENGTH}
+                    </>
+                }
+                {user !== undefined && 
+                    <>
+                        {user.username.length}/{MAX_USERNAME_LENGTH}
+                    </>
                 }
             </div>
-            <div className="settings-bio">
-                О себе
-                <div className="settings-bio-field">
-                    <textarea maxLength={BIO_MAX_LENGTH} className="settings-bio__input" placeholder="Что-то интересненькое..." value={user === undefined ? '' : user.bio} onChange={handleChangingTextarea}/>
-                    <div className="settings-bio__length">
-                        {user === undefined ? 0 : user.bio.length}/{BIO_MAX_LENGTH}
-                    </div>
+            {usernameError !== undefined &&
+                <div className="settings-username-field__error">
+                    {usernameError}
                 </div>
-            </div>
+            }
+        </div>
+    )
+};
+
+const SettingsRightColumn: React.FC = () => {
+    return (
+        <div className="settings-right-column">
+            <SettingsUsername />
+            <SettingsBio />
             <SettingsSkillToLearn />
             <SettingsSkillToShare />
-            {/* {user &&
-                <div className="settings-hrefs">
-                    Ссылки
-                    <div className="settings-hrefs-examples">
-                        {hrefs.map((href: string, index: number) => {
-                            return (
-                                <div key={index} className="settings-hrefs-examples__href">
-                                    <a href={href} target="_blank">
-                                        {href}
-                                    </a>
-                                    <img className="settings-hrefs-examples__img" src="/shared/cancel.png" alt="Удалить ссылку" onClick={() => handleRemovingHref(href)}/>
-                                </div>
-                            );
-                        })}
-                        <div className="settings-hrefs-examples-add-href" onClick={() => console.log('Oboudno')}>
-                            <img className="settings-hrefs-examples-add-href__img" src="/shared/plus.png" alt="Добавить ссылку"/>
-                        </div>
-                    </div>
-                </div>
-            } */}
+            <SettingsHrefs />
         </div>
     );
 };

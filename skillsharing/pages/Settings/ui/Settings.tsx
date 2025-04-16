@@ -17,8 +17,10 @@ const Settings: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log('here');
         if (user !== undefined && !isFetched) {
             dispatch(GetProfile(user.id));
+            console.log('i am here')
         }
 
         return () => {
