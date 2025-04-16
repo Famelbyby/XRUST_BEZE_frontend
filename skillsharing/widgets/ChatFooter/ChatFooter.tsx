@@ -243,7 +243,7 @@ const ChatFooter: React.FC = () => {
                     <div className="chat-footer-fields__microphone-background">
                     </div>
                 }
-                <img id='record-voice-message' className={'chat-footer-fields__microphone' + (isRecording ? " chat-footer-fields__microphone_recording" : '')} src={'/Chat/microphone' + (isRecording ? "_white" : "") + '.png'} alt='Записать голосовое сообщение' />
+                <img id='record-voice-message' className={'chat-footer-fields__microphone' + (isRecording ? " chat-footer-fields__microphone_recording" : '')} src={'/ChatPage/microphone' + (isRecording ? "_white" : "") + '.png'} alt='Записать голосовое сообщение' />
                 {!isRecorded && 
                     <textarea id="textarea" className='chat-footer-fields__textarea' value={inputText} placeholder='Ваше сообщение...' onChange={handleChangingTextareaInput}/>
                 }
