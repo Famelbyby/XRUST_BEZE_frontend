@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { AppState } from "../../../app/AppStore";
 import './Dialog.scss'
 import { AVATAR_URL } from "../../../shared/Consts/URLS";
-import { Skill } from "../../../shared/Consts/Interfaces";
+import SkillsLine from "../../../features/SkillsLine/SkillsLine";
 
 const Dialog: React.FC<DialogProps> = ({dialog}) => {
     const {user} = useSelector((state: AppState) => state.user);
@@ -21,14 +21,6 @@ const Dialog: React.FC<DialogProps> = ({dialog}) => {
         if (dialogCompanion !== undefined) {
             companion = dialogCompanion;
         }
-    }
-
-    let dialogTags: string = '';
-
-    if (companion !== undefined) {
-        companion.skills_to_share.forEach((skill: Skill) => {
-            dialogTags += skill.name + ' ';
-        });
     }
 
     return (
@@ -81,7 +73,7 @@ const Dialog: React.FC<DialogProps> = ({dialog}) => {
             <div className="dialog-info">
                 {dialog !== undefined && 
                     <div className="dialog-info__tags">
-                        {dialogTags}
+                        <SkillsLine skills={companion!.skills_to_share} />
                     </div>
                 }
                 {dialog === undefined && 

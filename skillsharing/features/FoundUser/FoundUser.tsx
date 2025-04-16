@@ -2,21 +2,15 @@ import React from 'react';
 import {ProfileType} from '../../pages/Profile/ui/ProfileTypes'
 import { Link } from 'react-router';
 import './FoundUser.scss'
-import { Skill } from '../../shared/Consts/Interfaces';
 import { FormatRelativeTimeInPastInDays } from '../../shared/Functions/FormatDate';
 import { AVATAR_URL } from '../../shared/Consts/URLS';
+import SkillsLine from '../SkillsLine/SkillsLine';
 
 interface FoundUserPropTypes {
     user: ProfileType,
 }
 
 const FoundUser: React.FC<FoundUserPropTypes> = ({user}) => {
-    let tags: string = '';
-
-    user.skills_to_share.forEach((skill: Skill) => {
-        tags += skill.name + ' ';
-    });
-
     return (
         <Link to={`/profile/${user.id}`}>
             <div className='found-user'>
@@ -29,7 +23,7 @@ const FoundUser: React.FC<FoundUserPropTypes> = ({user}) => {
                             {user.username}
                         </div>
                         <div className='found-user-header__tags'>
-                            {tags}
+                            <SkillsLine skills={user.skills_to_share} />
                         </div>
                     </div>
                     <div className='found-user-footer'>

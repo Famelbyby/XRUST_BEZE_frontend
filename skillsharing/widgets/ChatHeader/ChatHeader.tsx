@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeSelectedMessages, editMessage, hideDeletingModal, showDeletingModal, hideStructurizedModal, showStructurizedModal, addStructurizingMessage } from "../../app/slices/ChatSlice";
 import { IDeletingMessage, IMessage, IStructurizeMessage } from "../../entity/Message/MessageTypes";
 import { FormatRelativeTimeInPastInDays } from "../../shared/Functions/FormatDate";
-import { Skill } from "../../shared/Consts/Interfaces";
 import { AppDispatch, AppState } from "../../app/AppStore";
 import './ChatHeader.scss'
 import { AVATAR_URL } from "../../shared/Consts/URLS";
 import MainWebSocket from '../../shared/WebSocket'
 import { createPortal } from "react-dom";
+import SkillsLine from '../../features/SkillsLine/SkillsLine'
 import ModalWindow from '../../features/ModalWindow/ModalWindow'
 
 function handleDeletePressing(event: KeyboardEvent) {
@@ -72,14 +72,6 @@ const ChatHeader: React.FC = () => {
         dispatch(addStructurizingMessage(messageId));
     }
 
-    let companionTags: string = '';
-
-    if (companion !== undefined) {
-        companion.skills_to_share.forEach((skill_to_learn: Skill) => {
-            companionTags += skill_to_learn.name + ' ';
-        })
-    }
-
     let isMyMessages: boolean = true;
 
     if (selectedMessages !== undefined) {
@@ -127,7 +119,7 @@ const ChatHeader: React.FC = () => {
                     {companion !== undefined && 
                         <div className='chat-header-chat-info'>
                             <div className='chat-header-chat-info__tags'>
-                                {companionTags}
+                                <SkillsLine skills={companion.skills_to_share} />
                             </div>
                             <div className='chat-header-chat-info__rating'>
                                 Оценка 0
