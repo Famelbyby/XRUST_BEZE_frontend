@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import {TextFieldState, PasswordFieldState, AvatarFieldState, LoadAvatarResponse, UserResponse, CommunicationFormat, Skill, CategoryResponse, SkillLevel} from '../../shared/Consts/Interfaces'
-import {MatchPasswords, ValidateAvatarExtension, ValidateAvatarSize, ValidateEmail, ValidateHref, ValidatePassword, ValidateUsername} from '../../shared/Functions/Validators'
+import {MatchPasswords, ValidateAvatarExtension, ValidateAvatarSize, ValidateEmail, ValidatePassword, ValidateUsername} from '../../shared/Functions/Validators'
 import { GetCategories, LoadAvatar, TryRegister } from '../../pages/Auth/api/Auth'
 import { CODE_OK } from '../../shared/Consts/Codes'
 import { AUTH_SIGNUP_MODERATION, AUTH_SIGNUP_EMAIL_EXIST, AUTH_SIGNUP_USERNAME_EXIST } from '../../shared/Consts/Errors'
-import { MAX_HREFS_COUNT, WRONG_HREF } from '../../shared/Consts/ValidatorsConts'
+import { MAX_HREFS_COUNT } from '../../shared/Consts/ValidatorsConts'
 
 type SignUpStep = 1 | 2 | 3;
 
@@ -216,7 +216,7 @@ export const signupSlice = createSlice({
 
         state.hrefs.push({
             value: "https://",
-            error: WRONG_HREF,
+            error: undefined,
         });
     },
     deleteHref: (state: SignUpState, action: PayloadAction<number>) => {
@@ -236,14 +236,6 @@ export const signupSlice = createSlice({
         }
 
         state.hrefs[index].value = nextValue;
-
-        const isValid = ValidateHref(nextValue);
-
-        if (!isValid) {
-            state.hrefs[index].error = WRONG_HREF;
-        } else {
-            state.hrefs[index].error = undefined;
-        }
     },
     increaseStep: (state: SignUpState) => {
         state.step += 1;

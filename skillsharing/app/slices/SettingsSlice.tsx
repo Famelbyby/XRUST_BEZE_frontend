@@ -188,7 +188,7 @@ export const settingsSlice = createSlice({
 
         state.hrefs.push({
             value: 'https://',
-            error: WRONG_HREF,
+            error: undefined,
         });
     },
     deleteHrefSettings: (state: SettingsState, action: PayloadAction<number>) => {
@@ -208,14 +208,6 @@ export const settingsSlice = createSlice({
         }
 
         state.hrefs[index].value = nextValue;
-
-        const isValid: boolean = ValidateHref(nextValue);
-
-        if (!isValid) {
-            state.hrefs[index].error = WRONG_HREF;
-        } else {
-            state.hrefs[index].error = undefined;
-        }
     },
   },
   extraReducers: (builder) => {
