@@ -42,6 +42,8 @@ class MainWebSocket {
     }
 
     closeConnection = () => {
+        console.log('herer closed');
+
         if (this.socket !== undefined) {
             this.socket.close(1000);
         }

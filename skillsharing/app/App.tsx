@@ -26,12 +26,14 @@ function App() {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(GetUserByCookie());
+    if (user === undefined) {
+      dispatch(GetUserByCookie());
+    }    
 
     return () => {
       dispatch(clearUser());
     }
-  }, [dispatch]);
+  }, [user, dispatch]);
 
   useEffect(() => {
     if (user !== undefined) {

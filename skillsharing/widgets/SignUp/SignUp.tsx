@@ -327,7 +327,7 @@ const SignUpHrefs: React.FC = () => {
 
     return (
         <div className="sign-up-hrefs">
-            Ссылки
+            Личные ссылки
             <div className="sign-up-hrefs-examples">
                 {hrefs.map((href: {value: string, error: string | undefined}, index: number) => {
                     return (
@@ -378,14 +378,14 @@ const SignUp: React.FC = () => {
                 <>
                     <SignUpBio />
                     <SignUpAvatar />
-                    <SignUpPreferredFormat />
+                    <SignUpHrefs />
                 </>
             }
             {step === 3 && 
                 <>
                     <SignUpSkillToLearn />
                     <SignUpSkillToShare />
-                    <SignUpHrefs />
+                    <SignUpPreferredFormat />
                 </>
             }
             <div className='sign-up-footer'>
