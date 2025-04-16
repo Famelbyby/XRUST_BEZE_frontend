@@ -201,7 +201,7 @@ export const chatSlice = createSlice({
       state.companion = companion;
       state.peerID = companion.id;
     }).addCase(GetCompanion.fulfilled, (state: MessagesState, action) => {
-      const data = action as unknown as UserResponse;
+      const data = action.payload as unknown as UserResponse;
 
       console.log('received companion', data);
 
