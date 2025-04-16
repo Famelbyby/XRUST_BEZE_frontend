@@ -10,11 +10,19 @@ export function ValidateUsername(username: string): boolean {
         return false;
     }
 
-    if (!username.match(/(.)*[a-zA-zА-Яа-я](.)*/)) {
+    if (!username.match(/(.)*[a-zA-z](.)*/)) {
         return false;
     }
 
-    if (username.match(/(.)*[|!\\/+-=.{}[*^&$%#@№`~()?\]](.)*/)) {
+    if (username[0] === '.' || username[username.length - 1] === '.') {
+        return false;
+    }
+
+    if (username.match(/(.)*(\.\.)(.)*/)) {
+        return false;
+    }
+
+    if (username.match(/(.)*[|!\\/+={}[*^&$%#@№`~()?\]](.)*/)) {
         return false;
     }
 

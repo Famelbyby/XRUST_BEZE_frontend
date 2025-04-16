@@ -70,8 +70,6 @@ export const GetUserByCookie = createAsyncThunk(
         let data: unknown;
         let error: string | undefined;
 
-        console.log('asdas');
-
         await axios.get(BACK_URL + `/auth/validate`, 
             {
                 withCredentials: true,
@@ -80,7 +78,7 @@ export const GetUserByCookie = createAsyncThunk(
             console.log('wau wau', response);
 
             status = response.status;
-            data = response.data;
+            data = response.data.user;
             error = undefined;
         }).catch(({response}) => {
             console.log('opop', response);

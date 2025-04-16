@@ -75,7 +75,7 @@ export const signupSlice = createSlice({
         let isValid: boolean = ValidatePassword(state.password.value);
 
         if (!isValid) {
-            state.password.error = 'Длина пароля - от 6 до 12 символов';
+            state.password.error = 'Длина пароля - от 8 до 64 символов. Должны быть хотя бы одна заглавная буква, одна строчная, одна цифра и один спецсимвол';
         } else {
             state.password.error = undefined;
         }
@@ -94,7 +94,7 @@ export const signupSlice = createSlice({
         let isValid: boolean = ValidatePassword(state.repeatPassword.value);
 
         if (!isValid) {
-            state.repeatPassword.error = 'Длина пароля - от 6 до 12 символов';
+            state.repeatPassword.error = 'Длина пароля - от 8 до 64 символов. Должны быть хотя бы одна заглавная буква, одна строчная, одна цифра и один спецсимвол';
             return;
         }
 
@@ -112,7 +112,7 @@ export const signupSlice = createSlice({
         const isValid: boolean = ValidateUsername(state.identifier.value);
 
         if (!isValid) {
-            state.identifier.error = 'Длина имени - от 3 до 25 символов. Содержит только кириллицу и символы латинского алфавита';
+            state.identifier.error = 'Длина имени - от 3 до 25 символов. Содержит только символы латинского алфавита, нижние подчеркивания, точки и дефис';
         } else {
             state.identifier.error = undefined;
         }
