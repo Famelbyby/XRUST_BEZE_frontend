@@ -239,7 +239,7 @@ const SignUpSkillToShare: React.FC = () => {
 
     return (
         <div className='sign-up-sktl'>
-            Выберите навыки, которому хотите обучиться
+            Выберите навыки, которому хотите обучать
             <div className='sign-up-sktl-cases'>
                 {skills_to_share.map((skill, index) => {
                     return (
