@@ -1,5 +1,6 @@
 import React from 'react';
 import { Skill } from '../../shared/Consts/Interfaces';
+import './SkillsLine.scss'
 
 interface TagsLinePropTypes {
     skills: Skill[],

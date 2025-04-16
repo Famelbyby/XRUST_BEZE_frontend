@@ -1,0 +1,15 @@
+.skills-line {
+    &__item {
+        &_beginner {
+            color: #4bff37;
+        }
+
+        &_intermediate {
+            color: #eeee37;
+        }
+
+        &_advanced {
+            color: #ff3737;
+        }
+    }
+}

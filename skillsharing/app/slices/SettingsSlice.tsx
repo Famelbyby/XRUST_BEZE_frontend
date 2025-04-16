@@ -231,7 +231,7 @@ export const settingsSlice = createSlice({
             state.user.hrefs?.forEach((href) => {
                 state.hrefs.push({
                     value: href,
-                    error: (ValidateHref(href) ? undefined : WRONG_HREF),
+                    error: undefined,
                 })
             });
         }
