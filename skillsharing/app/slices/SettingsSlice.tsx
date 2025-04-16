@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ProfileType } from '../../pages/Profile/ui/ProfileTypes'
-import { CODE_CREATED, CODE_OK } from '../../shared/Consts/Codes';
+import { CODE_OK } from '../../shared/Consts/Codes';
 import { GetCategories, LoadAvatar, TryAuth, TryRegister } from '../../pages/Auth/api/Auth';
 import { AvatarFieldState, CategoryResponse, CommunicationFormat, LoadAvatarResponse, SkillLevel, UserResponse } from '../../shared/Consts/Interfaces';
 import { GetUserByCookie } from '../../entity/User/api/User';
