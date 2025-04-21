@@ -11,7 +11,7 @@ const RecorderBarVolumeRange: React.FC = () => {
 
     return (
         <div className="recorder-bar-volume">
-            <img className="recorder-bar-volume__img" src="/Chat/volume.png" alt="" />
+            <img className="recorder-bar-volume__img" src="/ChatPage/volume.png" alt="" />
             <RangeBar id='volume-range' width={70} min={0} max={1} step={0.05} value={volume} changeFunc={(event) => {
                 dispatch(setVolume(event.target.value));
             }}/>

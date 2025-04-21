@@ -92,7 +92,7 @@ export const recorderSlice = createSlice({
       (state.audioPlayer as HTMLAudioElement).src = VOICE_URL + action.payload.src;
       state.isPlayingMessage = true;
       (state.audioPlayer as HTMLAudioElement).volume = state.volume;
-      (state.audioPlayer as HTMLAudioElement).playbackRate = state.speed;
+      (state.audioPlayer as HTMLAudioElement).playbackRate = 1;
       (state.audioPlayer as HTMLAudioElement).play();
     },
     setVolume: (state: RecorderState, action: PayloadAction<string>) => {
@@ -105,8 +105,9 @@ export const recorderSlice = createSlice({
     setSpeed: (state: RecorderState, action: PayloadAction<string>) => {
       const nextSpeed: number = +(action.payload);
       
-      (state.audioPlayer as HTMLAudioElement).playbackRate = nextSpeed;
+      (state.audioPlayer as HTMLAudioElement).playbackRate = 1;
       state.speed = nextSpeed;
+      console.log(state.speed);
       localStorage.setItem('voice-speed', action.payload);
     },
     setCurrentTime: (state: RecorderState, action: PayloadAction<string>) => {

@@ -83,7 +83,7 @@ const ChatContent: React.FC = () => {
                             <div className="chat-content-attachments-item">
                                 <img className="chat-content-attachments-item__img" src="/ChatPage/download.png" alt="" />
                                 <img className="chat-content-attachments-item__delete" src="/shared/cancel_black.png" alt="" onClick={() => {
-                                    dispatch(deleteAttachment(index + oldAttachments.length));
+                                    dispatch(deleteAttachment(index + attachments.length));
                                 }}/>
                             </div>
                         );
