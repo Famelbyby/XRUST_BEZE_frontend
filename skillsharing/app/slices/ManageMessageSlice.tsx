@@ -84,6 +84,6 @@ export const manageMessageSlice = createSlice({
   },
 })
 
-export const { setUpdate, clearUpdate, clearInputAndAttachments, deleteAttachment, addAttachment, setInputText } = manageMessageSlice.actions
+export const { setOldAttachments, setUpdate, clearUpdate, clearInputAndAttachments, deleteAttachment, addAttachment, setInputText } = manageMessageSlice.actions
 
 export default manageMessageSlice.reducer

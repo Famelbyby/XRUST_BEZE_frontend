@@ -9,7 +9,7 @@ import MainWebSocket from '../../shared/WebSocket'
 import { FormatMinutesSecondDuration } from "../../shared/Functions/FormatDate";
 import { clearRecorded, setIsPlayingRecord, setPlayerSource, setRecorded, startRecording, stopPlaying } from "../../app/slices/RecorderSlice";
 import { LoadAttachments, LoadVoiceRecord } from "../../pages/Chat/api/Chat";
-import { addAttachment, clearInputAndAttachments, clearUpdate, setInputText, setUpdate } from "../../app/slices/ManageMessageSlice";
+import { addAttachment, clearInputAndAttachments, clearUpdate, setInputText, setOldAttachments, setUpdate } from "../../app/slices/ManageMessageSlice";
 
 const TEXTAREA_INITIAL_HEIGHT = 15;
 const MESSAGE_MAX_LENGTH = 800;
@@ -84,6 +84,7 @@ const ChatFooter: React.FC = () => {
     useEffect(() => {
         if (editingMessage !== null) {
             dispatch(setInputText(editingMessage.payload || ''));
+            dispatch(setOldAttachments(editingMessage.attachments || []));
             dispatch(setUpdate());
         }
     }, [editingMessage, dispatch]);
@@ -246,6 +247,15 @@ const ChatFooter: React.FC = () => {
 
     return (
         <div className='chat-footer'>
+            {isUpdating && 
+                <div className="chat-content-stop-updating">
+                    <img className="chat-content-stop-updating__img" src="/shared/cancel_black.png" alt="Отменить редактирование" onClick={() => {
+                        dispatch(stopEditingMessage());
+                        dispatch(clearInputAndAttachments());
+                        dispatch(clearUpdate());
+                    }}/>
+                </div>
+            }
             <div className='chat-footer-fields'>
                 {isRecording && 
                     <div className="chat-footer-fields__microphone-background">
