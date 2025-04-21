@@ -3,18 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import Message from "../../entity/Message/Message"
 import VoiceMessage from '../../entity/VoiceMessage/VoiceMessage'
 import { IMessage } from "../../entity/Message/MessageTypes";
-import { addMessage, deleteMessage, updateMessage } from "../../app/slices/ChatSlice";
+import { addMessage, deleteMessage, stopEditingMessage, updateMessage } from "../../app/slices/ChatSlice";
 import { AppDispatch, AppState } from "../../app/AppStore";
 import './ChatContent.scss'
 import { FormatDayMonthYear } from "../../shared/Functions/FormatDate";
 import MainWebSocket from '../../shared/WebSocket'
 import { DAY_IN_MILLISECONDS, SECOND_IN_MILLISECONDS } from "../../shared/Consts/ValidatorsConts";
-import { deleteAttachment } from "../../app/slices/ManageMessageSlice";
+import { clearInputAndAttachments, clearUpdate, deleteAttachment } from "../../app/slices/ManageMessageSlice";
 import { RoundSize } from "../../shared/Functions/FormatStrings";
 
 const ChatContent: React.FC = () => {
     const {messages, selectedMessages, structurizingMessages} = useSelector((state: AppState) => state.chatMessages);
-    const {attachments} = useSelector((state: AppState) => state.manageMessage);
+    const {attachments, isUpdating, oldAttachments} = useSelector((state: AppState) => state.manageMessage);
     const dispatch = useDispatch<AppDispatch>();
 
     /**
@@ -63,7 +63,7 @@ const ChatContent: React.FC = () => {
 
     return (
         <div id='chat-content' className='chat-content'>
-            {attachments.length !== 0 && 
+            {oldAttachments.length + attachments.length !== 0 && 
                 <div className="chat-content-attachments">
                     {attachments.map((attachment, index) => {
                         return (
@@ -78,6 +78,25 @@ const ChatContent: React.FC = () => {
                             </div>
                         );
                     })}
+                    {oldAttachments.map((_, index) => {
+                        return (
+                            <div className="chat-content-attachments-item">
+                                <img className="chat-content-attachments-item__img" src="/ChatPage/download.png" alt="" />
+                                <img className="chat-content-attachments-item__delete" src="/shared/cancel_black.png" alt="" onClick={() => {
+                                    dispatch(deleteAttachment(index + oldAttachments.length));
+                                }}/>
+                            </div>
+                        );
+                    })}
+                </div>
+            }
+            {isUpdating && 
+                <div className="chat-content-stop-updating">
+                    <img className="chat-content-stop-updating__img" src="/shared/cancel_black.png" alt="Отменить редактирование" onClick={() => {
+                        dispatch(stopEditingMessage());
+                        dispatch(clearInputAndAttachments());
+                        dispatch(clearUpdate());
+                    }}/>
                 </div>
             }
             {messages === undefined && 

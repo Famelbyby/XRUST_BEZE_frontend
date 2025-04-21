@@ -30,6 +30,9 @@ export const manageMessageSlice = createSlice({
     setInputText: (state: ManageMessageState, action: PayloadAction<string>) => {
         state.inputText = action.payload;
     },
+    setOldAttachments: (state: ManageMessageState, action: PayloadAction<string[]>) => {
+        state.oldAttachments = action.payload;
+    },
     setUpdate: (state: ManageMessageState) => {
         state.isUpdating = true;
     },
@@ -37,7 +40,7 @@ export const manageMessageSlice = createSlice({
         state.isUpdating = false;
     },
     addAttachment: (state: ManageMessageState, action: PayloadAction<File>) => {
-        if (state.attachments.length === MAX_ATTACHMENTS_LENGTH) {
+        if (state.attachments.length + state.oldAttachments.length === MAX_ATTACHMENTS_LENGTH) {
             return;
         }
 
@@ -57,8 +60,8 @@ export const manageMessageSlice = createSlice({
             return;
         }
 
-        if (index > state.attachments.length) {
-            state.oldAttachments = [...state.oldAttachments.slice(0, index), ...state.oldAttachments.slice(index + 1)];
+        if (index >= state.attachments.length) {
+            state.oldAttachments = [...state.oldAttachments.slice(0, index - state.attachments.length), ...state.oldAttachments.slice(index + 1 - state.attachments.length)];
         } else {
             state.attachments = [...state.attachments.slice(0, index), ...state.attachments.slice(index + 1)];
         }
@@ -68,6 +71,7 @@ export const manageMessageSlice = createSlice({
         state.inputText = '';
         state.attachmentsUploaded = false;
         state.attachmentURLs = undefined;
+        state.oldAttachments = [];
     },
   },
   extraReducers: (builder) => {

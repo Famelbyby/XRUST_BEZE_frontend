@@ -33,7 +33,7 @@ function handleEnter(event: KeyboardEvent) {
 const ChatFooter: React.FC = () => {
     const {editingMessage, channelID, peerID} = useSelector((state: AppState) => state.chatMessages);
     const {isRecorded, recordDuration, isPlayingRecord, isRecording, audioPlayer, voiceBlob, recordURL} = useSelector((state: AppState) => state.recorder);
-    const {isUpdating, attachmentURLs, attachments, attachmentsUploaded, inputText} = useSelector((state: AppState) => state.manageMessage);
+    const {isUpdating, attachmentURLs, attachments, attachmentsUploaded, inputText, oldAttachments} = useSelector((state: AppState) => state.manageMessage);
     const {user} = useSelector((state: AppState) => state.user);
     const dispatch = useDispatch<AppDispatch>();
     const userId: string = user!.id;
@@ -162,12 +162,12 @@ const ChatFooter: React.FC = () => {
             dispatch(clearInputAndAttachments());
             NormalizeTextarea('textarea', TEXTAREA_INITIAL_HEIGHT);
         } else {
-            if (inputText.trim() === '') {
+            if (inputText.trim() === '' && attachments.length === 0 && oldAttachments.length === 0) {
                 dispatch(stopEditingMessage());
+                dispatch(clearInputAndAttachments());
+                dispatch(clearUpdate());
                 return;
             }
-
-            console.log(editingMessage);
     
             const messageJSON: IUpdatingMessage = {
                 "event": "EventText",
@@ -178,6 +178,7 @@ const ChatFooter: React.FC = () => {
                 "type": "update_message",
                 "created_at": editingMessage!.created_at,
                 "message_id": editingMessage!.message_id,
+                "attachments": [...oldAttachments, ...attachmentURLs!],
             }
     
             MainWebSocket.sendMessage(JSON.stringify(messageJSON));
