@@ -5,7 +5,6 @@ import FoundUser from '../../features/FoundUser/FoundUser'
 import { useDispatch, useSelector } from "react-redux";
 import { clearFoundUsers } from "../../app/slices/MainSlice";
 import { AppDispatch, AppState } from "../../app/AppStore";
-import MainRightSideBar from '../MainRightSideBar/MainRightSideBar'
 import './MainContent.scss'
 
 const MainContent: React.FC = () => {
@@ -42,7 +41,6 @@ const MainContent: React.FC = () => {
                     })
                 }
             </div>
-            <MainRightSideBar />
         </div>
     )
 };

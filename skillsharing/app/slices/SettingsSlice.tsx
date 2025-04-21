@@ -187,7 +187,7 @@ export const settingsSlice = createSlice({
         }
 
         state.hrefs.push({
-            value: 'https://',
+            value: '',
             error: undefined,
         });
     },

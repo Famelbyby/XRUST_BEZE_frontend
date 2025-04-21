@@ -162,6 +162,8 @@ const ChatFooter: React.FC = () => {
                 dispatch(stopEditingMessage());
                 return;
             }
+
+            console.log(editingMessage);
     
             const messageJSON: IUpdatingMessage = {
                 "event": "EventText",

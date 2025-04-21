@@ -215,7 +215,7 @@ export const signupSlice = createSlice({
         }
 
         state.hrefs.push({
-            value: "https://",
+            value: "",
             error: undefined,
         });
     },

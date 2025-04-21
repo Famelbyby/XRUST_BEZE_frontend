@@ -35,11 +35,20 @@ const ProfileRightColumn: React.FC = () => {
                         {user.hrefs && user.hrefs.length > 0 && 
                             <div className="profile-hrefs-examples">
                                 {user.hrefs.map((href: string, index: number) => {
+                                    const isMatched = !!href.match(/http(s)*:\/\/(.)+\.(.)+/);
+
                                     return (
                                         <div key={index} className="profile-hrefs-examples__href">
-                                            <a href={href} target="_blank">
-                                                {href}
-                                            </a>
+                                            {isMatched && 
+                                                <a href={href} target="_blank">
+                                                    {href}
+                                                </a>
+                                            }
+                                            {!isMatched && 
+                                                <>
+                                                    {href}
+                                                </>
+                                            }
                                         </div>
                                     );
                                 })}

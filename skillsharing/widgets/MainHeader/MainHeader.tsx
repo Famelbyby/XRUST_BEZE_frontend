@@ -48,7 +48,7 @@ const MainHeader: React.FC = () => {
         <div className='main-header'>
             <div className='main-header-left'>
                 <div className='main-header-hello'>
-                    С возвращением, 
+                    Добро пожаловать, 
                     { user !== undefined && 
                         <>
                             {' ' + user.username}
@@ -63,7 +63,7 @@ const MainHeader: React.FC = () => {
                     !
                 </div>
                 <div className='main-header-questions'>
-                    Появились вопросы? Мы поможем Вам с выбором эксперта
+                    Появились вопросы? Мы подобрали Вам экспертов по вашим навыкам
                 </div>
             </div>
             <div className='main-header-right'>
