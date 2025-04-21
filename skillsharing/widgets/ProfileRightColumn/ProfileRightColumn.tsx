@@ -38,9 +38,9 @@ const ProfileRightColumn: React.FC = () => {
                                     const isMatched = !!href.match(/http(s)*:\/\/(.)+\.(.)+/);
 
                                     return (
-                                        <div key={index} className="profile-hrefs-examples__href">
+                                        <div key={index} className="profile-hrefs-examples-item">
                                             {isMatched && 
-                                                <a href={href} target="_blank">
+                                                <a href={href} target="_blank" className="profile-hrefs-examples__href">
                                                     {href}
                                                 </a>
                                             }

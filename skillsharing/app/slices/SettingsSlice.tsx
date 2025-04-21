@@ -4,10 +4,10 @@ import { CODE_OK } from '../../shared/Consts/Codes';
 import { GetCategories, LoadAvatar, TryAuth, TryRegister } from '../../pages/Auth/api/Auth';
 import { AvatarFieldState, CategoryResponse, CommunicationFormat, LoadAvatarResponse, SkillLevel, UserResponse } from '../../shared/Consts/Interfaces';
 import { GetUserByCookie } from '../../entity/User/api/User';
-import { ValidateAvatarExtension, ValidateAvatarSize, ValidateHref, ValidateUsername } from '../../shared/Functions/Validators';
+import { ValidateAvatarExtension, ValidateAvatarSize, ValidateUsername } from '../../shared/Functions/Validators';
 import { GetProfile } from '../../pages/Profile/api/Profile';
 import { UpdateProfile } from '../../pages/Settings/api/Settings';
-import { MAX_HREFS_COUNT, WRONG_HREF } from '../../shared/Consts/ValidatorsConts';
+import { MAX_HREFS_COUNT } from '../../shared/Consts/ValidatorsConts';
 
 export interface SettingsState {
     user: ProfileType | undefined,
@@ -253,7 +253,7 @@ export const settingsSlice = createSlice({
             state.user.hrefs?.forEach((href) => {
                 state.hrefs.push({
                     value: href,
-                    error: (ValidateHref(href) ? undefined : WRONG_HREF),
+                    error: undefined,
                 })
             });
         }
@@ -275,7 +275,7 @@ export const settingsSlice = createSlice({
             state.user.hrefs?.forEach((href) => {
                 state.hrefs.push({
                     value: href,
-                    error: (ValidateHref(href) ? undefined : WRONG_HREF),
+                    error: undefined,
                 })
             });
         }
@@ -303,7 +303,7 @@ export const settingsSlice = createSlice({
             state.user.hrefs?.forEach((href) => {
                 state.hrefs.push({
                     value: href,
-                    error: (ValidateHref(href) ? undefined : WRONG_HREF),
+                    error: undefined,
                 })
             });
         }

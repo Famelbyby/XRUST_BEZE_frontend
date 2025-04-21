@@ -9,7 +9,7 @@ import MainWebSocket from '../../shared/WebSocket'
 import { FormatMinutesSecondDuration } from "../../shared/Functions/FormatDate";
 import { clearRecorded, setIsPlayingRecord, setPlayerSource, setRecorded, startRecording, stopPlaying } from "../../app/slices/RecorderSlice";
 import { LoadAttachments, LoadVoiceRecord } from "../../pages/Chat/api/Chat";
-import { addAttachment, clearInputAndAttachments, setInputText, setUpdate } from "../../app/slices/ManageMessageSlice";
+import { addAttachment, clearInputAndAttachments, clearUpdate, setInputText, setUpdate } from "../../app/slices/ManageMessageSlice";
 
 const TEXTAREA_INITIAL_HEIGHT = 15;
 const MESSAGE_MAX_LENGTH = 800;
@@ -121,8 +121,12 @@ const ChatFooter: React.FC = () => {
     }, [recordURL, dispatch, peerID, userId, channelID, recordDuration]);
 
     useEffect(() => {
+        if (!attachmentsUploaded) {
+            return;
+        }
+
         if (!isUpdating) {
-            if ((inputText.trim() === '' && attachments.length === 0) || !attachmentsUploaded) {
+            if (inputText.trim() === '' && attachments.length === 0) {
                 return;
             }
 
@@ -158,7 +162,7 @@ const ChatFooter: React.FC = () => {
             dispatch(clearInputAndAttachments());
             NormalizeTextarea('textarea', TEXTAREA_INITIAL_HEIGHT);
         } else {
-            if ((inputText.trim() === '' && attachments.length === 0) || !attachmentsUploaded) {
+            if (inputText.trim() === '') {
                 dispatch(stopEditingMessage());
                 return;
             }
@@ -179,6 +183,7 @@ const ChatFooter: React.FC = () => {
             MainWebSocket.sendMessage(JSON.stringify(messageJSON));
     
             dispatch(clearInputAndAttachments());
+            dispatch(clearUpdate());
             NormalizeTextarea('textarea', TEXTAREA_INITIAL_HEIGHT);
             dispatch(stopEditingMessage());
         }

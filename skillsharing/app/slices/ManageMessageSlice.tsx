@@ -33,6 +33,9 @@ export const manageMessageSlice = createSlice({
     setUpdate: (state: ManageMessageState) => {
         state.isUpdating = true;
     },
+    clearUpdate: (state: ManageMessageState) => {
+        state.isUpdating = false;
+    },
     addAttachment: (state: ManageMessageState, action: PayloadAction<File>) => {
         if (state.attachments.length === MAX_ATTACHMENTS_LENGTH) {
             return;
@@ -77,6 +80,6 @@ export const manageMessageSlice = createSlice({
   },
 })
 
-export const { setUpdate, clearInputAndAttachments, deleteAttachment, addAttachment, setInputText } = manageMessageSlice.actions
+export const { setUpdate, clearUpdate, clearInputAndAttachments, deleteAttachment, addAttachment, setInputText } = manageMessageSlice.actions
 
 export default manageMessageSlice.reducer
