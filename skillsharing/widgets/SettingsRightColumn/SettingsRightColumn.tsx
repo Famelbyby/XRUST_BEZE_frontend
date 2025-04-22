@@ -54,7 +54,7 @@ const SettingsSkillToLearn: React.FC = () => {
                                     )
                                 })}
                             </select>
-                            {!(user.skills_to_learn.length === 1) && 
+                            {(user.skills_to_learn.length !== 1) && 
                                 <img className='sign-up-sktl-case__delete-img' src='/shared/cancel.png' alt='Удалить навык' onClick={() => dispatch(deleteSkillFromLearn(skill.name))}/>
                             }
                         </div>
@@ -113,7 +113,7 @@ const SettingsSkillToShare: React.FC = () => {
                                     )
                                 })}
                             </select>
-                            {!(user.skills_to_share.length === 1) && 
+                            {(user.skills_to_share.length !== 1) && 
                                 <img className='sign-up-sktl-case__delete-img' src='/shared/cancel.png' alt='Удалить навык' onClick={() => dispatch(deleteSkillFromShare(skill.name))}/>
                             }
                         </div>

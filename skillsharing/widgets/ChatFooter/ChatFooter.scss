@@ -155,6 +155,22 @@
             display: block;
         }
     }
+
+    &-stop-updating {
+        display: flex;
+
+        &__img {
+            opacity: 0.5;
+            width: 15px;
+            height: 15px;
+            transition-duration: 0.2s;
+            cursor: pointer;
+
+            &:hover {
+                transform: scale(1.05);
+            }
+        }
+    }
 }
 
 @keyframes recording {

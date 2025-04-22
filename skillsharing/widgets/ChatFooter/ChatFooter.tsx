@@ -248,8 +248,8 @@ const ChatFooter: React.FC = () => {
     return (
         <div className='chat-footer'>
             {isUpdating && 
-                <div className="chat-content-stop-updating">
-                    <img className="chat-content-stop-updating__img" src="/shared/cancel_black.png" alt="Отменить редактирование" onClick={() => {
+                <div className="chat-footer-stop-updating">
+                    <img className="chat-footer-stop-updating__img" src="/shared/cancel_black.png" alt="Отменить редактирование" onClick={() => {
                         dispatch(stopEditingMessage());
                         dispatch(clearInputAndAttachments());
                         dispatch(clearUpdate());
