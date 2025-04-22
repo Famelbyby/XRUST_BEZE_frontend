@@ -1,6 +1,7 @@
 import { DialogItem } from "../../entity/Dialog/ui/DialogTypes";
 import { IMessage } from "../../entity/Message/MessageTypes";
 import { ProfileType } from "../../pages/Profile/ui/ProfileTypes";
+import {MaterialItem} from '../../entity/Material/MaterialTypes';
 
 export interface TextFieldState {
     value: string,
@@ -19,6 +20,10 @@ export interface Skill {
 export interface Category {
     category: string,
     skills: string[],
+}
+
+export interface UserMaterialsResponse extends AnyAPIResponse {
+    materials: MaterialItem[],
 }
 
 export interface CategoryResponse extends AnyAPIResponse {

@@ -36,6 +36,12 @@ const SideBar: React.FC = () => {
             title: 'Чаты',
             linkTo: '/chats',
         },
+        {
+            id: 3,
+            icon: '/SideBar/materials.png',
+            title: 'Материалы',
+            linkTo: '/materials',
+        }
         // {
         //     id: 3,
         //     icon:'/SideBar/medal.png',

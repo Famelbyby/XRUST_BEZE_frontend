@@ -1,0 +1,33 @@
+.user-materials-header {
+    display: flex;
+    align-items: center;
+    font-family: 'Inter';
+    font-size: 20px;
+    gap: 10px;
+
+    &-go-back {
+        display: flex;
+
+        &__img {
+            width: 20px;
+            height: 20px;
+        }
+        
+        &-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 35px;
+            height: 36px;
+            padding-right: 2px;
+            border-radius: 50%;
+            background-color: inherit;
+            cursor: pointer;
+            transition-duration: 0.4s;
+
+            &:hover {
+                background-color: rgba(193, 193, 193, 0.3);
+            }
+        }
+    }
+}

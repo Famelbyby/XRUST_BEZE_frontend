@@ -18,6 +18,7 @@ import { clearUser } from './slices/UserSlice'
 import Settings from '../pages/Settings/ui/Settings'
 import StructurizedMessage from '../pages/StructurizedMessage/ui/StructurizedMessage'
 import MainWebSocket from '../shared/WebSocket'
+import UserMaterials from '../pages/UserMaterials/ui/UserMaterials'
 
 //localStorage.getItem("user_id") || "67e3b36b9a36154096b4bbea"
 
@@ -66,6 +67,7 @@ function App() {
                 <Route path='/main-page' element={<Main />} />
                 <Route path='/profile' >
                   <Route path=':userID' element={<Profile />} />
+                  <Route path=':userID/materials' element={<UserMaterials />} />
                 </Route>
                 <Route path='/settings' element={<Settings />} />
                 <Route path='/chat'>

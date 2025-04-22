@@ -10,11 +10,13 @@ import { IMessage } from '../../entity/Message/MessageTypes'
 export interface DialogsState {
   dialogs: DialogItem[] | undefined,
   filteredDialogs: DialogItem[] | undefined,
+  isServerError: boolean,
 }
 
 const initialState: DialogsState = {
   dialogs: undefined,
   filteredDialogs: undefined,
+  isServerError: false,
 }
 
 export const dialogsSlice = createSlice({
@@ -55,6 +57,7 @@ export const dialogsSlice = createSlice({
     clearAll: (state: DialogsState) => {
       state.dialogs = undefined;
       state.filteredDialogs = undefined;
+      state.isServerError = false;
     },
     replaceNewMessage: (state: DialogsState, action: PayloadAction<IMessage>) => {
       if (state.filteredDialogs === undefined) {
@@ -87,9 +90,14 @@ export const dialogsSlice = createSlice({
     builder.addCase(GetDialogs.fulfilled, (state: DialogsState, action) => {
       const data = action.payload as DialogsResponse;
 
+      console.log(data);
+
       if (data.status !== CODE_OK) {
+        state.isServerError = true;
         return;
       }
+
+      state.isServerError = false;
 
       if (data.dialogs === null) {
         data.dialogs = [];
@@ -101,6 +109,10 @@ export const dialogsSlice = createSlice({
       state.filteredDialogs = state.dialogs;
     }).addCase(GetLastMessage.fulfilled, (state: DialogsState, action) => {
       const data = action.payload;
+
+      if (data!.status !== CODE_OK) {
+        return;
+      }
 
       if (state.filteredDialogs === undefined) {
         return;

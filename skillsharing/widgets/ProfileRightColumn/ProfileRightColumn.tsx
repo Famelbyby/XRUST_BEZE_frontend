@@ -3,6 +3,7 @@ import ProfileHeader from './ProfileHeader/ProfileHeader'
 import './ProfileRightColumn.scss'
 import { useSelector } from "react-redux";
 import { AppState } from "../../app/AppStore";
+import { Link } from "react-router";
 
 // const hrefs: string[] = [
 //     "https://github.com",
@@ -61,6 +62,14 @@ const ProfileRightColumn: React.FC = () => {
                         }
                     </div>   
                 }
+                <div className="profile-materials">
+                    Учебные материалы
+                    <Link to={'materials'}>
+                        <div className="profile-materials-go-page">
+                            <img className="profile-materials-go-page__img" src="/shared/go-back.png" alt="Перейти к учебным материалам"/>
+                        </div>
+                    </Link>
+                </div>
                 {/*<div className="profile-feedbacks">
                     Отзывы
                     {profile !== undefined && profile.feedbacks.length > 0 &&

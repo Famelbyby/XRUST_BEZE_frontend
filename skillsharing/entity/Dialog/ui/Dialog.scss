@@ -146,4 +146,14 @@
             }
         }
     }
+
+    &__server-error {
+        display: flex;
+        flex-grow: 1;
+        justify-content: center;
+        align-items: center;
+        font-size: 23px;
+        font-family: "Inter";
+        color: rgba(255, 0, 0, 0.4117647059);
+    }
 }

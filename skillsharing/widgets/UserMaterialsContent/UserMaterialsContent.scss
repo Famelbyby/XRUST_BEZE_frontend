@@ -1,0 +1,35 @@
+@mixin materials-spinner {
+    animation-name: messages-spinner;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    background-color: #d3cff98f;
+    border-radius: 50%;
+}
+
+.user-materials-content {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+
+    &-waiting {
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__spinner {
+        @include materials-spinner;
+    }
+
+    &__no-materials {
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+        justify-content: center;
+        font-size: 23px;
+        font-family: Inter;
+        color: #00000069;
+    }
+}

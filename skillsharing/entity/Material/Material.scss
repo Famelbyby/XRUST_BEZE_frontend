@@ -1,0 +1,70 @@
+.material {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    padding: 10px 15px;
+    justify-content: space-between;
+    transition-duration: 0.2s;
+    gap: 20px;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(0, 0, 0, 0);
+    }
+
+    &-header {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    &-footer {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        font-family: "Inter";
+        font-size: 15px;
+
+        &-time {
+            display: flex;
+            gap: 5px;
+            font-size: 13px;
+            font-family: "Inter";
+            color: rgba(0, 0, 0, 0.5607843137);
+
+            &__img {
+                width: 17px;
+                height: 17px;
+            }
+        }
+
+        &-download, &-share, &-author {
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        &-download {
+            display: flex;
+            gap: 7px;
+
+            &__img {
+                width: 17px;
+                height: 17px;
+            }
+        }
+
+        &-share {
+            display: flex;
+            gap: 7px;
+            
+            &__img {
+                width: 17px;
+                height: 17px;
+            }
+        }
+    }
+}

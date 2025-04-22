@@ -10,7 +10,7 @@ import MainWebSocket from '../../shared/WebSocket'
 import { IMessage } from '../../entity/Message/MessageTypes';
 
 const DialogsContent: React.FC = () => {
-    const {dialogs, filteredDialogs} = useSelector((state: AppState) => state.dialogs);
+    const {dialogs, filteredDialogs, isServerError} = useSelector((state: AppState) => state.dialogs);
     const {user} = useSelector((state: AppState) => state.user);
     const dispatch = useDispatch<AppDispatch>();
 
@@ -62,17 +62,26 @@ const DialogsContent: React.FC = () => {
 
     return (
         <div className="dialogs">
-            {filteredDialogs === undefined && 
-                [0, 1, 2, 3, 4].map((index) => {
-                    return <Dialog dialog={undefined} key={index} />
-                })}
-            {filteredDialogs !== undefined && filteredDialogs.length > 0 && 
-                filteredDialogs.map((dialog: DialogItem) => {
-                    return <Dialog dialog={dialog} key={dialog.channel_id} />
-                })}
-            {filteredDialogs !== undefined && filteredDialogs.length === 0 && 
-                <div className="dialogs__no-chats">
-                    Чатов нет
+            {!isServerError && 
+                <>
+                    {filteredDialogs === undefined && 
+                        [0, 1, 2, 3, 4].map((index) => {
+                            return <Dialog dialog={undefined} key={index} />
+                        })}
+                    {filteredDialogs !== undefined && filteredDialogs.length > 0 && 
+                        filteredDialogs.map((dialog: DialogItem) => {
+                            return <Dialog dialog={dialog} key={dialog.channel_id} />
+                        })}
+                    {filteredDialogs !== undefined && filteredDialogs.length === 0 && 
+                        <div className="dialogs__no-chats">
+                            Чатов нет
+                        </div>
+                    }
+                </>
+            }
+            {isServerError && 
+                <div className='dialog__server-error'>
+                    Неожиданная ошибка сервера
                 </div>
             }
         </div>

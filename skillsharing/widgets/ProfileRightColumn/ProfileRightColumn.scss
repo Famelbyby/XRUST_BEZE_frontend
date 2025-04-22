@@ -107,4 +107,30 @@
             font-size: 17px;
         }
     }
+
+    &-materials {
+        font-family: "Inter";
+        font-size: 20px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+
+        &-go-page {
+            display: flex;
+            padding: 10px;
+            cursor: pointer;
+            transition-duration: 0.4s;
+            border-radius: 50%;
+
+            &:hover {
+                background-color: rgba(193, 193, 193, 0.3);
+            }
+
+            &__img {
+                transform: rotate(180deg);
+                width: 15px;
+                height: 15px;
+            }
+        }
+    }
 }
