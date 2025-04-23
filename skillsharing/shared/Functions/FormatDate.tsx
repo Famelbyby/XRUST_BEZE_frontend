@@ -7,7 +7,7 @@ import { MINUTE_IN_MILLISECONDS, HOUR_IN_MILLISECONDS, DAY_IN_MILLISECONDS, RUSS
  */
 function MinutesEndingInRussian(minutes: number): string {
     switch (true) {
-        case (minutes % 10 === 1):
+        case (minutes % 10 === 1) && (minutes % 100 !== 11):
             return "у";
         case (minutes % 10 < 5) && ((minutes < 11) || (minutes > 14)):
             return 'ы';
