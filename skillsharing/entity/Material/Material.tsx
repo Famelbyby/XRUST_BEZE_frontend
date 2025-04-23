@@ -5,9 +5,12 @@ import { FormatRelativeTimeInPastInDays } from "../../shared/Functions/FormatDat
 import { SECOND_IN_MILLISECONDS } from "../../shared/Consts/ValidatorsConts";
 import './Material.scss'
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { setIsCopied } from "../../app/slices/UserSlice";
 
 const Material: React.FC<MaterialItem> = (material) => {
     const navigateTo = useNavigate();
+    const dispatch = useDispatch();
 
     return (
         <div className="material" onClick={() => navigateTo(`/materials/${material.id}`)}>
@@ -46,6 +49,8 @@ const Material: React.FC<MaterialItem> = (material) => {
                     event.stopPropagation();
 
                     navigator.clipboard.writeText(`https://skill-sharing.ru/materials/${material.id}`);
+
+                    dispatch(setIsCopied(true));
                 }}>
                     поделиться
                     <img className="material-footer-share__img" src="/UserMaterialsPage/share.png" alt="" />

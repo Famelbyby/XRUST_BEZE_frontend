@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ProfileType } from '../../pages/Profile/ui/ProfileTypes'
 import { GetUserByCookie, Logout } from '../../entity/User/api/User';
 import { TryAuth, TryRegister } from '../../pages/Auth/api/Auth';
@@ -10,11 +10,13 @@ import { UpdateProfile } from '../../pages/Settings/api/Settings';
 export interface UserState {
   user: ProfileType | undefined;
   isFetched: boolean,
+  isCopied: boolean,
 }
 
 const initialState: UserState = {
     user: undefined,
     isFetched: false,
+    isCopied: false,
 }
 
 export const userSlice = createSlice({
@@ -24,6 +26,9 @@ export const userSlice = createSlice({
     clearUser: (state: UserState) => {
         state.user = undefined;
         state.isFetched = false;
+    },
+    setIsCopied: (state: UserState, action: PayloadAction<boolean>) => {
+      state.isCopied = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -86,6 +91,6 @@ export const userSlice = createSlice({
   },
 })
 
-export const { clearUser } = userSlice.actions
+export const { setIsCopied, clearUser } = userSlice.actions
 
 export default userSlice.reducer

@@ -11,6 +11,7 @@ import MainWebSocket from '../../shared/WebSocket'
 import { createPortal } from "react-dom";
 import SkillsLine from '../../features/SkillsLine/SkillsLine'
 import ModalWindow from '../../features/ModalWindow/ModalWindow'
+import { setIsCopied } from "../../app/slices/UserSlice";
 
 function handleDeletePressing(event: KeyboardEvent) {
     if (event.key !== 'Delete') {
@@ -154,6 +155,7 @@ const ChatHeader: React.FC = () => {
                                 <img className="chat-header-controls__img chat-header-controls__copy" src="/ChatPage/copy.png" alt="Копировать сообщение" onClick={() => {
                                     navigator.clipboard.writeText(selectedMessages[0].payload || '');
 
+                                    dispatch(setIsCopied(true));
                                     dispatch(removeSelectedMessages());
                                 }} />
                             </>   

@@ -21,6 +21,7 @@ import MainWebSocket from '../shared/WebSocket'
 import UserMaterials from '../pages/UserMaterials/ui/UserMaterials'
 import CertainMaterial from '../pages/CertainMaterial/ui/CertainMaterial'
 import Materials from '../pages/Materials/ui/Materials'
+import CopiedWindow from '../features/CopiedWindow/CopiedWindow'
 
 function App() {
   const {user, isFetched} = useSelector((state: AppState) => state.user);
@@ -45,6 +46,7 @@ function App() {
   return (
       <>
         <Header />
+        <CopiedWindow />
         <div className='main-part'>
           {user === undefined && !isFetched && 
             <div className='main-part__waiting'>
