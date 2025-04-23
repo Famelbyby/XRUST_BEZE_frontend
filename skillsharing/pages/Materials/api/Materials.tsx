@@ -24,3 +24,23 @@ export const GetMaterialsByTags = createAsyncThunk(
         return {materials: data, status};
     }
 );
+
+export const GetMaterialsByName = createAsyncThunk(
+    'materials/getByName',
+    async (name: string) => {
+        let status: number = CODE_OK;
+        let data: unknown;
+
+        await axios.get(BACK_URL + STUDY_MATERIALS_URL + `?name=${name}`).then(
+            (response) => {
+                status = response.status;
+                data = response.data.study_materials;
+            }
+        ).catch(({response}) => {
+            data = undefined;
+            status = response.status;
+        });
+
+        return {materials: data, status};
+    }
+);

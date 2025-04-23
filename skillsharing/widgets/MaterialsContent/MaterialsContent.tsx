@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, AppState } from "../../app/AppStore";
 import Material from "../../entity/Material/Material";
-import { GetMaterialsByTags } from "../../pages/Materials/api/Materials";
-import { clearMaterials } from "../../app/slices/MaterialsSlice";
+import { GetMaterialsByName, GetMaterialsByTags } from "../../pages/Materials/api/Materials";
+import { changeFilterType, clearMaterials } from "../../app/slices/MaterialsSlice";
 import './MaterialsContent.scss'
 
 const LeftSide: React.FC = () => {
@@ -36,14 +36,38 @@ const LeftSide: React.FC = () => {
 }
 
 const RightSide: React.FC = () => {
+    const {user} = useSelector((state: AppState) => state.user);
+    const {filterType} = useSelector((state: AppState) => state.materials);
+    const [materialNameInput, setMaterialNameInput] = useState("");
+    const dispatch = useDispatch<AppDispatch>();
+
+    useEffect(() => {
+        if (materialNameInput === '') {
+            if (user !== undefined) {
+                dispatch(GetMaterialsByTags(user.skills_to_learn.map((skill) => skill.name)));
+            }
+        } else {
+            dispatch(GetMaterialsByName(materialNameInput));
+        }
+    }, [materialNameInput]);
+
     return (
         <div className="materials-content-right-side">
             <div className="materials-content-filter">
                 Фильтр по 
-                <select className="materials-content-filter-select">
-                    <option className="materials-content-filter__option" value={"name"}>имени</option>
+                <select className="materials-content-filter-select" onChange={(event) => {
+                    dispatch(changeFilterType(event.target.value));
+                }}>
+                    <option className="materials-content-filter__option" value={"name"} selected>названию</option>
                     <option className="materials-content-filter__option" value={"skill"}>навыку</option>
                 </select>
+            </div>
+            <div className="materials-content-inputs">
+                {filterType === "name" && 
+                    <input type="text" className="materials-content__name-input" value={materialNameInput} placeholder="Название материала" onChange={(event) => {
+                        setMaterialNameInput(event.target.value);
+                    }}/>
+                }
             </div>
         </div>
     )

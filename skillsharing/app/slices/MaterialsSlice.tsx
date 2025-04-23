@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { FilterType, UserMaterialsResponse } from '../../shared/Consts/Interfaces';
 import { MaterialItem } from '../../entity/Material/MaterialTypes';
-import {GetMaterialsByTags} from '../../pages/Materials/api/Materials'
+import {GetMaterialsByName, GetMaterialsByTags} from '../../pages/Materials/api/Materials'
 
 export interface MaterialsState {
   isFetched: boolean,
@@ -21,6 +21,9 @@ export const materialsSlice = createSlice({
   name: 'structurizedMessage',
   initialState,
   reducers: {
+    changeFilterType: (state: MaterialsState, action: PayloadAction<string>) => {
+      state.filterType = action.payload as FilterType;
+    },
     clearMaterials: (state: MaterialsState) => {
         state.isFetched = false;
         state.materials = [];
@@ -33,10 +36,15 @@ export const materialsSlice = createSlice({
 
         state.isFetched = true;
         state.materials = response.materials || [];
-    });
+    }).addCase(GetMaterialsByName.fulfilled, (state: MaterialsState, action) => {
+      const response = action.payload as unknown as UserMaterialsResponse;
+
+      state.isFetched = true;
+      state.materials = response.materials || [];
+  });
   }
 })
 
-export const { clearMaterials } = materialsSlice.actions
+export const { changeFilterType, clearMaterials } = materialsSlice.actions
 
 export default materialsSlice.reducer
