@@ -27,7 +27,7 @@ const CopiedWindow: React.FC = () => {
         <div ref={window} className='copied-window'>
             <div className='copied-window-content'>
                 Скопировано
-                <img id="copied-window" className='copied-window__img' src='/ChatPage/check.png' alt=''/>
+                <img id="copied-window" className='copied-window__img' src='/ChatPage/check_white.png' alt=''/>
             </div>
         </div>
     )
