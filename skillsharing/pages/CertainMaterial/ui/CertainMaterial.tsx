@@ -15,6 +15,12 @@ const CertainMaterial: React.FC = () => {
     const navigateTo = useNavigate();
 
     useEffect(() => {
+        if (material !== undefined) {
+            document.title = material.name;
+        }
+    }, [material]);
+
+    useEffect(() => {
         const materialID = params.materialID;
 
         if (materialID !== undefined) {
@@ -41,9 +47,6 @@ const CertainMaterial: React.FC = () => {
             }
             {isFetched && material !== undefined && 
                 <div className='certain-material-content'>
-                    <div className='certain-material-title'>
-                        {material.name}
-                    </div>
                     <object
                         data={MATERIALS_URL + '/' + material.filename}
                         type="application/pdf"

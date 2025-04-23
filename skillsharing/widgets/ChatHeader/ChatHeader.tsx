@@ -31,6 +31,12 @@ const ChatHeader: React.FC = () => {
     const selectedMessagesCount = (selectedMessages || []).length;
 
     useEffect(() => {
+        if (companion !== undefined) {
+            document.title = `Чат с ${companion.username}`;
+        }
+    }, [companion]);
+
+    useEffect(() => {
         window.addEventListener('keydown', handleDeletePressing);
 
         return () => {

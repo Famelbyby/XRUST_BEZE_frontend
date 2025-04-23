@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, AppState } from "../../../app/AppStore";
 import { clearProfile } from "../../../app/slices/ProfileSlice";
 import NotFound from '../../../features/404/404'
+import { Helmet } from "react-helmet";
 
 const Profile: React.FC = () => {
     const {user, isFetched} = useSelector((state: AppState) => state.profile);
@@ -26,6 +27,9 @@ const Profile: React.FC = () => {
 
     return (
         <div className="profile-page">
+            <Helmet>
+                <title>Профиль</title>
+            </Helmet>
             {user === undefined && isFetched && 
                 <NotFound />
             }

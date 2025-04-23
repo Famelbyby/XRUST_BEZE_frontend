@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StatisticItem} from './ProfileLeftColumnTypes'
 import {CapitalizeString} from '../../shared/Functions/FormatStrings'
 import {PREFERRED_FORMAT_TRANSLATION} from '../../shared/Consts/Translations'
@@ -22,6 +22,12 @@ const profileStatistics: StatisticItem[] = [
 const ProfileLeftColumn: React.FC = () => {
     const {user} = useSelector((state: AppState) => state.profile);
     const {user: myUser} = useSelector((state: AppState) => state.user);
+
+    useEffect(() => {
+        if (user !== undefined) {
+            document.title = user.username;
+        }
+    }, [user]);
 
     return (
         <div className="profile-left-column">

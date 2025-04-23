@@ -10,6 +10,7 @@ import { PREFERRED_FORMAT_TRANSLATION, PREFERRED_FORMAT_TYPES } from '../../shar
 import { CommunicationFormat } from '../../shared/Consts/Interfaces';
 import { BIO_MAX_LENGTH, MAX_HREFS_COUNT } from '../../shared/Consts/ValidatorsConts';
 import Loader from '../../features/Loader/Loader';
+import {Helmet} from 'react-helmet';
 
 const SignUpAvatar: React.FC = () => {
     const {avatar} = useSelector((state: AppState) => state.signup);
@@ -366,6 +367,9 @@ const SignUp: React.FC = () => {
 
     return (
         <div className='sign-up-page'>
+            <Helmet>
+                <title>Регистрация</title>
+            </Helmet>
             {step === 1 && 
                 <>
                     <SignUpIdentifier />

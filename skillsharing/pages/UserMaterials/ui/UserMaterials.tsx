@@ -7,9 +7,9 @@ import UserMaterialsHeader from '../../../widgets/UserMaterialsHeader/UserMateri
 import UserMaterialsContent from '../../../widgets/UserMaterialsContent/UserMaterialsContent'
 import './UserMaterials.scss'
 import { clearUserMaterials } from '../../../app/slices/UserMaterialsSlice';
+import { Helmet } from 'react-helmet';
 
 const UserMaterials: React.FC = () => {
-    
     const params = useParams();
     const dispatch = useDispatch<AppDispatch>();
 
@@ -29,6 +29,9 @@ const UserMaterials: React.FC = () => {
 
     return (
         <div className='user-materials-page'>
+            <Helmet>
+                <title>Учебные материалы пользователя</title>
+            </Helmet>
             <UserMaterialsHeader />
             <UserMaterialsContent />
         </div>

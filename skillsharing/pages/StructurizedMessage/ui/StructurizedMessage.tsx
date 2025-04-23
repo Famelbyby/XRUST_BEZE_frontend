@@ -6,6 +6,7 @@ import NotFound from "../../../features/404/404";
 import {GetMessageById} from '../api/StructurizedMessage'
 import StructurizedMessageContent from '../../../widgets/StructurizedMessageContent/StructurizedMessageContent'
 import './StructurizedMessage.scss'
+import { Helmet } from "react-helmet";
 
 const StructurizedMessage: React.FC = () => {
     const navigateTo = useNavigate();
@@ -23,6 +24,9 @@ const StructurizedMessage: React.FC = () => {
 
     return (
         <div className='str-message-page'>
+            <Helmet>
+                <title>Структуризированное сообщение</title>
+            </Helmet>
             {!badMessageError &&
                 <>
                     <div className='str-message-go-back'>

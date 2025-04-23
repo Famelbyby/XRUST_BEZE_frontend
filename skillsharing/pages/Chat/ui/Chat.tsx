@@ -11,6 +11,7 @@ import { clearAllMessages } from '../../../app/slices/ChatSlice';
 import { GetChannelByIds, GetCompanion } from '../api/Chat';
 import RecorderBar from '../../../widgets/RecorderBar/RecorderBar';
 import { finishVoiceMessage } from '../../../app/slices/RecorderSlice';
+import { Helmet } from 'react-helmet';
 
 const Chat: React.FC = () => {
     const navigateTo = useNavigate();
@@ -41,6 +42,9 @@ const Chat: React.FC = () => {
 
     return (
         <div className='chat-page'>
+            <Helmet>
+                <title>Чат</title>
+            </Helmet>
             {!noPeerError &&
                 <>
                     <div className='chat-go-back'>

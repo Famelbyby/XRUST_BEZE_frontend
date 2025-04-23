@@ -9,6 +9,7 @@ import { AppDispatch, AppState } from "../../../app/AppStore";
 import { clearSettings, clearUpdated } from "../../../app/slices/SettingsSlice";
 import { useNavigate } from "react-router";
 import { GetCategories } from "../../Auth/api/Auth";
+import { Helmet } from "react-helmet";
 
 const Settings: React.FC = () => {
     const {user, isFetched} = useSelector((state: AppState) => state.user);
@@ -39,6 +40,9 @@ const Settings: React.FC = () => {
 
     return (
         <div className="settings-page">
+            <Helmet>
+                <title>Настройки</title>
+            </Helmet>
             <div className="settings-main">
                 <SettingsLeftColumn />
                 <SettingsRightColumn />

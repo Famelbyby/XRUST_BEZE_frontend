@@ -7,6 +7,7 @@ import PasswordField from '../../features/PasswordField/PasswordField'
 import './LogIn.scss'
 import { TryAuth} from '../../pages/Auth/api/Auth'
 import Loader from '../../features/Loader/Loader'
+import { Helmet } from "react-helmet";
 
 const LogInEnterButton: React.FC = () => {
     const {identifier, password, isPending, isEmailValid} = useSelector((state: AppState) => state.login);
@@ -62,6 +63,9 @@ const LogInPassword: React.FC = () => {
 const LogIn: React.FC = () => {
     return (
         <div className="log-in-page">
+            <Helmet>
+                <title>Авторизация</title>
+            </Helmet>
             <LogInIdentifier />
             <LogInPassword />
             <LogInEnterButton />
