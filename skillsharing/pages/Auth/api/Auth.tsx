@@ -4,7 +4,7 @@ import {ProfileType} from '../../../pages/Profile/ui/ProfileTypes'
 import { createAsyncThunk } from '@reduxjs/toolkit';
 // import { CODE_CREATED, CODE_OK } from '../../../shared/Consts/Codes';
 import { AuthRequest, Category, LoadAvatarRequest, RegisterRequest } from '../../../shared/Consts/Interfaces';
-import { CODE_NOT_AUTHED, CODE_OK } from '../../../shared/Consts/Codes';
+import { CODE_OK } from '../../../shared/Consts/Codes';
 
 // const userMock: ProfileType = {
 //     id: localStorage.getItem('user-id') || "67ed4e0a66ab0aab711f8476",

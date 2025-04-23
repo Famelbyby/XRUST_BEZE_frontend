@@ -7,23 +7,23 @@ import { BACK_URL, STUDY_MATERIALS_URL } from "../../../shared/Consts/URLS";
 //     study_materials: undefined,
 // }
 
-const materialsMock = [
-    {
-        "id": "6807ffaf212f5117f282d050",
-        "name": "Math Practice Problems",
-        "filename": "physics_problems.pdf",
-        "tags": [
-            "math"
-        ],
-        "author_id": "67ffd6b2267a8c246fabbcda",
-        "author": {
-            "username": "test4",
-            "avatar": "test_avatar.jpg"
-        },
-        "created": 1713792000,
-        "updated": 1713792000
-    }
-];
+// const materialsMock = [
+//     {
+//         "id": "6807ffaf212f5117f282d050",
+//         "name": "Math Practice Problems",
+//         "filename": "physics_problems.pdf",
+//         "tags": [
+//             "math"
+//         ],
+//         "author_id": "67ffd6b2267a8c246fabbcda",
+//         "author": {
+//             "username": "test4",
+//             "avatar": "test_avatar.jpg"
+//         },
+//         "created": 1713792000,
+//         "updated": 1713792000
+//     }
+// ];
 
 export const GetUserMaterials = createAsyncThunk(
     'user/getMaterials',

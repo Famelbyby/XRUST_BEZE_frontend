@@ -7,6 +7,8 @@ move-html: create-routes
 	cp ./dist/index.html ./dist/chat
 	cp ./dist/index.html ./dist/chats
 	cp ./dist/index.html ./dist/structurized-messages
+	cp ./dist/index.html ./dist/materials
+	cp ./dist/index.html ./dist/profile-materials
 
 create-routes:
 	mkdir ./dist/sign-up
@@ -17,3 +19,5 @@ create-routes:
 	mkdir ./dist/chat
 	mkdir ./dist/chats
 	mkdir ./dist/structurized-messages
+	mkdir ./dist/materials
+	mkdir ./dist/profile-materials

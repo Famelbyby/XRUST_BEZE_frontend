@@ -69,8 +69,8 @@ function App() {
                 <Route path='/main-page' element={<Main />} />
                 <Route path='/profile' >
                   <Route path=':userID' element={<Profile />} />
-                  <Route path=':userID/materials' element={<UserMaterials />} />
                 </Route>
+                <Route path='/profile-materials/:userID' element={<UserMaterials />} />
                 <Route path='/settings' element={<Settings />} />
                 <Route path='/chat'>
                   <Route path=':chatID' element={<Chat />} />

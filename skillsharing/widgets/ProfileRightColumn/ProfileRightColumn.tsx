@@ -64,7 +64,7 @@ const ProfileRightColumn: React.FC = () => {
                 }
                 <div className="profile-materials">
                     Учебные материалы
-                    <Link to={'materials'}>
+                    <Link to={`/profile-materials/${user?.id}`}>
                         <div className="profile-materials-go-page">
                             <img className="profile-materials-go-page__img" src="/shared/go-back.png" alt="Перейти к учебным материалам"/>
                         </div>
