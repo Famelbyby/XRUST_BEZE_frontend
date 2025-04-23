@@ -1,7 +1,15 @@
+@mixin materials-spinner {
+    animation-name: messages-spinner;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    background-color: #d3cff98f;
+    border-radius: 50%;
+}
+
 .materials-content {
     display: flex;
     height: calc(100vh - 140px);
-    //justify-content: space-between;
     gap: 50px;
 
     &-left-side {
@@ -60,5 +68,9 @@
         width: 100%;
         justify-content: center;
         align-items: center;
+    }
+
+    &__spinner {
+        @include materials-spinner;
     }
 }
