@@ -1,11 +1,13 @@
 .materials-content {
     display: flex;
     height: calc(100vh - 140px);
-    justify-content: space-between;
+    //justify-content: space-between;
+    gap: 50px;
 
     &-left-side {
         display: flex;
         flex-grow: 1;
+        max-width: 800px;
     }
 
     &-list {
@@ -13,5 +15,33 @@
         flex-direction: column;
         gap: 10px;
         flex-grow: 1;
+    }
+
+    &-right-side {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    &-filter {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        font-family: 'Inter';
+        font-size: 17px;
+
+        &-select {
+            border: none;
+            background-color: #00000019;
+            padding: 5px 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Inter';
+
+            &:focus-visible, &:focus {
+                border: none;
+                outline: none;
+            }
+        }
     }
 }
