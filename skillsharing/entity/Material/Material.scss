@@ -57,6 +57,7 @@
         &-download, &-share {
             display: flex;
             gap: 7px;
+            align-items: center;
 
             &__img {
                 width: 13px;

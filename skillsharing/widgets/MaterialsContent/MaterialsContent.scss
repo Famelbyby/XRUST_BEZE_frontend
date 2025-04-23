@@ -1,0 +1,17 @@
+.materials-content {
+    display: flex;
+    height: calc(100vh - 140px);
+    justify-content: space-between;
+
+    &-left-side {
+        display: flex;
+        flex-grow: 1;
+    }
+
+    &-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex-grow: 1;
+    }
+}

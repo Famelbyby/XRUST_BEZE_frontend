@@ -1,12 +1,13 @@
 import React from "react";
-import MainContent from '../../../widgets/MainContent/MainContent'
-import MainHeader from '../../../widgets/MainHeader/MainHeader'
+import MaterialsContent from '../../../widgets/MaterialsContent/MaterialsContent';
+import MaterialsHeader from '../../../widgets/MaterialsHeader/MaterialsHeader';
+import './Materials.scss'
 
 const Materials: React.FC = () => {
     return (
-        <div className="main-page">
-            <MainHeader />
-            <MainContent />
+        <div className="materials-page">
+            <MaterialsHeader />
+            <MaterialsContent />
         </div>
     )
 };

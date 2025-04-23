@@ -12,6 +12,7 @@ import recorderReducer from './slices/RecorderSlice'
 import manageMessageReducer from './slices/ManageMessageSlice'
 import userMaterialsReducer from './slices/UserMaterialsSlice'
 import certainMaterialReducer from './slices/CertainMaterialSlice'
+import materialsReducer from './slices/MaterialsSlice'
 
 export const appStore = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ export const appStore = configureStore({
     manageMessage: manageMessageReducer,
     userMaterials: userMaterialsReducer,
     certainMaterial: certainMaterialReducer,
+    materials: materialsReducer,
   },
 })
 

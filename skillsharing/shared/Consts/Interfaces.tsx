@@ -10,6 +10,7 @@ export interface TextFieldState {
 
 export type SkillLevel = "beginner" | "intermediate" | "advanced";
 export type CommunicationFormat = "voice" | "text" | "video";
+export type FilterType = "name" | "skill";
 
 export interface Skill {
     name: string,

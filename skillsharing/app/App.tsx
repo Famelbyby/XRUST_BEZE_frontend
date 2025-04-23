@@ -20,6 +20,7 @@ import StructurizedMessage from '../pages/StructurizedMessage/ui/StructurizedMes
 import MainWebSocket from '../shared/WebSocket'
 import UserMaterials from '../pages/UserMaterials/ui/UserMaterials'
 import CertainMaterial from '../pages/CertainMaterial/ui/CertainMaterial'
+import Materials from '../pages/Materials/ui/Materials'
 
 //localStorage.getItem("user_id") || "67e3b36b9a36154096b4bbea"
 
@@ -79,9 +80,8 @@ function App() {
                 <Route path='/structurized-messages'>
                   <Route path=':messageId' element={<StructurizedMessage />} />
                 </Route>
-                <Route path='/materials'>
-                  <Route path=':materialID' element={<CertainMaterial />} />
-                </Route>
+                <Route path='/materials' element={<Materials />} />
+                <Route path='/materials/:materialID' element={<CertainMaterial />} />
                 <Route path='*' element={<Navigate to='/main-page' replace />} />
               </Routes>
             </>

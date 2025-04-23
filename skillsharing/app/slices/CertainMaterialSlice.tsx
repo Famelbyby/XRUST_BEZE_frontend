@@ -13,7 +13,7 @@ const initialState: CertainMaterialsState = {
     material: undefined,
 }
 
-export const userMaterialsSlice = createSlice({
+export const certainMaterialsSlice = createSlice({
   name: 'structurizedMessage',
   initialState,
   reducers: {
@@ -32,6 +32,6 @@ export const userMaterialsSlice = createSlice({
   }
 })
 
-export const { clearCertainMaterial } = userMaterialsSlice.actions
+export const { clearCertainMaterial } = certainMaterialsSlice.actions
 
-export default userMaterialsSlice.reducer
+export default certainMaterialsSlice.reducer
