@@ -19,6 +19,11 @@
         display: flex;
         width: 100%;
         justify-content: space-between;
+        font-family: 'Inter';
+
+        &__tags {
+            color: #00000069;
+        }
     }
 
     &-footer {
@@ -26,7 +31,8 @@
         justify-content: space-between;
         width: 100%;
         font-family: "Inter";
-        font-size: 15px;
+        font-size: 13px;
+        align-items: center;
 
         &-time {
             display: flex;
@@ -34,6 +40,7 @@
             font-size: 13px;
             font-family: "Inter";
             color: rgba(0, 0, 0, 0.5607843137);
+            width: 150px;
 
             &__img {
                 width: 17px;
@@ -47,23 +54,26 @@
             }
         }
 
-        &-download {
+        &-download, &-share {
             display: flex;
             gap: 7px;
 
             &__img {
-                width: 17px;
-                height: 17px;
+                width: 13px;
+                height: 13px;
             }
         }
 
-        &-share {
+        &-author {
             display: flex;
-            gap: 7px;
-            
-            &__img {
-                width: 17px;
-                height: 17px;
+            gap: 5px;
+            font-size: 14px;
+            align-items: center;
+
+            &__avatar-img {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
             }
         }
     }

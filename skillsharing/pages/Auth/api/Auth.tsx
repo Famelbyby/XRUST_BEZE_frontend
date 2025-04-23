@@ -74,9 +74,9 @@ export const TryAuth = createAsyncThunk(
             error = undefined;
         }).catch(({response}) => {
             console.log(response);
-            status = CODE_NOT_AUTHED;//status = response.status;
+            status = response.status;
             data = undefined;
-            error = "rpc error: code = Unknown desc = user does not exist";//error = response.data;
+            error = response.data.error;
         });
 
         return {user: data as ProfileType, status, error};

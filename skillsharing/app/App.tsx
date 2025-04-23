@@ -19,6 +19,7 @@ import Settings from '../pages/Settings/ui/Settings'
 import StructurizedMessage from '../pages/StructurizedMessage/ui/StructurizedMessage'
 import MainWebSocket from '../shared/WebSocket'
 import UserMaterials from '../pages/UserMaterials/ui/UserMaterials'
+import CertainMaterial from '../pages/CertainMaterial/ui/CertainMaterial'
 
 //localStorage.getItem("user_id") || "67e3b36b9a36154096b4bbea"
 
@@ -54,10 +55,11 @@ function App() {
           {user === undefined && isFetched && 
             <Routes>
               <Route path='' element={<Auth />}>
+                <Route index element={<Navigate to='log-in' replace />} />
                 <Route path='sign-up' element={<SignUp />} />
                 <Route path='log-in' element={<LogIn />} />
               </Route>
-              <Route path='*' element={<Navigate to='/log-in' replace />} />
+              <Route path='*' element={<Navigate to='/' replace />} />
             </Routes>
           }
           {user !== undefined && 
@@ -76,6 +78,9 @@ function App() {
                 <Route path='/chats' element={<Dialogs />} />
                 <Route path='/structurized-messages'>
                   <Route path=':messageId' element={<StructurizedMessage />} />
+                </Route>
+                <Route path='/materials'>
+                  <Route path=':materialID' element={<CertainMaterial />} />
                 </Route>
                 <Route path='*' element={<Navigate to='/main-page' replace />} />
               </Routes>

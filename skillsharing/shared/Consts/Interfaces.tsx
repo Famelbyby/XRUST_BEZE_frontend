@@ -22,6 +22,10 @@ export interface Category {
     skills: string[],
 }
 
+export interface CertainMaterialResponse extends AnyAPIResponse {
+    material: MaterialItem,
+}
+
 export interface UserMaterialsResponse extends AnyAPIResponse {
     materials: MaterialItem[],
 }

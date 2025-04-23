@@ -76,6 +76,8 @@ export const loginSlice = createSlice({
             return;
         }
 
+        console.log(data.error);
+
         switch (data.error) {
             case AUTH_LOGIN_WRONG_PASSWORD:
                 state.password.error = "Неправильный пароль";

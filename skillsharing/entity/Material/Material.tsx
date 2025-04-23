@@ -25,12 +25,16 @@ const Material: React.FC<MaterialItem> = (material) => {
                     {FormatRelativeTimeInPastInDays(new Date(material.created * SECOND_IN_MILLISECONDS))}
                 </div>
                 {material.author !== undefined && 
-                    <div className="material-footer-author" onClick={() => navigateTo(`/profile/${material.author_id}`)}>
+                    <div className="material-footer-author" onClick={(event) => {
+                        event.stopPropagation();
+
+                        navigateTo(`/profile/${material.author_id}`);
+                    }}>
                         <img className="material-footer-author__avatar-img" src={AVATAR_URL + material.author.avatar} alt="" />
                         {material.author.username}
                     </div>
                 }
-                <a href={MATERIALS_URL + material.filename} download={material.name} onClick={(event) => {
+                <a href={MATERIALS_URL + '/' + material.filename} download={material.name} onClick={(event) => {
                     event.stopPropagation();
                 }}>
                     <div className="material-footer-download">

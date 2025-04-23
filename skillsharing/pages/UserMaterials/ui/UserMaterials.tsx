@@ -6,6 +6,7 @@ import {GetUserMaterials} from '../api/UserMaterials';
 import UserMaterialsHeader from '../../../widgets/UserMaterialsHeader/UserMaterialsHeader'
 import UserMaterialsContent from '../../../widgets/UserMaterialsContent/UserMaterialsContent'
 import './UserMaterials.scss'
+import { clearUserMaterials } from '../../../app/slices/UserMaterialsSlice';
 
 const UserMaterials: React.FC = () => {
     
@@ -19,6 +20,10 @@ const UserMaterials: React.FC = () => {
 
         if (userId !== undefined) {
             dispatch(GetUserMaterials(userId));
+        }
+
+        return () => {
+            dispatch(clearUserMaterials());
         }
     }, []);
 
