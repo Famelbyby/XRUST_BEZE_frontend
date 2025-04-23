@@ -286,6 +286,8 @@ export const signupSlice = createSlice({
             return;
         }
 
+        state.globalSkills = [];
+
         data.categories.forEach((category) => {
             state.globalSkills = [...state.globalSkills, ...category.skills]
         });

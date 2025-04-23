@@ -5,6 +5,7 @@ import Material from "../../entity/Material/Material";
 import { GetMaterialsByName, GetMaterialsByTags } from "../../pages/Materials/api/Materials";
 import { changeFilterType, clearMaterials } from "../../app/slices/MaterialsSlice";
 import './MaterialsContent.scss'
+import { GetCategories } from "../../pages/Auth/api/Auth";
 
 const LeftSide: React.FC = () => {
     const {isFetched, materials} = useSelector((state: AppState) => state.materials);
@@ -37,9 +38,14 @@ const LeftSide: React.FC = () => {
 
 const RightSide: React.FC = () => {
     const {user} = useSelector((state: AppState) => state.user);
-    const {filterType} = useSelector((state: AppState) => state.materials);
+    const {filterType, globalSkills} = useSelector((state: AppState) => state.materials);
     const [materialNameInput, setMaterialNameInput] = useState("");
+    const [materialSkillInput, setMaterialSkillInput] = useState("");
     const dispatch = useDispatch<AppDispatch>();
+
+    useEffect(() => {
+        dispatch(GetCategories());
+    }, []);
 
     useEffect(() => {
         if (materialNameInput === '') {
@@ -51,11 +57,23 @@ const RightSide: React.FC = () => {
         }
     }, [materialNameInput]);
 
+    useEffect(() => {
+        if (materialSkillInput === '') {
+            if (user !== undefined) {
+                dispatch(GetMaterialsByTags(user.skills_to_learn.map((skill) => skill.name)));
+            }
+        } else {
+            dispatch(GetMaterialsByTags([materialSkillInput]));
+        }
+    }, [materialSkillInput]);
+
     return (
         <div className="materials-content-right-side">
             <div className="materials-content-filter">
                 Фильтр по 
                 <select className="materials-content-filter-select" onChange={(event) => {
+                    setMaterialNameInput("");
+                    setMaterialSkillInput("");
                     dispatch(changeFilterType(event.target.value));
                 }}>
                     <option className="materials-content-filter__option" value={"name"} selected>названию</option>
@@ -67,6 +85,20 @@ const RightSide: React.FC = () => {
                     <input type="text" className="materials-content__name-input" value={materialNameInput} placeholder="Название материала" onChange={(event) => {
                         setMaterialNameInput(event.target.value);
                     }}/>
+                }
+                {filterType === "skill" && 
+                    <select className='materials-content__skill-select' onChange={(event) => {
+                        setMaterialSkillInput(event.target.value);
+                    }}>
+                        <option value={""} selected key={"nothing"}>...</option>
+                        {globalSkills.map((glSkill, index) => {
+                            return (
+                                <>
+                                    <option value={glSkill} key={index}>{glSkill}</option>
+                                </>
+                            )
+                        })}
+                    </select>
                 }
             </div>
         </div>

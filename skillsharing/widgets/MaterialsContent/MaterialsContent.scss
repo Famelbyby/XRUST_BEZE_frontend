@@ -82,7 +82,7 @@
         @include materials-spinner;
     }
 
-    &__name-input {
+    &__name-input, &__skill-select {
         border: 1px solid rgba(0, 0, 0, 0.2);
         border-radius: 10px;
         padding: 10px;
