@@ -21,9 +21,6 @@ import MainWebSocket from '../shared/WebSocket'
 import UserMaterials from '../pages/UserMaterials/ui/UserMaterials'
 import CertainMaterial from '../pages/CertainMaterial/ui/CertainMaterial'
 import Materials from '../pages/Materials/ui/Materials'
-import { Helmet } from 'react-helmet'
-
-//localStorage.getItem("user_id") || "67e3b36b9a36154096b4bbea"
 
 function App() {
   const {user, isFetched} = useSelector((state: AppState) => state.user);
