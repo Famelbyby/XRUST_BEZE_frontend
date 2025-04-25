@@ -16,12 +16,18 @@
     border-radius: 50%;
 }
 
+@mixin phones {
+    @media screen and (width <= 800px) {
+        @content;
+    }
+}
+
 .chat {
     &-page {
         display: flex;
         width: 100%;
         justify-content: center;
-        padding: 10px 0 20px;
+        padding: 20px;
     }
 
     &-dialog {

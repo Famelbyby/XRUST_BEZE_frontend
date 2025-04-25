@@ -1,9 +1,19 @@
+@mixin phones {
+    @media screen and (width <= 800px) {
+        @content;
+    }
+}
+
 .sidebar {
     display: flex;
     flex-direction: column;
     border-right: 1px solid rgba(0, 0, 0, 0.4);
     padding: 30px;
     gap: 23px;
+
+    @include phones {
+        display: none;
+    }
 
     &-item {
         display: flex;

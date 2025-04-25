@@ -7,10 +7,21 @@
     animation-direction: alternate;
 }
 
+@mixin phones {
+    @media screen and (width <= 800px) {
+        @content;
+    }
+}
+
 .main-header {
     display: flex;
     justify-content: space-between;
     width: 100%;
+
+    @include phones {
+        flex-direction: column;
+        gap: 10px;
+    }
 
     &-left {
         display: flex;
@@ -25,6 +36,10 @@
         justify-content: end;
         width: 300px;
         margin-right: 100px;
+
+        @include phones {
+            width: 80%;
+        }
     }
 
     &__searching-input {

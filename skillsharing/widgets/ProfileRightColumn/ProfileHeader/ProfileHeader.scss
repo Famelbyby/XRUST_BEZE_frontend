@@ -7,6 +7,12 @@
     animation-direction: alternate;
 }
 
+@mixin phones {
+    @media screen and (width <= 800px) {
+        @content;
+    }
+}
+
 .profile {
     &-header {
         display: flex;
@@ -14,6 +20,10 @@
         justify-content: space-between;
         align-items: start;
         min-height: 120px;
+
+        @include phones {
+            flex-direction: column-reverse;
+        }
     }
 
     &-brief {

@@ -1,7 +1,7 @@
 .dialogs {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    flex-grow: 3;
     padding: 30px;
     align-items: stretch;
     gap: 10px;
@@ -9,7 +9,6 @@
     &-page {
         display: flex;
         width: 100%;
-        padding-right: 80px;
         padding-top: 50px;
     }
 }
