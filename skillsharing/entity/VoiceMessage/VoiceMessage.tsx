@@ -17,7 +17,7 @@ interface PropType {
 
 const VoiceMessage: React.FC<PropType> = ({message, isSelected}) => {
     const {user} = useSelector((state: AppState) => state.user);
-    const {voiceMessageId, isPlayingMessage} = useSelector((state: AppState) => state.recorder);
+    const {voiceMessageId, isPlayingMessage, currentTime} = useSelector((state: AppState) => state.recorder);
     const user_id: IMessage["user_id"] = user!.id;
     const messageTime: string = FormatHoursMinutes(new Date(message.created_at * SECOND_IN_MILLISECONDS));
     const isOwnMessage = user_id === message.user_id;
@@ -51,6 +51,16 @@ const VoiceMessage: React.FC<PropType> = ({message, isSelected}) => {
     }, [message.message_id, isPlayingMessage, voiceMessageId, dispatch, message.voice_duration]);
 
     useEffect(() => {
+        if (!isPlayingMessage && voiceMessageId === message.message_id) {
+            const messageTimer = document.getElementById(`voice-message-${message.message_id}-duration`) as HTMLElement;
+
+            if (messageTimer !== null) {
+                messageTimer.innerHTML = FormatMinutesSecondDuration(player.currentTime * SECOND_IN_MILLISECONDS);
+            }
+        }
+    }, [isPlayingMessage, voiceMessageId]);
+
+    useEffect(() => {
         player.onended = () => {
             dispatch(finishVoiceMessage());
         }
@@ -76,12 +86,17 @@ const VoiceMessage: React.FC<PropType> = ({message, isSelected}) => {
                         }
                     }}/>
                     {voiceMessageId === message.message_id && 
-                        <RangeBar id={`voice-range-bar-${message.message_id}`} width={100} min={0} max={100} step={1} value={player.currentTime} changeFunc={(event) => {
+                        <RangeBar id={`voice-range-bar-${message.message_id}`} width={100} min={0} max={100} step={1} value={player.currentTime / message.voice_duration! * 100 * SECOND_IN_MILLISECONDS} changeFunc={(event) => {
                             dispatch(setCurrentTime(event.target.value));
                         }}/>
                     }
                     <div className="chat-voice-message-content__duration" id={`voice-message-${message.message_id}-duration`}>
-                        {voiceMessageId === undefined && 
+                        {voiceMessageId === message.message_id && 
+                            <>
+                                {FormatMinutesSecondDuration(currentTime)}
+                            </>
+                        }
+                        {voiceMessageId !== message.message_id && 
                             <>
                                 {FormatMinutesSecondDuration(message.voice_duration!)}
                             </>
