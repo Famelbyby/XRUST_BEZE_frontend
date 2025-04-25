@@ -90,8 +90,6 @@ export const dialogsSlice = createSlice({
     builder.addCase(GetDialogs.fulfilled, (state: DialogsState, action) => {
       const data = action.payload as DialogsResponse;
 
-      console.log(data);
-
       if (data.status !== CODE_OK) {
         state.isServerError = true;
         return;

@@ -101,8 +101,6 @@ export const GetDialogs = createAsyncThunk(
             status = response.status;
             data = undefined;
         });
-
-        console.log(status);
     
         return {dialogs: data, status};
     }

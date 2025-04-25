@@ -3,6 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { LoadVoiceRecord } from '../../pages/Chat/api/Chat';
 import { LoadVoiceRecordResponse } from '../../shared/Consts/Interfaces';
 import { VOICE_URL } from '../../shared/Consts/URLS';
+import { SECOND_IN_MILLISECONDS } from '../../shared/Consts/ValidatorsConts';
 
 export interface RecorderState {
   isRecording: boolean,
@@ -17,6 +18,7 @@ export interface RecorderState {
   currentTime: number,
   recordURL: string | undefined,
   voiceBlob: Blob | undefined,
+  voiceMessageDuration: number,
 }
 
 const initialState: RecorderState = {
@@ -32,6 +34,7 @@ const initialState: RecorderState = {
   recordURL: undefined,
   voiceBlob: undefined,
   currentTime: 0,
+  voiceMessageDuration: 0,
 }
 
 export const recorderSlice = createSlice({
@@ -109,9 +112,9 @@ export const recorderSlice = createSlice({
       state.recordURL = undefined;
       state.voiceBlob = undefined;
     },
-    setPlayMessage: (state: RecorderState, action: PayloadAction<{id: string, src: string}>) => {
+    setPlayMessage: (state: RecorderState, action: PayloadAction<{id: string, src: string, duration: number}>) => {
       state.voiceMessageId = action.payload.id;
-      
+      state.voiceMessageDuration = action.payload.duration;
       state.isPlayingMessage = true;
 
       const audioPlayer: HTMLMediaElement = document.getElementById('voice-messages-recorder') as HTMLMediaElement;
@@ -132,6 +135,7 @@ export const recorderSlice = createSlice({
       }
 
       state.volume = nextVolume;
+      state.currentTime = audioPlayer.currentTime;
       localStorage.setItem('voice-volume', action.payload);
     },
     setSpeed: (state: RecorderState, action: PayloadAction<string>) => {
@@ -143,7 +147,7 @@ export const recorderSlice = createSlice({
       }
       
       state.speed = nextSpeed;
-      console.log(state.speed);
+      state.currentTime = audioPlayer.currentTime;
       localStorage.setItem('voice-speed', action.payload);
     },
     setCurrentTime: (state: RecorderState, action: PayloadAction<string>) => {
@@ -151,12 +155,10 @@ export const recorderSlice = createSlice({
       const audioPlayer: HTMLMediaElement = document.getElementById('voice-messages-recorder') as HTMLMediaElement;
 
       if (audioPlayer !== null) {
-        console.log(audioPlayer.duration);
-        console.log(nextTimeInPercentage, nextTimeInPercentage * audioPlayer.duration / 100);
-        audioPlayer.currentTime = nextTimeInPercentage * audioPlayer.duration / 100;
+        audioPlayer.currentTime = nextTimeInPercentage * state.voiceMessageDuration / (100 * SECOND_IN_MILLISECONDS);
       }
 
-      state.currentTime = audioPlayer.duration * nextTimeInPercentage / 100;
+      state.currentTime = state.voiceMessageDuration * nextTimeInPercentage / (100 * SECOND_IN_MILLISECONDS);
     },
     setIsPLayingVoiceMessage: (state: RecorderState, action: PayloadAction<boolean>) => {
       const nextState: boolean = action.payload;
@@ -175,6 +177,7 @@ export const recorderSlice = createSlice({
     finishVoiceMessage: (state: RecorderState) => {
       state.voiceMessageId = undefined;
       state.isPlayingMessage = false;
+      state.voiceMessageDuration = 0;
 
       const audioPlayer: HTMLMediaElement = document.getElementById('voice-messages-recorder') as HTMLMediaElement;
 

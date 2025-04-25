@@ -26,7 +26,6 @@ const VoiceMessage: React.FC<PropType> = ({message, isSelected}) => {
 
     useEffect(() => {
         let deleteIndex: undefined | number;
-        //const messageDuration = document.getElementById(`voice-message-content-${message.message_id}`) as HTMLElement;
 
         if (isPlayingMessage && message.message_id === voiceMessageId) {
             const messageTimer = document.getElementById(`voice-message-${message.message_id}-duration`) as HTMLElement;
@@ -41,9 +40,8 @@ const VoiceMessage: React.FC<PropType> = ({message, isSelected}) => {
 
                 if (messageRangeBar !== null) {
                     messageRangeBar.style.backgroundSize = `${percentage}% 100%`;
+                    messageRangeBar.value = String(percentage);
                 }
-
-                //dispatch(setCurrentTime(player.currentTime.toString()));
             }, 50);
         }
 
@@ -72,7 +70,7 @@ const VoiceMessage: React.FC<PropType> = ({message, isSelected}) => {
                         event.stopPropagation();
 
                         if (voiceMessageId !== message.message_id) {
-                            dispatch(setPlayMessage({id: message.message_id, src: message.voice!}));
+                            dispatch(setPlayMessage({id: message.message_id, src: message.voice || '', duration: message.voice_duration || 0}));
                         } else {
                             dispatch(setIsPLayingVoiceMessage(!isPlayingMessage));
                         }

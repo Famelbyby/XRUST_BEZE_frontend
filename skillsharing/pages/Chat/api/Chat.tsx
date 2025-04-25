@@ -175,8 +175,6 @@ export const LoadVoiceRecord = createAsyncThunk(
                 }
             });
 
-            console.log(status, data);
-
             return {recordURL: data.filename as string, status};
         } catch(event) {
             console.log(event);
@@ -211,15 +209,6 @@ export const LoadAttachments = createAsyncThunk(
 export const GetCompanion = createAsyncThunk(
     'chat/getCompanionByID',
     async (peerId: string) => {
-        // const response = await (new Promise((resolve) => {
-        //     setTimeout(() => {
-        //         resolve(userMock);
-        //     }, 2000)
-        // }));
-        
-        // callback(response as ProfileType | undefined);
-
-        // return {user: response, status: CODE_OK};
         let data: unknown;
         let status: number = CODE_OK;
 

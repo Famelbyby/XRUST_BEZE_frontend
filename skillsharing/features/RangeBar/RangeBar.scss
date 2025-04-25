@@ -9,6 +9,10 @@
 
     &::-webkit-slider-thumb {
         appearance: none;
-        width: 0;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        border: 1px solid rgba(105, 105, 105, 0.4);
+        background-image: linear-gradient(white, white);
     }
 }
