@@ -147,10 +147,16 @@ export const recorderSlice = createSlice({
       localStorage.setItem('voice-speed', action.payload);
     },
     setCurrentTime: (state: RecorderState, action: PayloadAction<string>) => {
-      const nextTime: number = +(action.payload);
-      
-      //(state.audioPlayer as HTMLAudioElement).currentTime = nextTime;
-      state.currentTime = nextTime;
+      const nextTimeInPercentage: number = +(action.payload);
+      const audioPlayer: HTMLMediaElement = document.getElementById('voice-messages-recorder') as HTMLMediaElement;
+
+      if (audioPlayer !== null) {
+        console.log(audioPlayer.duration);
+        console.log(nextTimeInPercentage, nextTimeInPercentage * audioPlayer.duration / 100);
+        audioPlayer.currentTime = nextTimeInPercentage * audioPlayer.duration / 100;
+      }
+
+      state.currentTime = audioPlayer.duration * nextTimeInPercentage / 100;
     },
     setIsPLayingVoiceMessage: (state: RecorderState, action: PayloadAction<boolean>) => {
       const nextState: boolean = action.payload;

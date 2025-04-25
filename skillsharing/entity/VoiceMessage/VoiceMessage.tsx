@@ -43,7 +43,7 @@ const VoiceMessage: React.FC<PropType> = ({message, isSelected}) => {
                     messageRangeBar.style.backgroundSize = `${percentage}% 100%`;
                 }
 
-                dispatch(setCurrentTime(player.currentTime.toString()));
+                //dispatch(setCurrentTime(player.currentTime.toString()));
             }, 50);
         }
 
