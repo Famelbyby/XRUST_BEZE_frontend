@@ -17,12 +17,12 @@ interface PropType {
 
 const VoiceMessage: React.FC<PropType> = ({message, isSelected}) => {
     const {user} = useSelector((state: AppState) => state.user);
-    const {voiceMessageId, isPlayingMessage, audioPlayer} = useSelector((state: AppState) => state.recorder);
+    const {voiceMessageId, isPlayingMessage} = useSelector((state: AppState) => state.recorder);
     const user_id: IMessage["user_id"] = user!.id;
     const messageTime: string = FormatHoursMinutes(new Date(message.created_at * SECOND_IN_MILLISECONDS));
     const isOwnMessage = user_id === message.user_id;
     const dispatch = useDispatch();
-    const player = (audioPlayer as HTMLAudioElement);
+    const player = document.getElementById('voice-messages-recorder') as HTMLMediaElement;
 
     useEffect(() => {
         let deleteIndex: undefined | number;
@@ -33,7 +33,6 @@ const VoiceMessage: React.FC<PropType> = ({message, isSelected}) => {
             const messageRangeBar = document.getElementById(`voice-range-bar-${message.message_id}`) as HTMLInputElement;
 
             deleteIndex = setInterval(() => {
-                const player = audioPlayer as HTMLAudioElement;
                 const percentage = player.currentTime / message.voice_duration! * 100000;
 
                 if (messageTimer !== null) {
@@ -51,7 +50,7 @@ const VoiceMessage: React.FC<PropType> = ({message, isSelected}) => {
         return () => {
             clearInterval(deleteIndex);
         }
-    }, [audioPlayer, message.message_id, isPlayingMessage, voiceMessageId, dispatch, message.voice_duration]);
+    }, [message.message_id, isPlayingMessage, voiceMessageId, dispatch, message.voice_duration]);
 
     useEffect(() => {
         player.onended = () => {

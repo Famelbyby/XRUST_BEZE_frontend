@@ -32,30 +32,36 @@ function handleEnter(event: KeyboardEvent) {
 
 const ChatFooter: React.FC = () => {
     const {editingMessage, channelID, peerID} = useSelector((state: AppState) => state.chatMessages);
-    const {isRecorded, recordDuration, isPlayingRecord, isRecording, audioPlayer, voiceBlob, recordURL} = useSelector((state: AppState) => state.recorder);
+    const {isRecorded, recordDuration, isPlayingRecord, isRecording, voiceBlob, recordURL} = useSelector((state: AppState) => state.recorder);
     const {isUpdating, attachmentURLs, attachments, attachmentsUploaded, inputText, oldAttachments} = useSelector((state: AppState) => state.manageMessage);
     const {user} = useSelector((state: AppState) => state.user);
     const dispatch = useDispatch<AppDispatch>();
     const userId: string = user!.id;
     
+    useEffect(() => {
+        window.addEventListener('keypress', handleEnter);
+
+        return () => {
+            window.removeEventListener('keypress', handleEnter);
+        }
+    }, []);
+
     /**
      * Adds eventListener on 'Enter' to send messages or confirm editing
      */
     useEffect(() => {
-        window.addEventListener('keypress', handleEnter);
-
         const recorder = document.querySelector('#record-voice-message') as HTMLElement;
 
-        if (recorder !== null) {
-            recorder.addEventListener('mousedown', async () => {
+        async function toggleRecordingVoiceMessage() {
+            console.log(isRecording);
+
+            if (!isRecording) {
                 const mediaStream = await navigator.mediaDevices.getUserMedia({audio: true});
                 mediaRecorder = new MediaRecorder(mediaStream);
                 mediaRecorder.start();
 
                 dispatch(startRecording());
-            });
-
-            recorder.addEventListener('mouseup', () => {
+            } else {
                 if (mediaRecorder !== undefined) {
                     mediaRecorder.stop();
 
@@ -67,13 +73,19 @@ const ChatFooter: React.FC = () => {
 
                     mediaRecorder = undefined;
                 }
-            });
+            }
+        }
+
+        if (recorder !== null) {
+            recorder.addEventListener('click', toggleRecordingVoiceMessage);
         }
 
         return () => {
-            window.removeEventListener('keypress', handleEnter);
+            if (recorder !== null) {
+                recorder.removeEventListener('click', toggleRecordingVoiceMessage);
+            }
         }
-    }, [dispatch]);
+    }, [dispatch, isRecording]);
 
     useEffect(() => {
         if (voiceBlob !== undefined) {
@@ -218,7 +230,7 @@ const ChatFooter: React.FC = () => {
             deleteIndex = setInterval(() => {
 
                 if (sidebar !== null) {
-                    const player = audioPlayer as HTMLAudioElement;
+                    const player = document.getElementById('voice-messages-recorder') as HTMLMediaElement;
                     const percentage = player.currentTime / player.duration * 100;
 
                     if (percentage === 100) {
@@ -231,7 +243,7 @@ const ChatFooter: React.FC = () => {
         return () => {
             clearInterval(deleteIndex);
         }
-    }, [isPlayingRecord, audioPlayer, dispatch]);
+    }, [isPlayingRecord, dispatch]);
 
     function handleAddingAttachment(event: React.ChangeEvent<HTMLInputElement>) {
         const files = event.target.files;

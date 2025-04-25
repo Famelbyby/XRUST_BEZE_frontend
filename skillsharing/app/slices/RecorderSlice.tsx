@@ -10,7 +10,6 @@ export interface RecorderState {
   isPlayingRecord: boolean,
   isPlayingMessage: boolean,
   voiceMessageId: string | undefined,
-  audioPlayer: object,
   recordDuration: number,
   startRecordingTime: number | undefined,
   volume: number,
@@ -23,7 +22,6 @@ export interface RecorderState {
 const initialState: RecorderState = {
   isRecording: false,
   isPlayingRecord: false,
-  audioPlayer: new Audio(),
   recordDuration: 0,
   startRecordingTime: undefined,
   isRecorded: false,
@@ -45,30 +43,48 @@ export const recorderSlice = createSlice({
       state.isRecording = true;
 
       state.voiceMessageId = undefined;
-      (state.audioPlayer as HTMLAudioElement).pause();
-      (state.audioPlayer as HTMLAudioElement).src = '';
+
+      const audioPlayer: HTMLMediaElement = document.getElementById('voice-messages-recorder') as HTMLMediaElement;
+
+      if (audioPlayer !== null) {
+        audioPlayer.pause();
+        audioPlayer.src = '';
+        audioPlayer.onended = null;
+      }
+
       state.isPlayingMessage = false;
-      (state.audioPlayer as HTMLAudioElement).onended = null;
     },
     stopPlaying: (state: RecorderState) => {
       state.isPlayingRecord = false;
-      (state.audioPlayer as HTMLAudioElement).pause();
-      (state.audioPlayer as HTMLAudioElement).currentTime = 0;
+
+      const audioPlayer: HTMLMediaElement = document.getElementById('voice-messages-recorder') as HTMLMediaElement;
+
+      if (audioPlayer !== null) {
+        audioPlayer.pause();
+        audioPlayer.currentTime = 0;
+      }
     },
     setIsPlayingRecord: (state: RecorderState, action: PayloadAction<boolean>) => {
       const nextState: boolean = action.payload;
+      const audioPlayer: HTMLMediaElement = document.getElementById('voice-messages-recorder') as HTMLMediaElement;
 
-      if (nextState) {
-        (state.audioPlayer as HTMLAudioElement).play();
-      } else {
-        (state.audioPlayer as HTMLAudioElement).pause();
+      if (audioPlayer !== null) {
+        if (nextState) {
+          audioPlayer.play();
+        } else {
+          audioPlayer.pause();
+        }
       }
 
       state.isPlayingRecord = nextState;
     },
-    setPlayerSource: (state: RecorderState, action: PayloadAction<string>) => {
-      (state.audioPlayer as HTMLAudioElement).src = action.payload;
-      (state.audioPlayer as HTMLAudioElement).load();
+    setPlayerSource: (_, action: PayloadAction<string>) => {
+      const audioPlayer: HTMLMediaElement = document.getElementById('voice-messages-recorder') as HTMLMediaElement;
+
+      if (audioPlayer !== null) {
+        audioPlayer.src = action.payload;
+        audioPlayer.load();
+      }
     },
     setRecorded: (state: RecorderState, action: PayloadAction<Blob>) => {
       state.isRecorded = true;
@@ -83,29 +99,49 @@ export const recorderSlice = createSlice({
       state.isRecorded = false;
       state.startRecordingTime = undefined;
       state.isPlayingRecord = false;
-      (state.audioPlayer as HTMLAudioElement).pause();
+
+      const audioPlayer: HTMLMediaElement = document.getElementById('voice-messages-recorder') as HTMLMediaElement;
+
+      if (audioPlayer !== null) {
+        audioPlayer.pause();
+      }
+
       state.recordURL = undefined;
       state.voiceBlob = undefined;
     },
     setPlayMessage: (state: RecorderState, action: PayloadAction<{id: string, src: string}>) => {
       state.voiceMessageId = action.payload.id;
-      (state.audioPlayer as HTMLAudioElement).src = VOICE_URL + action.payload.src;
+      
       state.isPlayingMessage = true;
-      (state.audioPlayer as HTMLAudioElement).volume = state.volume;
-      (state.audioPlayer as HTMLAudioElement).playbackRate = 1;
-      (state.audioPlayer as HTMLAudioElement).play();
+
+      const audioPlayer: HTMLMediaElement = document.getElementById('voice-messages-recorder') as HTMLMediaElement;
+
+      if (audioPlayer !== null) {
+        audioPlayer.src = VOICE_URL + action.payload.src;
+        audioPlayer.volume = state.volume;
+        audioPlayer.playbackRate = state.speed;
+        audioPlayer.play();
+      }
     },
     setVolume: (state: RecorderState, action: PayloadAction<string>) => {
       const nextVolume: number = +(action.payload);
-      
-      (state.audioPlayer as HTMLAudioElement).volume = nextVolume;
+      const audioPlayer: HTMLMediaElement = document.getElementById('voice-messages-recorder') as HTMLMediaElement;
+
+      if (audioPlayer !== null) {
+        audioPlayer.volume = nextVolume;
+      }
+
       state.volume = nextVolume;
       localStorage.setItem('voice-volume', action.payload);
     },
     setSpeed: (state: RecorderState, action: PayloadAction<string>) => {
       const nextSpeed: number = +(action.payload);
+      const audioPlayer: HTMLMediaElement = document.getElementById('voice-messages-recorder') as HTMLMediaElement;
+
+      if (audioPlayer !== null) {
+        audioPlayer.playbackRate = nextSpeed;
+      }
       
-      (state.audioPlayer as HTMLAudioElement).playbackRate = 1;
       state.speed = nextSpeed;
       console.log(state.speed);
       localStorage.setItem('voice-speed', action.payload);
@@ -113,26 +149,34 @@ export const recorderSlice = createSlice({
     setCurrentTime: (state: RecorderState, action: PayloadAction<string>) => {
       const nextTime: number = +(action.payload);
       
-      (state.audioPlayer as HTMLAudioElement).currentTime = nextTime;
+      //(state.audioPlayer as HTMLAudioElement).currentTime = nextTime;
       state.currentTime = nextTime;
     },
     setIsPLayingVoiceMessage: (state: RecorderState, action: PayloadAction<boolean>) => {
       const nextState: boolean = action.payload;
+      const audioPlayer: HTMLMediaElement = document.getElementById('voice-messages-recorder') as HTMLMediaElement;
 
-      if (nextState) {
-        (state.audioPlayer as HTMLAudioElement).play();
-      } else {
-        (state.audioPlayer as HTMLAudioElement).pause();
+      if (audioPlayer !== null) {
+        if (nextState) {
+          audioPlayer.play();
+        } else {
+          audioPlayer.pause();
+        }
       }
 
       state.isPlayingMessage = nextState;
     },
     finishVoiceMessage: (state: RecorderState) => {
       state.voiceMessageId = undefined;
-      (state.audioPlayer as HTMLAudioElement).pause();
-      (state.audioPlayer as HTMLAudioElement).src = '';
       state.isPlayingMessage = false;
-      (state.audioPlayer as HTMLAudioElement).onended = null;
+
+      const audioPlayer: HTMLMediaElement = document.getElementById('voice-messages-recorder') as HTMLMediaElement;
+
+      if (audioPlayer !== null) {
+        audioPlayer.pause();
+        audioPlayer.src = '';
+        audioPlayer.onended = null;
+      }
     },
   },
   extraReducers: (builder) => {

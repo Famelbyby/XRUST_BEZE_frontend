@@ -47,6 +47,7 @@ const Chat: React.FC = () => {
             </Helmet>
             {!noPeerError &&
                 <>
+                    <audio id='voice-messages-recorder' className='voice-messages-recorder' />
                     <div className='chat-go-back'>
                         <div className='chat-go-back-wrapper' onClick={() => {
                             navigateTo(-1);
