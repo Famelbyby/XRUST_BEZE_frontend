@@ -15,11 +15,11 @@
 
     &__cancel, &__save {
         padding: 10px 20px;
-        border: 1px solid;
         border-radius: 10px;
         font-family: 'Inter';
         cursor: pointer;
         transition-duration: 0.2s;
+        border: none;
 
         &:hover {
             transform: translateY(-2px);
@@ -29,7 +29,6 @@
 
     &__save {
         background-color: rgba(0, 0, 255, 0.7);
-        border: none;
         color: white;
     }
 }
