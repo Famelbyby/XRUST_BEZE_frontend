@@ -1,13 +1,14 @@
 import { useNavigate } from "react-router";
 import { DialogProps } from "./DialogTypes";
 import React from "react";
-import { FormatHoursMinutes } from "../../../shared/Functions/FormatDate";
+import { FormatHoursMinutes, FormatRelativeTimeInPastInDays } from "../../../shared/Functions/FormatDate";
 import { ProfileType } from "../../../pages/Profile/ui/ProfileTypes";
 import { useSelector } from "react-redux";
 import { AppState } from "../../../app/AppStore";
 import './Dialog.scss'
 import { AVATAR_URL } from "../../../shared/Consts/URLS";
 import SkillsLine from "../../../features/SkillsLine/SkillsLine";
+import { SECOND_IN_MILLISECONDS } from "../../../shared/Consts/ValidatorsConts";
 
 const Dialog: React.FC<DialogProps> = ({dialog}) => {
     const {user} = useSelector((state: AppState) => state.user);
@@ -64,7 +65,7 @@ const Dialog: React.FC<DialogProps> = ({dialog}) => {
                     <div className="dialog-user-info__message-time">
                         {dialog !== undefined && 
                             <>
-                                {FormatHoursMinutes(new Date(dialog.last_message!.created_at))}
+                                {FormatRelativeTimeInPastInDays(new Date(dialog.last_message!.created_at * SECOND_IN_MILLISECONDS))}
                             </>
                         }
                     </div>
