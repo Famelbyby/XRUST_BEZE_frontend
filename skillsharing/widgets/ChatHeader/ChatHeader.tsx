@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { removeSelectedMessages, editMessage, hideDeletingModal, showDeletingModal, hideStructurizedModal, showStructurizedModal, addStructurizingMessage } from "../../app/slices/ChatSlice";
+import { removeSelectedMessages, editMessage, hideDeletingModal, showDeletingModal, hideStructurizedModal, addStructurizingMessage } from "../../app/slices/ChatSlice";
 import { IDeletingMessage, IMessage, IStructurizeMessage } from "../../entity/Message/MessageTypes";
 import { FormatRelativeTimeInPastInDays } from "../../shared/Functions/FormatDate";
 import { AppDispatch, AppState } from "../../app/AppStore";
@@ -146,9 +146,6 @@ const ChatHeader: React.FC = () => {
                     <div className="chat-header-controls">
                         {selectedMessages !== undefined && selectedMessagesCount === 1 &&
                             <>
-                                <img className="chat-header-controls__img chat-header-controls__ai" src="/ChatPage/ai.png" alt="Структуризировать" title="Структуризировать сообщение" onClick={() => {
-                                    dispatch(showStructurizedModal(selectedMessages[0].message_id));
-                                }}/>
                                 {isMyMessages && selectedMessages[0].voice === undefined && 
                                     <img className="chat-header-controls__img chat-header-controls__edit" src="/shared/pen.png" alt="Изменить сообщение" onClick={() => {
                                         dispatch(editMessage());
