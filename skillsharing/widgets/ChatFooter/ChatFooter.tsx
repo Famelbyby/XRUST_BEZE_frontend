@@ -53,8 +53,6 @@ const ChatFooter: React.FC = () => {
         const recorder = document.querySelector('#record-voice-message') as HTMLElement;
 
         async function toggleRecordingVoiceMessage() {
-            console.log(isRecording);
-
             if (!isRecording) {
                 const mediaStream = await navigator.mediaDevices.getUserMedia({audio: true});
                 mediaRecorder = new MediaRecorder(mediaStream);

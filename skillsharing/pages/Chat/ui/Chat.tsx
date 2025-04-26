@@ -10,7 +10,7 @@ import NotFound from '../../../features/404/404';
 import { clearAllMessages } from '../../../app/slices/ChatSlice';
 import { GetChannelByIds, GetCompanion } from '../api/Chat';
 import RecorderBar from '../../../widgets/RecorderBar/RecorderBar';
-import { finishVoiceMessage } from '../../../app/slices/RecorderSlice';
+import { clearRecorded, finishVoiceMessage, setRecorded } from '../../../app/slices/RecorderSlice';
 import { Helmet } from 'react-helmet';
 
 const Chat: React.FC = () => {
@@ -31,6 +31,8 @@ const Chat: React.FC = () => {
         return () => {
             dispatch(clearAllMessages());
             dispatch(finishVoiceMessage());
+            dispatch(setRecorded(new Blob()));
+            dispatch(clearRecorded());
         }
     }, [user, peerID, dispatch]);
 
