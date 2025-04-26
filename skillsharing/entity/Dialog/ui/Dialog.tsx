@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import { DialogProps } from "./DialogTypes";
 import React from "react";
-import { FormatHoursMinutes, FormatRelativeTimeInPastInDays } from "../../../shared/Functions/FormatDate";
+import { FormatRelativeTimeInPastInDays } from "../../../shared/Functions/FormatDate";
 import { ProfileType } from "../../../pages/Profile/ui/ProfileTypes";
 import { useSelector } from "react-redux";
 import { AppState } from "../../../app/AppStore";

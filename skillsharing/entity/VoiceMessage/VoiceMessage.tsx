@@ -74,38 +74,47 @@ const VoiceMessage: React.FC<PropType> = ({message, isSelected}) => {
 
             dispatch(toggleSelectedMessage(message.message_id));
         }}>
-            <div id={`voice-message-content-${message.message_id}`} className={'chat-voice-message chat-voice-message_' + (isOwnMessage ? 'right' : 'left')} key={message.message_id}>
-                <div className="chat-voice-message-content">
-                    <img className="chat-voice-message-content__img" src={"/shared/" + (isPlayingMessage && (voiceMessageId === message.message_id) ? "pause" : "play-button") + "_white.png"} alt="Включить голосовое" onClick={(event) => {
-                        event.stopPropagation();
+            <div className={'chat-message-wrapper chat-message-wrapper_' + (isOwnMessage ? 'right' : 'left')}>
+                <div id={`voice-message-content-${message.message_id}`} className={'chat-voice-message chat-voice-message_' + (isOwnMessage ? 'right' : 'left')} key={message.message_id}>
+                    <div className="chat-voice-message-content">
+                        <img className="chat-voice-message-content__img" src={"/shared/" + (isPlayingMessage && (voiceMessageId === message.message_id) ? "pause" : "play-button") + "_white.png"} alt="Включить голосовое" onClick={(event) => {
+                            event.stopPropagation();
 
-                        if (voiceMessageId !== message.message_id) {
-                            dispatch(setPlayMessage({id: message.message_id, src: message.voice || '', duration: message.voice_duration || 0}));
-                        } else {
-                            dispatch(setIsPLayingVoiceMessage(!isPlayingMessage));
-                        }
-                    }}/>
-                    {voiceMessageId === message.message_id && 
-                        <RangeBar id={`voice-range-bar-${message.message_id}`} width={100} min={0} max={100} step={1} value={player.currentTime / message.voice_duration! * 100 * SECOND_IN_MILLISECONDS} changeFunc={(event) => {
-                            dispatch(setCurrentTime(event.target.value));
+                            if (voiceMessageId !== message.message_id) {
+                                dispatch(setPlayMessage({id: message.message_id, src: message.voice || '', duration: message.voice_duration || 0}));
+                            } else {
+                                dispatch(setIsPLayingVoiceMessage(!isPlayingMessage));
+                            }
                         }}/>
-                    }
-                    <div className="chat-voice-message-content__duration" id={`voice-message-${message.message_id}-duration`}>
                         {voiceMessageId === message.message_id && 
-                            <>
-                                {FormatMinutesSecondDuration(currentTime)}
-                            </>
+                            <RangeBar id={`voice-range-bar-${message.message_id}`} width={100} min={0} max={100} step={1} value={player.currentTime / message.voice_duration! * 100 * SECOND_IN_MILLISECONDS} changeFunc={(event) => {
+                                dispatch(setCurrentTime(event.target.value));
+                            }}/>
                         }
-                        {voiceMessageId !== message.message_id && 
-                            <>
-                                {FormatMinutesSecondDuration(message.voice_duration!)}
-                            </>
-                        }
+                        <div className="chat-voice-message-content__duration" id={`voice-message-${message.message_id}-duration`}>
+                            {voiceMessageId === message.message_id && 
+                                <>
+                                    {FormatMinutesSecondDuration(currentTime)}
+                                </>
+                            }
+                            {voiceMessageId !== message.message_id && 
+                                <>
+                                    {FormatMinutesSecondDuration(message.voice_duration!)}
+                                </>
+                            }
+                        </div>
+                    </div>
+                    <div className='chat-content__time'>
+                        {messageTime}
                     </div>
                 </div>
-                <div className='chat-content__time'>
-                    {messageTime}
-                </div>
+                {/* {message.structurized === undefined && 
+                    <img className="chat-message-wrapper__structurize-img" src="/ChatPage/ai.png" alt="Структуризировать" title="Структуризировать сообщение" onClick={(event) => {
+                        dispatch(showStructurizedModal(message.message_id));
+
+                        event.stopPropagation();
+                    }}/>
+                } */}
             </div>
             {isSelected && 
                 <div className={'chat-message-checked-mark chat-message-checked-mark_' + (isOwnMessage ? 'right' : 'left')}>

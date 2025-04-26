@@ -28,8 +28,10 @@ function handleDeletePressing(event: KeyboardEvent) {
 const ChatHeader: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const {user} = useSelector((state: AppState) => state.user);
-    const {selectedMessages, channelID, companion, peerID, isHiddenDeletingModal, isHiddenStructurizedModal} = useSelector((state: AppState) => state.chatMessages);
+    const {selectedMessages, channelID, companion, peerID, isHiddenDeletingModal, isHiddenStructurizedModal, structurizedMessageId} = useSelector((state: AppState) => state.chatMessages);
     const selectedMessagesCount = (selectedMessages || []).length;
+
+    console.log(isHiddenStructurizedModal);
 
     useEffect(() => {
         if (companion !== undefined) {
@@ -145,7 +147,7 @@ const ChatHeader: React.FC = () => {
                         {selectedMessages !== undefined && selectedMessagesCount === 1 &&
                             <>
                                 <img className="chat-header-controls__img chat-header-controls__ai" src="/ChatPage/ai.png" alt="Структуризировать" title="Структуризировать сообщение" onClick={() => {
-                                    dispatch(showStructurizedModal());
+                                    dispatch(showStructurizedModal(selectedMessages[0].message_id));
                                 }}/>
                                 {isMyMessages && selectedMessages[0].voice === undefined && 
                                     <img className="chat-header-controls__img chat-header-controls__edit" src="/shared/pen.png" alt="Изменить сообщение" onClick={() => {
@@ -168,11 +170,11 @@ const ChatHeader: React.FC = () => {
                                 }
                             </>
                         }
-                        {!isHiddenStructurizedModal && 
-                            createPortal(<ModalWindow modalType={'structurize'} closeModal={() => dispatch(hideStructurizedModal())} agreeTitle="Да" cancelTitle="Отменить" agreeFunc={() => structurizeMessage(selectedMessages![0].message_id)} windowTitle="Вы уверены, что хотите структуризировать выделенное сообщение? Это может занять несколько минут"/>, document.querySelector('#root')!)
-                        }
                     </div>
                 </>
+            }
+            {!isHiddenStructurizedModal && 
+                createPortal(<ModalWindow modalType={'structurize'} closeModal={() => dispatch(hideStructurizedModal())} agreeTitle="Да" cancelTitle="Отменить" agreeFunc={() => structurizeMessage(structurizedMessageId)} windowTitle="Вы уверены, что хотите структуризировать выделенное сообщение? Это может занять несколько минут"/>, document.querySelector('#root')!)
             }
         </div>
     )

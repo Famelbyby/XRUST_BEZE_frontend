@@ -19,6 +19,7 @@ export interface MessagesState {
   isHiddenDeletingModal: boolean,
   isHiddenStructurizedModal: boolean,
   structurizingMessages: Array<string>,
+  structurizedMessageId: string,
 }
 
 const initialState: MessagesState = {
@@ -34,6 +35,7 @@ const initialState: MessagesState = {
   isHiddenDeletingModal: true,
   isHiddenStructurizedModal: true,
   structurizingMessages: [],
+  structurizedMessageId: '',
 }
 
 export const chatSlice = createSlice({
@@ -59,6 +61,7 @@ export const chatSlice = createSlice({
       state.editingMessage = null;
       state.noPeerError = false;
       state.noChatError = false;
+      state.structurizedMessageId = '';
     },
     replaceMessages: (state: MessagesState, action: PayloadAction<IMessage[]>) => {
         const messages: IMessage[] = action.payload;
@@ -161,8 +164,10 @@ export const chatSlice = createSlice({
     hideStructurizedModal: (state: MessagesState) => {
       state.isHiddenStructurizedModal = true;
     },
-    showStructurizedModal: (state: MessagesState) => {
+    showStructurizedModal: (state: MessagesState, action: PayloadAction<string>) => {
       state.isHiddenStructurizedModal = false;
+      state.structurizedMessageId = action.payload;
+      console.log('here');
     },
   },
   extraReducers: (builder) => {

@@ -25,7 +25,7 @@ const Header: React.FC = () => {
                         <Link to={`/profile/${user.id}`} >
                             <img className="header-profile__avatar" src={AVATAR_URL + user.avatar} alt="profile" />
                         </Link>
-                        <img className="header-profile__notifications" src="/Header/bell.png" alt="notifications"/>
+                        {/* <img className="header-profile__notifications" src="/Header/bell.png" alt="notifications"/> */}
                     </div>
                 </>
             }
