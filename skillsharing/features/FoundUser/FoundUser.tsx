@@ -38,12 +38,6 @@ const FoundUser: React.FC<FoundUserPropTypes> = ({user}) => {
                                     0
                                 </div>
                             </div>
-                            <div className='found-user-footer__helps'>
-                                Помощей
-                                <div className='found-user-footer__num'>
-                                    0
-                                </div>
-                            </div>
                             <div className='found-user-footer__feedbacks'>
                                 Отзывы
                                 <div className='found-user-footer__num'>

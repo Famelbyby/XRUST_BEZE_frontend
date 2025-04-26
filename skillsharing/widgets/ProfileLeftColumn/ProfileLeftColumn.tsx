@@ -13,10 +13,6 @@ const profileStatistics: StatisticItem[] = [
         title: 'Оценка',
         userKey: 'rate',
     },
-    {
-        title: 'Помощей',
-        userKey: 'helps',
-    },
 ];
 
 const ProfileLeftColumn: React.FC = () => {
