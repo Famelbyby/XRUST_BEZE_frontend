@@ -21,6 +21,10 @@
         justify-content: space-between;
         font-family: 'Inter';
 
+        &__title {
+            text-decoration: underline;
+        }
+
         &__tags {
             color: #00000069;
         }
