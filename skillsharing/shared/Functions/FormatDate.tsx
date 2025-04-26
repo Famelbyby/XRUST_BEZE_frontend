@@ -41,7 +41,7 @@ function DaysEndingInRussian(days: number): string {
     switch (true) {
         case (days % 10 === 1) && (days % 100 !== 11):
             return "день";
-        case (days % 10 < 5) && ((days % 100 < 11) || (days % 100 > 14)):
+        case (days % 10 < 5) && ((days % 100 < 10) || (days % 100 > 14)):
             return 'дня';
         default:
             return 'дней';
