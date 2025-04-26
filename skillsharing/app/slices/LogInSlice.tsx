@@ -64,6 +64,19 @@ export const loginSlice = createSlice({
     toggleIsPasswordHidden: (state: LogInState) => {
         state.password.isHidden = !state.password.isHidden;
     },
+    clearAllLogInFields: (state: LogInState) => {
+        state.isEmailValid = false;
+        state.isPending = false;
+        state.identifier = {
+            value: '',
+            error: undefined,
+        };
+        state.password = {
+            value: '',
+            error: undefined,
+            isHidden: true,
+        }
+    },
   },
   extraReducers: (builder) => {
       builder.addCase(TryAuth.pending, (state: LogInState) => {
@@ -75,8 +88,6 @@ export const loginSlice = createSlice({
         if (data.status === CODE_OK) {
             return;
         }
-
-        console.log(data.error);
 
         switch (data.error) {
             case AUTH_LOGIN_WRONG_PASSWORD:
@@ -90,6 +101,6 @@ export const loginSlice = createSlice({
   },
 })
 
-export const { editedIdentifierField, editedPasswordField, toggleIsPasswordHidden } = loginSlice.actions
+export const { clearAllLogInFields, editedIdentifierField, editedPasswordField, toggleIsPasswordHidden } = loginSlice.actions
 
 export default loginSlice.reducer

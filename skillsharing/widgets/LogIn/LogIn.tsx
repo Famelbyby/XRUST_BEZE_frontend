@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { editedIdentifierField, editedPasswordField, toggleIsPasswordHidden } from "../../app/slices/LogInSlice";
+import { clearAllLogInFields, editedIdentifierField, editedPasswordField, toggleIsPasswordHidden } from "../../app/slices/LogInSlice";
 import { AppDispatch, AppState } from "../../app/AppStore";
 import TextField from "../../features/TextField/TextField";
 import PasswordField from '../../features/PasswordField/PasswordField'
@@ -61,6 +61,14 @@ const LogInPassword: React.FC = () => {
 }
 
 const LogIn: React.FC = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        return () => {
+            dispatch(clearAllLogInFields());
+        }
+    }, []);
+
     return (
         <div className="log-in-page">
             <Helmet>

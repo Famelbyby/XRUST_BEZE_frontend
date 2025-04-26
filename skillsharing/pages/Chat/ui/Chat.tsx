@@ -12,6 +12,7 @@ import { GetChannelByIds, GetCompanion } from '../api/Chat';
 import RecorderBar from '../../../widgets/RecorderBar/RecorderBar';
 import { clearRecorded, finishVoiceMessage, setRecorded } from '../../../app/slices/RecorderSlice';
 import { Helmet } from 'react-helmet';
+import { clearInputAndAttachments, clearUpdate } from '../../../app/slices/ManageMessageSlice';
 
 const Chat: React.FC = () => {
     const navigateTo = useNavigate();
@@ -21,7 +22,6 @@ const Chat: React.FC = () => {
     const {noPeerError, noChatError} = useSelector((state: AppState) => state.chatMessages);
     const {user} = useSelector((state: AppState) => state.user);
     const {voiceMessageId} = useSelector((state: AppState) => state.recorder);
-    //const {isFetched, companion} = useSelector((state: AppState) => state.chatMessages);
 
     useEffect(() => {
         if (user !== undefined) {
@@ -33,6 +33,8 @@ const Chat: React.FC = () => {
             dispatch(finishVoiceMessage());
             dispatch(setRecorded(new Blob()));
             dispatch(clearRecorded());
+            dispatch(clearInputAndAttachments());
+            dispatch(clearUpdate());
         }
     }, [user, peerID, dispatch]);
 

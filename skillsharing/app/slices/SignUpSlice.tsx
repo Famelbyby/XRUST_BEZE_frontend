@@ -262,6 +262,18 @@ export const signupSlice = createSlice({
         const data = action.payload as UserResponse;
 
         if (data.status === CODE_OK) {
+            state.identifier = initialState.identifier;
+            state.password = initialState.password;
+            state.avatar = initialState.avatar;
+            state.bio = initialState.bio;
+            state.email = initialState.email;
+            state.hrefs = initialState.hrefs;
+            state.isPending = initialState.isPending;
+            state.preferred_format = initialState.preferred_format;
+            state.repeatPassword = initialState.repeatPassword;
+            state.skills_to_learn = initialState.skills_to_learn;
+            state.skills_to_share = initialState.skills_to_share;
+            state.step = initialState.step;
             return;
         }
 

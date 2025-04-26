@@ -7,6 +7,7 @@ import {GetMessageById} from '../api/StructurizedMessage'
 import StructurizedMessageContent from '../../../widgets/StructurizedMessageContent/StructurizedMessageContent'
 import './StructurizedMessage.scss'
 import { Helmet } from "react-helmet";
+import { clearMessage } from "../../../app/slices/StructurizedMessageSlice";
 
 const StructurizedMessage: React.FC = () => {
     const navigateTo = useNavigate();
@@ -19,6 +20,10 @@ const StructurizedMessage: React.FC = () => {
     useEffect(() => {
         if (messageId !== undefined && user !== undefined) {
             dispatch(GetMessageById({messageId, userId: user.id}));
+        }
+
+        return () => {
+            dispatch(clearMessage());
         }
     }, [dispatch, messageId, user]);
 

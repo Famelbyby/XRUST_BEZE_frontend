@@ -85,6 +85,7 @@ export const userSlice = createSlice({
       }
 
       state.user = undefined;
+      state.isFetched = false;
     });
   },
 })

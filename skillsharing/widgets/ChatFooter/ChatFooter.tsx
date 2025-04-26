@@ -199,8 +199,6 @@ const ChatFooter: React.FC = () => {
             NormalizeTextarea('textarea', TEXTAREA_INITIAL_HEIGHT);
             dispatch(stopEditingMessage());
         }
-
-        
     }, [dispatch, channelID, inputText, peerID, userId, attachmentsUploaded, attachmentURLs, attachments.length, isUpdating, editingMessage]);
 
     function handleChangingTextareaInput(event: React.ChangeEvent<HTMLTextAreaElement>) {

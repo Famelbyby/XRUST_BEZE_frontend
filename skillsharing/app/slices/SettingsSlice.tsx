@@ -179,6 +179,7 @@ export const settingsSlice = createSlice({
         state.avatar.file = undefined;
         state.avatar.error = undefined;
         state.usernameError = undefined;
+        state.isPending = false;
         state.hrefs = [];
     },
     addHrefSettings: (state: SettingsState) => {
