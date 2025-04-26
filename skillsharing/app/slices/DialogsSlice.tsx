@@ -28,7 +28,6 @@ export const dialogsSlice = createSlice({
       
       if (selectedTags.length === 0) {
         state.filteredDialogs = state.dialogs;
-
         return;
       }
 
@@ -60,11 +59,17 @@ export const dialogsSlice = createSlice({
       state.isServerError = false;
     },
     replaceNewMessage: (state: DialogsState, action: PayloadAction<IMessage>) => {
-      if (state.filteredDialogs === undefined) {
+      if (state.filteredDialogs === undefined || state.dialogs === undefined) {
         return;
       }
 
       const newMessage = action.payload;
+
+      state.dialogs.forEach((dialog, index) => {
+        if (dialog.channel_id === newMessage.channel_id) {
+          state.dialogs![index].last_message = newMessage;
+        }
+      });
 
       state.filteredDialogs.forEach((filteredDialog, index) => {
         if (filteredDialog.channel_id === newMessage.channel_id) {
@@ -73,11 +78,17 @@ export const dialogsSlice = createSlice({
       });
     },
     replaceUpdatedMessage: (state: DialogsState, action: PayloadAction<IMessage>) => {
-      if (state.filteredDialogs === undefined) {
+      if (state.filteredDialogs === undefined || state.dialogs === undefined) {
         return;
       }
 
       const newMessage = action.payload;
+
+      state.dialogs.forEach((dialog, index) => {
+        if (dialog.channel_id === newMessage.channel_id && dialog.last_message!.message_id === newMessage.message_id) {
+          state.dialogs![index].last_message = newMessage;
+        }
+      });
 
       state.filteredDialogs.forEach((filteredDialog, index) => {
         if (filteredDialog.channel_id === newMessage.channel_id && filteredDialog.last_message!.message_id === newMessage.message_id) {
