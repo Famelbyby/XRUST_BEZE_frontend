@@ -76,7 +76,7 @@ const Message: React.FC<PropType> = ({message, isSelected, isStructurizing}) => 
                         {messageTime}
                     </div>
                 </div>
-                {message.structurized === undefined && 
+                {message.structurized === undefined && message.payload !== undefined && message.payload !== '' && 
                     <img className="chat-message-wrapper__structurize-img" src="/ChatPage/ai.png" alt="Структуризировать" title="Структуризировать сообщение" onClick={(event) => {
                         dispatch(showStructurizedModal(message.message_id));
 
