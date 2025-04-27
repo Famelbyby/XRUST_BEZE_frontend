@@ -28,6 +28,16 @@
         width: 100%;
         justify-content: center;
         padding: 20px;
+        box-sizing: border-box;
+
+        @include phones {
+            padding: 0;
+            position: fixed;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            background-color: white;
+        }
     }
 
     &-dialog {
@@ -41,11 +51,20 @@
         box-sizing: border-box;
         margin: 0 20px;
         position: relative;
+
+        @include phones {
+            border-radius: 0px;
+            margin: 0;
+        }
     }
 
     &-go-back {
         display: flex;
         padding-top: 30px;
+
+        @include phones {
+            display: none;
+        }
 
         &__img {
             width: 20px;

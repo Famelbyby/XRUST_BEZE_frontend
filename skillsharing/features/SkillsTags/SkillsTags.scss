@@ -1,8 +1,18 @@
+@mixin phones {
+    @media screen and (width <= 800px) {
+        @content;
+    }
+}
+
 .skills-tags {
     display: flex;
     flex-direction: column;
     min-width: 30%;
     padding-right: 20px;
+
+    @include phones {
+        padding-left: 30px;
+    }
 
     &__tag {
         padding: 5px 10px;

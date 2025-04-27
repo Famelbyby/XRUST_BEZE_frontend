@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { removeSelectedMessages, editMessage, hideDeletingModal, showDeletingModal, hideStructurizedModal, addStructurizingMessage } from "../../app/slices/ChatSlice";
 import { IDeletingMessage, IMessage, IStructurizeMessage } from "../../entity/Message/MessageTypes";
@@ -30,6 +30,7 @@ const ChatHeader: React.FC = () => {
     const {user} = useSelector((state: AppState) => state.user);
     const {selectedMessages, channelID, companion, peerID, isHiddenDeletingModal, isHiddenStructurizedModal, structurizedMessageId} = useSelector((state: AppState) => state.chatMessages);
     const selectedMessagesCount = (selectedMessages || []).length;
+    const navigateTo = useNavigate();
 
     console.log(isHiddenStructurizedModal);
 
@@ -95,7 +96,14 @@ const ChatHeader: React.FC = () => {
         <div className='chat-header'>
             {selectedMessagesCount === 0 &&
                 <>
-                    <Link to={companion === undefined ? window.location.href : `/profile/${companion.id}`}>
+                    <div className='chat-header-go-back'>
+                        <div className='chat-header-go-back-wrapper' onClick={() => {
+                            navigateTo(-1);
+                        }}>
+                            <img className='chat-header-go-back__img' src='/shared/go-back.png' alt='' />
+                        </div>
+                    </div>
+                    <Link to={companion === undefined ? window.location.href : `/profile/${companion.id}`} style={{display: "flex", flexGrow: "1"}}>
                         <div className='chat-header-user'>
                             {companion && <img className='chat-header-user__avatar' src={AVATAR_URL + companion.avatar} alt='' />}
                             {(companion === undefined) && 
