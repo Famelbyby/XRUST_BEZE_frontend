@@ -11,7 +11,7 @@
     padding-right: 20px;
 
     @include phones {
-        padding-left: 30px;
+        padding: 10px;
     }
 
     &__tag {
@@ -23,6 +23,10 @@
         user-select: none;
         font-family: 'Lato';
 
+        @include phones {
+            font-size: 14px;
+        }
+
         &_selected {
             background-color: green;
             color: white;
@@ -32,11 +36,16 @@
     &__title {
         display: flex;
         gap: 40px;
-
         font-family: 'Inter';
         font-weight: bold;
         font-size: 23px;
         margin-bottom: 20px;
+
+        @include phones {
+            margin-bottom: 10px;
+            font-size: 17px;
+            gap: 20px;
+        }
     }
 
     &__count {

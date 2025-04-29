@@ -2,6 +2,7 @@ import './App.scss'
 import { Navigate, Route } from 'react-router'
 import Header from '../widgets/Header/ui/Header'
 import SideBar from '../widgets/SideBar/ui/SideBar'
+import MobileSideBar from '../widgets/MobileSideBar/MobileSideBar'
 import Chat from '../pages/Chat/ui/Chat'
 import Dialogs from '../pages/Dialogs/ui/Dialogs'
 import Profile from '../pages/Profile/ui/Profile'
@@ -84,6 +85,7 @@ function App() {
                 <Route path='/materials/:materialID' element={<CertainMaterial />} />
                 <Route path='*' element={<Navigate to='/main-page' replace />} />
               </Routes>
+              <MobileSideBar />
             </>
           }
         </div>

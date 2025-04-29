@@ -1,0 +1,38 @@
+@mixin phones {
+    @media screen and (width <= 800px) {
+        @content;
+    }
+}
+
+.mobile-sidebar {
+    display: none;
+    width: 100%;
+    justify-content: space-around;
+    padding: 5px 0;
+
+    @include phones {
+        display: flex;
+    }
+
+    &-item {
+        display: flex;
+        align-items: center;
+        padding: 8px 10px;
+        border-radius: 10px;
+
+        &__img {
+            width: 25px;
+            height: 25px;
+        }
+
+        &__title {
+            font-family: 'Roboto';
+            margin-left: 8px;
+            font-size: 17px;
+        }
+
+        &_selected {
+            background-color: #80808042;
+        }
+    }
+}

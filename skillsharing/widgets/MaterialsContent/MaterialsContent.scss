@@ -15,7 +15,7 @@
 
 .materials-content {
     display: flex;
-    height: calc(100vh - 140px);
+    min-height: 0;
     gap: 50px;
 
     @include phones {

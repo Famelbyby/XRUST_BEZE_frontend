@@ -28,6 +28,10 @@
         flex-direction: column;
         gap: 20px;
         flex-grow: 1;
+
+        @include phones {
+            gap: 15px;
+        }
     }
 
     &-right {
@@ -48,6 +52,11 @@
         padding: 10px;
         font-family: 'Inter';
         font-size: 13px;
+
+        @include phones {
+            font-size: 11px;
+            padding: 7px;
+        }
 
         &:focus-visible {
             outline: none;

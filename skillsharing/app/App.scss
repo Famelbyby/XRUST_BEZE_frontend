@@ -9,6 +9,12 @@
     border-radius: 50%;
 }
 
+@mixin phones {
+    @media screen and (width <= 800px) {
+        @content;
+    }
+}
+
 html {
     height: 100%;
 }
@@ -22,9 +28,13 @@ body {
 
 .main-part {
     display: flex;
-    flex-direction: row;
     flex-grow: 1;
-    max-height: calc(100% - 60px);
+    min-height: 0;
+
+    @include phones {
+        flex-direction: column;
+        justify-content: space-between;
+    }
 
     &__waiting {
         display: flex;

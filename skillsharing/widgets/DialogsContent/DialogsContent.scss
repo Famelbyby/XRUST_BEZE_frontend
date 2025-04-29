@@ -1,3 +1,9 @@
+@mixin phones {
+    @media screen and (width <= 800px) {
+        @content;
+    }
+}
+
 .dialogs__no-chats {
     display: flex;
     flex-grow: 1;
@@ -5,4 +11,9 @@
     font-size: 23px;
     font-family: 'Inter';
     color: #00000069;
+
+    @include phones {
+        font-size: 20px;
+        margin-top: 15px;
+    }
 }

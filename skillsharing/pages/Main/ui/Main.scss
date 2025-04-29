@@ -11,9 +11,12 @@
         padding: 40px;
         flex-direction: column;
         gap: 30px;
+        box-sizing: border-box;
+        min-height: 0;
 
         @include phones {
             padding: 15px;
+            gap: 20px;
         }
     }
 }

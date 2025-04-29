@@ -11,9 +11,10 @@
     padding: 30px;
     gap: 30px;
     box-sizing: border-box;
+    min-height: 0;
 
     @include phones {
-        padding: 10px;
+        padding: 10px 10px 0;
         gap: 20px;
     }
 }
