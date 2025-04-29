@@ -10,15 +10,17 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
     description: 'Education place',
     icons: [
       {
-        src: '/shared/parrot2.jpg',
-        type: 'image/jpg',
+        src: '/shared/parrot.png',
+        sizes: '192x192',
+        type: 'image/png',
+        purpose: 'maskable',
       },
     ],
     theme_color: '#000000',
     background_color: '#FFFFFF',
     display: 'standalone',
-    scope: '/',
-    start_url: '/',
+    scope: 'https://skill-sharing.ru/',
+    start_url: 'https://skill-sharing.ru/',
     orientation: 'portrait',
   }
 }
