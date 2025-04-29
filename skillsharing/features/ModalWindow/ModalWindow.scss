@@ -4,10 +4,12 @@
         position: absolute;
         justify-content: center;
         align-items: center;
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         font-family: 'Inter';
         background: #0000003b;
+        padding: 10px;
+        box-sizing: border-box;
 
         animation-name: modal-wrapper;
         animation-duration: 0.5s;
