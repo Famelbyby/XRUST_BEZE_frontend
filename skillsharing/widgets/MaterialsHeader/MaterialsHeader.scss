@@ -1,6 +1,16 @@
+@mixin phones {
+    @media screen and (width <= 800px) {
+        @content;
+    }
+}
+
 .materials-header {
     display: flex;
     width: 100%;
     font-family: 'Inter';
     font-size: 24px;
+
+    @include phones {
+        font-size: 20px;
+    }
 }

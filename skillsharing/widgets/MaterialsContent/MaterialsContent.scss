@@ -7,10 +7,22 @@
     border-radius: 50%;
 }
 
+@mixin phones {
+    @media screen and (width <= 800px) {
+        @content;
+    }
+}
+
 .materials-content {
     display: flex;
     height: calc(100vh - 140px);
     gap: 50px;
+
+    @include phones {
+        flex-direction: column-reverse;
+        justify-content: start;
+        gap: 20px;
+    }
 
     &-left-side {
         display: flex;
@@ -18,6 +30,11 @@
         max-width: 800px;
         max-height: calc(100% - 20px);
         overflow: scroll;
+
+        @include phones {
+            flex-grow: 0;
+            width: 100%;
+        }
 
         &::-webkit-scrollbar {
             display: none;
@@ -36,6 +53,11 @@
         flex-direction: column;
         flex-grow: 1;
         gap: 20px;
+
+        @include phones {
+            flex-grow: 0;
+            gap: 10px;
+        }
     }
 
     &-filter {
@@ -46,6 +68,10 @@
         font-size: 17px;
         width: 270px;
 
+        @include phones {
+            font-size: 15px;
+        }
+
         &-select {
             border: none;
             background-color: #00000019;
@@ -53,6 +79,10 @@
             border-radius: 20px;
             cursor: pointer;
             font-family: 'Inter';
+
+            @include phones {
+                font-size: 11px;
+            }
 
             &:focus-visible, &:focus {
                 border: none;
@@ -69,6 +99,11 @@
         font-family: Inter;
         color: #00000069;
         align-items: center;
+
+        @include phones {
+            font-size: 18px;
+            margin-top: 10px;
+        }
     }
 
     &-mock {
@@ -88,6 +123,12 @@
         padding: 10px;
         font-family: "Inter";
         font-size: 13px;
+
+        @include phones {
+            padding: 7px;
+            font-size: 11px;
+            width: 300px;
+        }
 
         &:focus-visible {
             outline: none;
