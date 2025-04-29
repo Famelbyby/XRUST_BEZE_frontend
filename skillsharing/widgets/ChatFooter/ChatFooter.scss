@@ -89,6 +89,7 @@
             overflow-y: scroll;
             max-height: 80px;
             font-family: 'Inter';
+            width: 0;
 
             &::-webkit-scrollbar {
                 display: none;
