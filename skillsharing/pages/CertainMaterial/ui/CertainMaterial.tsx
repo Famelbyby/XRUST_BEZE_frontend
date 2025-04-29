@@ -32,6 +32,21 @@ const CertainMaterial: React.FC = () => {
         }
     }, []);
 
+    useEffect(() => {
+            if (material === undefined && isFetched) {
+                const noIndex = document.createElement('meta');
+                
+                noIndex.name = 'robots';
+                noIndex.content = 'noindex';
+    
+                document.head.appendChild(noIndex);
+            }
+    
+            return () => {
+                document.querySelector('meta[content="noindex"]')?.remove();
+            }
+        }, [material, isFetched]);
+
     return (
         <div className='certain-material'>
             <div className='user-materials-header-go-back'>

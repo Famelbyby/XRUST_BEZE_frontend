@@ -25,6 +25,21 @@ const Profile: React.FC = () => {
         }
     }, [params.userID, dispatch])
 
+    useEffect(() => {
+        if (user === undefined && isFetched) {
+            const noIndex = document.createElement('meta');
+            
+            noIndex.name = 'robots';
+            noIndex.content = 'noindex';
+
+            document.head.appendChild(noIndex);
+        }
+
+        return () => {
+            document.querySelector('meta[content="noindex"]')?.remove();
+        }
+    }, [user, isFetched]);
+
     return (
         <div className="profile-page">
             <Helmet>

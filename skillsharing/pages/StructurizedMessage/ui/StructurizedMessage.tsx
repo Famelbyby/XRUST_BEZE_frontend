@@ -27,6 +27,21 @@ const StructurizedMessage: React.FC = () => {
         }
     }, [dispatch, messageId, user]);
 
+    useEffect(() => {
+        if (badMessageError) {
+            const noIndex = document.createElement('meta');
+            
+            noIndex.name = 'robots';
+            noIndex.content = 'noindex';
+
+            document.head.appendChild(noIndex);
+        }
+
+        return () => {
+            document.querySelector('meta[content="noindex"]')?.remove();
+        }
+    }, [badMessageError]);
+
     return (
         <div className='str-message-page'>
             <Helmet>

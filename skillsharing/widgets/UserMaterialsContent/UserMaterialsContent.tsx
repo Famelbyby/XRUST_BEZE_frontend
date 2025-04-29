@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { AppState } from "../../app/AppStore";
 import Material from '../../entity/Material/Material'
@@ -6,6 +6,21 @@ import './UserMaterialsContent.scss'
 
 const UserMaterialsContent: React.FC = () => {
     const {isFetched, materials} = useSelector((state: AppState) => state.userMaterials);
+
+    useEffect(() => {
+        if (materials.length === 0 && isFetched) {
+            const noIndex = document.createElement('meta');
+            
+            noIndex.name = 'robots';
+            noIndex.content = 'noindex';
+
+            document.head.appendChild(noIndex);
+        }
+
+        return () => {
+            document.querySelector('meta[content="noindex"]')?.remove();
+        }
+    }, [materials, isFetched]);
 
     return (
         <div className="user-materials-content">

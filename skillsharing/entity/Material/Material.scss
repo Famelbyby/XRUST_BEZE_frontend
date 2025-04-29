@@ -57,6 +57,8 @@
         font-family: "Inter";
         font-size: 13px;
         align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
 
         @include phones {
             font-size: 11px;

@@ -15,8 +15,6 @@ const UserMaterials: React.FC = () => {
 
     useEffect(() => {
         const userId = params.userID;
-        
-        console.log(userId);
 
         if (userId !== undefined) {
             dispatch(GetUserMaterials(userId));

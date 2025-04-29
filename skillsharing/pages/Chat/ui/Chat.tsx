@@ -44,6 +44,21 @@ const Chat: React.FC = () => {
         }
     }, [noChatError]);
 
+    useEffect(() => {
+            if (noPeerError) {
+                const noIndex = document.createElement('meta');
+                
+                noIndex.name = 'robots';
+                noIndex.content = 'noindex';
+    
+                document.head.appendChild(noIndex);
+            }
+    
+            return () => {
+                document.querySelector('meta[content="noindex"]')?.remove();
+            }
+        }, [noPeerError]);
+
     return (
         <div className='chat-page'>
             <Helmet>

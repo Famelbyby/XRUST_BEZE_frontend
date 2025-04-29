@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /profile-materials/
+Disallow: /chat/
+Disallow: /structurized-messages/

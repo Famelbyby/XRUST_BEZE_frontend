@@ -27,5 +27,17 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), VitePWA(manifestForPlugin)],
+  plugins: [
+    react(), 
+    VitePWA(manifestForPlugin),
+  ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom'],
+        },
+      },
+    },
+  },
 })
