@@ -17,6 +17,7 @@
     display: flex;
     min-height: 0;
     gap: 50px;
+    flex-grow: 1;
 
     @include phones {
         flex-direction: column-reverse;

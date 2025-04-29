@@ -27,6 +27,11 @@
             font-size: 20px;
             font-family: 'Inter';
             color: #00000073;
+
+            @include phones {
+                font-size: 18px;
+                margin-top: 15px;
+            }
         }
     }
 }
