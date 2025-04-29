@@ -9,6 +9,7 @@
     width: 100%;
     font-family: 'Inter';
     font-size: 24px;
+    gap: 5px;
 
     @include phones {
         font-size: 20px;
