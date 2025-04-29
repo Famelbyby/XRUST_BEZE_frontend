@@ -8,12 +8,12 @@ export interface RangeBarPropTypes {
     step: number,
     changeFunc: (event: React.ChangeEvent<HTMLInputElement>) => void,
     value: number,
-    width: number,
+    rangeClassName: string,
 }
 
-const RangeBar: React.FC<RangeBarPropTypes> = ({width, id, min, max, step, changeFunc, value}) => {
+const RangeBar: React.FC<RangeBarPropTypes> = ({rangeClassName, id, min, max, step, changeFunc, value}) => {
     return (
-        <input id={id} style={{width, backgroundSize: `${(value - min) / (max - min) * 100}% 100%`}} type='range' min={min} max={max} value={value} step={step} className="range-bar" onChange={changeFunc}/>
+        <input id={id} style={{backgroundSize: `${(value - min) / (max - min) * 100}% 100%`}} type='range' min={min} max={max} value={value} step={step} className={`range-bar ${rangeClassName}`} onChange={changeFunc}/>
     )
 };
 

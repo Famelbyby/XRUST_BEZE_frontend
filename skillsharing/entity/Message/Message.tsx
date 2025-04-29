@@ -54,7 +54,9 @@ const Message: React.FC<PropType> = ({message, isSelected, isStructurizing}) => 
                             {message.attachments.map((attachment) => {
                                 return (
                                     <div key={attachment} className='chat-content-message-attachments-item'>
-                                        <a href={ATTACHMENTS_URL + attachment} download={attachment}>
+                                        <a href={ATTACHMENTS_URL + attachment} download={attachment} onClick={(event) => {
+                                            event.stopPropagation();
+                                        }}>
                                             <img className="chat-content-message-attachments-item__img" src="/ChatPage/download.png" alt="" />
                                         </a>
                                     </div>

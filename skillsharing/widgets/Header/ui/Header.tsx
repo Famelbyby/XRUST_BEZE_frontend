@@ -10,7 +10,7 @@ const Header: React.FC = () => {
 
     return (
         <div className={"header" + (user === undefined ? " header_none-user" : "")}>
-            <Link to={'/'} >
+            <Link to={'/main-page'} >
                 <div className="header-logo">
                     SkillSharing
                 </div>

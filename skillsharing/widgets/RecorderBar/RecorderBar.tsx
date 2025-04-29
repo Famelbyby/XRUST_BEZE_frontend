@@ -12,7 +12,7 @@ const RecorderBarVolumeRange: React.FC = () => {
     return (
         <div className="recorder-bar-volume">
             <img className="recorder-bar-volume__img" src="/ChatPage/volume.png" alt="" />
-            <RangeBar id='volume-range' width={70} min={0} max={1} step={0.05} value={volume} changeFunc={(event) => {
+            <RangeBar id='volume-range' rangeClassName="volume-range" min={0} max={1} step={0.05} value={volume} changeFunc={(event) => {
                 dispatch(setVolume(event.target.value));
             }}/>
         </div>
@@ -26,7 +26,7 @@ const RecorderBarSpeedRange: React.FC = () => {
     return (
         <div className="recorder-bar-speed">
             0.5x
-            <RangeBar id='speed-range' width={70} min={0.5} max={1.5} step={0.25} value={speed} changeFunc={(event) => {
+            <RangeBar id='speed-range' rangeClassName='speed-range' min={0.5} max={1.5} step={0.25} value={speed} changeFunc={(event) => {
                 dispatch(setSpeed(event.target.value));
             }}/>
             1.5x

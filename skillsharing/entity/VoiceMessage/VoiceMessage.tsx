@@ -87,7 +87,7 @@ const VoiceMessage: React.FC<PropType> = ({message, isSelected}) => {
                             }
                         }}/>
                         {voiceMessageId === message.message_id && 
-                            <RangeBar id={`voice-range-bar-${message.message_id}`} width={100} min={0} max={100} step={1} value={player.currentTime / message.voice_duration! * 100 * SECOND_IN_MILLISECONDS} changeFunc={(event) => {
+                            <RangeBar id={`voice-range-bar-${message.message_id}`} rangeClassName='voice-range-bar' min={0} max={100} step={1} value={player.currentTime / message.voice_duration! * 100 * SECOND_IN_MILLISECONDS} changeFunc={(event) => {
                                 dispatch(setCurrentTime(event.target.value));
                             }}/>
                         }

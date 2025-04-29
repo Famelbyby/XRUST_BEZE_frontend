@@ -61,6 +61,10 @@
         font-family: 'Inter';
         font-size: 30px;
 
+        @include phones {
+            font-size: 20px;
+        }
+
         &-mock {
             display: flex;
             justify-content: center;
@@ -80,5 +84,9 @@
     &-questions {
         font-size: 17px;
         font-family: 'Inter';
+
+        @include phones {
+            font-size: 14px;
+        }
     }
 }

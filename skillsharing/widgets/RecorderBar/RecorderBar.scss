@@ -1,3 +1,9 @@
+@mixin phones {
+    @media screen and (width <= 800px) {
+        @content;
+    }
+}
+
 .recorder {
     &-field {
         display: flex;
@@ -14,22 +20,31 @@
         padding: 10px 20px;
         justify-content: space-between;
         align-items: center;
-        width: 70%;
         margin: auto;
         border-radius: 25px;
         background: linear-gradient(45deg, #D4DFFF, #B4D7FF);
         box-sizing: border-box;
+        gap: 10px;
 
         animation-name: recorder-bar;
         animation-duration: 0.3s;
         animation-iteration-count: 1;
         animation-direction: normal;
 
+        @include phones {
+            padding: 5px 10px;
+        }
+
         &__toggler {
             width: 20px;
             height: 20px;
             cursor: pointer;
             transition-duration: 0.5s;
+
+            @include phones {
+                width: 12px;
+                height: 12px;
+            }
 
             &:hover {
                 transform: scale(1.1);
@@ -41,9 +56,18 @@
             align-items: center;
             gap: 10px;
 
+            @include phones {
+                gap: 5px;
+            }
+
             &__img {
                 width: 17px;
                 height: 17px;
+
+                @include phones {
+                    width: 12px;
+                    height: 12px;
+                }
             }
         }
 
@@ -54,6 +78,11 @@
             font-family: 'Inter';
             font-size: 12px;
             color: #0000007d;
+
+            @include phones {
+                gap: 3px;
+                font-size: 10px;
+            }
         }
 
         &__close-img {
@@ -63,9 +92,22 @@
             opacity: 0.7;
             transition-duration: 0.5s;
 
+            @include phones {
+                width: 12px;
+                height: 12px;
+            }
+
             &:hover {
                 transform: scale(1.1);
             }
         }
+    }
+}
+
+.speed-range, .volume-range {
+    width: 70px;
+
+    @include phones {
+        width: 50px;
     }
 }
