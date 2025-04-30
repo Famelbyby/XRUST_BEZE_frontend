@@ -1,19 +1,19 @@
-import React, { useEffect } from "react";
-import SettingsLeftColumn from "../../../widgets/SettingsLeftColumn/SettingsLeftColumn";
-import SettingsRightColumn from "../../../widgets/SettingsRightColumn/SettingsRightColumn";
+import React, { useEffect } from 'react';
+import SettingsLeftColumn from '../../../widgets/SettingsLeftColumn/SettingsLeftColumn';
+import SettingsRightColumn from '../../../widgets/SettingsRightColumn/SettingsRightColumn';
 import SettingsFooter from '../../../widgets/SettingsFooter/SettingsFooter';
-import './Settings.scss'
-import { useDispatch, useSelector } from "react-redux";
-import { GetProfile } from "../../Profile/api/Profile";
-import { AppDispatch, AppState } from "../../../app/AppStore";
-import { clearSettings, clearUpdated } from "../../../app/slices/SettingsSlice";
-import { useNavigate } from "react-router";
-import { GetCategories } from "../../Auth/api/Auth";
-import { Helmet } from "react-helmet";
+import './Settings.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { GetProfile } from '../../Profile/api/Profile';
+import { AppDispatch, AppState } from '../../../app/AppStore';
+import { clearSettings, clearUpdated } from '../../../app/slices/SettingsSlice';
+import { useNavigate } from 'react-router';
+import { GetCategories } from '../../Auth/api/Auth';
+import { Helmet } from 'react-helmet';
 
 const Settings: React.FC = () => {
-    const {user, isFetched} = useSelector((state: AppState) => state.user);
-    const {isUpdated} = useSelector((state: AppState) => state.settings);
+    const { user, isFetched } = useSelector((state: AppState) => state.user);
+    const { isUpdated } = useSelector((state: AppState) => state.settings);
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ const Settings: React.FC = () => {
 
         return () => {
             dispatch(clearSettings());
-        }
+        };
     }, [dispatch, user, isFetched]);
 
     useEffect(() => {
@@ -47,8 +47,7 @@ const Settings: React.FC = () => {
             </div>
             <SettingsFooter />
         </div>
-
     );
-}
+};
 
 export default Settings;

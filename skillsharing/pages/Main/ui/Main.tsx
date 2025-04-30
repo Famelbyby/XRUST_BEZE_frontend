@@ -1,7 +1,7 @@
-import React from "react";
-import MainContent from '../../../widgets/MainContent/MainContent'
-import MainHeader from '../../../widgets/MainHeader/MainHeader'
-import { Helmet } from "react-helmet";
+import React from 'react';
+import MainContent from '../../../widgets/MainContent/MainContent';
+import MainHeader from '../../../widgets/MainHeader/MainHeader';
+import { Helmet } from 'react-helmet';
 
 const Main: React.FC = () => {
     return (
@@ -12,7 +12,7 @@ const Main: React.FC = () => {
             <MainHeader />
             <MainContent />
         </div>
-    )
+    );
 };
 
 export default Main;

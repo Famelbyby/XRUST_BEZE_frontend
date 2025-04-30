@@ -1,4 +1,10 @@
-import { MINUTE_IN_MILLISECONDS, HOUR_IN_MILLISECONDS, DAY_IN_MILLISECONDS, RUSSIAN_MONTHS, SECOND_IN_MILLISECONDS } from "../Consts/ValidatorsConts";
+import {
+    MINUTE_IN_MILLISECONDS,
+    HOUR_IN_MILLISECONDS,
+    DAY_IN_MILLISECONDS,
+    RUSSIAN_MONTHS,
+    SECOND_IN_MILLISECONDS,
+} from '../Consts/ValidatorsConts';
 
 /**
  * Returns ending of Russian words related to minutes
@@ -7,9 +13,9 @@ import { MINUTE_IN_MILLISECONDS, HOUR_IN_MILLISECONDS, DAY_IN_MILLISECONDS, RUSS
  */
 function MinutesEndingInRussian(minutes: number): string {
     switch (true) {
-        case (minutes % 10 === 1) && (minutes % 100 !== 11):
-            return "у";
-        case (minutes % 10 < 5) && ((minutes < 10) || (minutes > 14)):
+        case minutes % 10 === 1 && minutes % 100 !== 11:
+            return 'у';
+        case minutes % 10 < 5 && (minutes < 10 || minutes > 14):
             return 'ы';
         default:
             return '';
@@ -23,9 +29,9 @@ function MinutesEndingInRussian(minutes: number): string {
  */
 function HoursEndingInRussian(hours: number): string {
     switch (true) {
-        case (hours % 10 === 1):
-            return "";
-        case (hours % 10 < 5) && ((hours < 10) || (hours > 14)):
+        case hours % 10 === 1:
+            return '';
+        case hours % 10 < 5 && (hours < 10 || hours > 14):
             return 'а';
         default:
             return 'ов';
@@ -39,9 +45,9 @@ function HoursEndingInRussian(hours: number): string {
  */
 function DaysEndingInRussian(days: number): string {
     switch (true) {
-        case (days % 10 === 1) && (days % 100 !== 11):
-            return "день";
-        case (days % 10 < 5) && ((days % 100 < 10) || (days % 100 > 14)):
+        case days % 10 === 1 && days % 100 !== 11:
+            return 'день';
+        case days % 10 < 5 && (days % 100 < 10 || days % 100 > 14):
             return 'дня';
         default:
             return 'дней';
@@ -57,7 +63,7 @@ export function FormatHoursMinutes(date: Date): string {
     const hours: string = String(date.getHours());
     const minutes: string = String(date.getMinutes());
 
-    return hours.padStart(2, "0") + ":" + minutes.padStart(2, "0");
+    return hours.padStart(2, '0') + ':' + minutes.padStart(2, '0');
 }
 
 /**
@@ -73,16 +79,16 @@ export function FormatRelativeTimeInPastInDays(date: Date): string {
     const minutesPassed = Math.floor(timestampDiff / MINUTE_IN_MILLISECONDS);
     const hoursPassed = Math.floor(timestampDiff / HOUR_IN_MILLISECONDS);
     const daysPassed = Math.floor(timestampDiff / DAY_IN_MILLISECONDS);
-    
+
     switch (true) {
         case timestampDiff < MINUTE_IN_MILLISECONDS:
-            return "меньше минуты назад";
+            return 'меньше минуты назад';
         case timestampDiff < HOUR_IN_MILLISECONDS:
             return `${minutesPassed} минут${MinutesEndingInRussian(minutesPassed)} назад`;
         case timestampDiff < DAY_IN_MILLISECONDS:
             return `${hoursPassed} час${HoursEndingInRussian(hoursPassed)} назад`;
         case timestampDiff < 2 * DAY_IN_MILLISECONDS:
-            return "вчера";
+            return 'вчера';
         default:
             return `${daysPassed} ${DaysEndingInRussian(daysPassed)} назад`;
     }
@@ -97,14 +103,14 @@ export function FormatDayMonthYear(date: Date): string {
     const day: string = String(date.getDate());
     const month: number = date.getMonth();
     const year: number = date.getFullYear();
-    const currentYear: number = (new Date()).getFullYear();
+    const currentYear: number = new Date().getFullYear();
 
-    return day + " " + RUSSIAN_MONTHS[month] + (currentYear === year ? "" : ` ${year}`);
+    return day + ' ' + RUSSIAN_MONTHS[month] + (currentYear === year ? '' : ` ${year}`);
 }
 
 /**
  * Formats duration of voice message
- * 
+ *
  * @param time - Duration of voice message
  * @returns format in `minutes:seconds`
  */
@@ -112,5 +118,5 @@ export function FormatMinutesSecondDuration(time: number): string {
     const minutes: number = Math.floor(time / MINUTE_IN_MILLISECONDS);
     const seconds: number = Math.floor((time % MINUTE_IN_MILLISECONDS) / SECOND_IN_MILLISECONDS);
 
-    return minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0");
+    return minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
 }

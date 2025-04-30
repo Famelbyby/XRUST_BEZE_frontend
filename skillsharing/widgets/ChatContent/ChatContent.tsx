@@ -1,20 +1,22 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Message from "../../entity/Message/Message"
-import VoiceMessage from '../../entity/VoiceMessage/VoiceMessage'
-import { IMessage } from "../../entity/Message/MessageTypes";
-import { addMessage, deleteMessage, updateMessage } from "../../app/slices/ChatSlice";
-import { AppDispatch, AppState } from "../../app/AppStore";
-import './ChatContent.scss'
-import { FormatDayMonthYear } from "../../shared/Functions/FormatDate";
-import MainWebSocket from '../../shared/WebSocket'
-import { DAY_IN_MILLISECONDS, SECOND_IN_MILLISECONDS } from "../../shared/Consts/ValidatorsConts";
-import { deleteAttachment } from "../../app/slices/ManageMessageSlice";
-import { RoundSize } from "../../shared/Functions/FormatStrings";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Message from '../../entity/Message/Message';
+import VoiceMessage from '../../entity/VoiceMessage/VoiceMessage';
+import { IMessage } from '../../entity/Message/MessageTypes';
+import { addMessage, deleteMessage, updateMessage } from '../../app/slices/ChatSlice';
+import { AppDispatch, AppState } from '../../app/AppStore';
+import './ChatContent.scss';
+import { FormatDayMonthYear } from '../../shared/Functions/FormatDate';
+import MainWebSocket from '../../shared/WebSocket';
+import { DAY_IN_MILLISECONDS, SECOND_IN_MILLISECONDS } from '../../shared/Consts/ValidatorsConts';
+import { deleteAttachment } from '../../app/slices/ManageMessageSlice';
+import { RoundSize } from '../../shared/Functions/FormatStrings';
 
 const ChatContent: React.FC = () => {
-    const {messages, selectedMessages, structurizingMessages} = useSelector((state: AppState) => state.chatMessages);
-    const {attachments, oldAttachments} = useSelector((state: AppState) => state.manageMessage);
+    const { messages, selectedMessages, structurizingMessages } = useSelector(
+        (state: AppState) => state.chatMessages,
+    );
+    const { attachments, oldAttachments } = useSelector((state: AppState) => state.manageMessage);
     const dispatch = useDispatch<AppDispatch>();
 
     /**
@@ -23,7 +25,7 @@ const ChatContent: React.FC = () => {
     useEffect(() => {
         MainWebSocket.addObserver('chat-messages', (data: string) => {
             const message: IMessage = JSON.parse(data);
-            
+
             switch (message.type) {
                 case 'send_message':
                     dispatch(addMessage(message));
@@ -49,9 +51,9 @@ const ChatContent: React.FC = () => {
         if (chatContent !== null && scrollDown !== null) {
             chatContent.addEventListener('scroll', () => {
                 if (chatContent.scrollTop < -100) {
-                    scrollDown.style.display = "block";
+                    scrollDown.style.display = 'block';
                 } else {
-                    scrollDown.style.display = "none";
+                    scrollDown.style.display = 'none';
                 }
             });
 
@@ -62,82 +64,123 @@ const ChatContent: React.FC = () => {
     }, []);
 
     return (
-        <div id='chat-content' className='chat-content'>
-            {(oldAttachments.length + attachments.length) !== 0 && 
+        <div id="chat-content" className="chat-content">
+            {oldAttachments.length + attachments.length !== 0 && (
                 <div className="chat-content-attachments">
                     {attachments.map((attachment, index) => {
                         return (
                             <div className="chat-content-attachments-item">
-                                <img className="chat-content-attachments-item__img" src="/ChatPage/download.png" alt="" />
+                                <img
+                                    className="chat-content-attachments-item__img"
+                                    src="/ChatPage/download.png"
+                                    alt=""
+                                />
                                 <div className="chat-content-attachments-item__size">
                                     {RoundSize(attachment.size)}
                                 </div>
-                                <img className="chat-content-attachments-item__delete" src="/shared/cancel_black.png" alt="" onClick={() => {
-                                    dispatch(deleteAttachment(index));
-                                }}/>
+                                <img
+                                    className="chat-content-attachments-item__delete"
+                                    src="/shared/cancel_black.png"
+                                    alt=""
+                                    onClick={() => {
+                                        dispatch(deleteAttachment(index));
+                                    }}
+                                />
                             </div>
                         );
                     })}
                     {oldAttachments.map((_, index) => {
                         return (
                             <div className="chat-content-attachments-item">
-                                <img className="chat-content-attachments-item__img" src="/ChatPage/download.png" alt="" />
-                                <img className="chat-content-attachments-item__delete" src="/shared/cancel_black.png" alt="" onClick={() => {
-                                    dispatch(deleteAttachment(index + attachments.length));
-                                }}/>
+                                <img
+                                    className="chat-content-attachments-item__img"
+                                    src="/ChatPage/download.png"
+                                    alt=""
+                                />
+                                <img
+                                    className="chat-content-attachments-item__delete"
+                                    src="/shared/cancel_black.png"
+                                    alt=""
+                                    onClick={() => {
+                                        dispatch(deleteAttachment(index + attachments.length));
+                                    }}
+                                />
                             </div>
                         );
                     })}
                 </div>
-            }
-            {messages === undefined && 
-                <div className='chat-content__mock'>
-                    <div className='chat-content__spinner'>
-                    </div>
-                </div>}
-            {messages !== undefined && messages.length === 0 &&
-                <div className="chat-content__no-messages">
-                    Сообщений нет
+            )}
+            {messages === undefined && (
+                <div className="chat-content__mock">
+                    <div className="chat-content__spinner"></div>
                 </div>
-            }
-            {messages !== undefined && messages.length > 0 && messages.map((message, index) => {
-                const isSelected: boolean = selectedMessages!.find((selectedMessage) => selectedMessage.message_id === message.message_id) !== undefined;
-                const isStructurizing: boolean = structurizingMessages.includes(message.message_id);
-                
-                let needTime: boolean = false;
+            )}
+            {messages !== undefined && messages.length === 0 && (
+                <div className="chat-content__no-messages">Сообщений нет</div>
+            )}
+            {messages !== undefined &&
+                messages.length > 0 &&
+                messages.map((message, index) => {
+                    const isSelected: boolean =
+                        selectedMessages!.find(
+                            (selectedMessage) => selectedMessage.message_id === message.message_id,
+                        ) !== undefined;
+                    const isStructurizing: boolean = structurizingMessages.includes(
+                        message.message_id,
+                    );
 
-                const messTime = new Date(message.created_at * SECOND_IN_MILLISECONDS);
+                    let needTime: boolean = false;
 
-                if (index === messages.length - 1) {
-                    needTime = true;
-                } else {
-                        const nextMessTime = new Date(messages[index + 1].created_at * SECOND_IN_MILLISECONDS);
-                        
-                        if (!(nextMessTime.getDate() == messTime.getDate() && (nextMessTime.getMilliseconds() - messTime.getMilliseconds() < DAY_IN_MILLISECONDS))) {
+                    const messTime = new Date(message.created_at * SECOND_IN_MILLISECONDS);
+
+                    if (index === messages.length - 1) {
+                        needTime = true;
+                    } else {
+                        const nextMessTime = new Date(
+                            messages[index + 1].created_at * SECOND_IN_MILLISECONDS,
+                        );
+
+                        if (
+                            !(
+                                nextMessTime.getDate() == messTime.getDate() &&
+                                nextMessTime.getMilliseconds() - messTime.getMilliseconds() <
+                                    DAY_IN_MILLISECONDS
+                            )
+                        ) {
                             needTime = true;
                         }
-                }
+                    }
 
-                return (
-                    <>
-                        {message.voice !== undefined && 
-                            <VoiceMessage isSelected={isSelected} message={message} key={(new Date()).getMilliseconds()} isStructurizing={isStructurizing} />
-                        }
-                        {message.voice === undefined && 
-                            <Message isStructurizing={isStructurizing} message={message} key={(new Date()).getMilliseconds()} isSelected={isSelected} />
-                        }
-                        {needTime && 
-                            <div className="chat-content-day-field" key={message.message_id}>
-                                <div className="chat-content-day-field__day">
-                                    {FormatDayMonthYear(messTime)}
+                    return (
+                        <>
+                            {message.voice !== undefined && (
+                                <VoiceMessage
+                                    isSelected={isSelected}
+                                    message={message}
+                                    key={new Date().getMilliseconds()}
+                                    isStructurizing={isStructurizing}
+                                />
+                            )}
+                            {message.voice === undefined && (
+                                <Message
+                                    isStructurizing={isStructurizing}
+                                    message={message}
+                                    key={new Date().getMilliseconds()}
+                                    isSelected={isSelected}
+                                />
+                            )}
+                            {needTime && (
+                                <div className="chat-content-day-field" key={message.message_id}>
+                                    <div className="chat-content-day-field__day">
+                                        {FormatDayMonthYear(messTime)}
+                                    </div>
                                 </div>
-                            </div>
-                        }
-                    </>
-                );
-            })}
+                            )}
+                        </>
+                    );
+                })}
         </div>
-    )
+    );
 };
 
 export default ChatContent;

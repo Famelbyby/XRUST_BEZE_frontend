@@ -1,7 +1,7 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { CODE_OK } from "../../../shared/Consts/Codes";
-import axios from "axios";
-import { BACK_URL, STUDY_MATERIALS_URL } from "../../../shared/Consts/URLS";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { CODE_OK } from '../../../shared/Consts/Codes';
+import axios from 'axios';
+import { BACK_URL, STUDY_MATERIALS_URL } from '../../../shared/Consts/URLS';
 
 // const materialsMockUndefined = {
 //     study_materials: undefined,
@@ -25,21 +25,20 @@ import { BACK_URL, STUDY_MATERIALS_URL } from "../../../shared/Consts/URLS";
 //     }
 // ];
 
-export const GetUserMaterials = createAsyncThunk(
-    'user/getMaterials',
-    async (userId: string) => {
-        let status: number = CODE_OK;
-        let data: unknown;
+export const GetUserMaterials = createAsyncThunk('user/getMaterials', async (userId: string) => {
+    let status: number = CODE_OK;
+    let data: unknown;
 
-        await axios.get(BACK_URL + STUDY_MATERIALS_URL + `/by-author-id/${userId}`)
+    await axios
+        .get(BACK_URL + STUDY_MATERIALS_URL + `/by-author-id/${userId}`)
         .then((response) => {
-                status = response.status;
-                data = response.data.study_materials;
-        }).catch(({response}) => {
+            status = response.status;
+            data = response.data.study_materials;
+        })
+        .catch(({ response }) => {
             status = response.status;
             data = undefined;
         });
 
-        return {materials: data, status};
-    }
-);
+    return { materials: data, status };
+});

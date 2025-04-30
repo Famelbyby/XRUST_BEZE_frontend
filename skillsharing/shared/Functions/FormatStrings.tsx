@@ -1,4 +1,4 @@
-import { BYTES_IN_KB, BYTES_IN_MB } from "../Consts/ValidatorsConts";
+import { BYTES_IN_KB, BYTES_IN_MB } from '../Consts/ValidatorsConts';
 
 /**
  * Capitalizes the given string and returns copy

@@ -1,5 +1,5 @@
-export const WEBSOCKET_URL = "wss://skill-sharing.ru/api/v1/chat/ws?user_id=";
-export const BACK_URL = "https://skill-sharing.ru/api/v1";
+export const WEBSOCKET_URL = 'wss://skill-sharing.ru/api/v1/chat/ws?user_id=';
+export const BACK_URL = 'https://skill-sharing.ru/api/v1';
 export const STATIC_URL = BACK_URL + '/static';
 export const AVATAR_URL = STATIC_URL + '/avatars/';
 export const VOICE_URL = STATIC_URL + '/voice/';

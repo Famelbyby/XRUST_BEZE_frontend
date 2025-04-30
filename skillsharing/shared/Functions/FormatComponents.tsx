@@ -8,6 +8,6 @@ export function NormalizeTextarea(textareaID: string, textareaInitialHeight: num
 
     if (textareaInput !== null) {
         textareaInput.style.height = `${textareaInitialHeight}px`;
-        textareaInput.style.height = textareaInput.scrollHeight + "px";
+        textareaInput.style.height = textareaInput.scrollHeight + 'px';
     }
 }

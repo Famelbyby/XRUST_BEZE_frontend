@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 import MaterialsContent from '../../../widgets/MaterialsContent/MaterialsContent';
 import MaterialsHeader from '../../../widgets/MaterialsHeader/MaterialsHeader';
-import './Materials.scss'
-import { Helmet } from "react-helmet";
+import './Materials.scss';
+import { Helmet } from 'react-helmet';
 
 const Materials: React.FC = () => {
     return (
@@ -13,7 +13,7 @@ const Materials: React.FC = () => {
             <MaterialsHeader />
             <MaterialsContent />
         </div>
-    )
+    );
 };
 
 export default Materials;

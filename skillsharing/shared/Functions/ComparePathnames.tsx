@@ -6,4 +6,4 @@
  */
 export function ComparePathnames(location: string, pathname: string) {
     return location.startsWith(pathname);
-};
+}

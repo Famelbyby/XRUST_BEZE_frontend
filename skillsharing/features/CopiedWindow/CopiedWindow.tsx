@@ -2,10 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../../app/AppStore';
 import { setIsCopied } from '../../app/slices/UserSlice';
-import './CopiedWindow.scss'
+import './CopiedWindow.scss';
 
 const CopiedWindow: React.FC = () => {
-    const {isCopied} = useSelector((state: AppState) => state.user);
+    const { isCopied } = useSelector((state: AppState) => state.user);
     const window = useRef<HTMLDivElement | null>(null);
     const dispatch = useDispatch();
 
@@ -24,13 +24,18 @@ const CopiedWindow: React.FC = () => {
     }, [isCopied]);
 
     return (
-        <div ref={window} className='copied-window'>
-            <div className='copied-window-content'>
+        <div ref={window} className="copied-window">
+            <div className="copied-window-content">
                 Скопировано
-                <img id="copied-window" className='copied-window__img' src='/ChatPage/check_white.png' alt=''/>
+                <img
+                    id="copied-window"
+                    className="copied-window__img"
+                    src="/ChatPage/check_white.png"
+                    alt=""
+                />
             </div>
         </div>
-    )
+    );
 };
 
 export default CopiedWindow;

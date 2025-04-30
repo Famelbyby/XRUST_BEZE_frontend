@@ -5,13 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearAll, replaceNewMessage, replaceUpdatedMessage } from '../../app/slices/DialogsSlice';
 import { GetDialogs, GetLastMessage } from '../../pages/Dialogs/api/Dialogs';
 import { AppDispatch, AppState } from '../../app/AppStore';
-import './DialogsContent.scss'
-import MainWebSocket from '../../shared/WebSocket'
+import './DialogsContent.scss';
+import MainWebSocket from '../../shared/WebSocket';
 import { IMessage } from '../../entity/Message/MessageTypes';
 
 const DialogsContent: React.FC = () => {
-    const {dialogs, filteredDialogs, isServerError} = useSelector((state: AppState) => state.dialogs);
-    const {user} = useSelector((state: AppState) => state.user);
+    const { dialogs, filteredDialogs, isServerError } = useSelector(
+        (state: AppState) => state.dialogs,
+    );
+    const { user } = useSelector((state: AppState) => state.user);
     const dispatch = useDispatch<AppDispatch>();
 
     /**
@@ -20,11 +22,13 @@ const DialogsContent: React.FC = () => {
     useEffect(() => {
         MainWebSocket.addObserver('dialog-messages', (data: string) => {
             const message: IMessage = JSON.parse(data);
-            
+
             switch (message.type) {
                 case 'send_message':
                     if (dialogs !== undefined) {
-                        const foundDialog = dialogs.find((dialog) => dialog.channel_id === message.channel_id);
+                        const foundDialog = dialogs.find(
+                            (dialog) => dialog.channel_id === message.channel_id,
+                        );
 
                         if (foundDialog) {
                             dispatch(replaceNewMessage(message));
@@ -34,7 +38,7 @@ const DialogsContent: React.FC = () => {
                             }
                         }
                     }
-                    
+
                     break;
                 case 'update_message':
                     dispatch(replaceUpdatedMessage(message));
@@ -57,33 +61,30 @@ const DialogsContent: React.FC = () => {
 
         return () => {
             dispatch(clearAll());
-        }
+        };
     }, [dispatch, user]);
 
     return (
         <div className="dialogs">
-            {!isServerError && 
+            {!isServerError && (
                 <>
-                    {filteredDialogs === undefined && 
+                    {filteredDialogs === undefined &&
                         [0, 1, 2, 3, 4].map((index) => {
-                            return <Dialog dialog={undefined} key={index} />
+                            return <Dialog dialog={undefined} key={index} />;
                         })}
-                    {filteredDialogs !== undefined && filteredDialogs.length > 0 && 
+                    {filteredDialogs !== undefined &&
+                        filteredDialogs.length > 0 &&
                         filteredDialogs.map((dialog: DialogItem) => {
-                            return <Dialog dialog={dialog} key={dialog.channel_id} />
+                            return <Dialog dialog={dialog} key={dialog.channel_id} />;
                         })}
-                    {filteredDialogs !== undefined && filteredDialogs.length === 0 && 
-                        <div className="dialogs__no-chats">
-                            Чатов нет
-                        </div>
-                    }
+                    {filteredDialogs !== undefined && filteredDialogs.length === 0 && (
+                        <div className="dialogs__no-chats">Чатов нет</div>
+                    )}
                 </>
-            }
-            {isServerError && 
-                <div className='dialog__server-error'>
-                    Неожиданная ошибка сервера
-                </div>
-            }
+            )}
+            {isServerError && (
+                <div className="dialog__server-error">Неожиданная ошибка сервера</div>
+            )}
         </div>
     );
 };

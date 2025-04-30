@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import './Chat.scss'
+import './Chat.scss';
 import ChatFooter from '../../../widgets/ChatFooter/ChatFooter';
-import ChatHeader from '../../../widgets/ChatHeader/ChatHeader'
+import ChatHeader from '../../../widgets/ChatHeader/ChatHeader';
 import { useNavigate, useParams } from 'react-router';
 import ChatContent from '../../../widgets/ChatContent/ChatContent';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,13 +19,13 @@ const Chat: React.FC = () => {
     const params = useParams();
     const peerID: string | undefined = params.chatID;
     const dispatch = useDispatch<AppDispatch>();
-    const {noPeerError, noChatError} = useSelector((state: AppState) => state.chatMessages);
-    const {user} = useSelector((state: AppState) => state.user);
-    const {voiceMessageId} = useSelector((state: AppState) => state.recorder);
+    const { noPeerError, noChatError } = useSelector((state: AppState) => state.chatMessages);
+    const { user } = useSelector((state: AppState) => state.user);
+    const { voiceMessageId } = useSelector((state: AppState) => state.recorder);
 
     useEffect(() => {
         if (user !== undefined) {
-            dispatch(GetChannelByIds({userId: user.id, peerId: peerID!}));
+            dispatch(GetChannelByIds({ userId: user.id, peerId: peerID! }));
         }
 
         return () => {
@@ -35,7 +35,7 @@ const Chat: React.FC = () => {
             dispatch(clearRecorded());
             dispatch(clearInputAndAttachments());
             dispatch(clearUpdate());
-        }
+        };
     }, [user, peerID, dispatch]);
 
     useEffect(() => {
@@ -45,50 +45,50 @@ const Chat: React.FC = () => {
     }, [noChatError]);
 
     useEffect(() => {
-            if (noPeerError) {
-                const noIndex = document.createElement('meta');
-                
-                noIndex.name = 'robots';
-                noIndex.content = 'noindex';
-    
-                document.head.appendChild(noIndex);
-            }
-    
-            return () => {
-                document.querySelector('meta[content="noindex"]')?.remove();
-            }
-        }, [noPeerError]);
+        if (noPeerError) {
+            const noIndex = document.createElement('meta');
+
+            noIndex.name = 'robots';
+            noIndex.content = 'noindex';
+
+            document.head.appendChild(noIndex);
+        }
+
+        return () => {
+            document.querySelector('meta[content="noindex"]')?.remove();
+        };
+    }, [noPeerError]);
 
     return (
-        <div className='chat-page'>
+        <div className="chat-page">
             <Helmet>
                 <title>Чат</title>
             </Helmet>
-            {!noPeerError &&
+            {!noPeerError && (
                 <>
-                    <audio id='voice-messages-recorder' className='voice-messages-recorder' />
-                    <div className='chat-go-back'>
-                        <div className='chat-go-back-wrapper' aria-label='Вернуться' onClick={() => {
-                            navigateTo(-1);
-                        }}>
-                            <img className='chat-go-back__img' src='/shared/go-back.png' alt='' />
+                    <audio id="voice-messages-recorder" className="voice-messages-recorder" />
+                    <div className="chat-go-back">
+                        <div
+                            className="chat-go-back-wrapper"
+                            aria-label="Вернуться"
+                            onClick={() => {
+                                navigateTo(-1);
+                            }}
+                        >
+                            <img className="chat-go-back__img" src="/shared/go-back.png" alt="" />
                         </div>
                     </div>
-                    <div className='chat-dialog'>
-                        {voiceMessageId !== undefined && 
-                            <RecorderBar />
-                        }
+                    <div className="chat-dialog">
+                        {voiceMessageId !== undefined && <RecorderBar />}
                         <ChatHeader />
                         <ChatContent />
                         <ChatFooter />
                     </div>
-                </> 
-            }
-            {noPeerError && 
-                <NotFound />
-            }
+                </>
+            )}
+            {noPeerError && <NotFound />}
         </div>
-    )
-}
+    );
+};
 
 export default Chat;

@@ -6,46 +6,52 @@ import { CODE_OK } from '../../../shared/Consts/Codes';
 
 export const GetMatchedUsers = createAsyncThunk(
     'main/getMatchedUsers',
-    async ({userId, callback}: MatchUserRequest) => {
+    async ({ userId, callback }: MatchUserRequest) => {
         let data: unknown;
         let status: number = CODE_OK;
         let error: string | undefined;
 
-        await axios.get(BACK_URL + USERS_URL + `/match/${userId}`).then((response) => {
-            status = response.status;
-            data = response.data;
-            error = undefined;
+        await axios
+            .get(BACK_URL + USERS_URL + `/match/${userId}`)
+            .then((response) => {
+                status = response.status;
+                data = response.data;
+                error = undefined;
 
-            callback();
-        }).catch(({response}) => {
-            status = response.status;
-            data = undefined;
-            error = response.data;
-        });
+                callback();
+            })
+            .catch(({ response }) => {
+                status = response.status;
+                data = undefined;
+                error = response.data;
+            });
 
-        return {foundUsers: data, status: status, error};
-    }
+        return { foundUsers: data, status: status, error };
+    },
 );
 
 export const GetFoundByNameUsers = createAsyncThunk(
     'main/getFoundByNameUsers',
-    async ({userId, query, callback}: FindByNameUsersRequest) => {
+    async ({ userId, query, callback }: FindByNameUsersRequest) => {
         let data: unknown;
         let status: number = CODE_OK;
         let error: string | undefined;
 
-        await axios.get(BACK_URL + USERS_URL + `/by-name?username=${query}&user_id=${userId}`).then((response) => {
-            status = response.status;
-            data = response.data.users;
-            error = undefined;
+        await axios
+            .get(BACK_URL + USERS_URL + `/by-name?username=${query}&user_id=${userId}`)
+            .then((response) => {
+                status = response.status;
+                data = response.data.users;
+                error = undefined;
 
-            callback();
-        }).catch(({response}) => {
-            status = response.status;
-            data = undefined;
-            error = response.data;
-        });
+                callback();
+            })
+            .catch(({ response }) => {
+                status = response.status;
+                data = undefined;
+                error = response.data;
+            });
 
-        return {foundUsers: data, status: status, error};
-    }
-)
+        return { foundUsers: data, status: status, error };
+    },
+);
