@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { DialogItem } from '../../entity/Dialog/ui/DialogTypes';
 import { ProfileType } from '../../pages/Profile/ui/ProfileTypes';
 import { GetDialogs, GetLastMessage } from '../../pages/Dialogs/api/Dialogs';
-import { DialogsResponse, Skill } from '../../shared/Consts/Interfaces';
+import { DialogsResponse, GetLastMessageResponse, Skill } from '../../shared/Consts/Interfaces';
 import { CODE_OK } from '../../shared/Consts/Codes';
 import { IMessage } from '../../entity/Message/MessageTypes';
 
@@ -136,7 +136,7 @@ export const dialogsSlice = createSlice({
                 state.filteredDialogs = state.dialogs;
             })
             .addCase(GetLastMessage.fulfilled, (state: DialogsState, action) => {
-                const data = action.payload;
+                const data = action.payload as GetLastMessageResponse;
 
                 if (data!.status !== CODE_OK) {
                     return;

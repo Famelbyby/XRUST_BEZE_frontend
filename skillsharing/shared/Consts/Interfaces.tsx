@@ -23,6 +23,11 @@ export interface Category {
     skills: string[];
 }
 
+export interface GetLastMessageResponse extends AnyAPIResponse {
+    channelId: string;
+    messages: IMessage[];
+}
+
 export interface CertainMaterialResponse extends AnyAPIResponse {
     material: MaterialItem;
 }
