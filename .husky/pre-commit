@@ -1,0 +1,4 @@
+echo "pre-committing...."
+cd ./skillsharing
+npm run lint
+npm run format
