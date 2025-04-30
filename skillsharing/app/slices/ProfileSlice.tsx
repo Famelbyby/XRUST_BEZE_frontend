@@ -28,7 +28,6 @@ export const profileSlice = createSlice({
 
       state.isFetched = true;
       state.user = data.user;
-      console.log(state.user);
     });
   },
 })

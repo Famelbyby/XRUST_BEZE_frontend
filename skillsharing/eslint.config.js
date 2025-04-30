@@ -18,8 +18,8 @@ export default tseslint.config(
       'react-refresh': reactRefresh,
     },
     rules: {
-      'no-unused-vars': [
-        "warn",
+      'no-console': [
+        'error',
       ],
       'react-refresh/only-export-components': [
         'warn',

@@ -13,8 +13,6 @@ export interface ModalWindowProps {
 }
 
 const ModalWindow: React.FC<ModalWindowProps> = ({windowTitle, agreeTitle, cancelTitle, agreeFunc, closeModal, modalType}) => {
-    console.log('here2');
-
     useEffect(() => {
         function handleClick(event: MouseEvent) {
             let target = event.target as ParentNode | null;

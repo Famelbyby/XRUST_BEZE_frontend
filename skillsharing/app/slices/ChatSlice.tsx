@@ -167,7 +167,6 @@ export const chatSlice = createSlice({
     showStructurizedModal: (state: MessagesState, action: PayloadAction<string>) => {
       state.isHiddenStructurizedModal = false;
       state.structurizedMessageId = action.payload;
-      console.log('here');
     },
   },
   extraReducers: (builder) => {

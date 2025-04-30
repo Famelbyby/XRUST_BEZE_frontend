@@ -288,7 +288,6 @@ export const settingsSlice = createSlice({
         }
 
         const profile = data.user;
-        console.log(data);
 
         if (profile !== undefined && state.user !== undefined && profile.id === state.user.id) {
             state.user = profile;
@@ -330,7 +329,6 @@ export const settingsSlice = createSlice({
         }
 
         state.avatar.URL = data.avatarURL;
-        console.log(state.avatar.URL);
     }).addCase(GetCategories.fulfilled, (state: SettingsState, action) => {
         const data = action.payload as CategoryResponse;
 

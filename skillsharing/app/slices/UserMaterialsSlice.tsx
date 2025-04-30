@@ -27,9 +27,7 @@ export const userMaterialsSlice = createSlice({
         const response = action.payload as unknown as UserMaterialsResponse;
 
         state.isFetched = true;
-        console.log(response.materials);
         state.materials = response.materials || [];
-        console.log(state.materials);
     });
   }
 })

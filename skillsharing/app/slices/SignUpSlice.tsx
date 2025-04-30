@@ -255,7 +255,6 @@ export const signupSlice = createSlice({
         }
 
         state.avatar.URL = data.avatarURL;
-        console.log(state.avatar.URL);
     }).addCase(TryRegister.fulfilled, (state: SignUpState, action) => {
         state.isPending = false;
         
