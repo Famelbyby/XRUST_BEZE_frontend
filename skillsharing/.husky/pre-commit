@@ -1,2 +1,3 @@
+echo "pre-committing...."
 npm run lint
 npm run format
