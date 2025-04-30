@@ -8,7 +8,7 @@ const UserMaterialsHeader: React.FC = () => {
     return (
         <div className='user-materials-header'>
             <div className='user-materials-header-go-back'>
-                <div className='user-materials-header-go-back-wrapper' onClick={() => {
+                <div className='user-materials-header-go-back-wrapper' aria-label='Вернуться' onClick={() => {
                     navigateTo(-1);
                 }}>
                     <img className='user-materials-header-go-back__img' src='/shared/go-back.png' alt='' />

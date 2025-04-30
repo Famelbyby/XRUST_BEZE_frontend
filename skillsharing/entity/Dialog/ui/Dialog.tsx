@@ -12,7 +12,7 @@ import { SECOND_IN_MILLISECONDS } from "../../../shared/Consts/ValidatorsConts";
 
 const Dialog: React.FC<DialogProps> = ({dialog}) => {
     const {user} = useSelector((state: AppState) => state.user);
-    const navigator = useNavigate();
+    const navigateTo = useNavigate();
 
     let companion: ProfileType | undefined = undefined;
 
@@ -25,8 +25,8 @@ const Dialog: React.FC<DialogProps> = ({dialog}) => {
     }
 
     return (
-        <div className="dialog" onClick={() => {
-            navigator(`/chat/${companion?.id}`);
+        <div className="dialog" aria-label="Перейти в чат" onClick={() => {
+            navigateTo(`/chat/${companion?.id}`);
         }}>
             <div className="dialog-user">
                 {dialog !== undefined && 

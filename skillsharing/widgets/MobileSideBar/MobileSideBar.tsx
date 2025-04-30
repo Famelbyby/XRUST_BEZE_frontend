@@ -9,6 +9,7 @@ interface mobileSideBarItem {
     id: number,
     icon: string,
     linkTo: string,
+    title: string,
 }
 
 const MobileSideBar: React.FC = () => {
@@ -21,21 +22,25 @@ const MobileSideBar: React.FC = () => {
             id: 0,
             icon: '/Header/main.png',
             linkTo: '/main-page',
+            title: 'Главная',
         },
         {
             id: 1,
             icon:'/SideBar/user.png',
             linkTo: `/profile/${user?.id}`,
+            title: 'Профиль',
         },
         {
             id: 2,
             icon:'/SideBar/message.png',
             linkTo: '/chats',
+            title: 'Чаты',
         },
         {
             id: 3,
             icon: '/SideBar/materials.png',
             linkTo: '/materials',
+            title: 'Материалы',
         }
     ];
 
@@ -43,7 +48,7 @@ const MobileSideBar: React.FC = () => {
         <div className="mobile-sidebar">
             {sideBarItems.map((item) => {
                 return (
-                    <Link to={item.linkTo} key={item.id}>
+                    <Link to={item.linkTo} key={item.id} aria-label={item.title}>
                         <div className={"mobile-sidebar-item" + (ComparePathnames(location.pathname, item.linkTo) ? " mobile-sidebar-item_selected" : "")}>
                             <img className="mobile-sidebar-item__img" src={item.icon} alt=""/>
                         </div>

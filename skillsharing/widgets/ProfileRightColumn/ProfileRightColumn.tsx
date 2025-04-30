@@ -41,7 +41,7 @@ const ProfileRightColumn: React.FC = () => {
                                     return (
                                         <div key={index} className="profile-hrefs-examples-item">
                                             {isMatched && 
-                                                <a href={href} target="_blank" className="profile-hrefs-examples__href">
+                                                <a href={href} target="_blank" className="profile-hrefs-examples__href" aria-label={`Ссылка на ${href}`}>
                                                     {href}
                                                 </a>
                                             }
@@ -64,9 +64,9 @@ const ProfileRightColumn: React.FC = () => {
                 }
                 <div className="profile-materials">
                     Учебные материалы
-                    <Link to={`/profile-materials/${user?.id}`}>
+                    <Link to={`/profile-materials/${user?.id}`} aria-label="Перейти к учебным материалам">
                         <div className="profile-materials-go-page">
-                            <img className="profile-materials-go-page__img" src="/shared/go-back.png" alt="Перейти к учебным материалам"/>
+                            <img className="profile-materials-go-page__img" src="/shared/go-back.png" alt=""/>
                         </div>
                     </Link>
                 </div>

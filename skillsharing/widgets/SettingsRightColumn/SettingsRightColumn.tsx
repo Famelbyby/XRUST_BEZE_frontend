@@ -5,12 +5,6 @@ import { AppDispatch, AppState } from "../../app/AppStore";
 import { addHrefSettings, addSkillToLearn, addSkillToShare, changeHrefSettings, deleteHrefSettings, deleteSkillFromLearn, deleteSkillFromShare, editedSkillToLearn, editedSkillToLearnLevel, editedSkillToShare, editedSkillToShareLevel, setBio, setUsername } from "../../app/slices/SettingsSlice";
 import { BIO_MAX_LENGTH, MAX_HREFS_COUNT, MAX_USERNAME_LENGTH, MIN_USERNAME_LENGTH } from "../../shared/Consts/ValidatorsConts";
 
-// const hrefsMock: string[] = [
-//     "https://github.com",
-//     "https://vk.com",
-//     "https://twitch.com",
-// ];
-
 const SettingsSkillToLearn: React.FC = () => {
     const {user, globalSkills} = useSelector((state: AppState) => state.settings);
     const dispatch = useDispatch<AppDispatch>();

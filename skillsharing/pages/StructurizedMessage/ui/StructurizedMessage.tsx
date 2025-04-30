@@ -50,7 +50,7 @@ const StructurizedMessage: React.FC = () => {
             {!badMessageError &&
                 <>
                     <div className='str-message-go-back'>
-                        <div className='str-message-go-back-wrapper' onClick={() => {
+                        <div className='str-message-go-back-wrapper' aria-label="Вернуться" onClick={() => {
                             navigateTo(-1);
                         }}>
                             <img className='str-message-go-back__img' src='/shared/go-back.png' alt='' />

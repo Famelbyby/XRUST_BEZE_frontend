@@ -12,7 +12,7 @@ interface FoundUserPropTypes {
 
 const FoundUser: React.FC<FoundUserPropTypes> = ({user}) => {
     return (
-        <Link to={`/profile/${user.id}`}>
+        <Link to={`/profile/${user.id}`} aria-label='Профиль'>
             <div className='found-user'>
                 <div className="found-user-avatar">
                     <img className="found-user-avatar__img" src={AVATAR_URL + user.avatar} alt="" />

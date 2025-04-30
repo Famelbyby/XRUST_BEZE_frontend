@@ -29,7 +29,7 @@ const Material: React.FC<MaterialItem> = (material) => {
                         {FormatRelativeTimeInPastInDays(new Date(material.created * SECOND_IN_MILLISECONDS))}
                     </div>
                     {material.author !== undefined && 
-                        <div className="material-footer-author" onClick={(event) => {
+                        <div className="material-footer-author" aria-label="Перейти на автора" onClick={(event) => {
                             event.stopPropagation();
 
                             navigateTo(`/profile/${material.author_id}`);
@@ -40,7 +40,7 @@ const Material: React.FC<MaterialItem> = (material) => {
                     }
                 </div>
                 <div className="material-footer-right">
-                    <a href={MATERIALS_URL + '/' + material.filename} download={material.name} onClick={(event) => {
+                    <a href={MATERIALS_URL + '/' + material.filename} aria-label="" download={material.name} onClick={(event) => {
                         event.stopPropagation();
                     }}>
                         <div className="material-footer-download">

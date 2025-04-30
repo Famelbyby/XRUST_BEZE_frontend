@@ -48,7 +48,7 @@ const SideBar: React.FC = () => {
         <div className="sidebar">
             {sideBarItems.map((item) => {
                 return (
-                    <Link to={item.linkTo} key={item.id}>
+                    <Link to={item.linkTo} key={item.id} aria-label={item.title}>
                         <div className={"sidebar-item" + (ComparePathnames(location.pathname, item.linkTo) ? " sidebar-item_selected" : "")}>
                             <img className="sidebar-item__img" src={item.icon} alt=""/>
                             <div className="sidebar-item__title">

@@ -14,7 +14,6 @@ const SettingsFooter: React.FC = () => {
 
     useEffect(() => {
         if (avatar.URL !== undefined) {
-            console.log(user!);
             dispatch(UpdateProfile({user: user!, avatar: avatar.URL, hrefs: hrefs.map((href) => href.value)}));
         }
     }, [dispatch, avatar.URL]);

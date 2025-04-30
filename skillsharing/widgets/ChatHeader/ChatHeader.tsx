@@ -32,8 +32,6 @@ const ChatHeader: React.FC = () => {
     const selectedMessagesCount = (selectedMessages || []).length;
     const navigateTo = useNavigate();
 
-    console.log(isHiddenStructurizedModal);
-
     useEffect(() => {
         if (companion !== undefined) {
             document.title = `Чат с ${companion.username}`;
@@ -97,13 +95,13 @@ const ChatHeader: React.FC = () => {
             {selectedMessagesCount === 0 &&
                 <>
                     <div className='chat-header-go-back'>
-                        <div className='chat-header-go-back-wrapper' onClick={() => {
+                        <div className='chat-header-go-back-wrapper' aria-label="Вернуться" onClick={() => {
                             navigateTo(-1);
                         }}>
                             <img className='chat-header-go-back__img' src='/shared/go-back.png' alt='' />
                         </div>
                     </div>
-                    <Link to={companion === undefined ? window.location.href : `/profile/${companion.id}`} style={{display: "flex", flexGrow: "1"}}>
+                    <Link to={companion === undefined ? window.location.href : `/profile/${companion.id}`} style={{display: "flex", flexGrow: "1"}} aria-label="Профиль собеседника">
                         <div className='chat-header-user'>
                             {companion && <img className='chat-header-user__avatar' src={AVATAR_URL + companion.avatar} alt='' />}
                             {(companion === undefined) && 

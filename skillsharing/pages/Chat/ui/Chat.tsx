@@ -68,7 +68,7 @@ const Chat: React.FC = () => {
                 <>
                     <audio id='voice-messages-recorder' className='voice-messages-recorder' />
                     <div className='chat-go-back'>
-                        <div className='chat-go-back-wrapper' onClick={() => {
+                        <div className='chat-go-back-wrapper' aria-label='Вернуться' onClick={() => {
                             navigateTo(-1);
                         }}>
                             <img className='chat-go-back__img' src='/shared/go-back.png' alt='' />

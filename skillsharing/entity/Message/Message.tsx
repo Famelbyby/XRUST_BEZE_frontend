@@ -42,7 +42,7 @@ const Message: React.FC<PropType> = ({message, isSelected, isStructurizing}) => 
                             <StructurizedMessageContent message={message} isOnPage={false}/>
                             
                         </div>
-                        <Link className='chat-content-link' to={`/structurized-messages/${message.message_id}`}>
+                        <Link className='chat-content-link' to={`/structurized-messages/${message.message_id}`} aria-label=''>
                             <div className='chat-content-link__go-to-page'>
                                 Перейти на отдельную страницу
                             </div>
@@ -54,7 +54,7 @@ const Message: React.FC<PropType> = ({message, isSelected, isStructurizing}) => 
                             {message.attachments.map((attachment) => {
                                 return (
                                     <div key={attachment} className='chat-content-message-attachments-item'>
-                                        <a href={ATTACHMENTS_URL + attachment} download={attachment} onClick={(event) => {
+                                        <a href={ATTACHMENTS_URL + attachment} download={attachment} aria-label='Скачать вложение' onClick={(event) => {
                                             event.stopPropagation();
                                         }}>
                                             <img className="chat-content-message-attachments-item__img" src="/ChatPage/download.png" alt="" />
