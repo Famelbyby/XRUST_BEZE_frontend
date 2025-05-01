@@ -328,7 +328,7 @@ export const signupSlice = createSlice({
                     return;
                 }
 
-                switch (data.error) {
+                switch (data.error?.error) {
                     case AUTH_SIGNUP_EMAIL_EXIST:
                         state.email.error = 'Пользователь с такой почтой уже существует';
                         state.step = 1;
