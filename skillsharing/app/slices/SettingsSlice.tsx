@@ -369,7 +369,7 @@ export const settingsSlice = createSlice({
 
                 const data = action.payload as UserResponse;
 
-                if (data.status !== CODE_OK) {
+                if (data.status === CODE_OK) {
                     state.user = data.user;
                     state.isUpdated = true;
 
