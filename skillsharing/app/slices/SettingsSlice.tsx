@@ -19,10 +19,12 @@ import {
 import { GetProfile } from '../../pages/Profile/api/Profile';
 import { UpdateProfile } from '../../pages/Settings/api/Settings';
 import { MAX_HREFS_COUNT } from '../../shared/Consts/ValidatorsConts';
+import { SETTINGS_PROFANITY_DETECTED, SETTINGS_USERNAME_EXIST } from '../../shared/Consts/Errors';
 
 export interface SettingsState {
     user: ProfileType | undefined;
     usernameError: string | undefined;
+    bioError: string | undefined;
     isUpdated: boolean;
     globalSkills: string[];
     avatar: AvatarFieldState;
@@ -36,6 +38,7 @@ export interface SettingsState {
 const initialState: SettingsState = {
     user: undefined,
     usernameError: undefined,
+    bioError: undefined,
     isUpdated: false,
     globalSkills: [],
     avatar: {
@@ -218,6 +221,7 @@ export const settingsSlice = createSlice({
             state.usernameError = undefined;
             state.isPending = false;
             state.hrefs = [];
+            state.bioError = undefined;
         },
         addHrefSettings: (state: SettingsState) => {
             if (state.hrefs.length === MAX_HREFS_COUNT) {
@@ -366,11 +370,30 @@ export const settingsSlice = createSlice({
                 const data = action.payload as UserResponse;
 
                 if (data.status !== CODE_OK) {
+                    state.user = data.user;
+                    state.isUpdated = true;
+
                     return;
                 }
 
-                state.user = data.user;
-                state.isUpdated = true;
+                state.bioError = undefined;
+                state.usernameError = undefined;
+
+                if (data.error !== undefined) {
+                    switch (data.error.error) {
+                        case SETTINGS_USERNAME_EXIST:
+                            state.usernameError = 'Такое имя уже занято';
+                            break;
+                        case SETTINGS_PROFANITY_DETECTED:
+                            if (data.error.profanity_error_fields?.includes('Username')) {
+                                state.usernameError = 'Неподходящее имя';
+                            }
+
+                            if (data.error.profanity_error_fields?.includes('Bio')) {
+                                state.bioError = 'Неподходящее описание';
+                            }
+                    }
+                }
             })
             .addCase(LoadAvatar.fulfilled, (state: SettingsState, action) => {
                 state.isPending = false;

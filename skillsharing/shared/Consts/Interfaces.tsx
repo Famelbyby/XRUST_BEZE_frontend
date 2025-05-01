@@ -50,9 +50,14 @@ export interface AvatarFieldState {
     error: string | undefined;
 }
 
+export interface ErrorResponse {
+    error: string;
+    profanity_error_fields?: string[];
+}
+
 export interface AnyAPIResponse {
     status: number;
-    error: string | undefined;
+    error: ErrorResponse | undefined;
 }
 
 export interface RegisterRequest extends AuthRequest {

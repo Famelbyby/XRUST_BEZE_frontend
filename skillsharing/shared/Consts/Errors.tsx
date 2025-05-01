@@ -9,3 +9,7 @@ export const AUTH_SIGNUP_USERNAME_EXIST =
     'rpc error: code = AlreadyExists desc = username already exists';
 export const AUTH_SIGNUP_MODERATION =
     'rpc error: code = Internal desc = failed to create user: profanity detected';
+
+//Settings errors
+export const SETTINGS_USERNAME_EXIST = 'username already exists';
+export const SETTINGS_PROFANITY_DETECTED = 'profanity detected';

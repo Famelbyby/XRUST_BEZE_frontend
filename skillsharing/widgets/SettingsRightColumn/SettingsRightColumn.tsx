@@ -201,7 +201,7 @@ const SettingsSkillToShare: React.FC = () => {
 };
 
 const SettingsBio: React.FC = () => {
-    const { user } = useSelector((state: AppState) => state.settings);
+    const { user, bioError } = useSelector((state: AppState) => state.settings);
     const dispatch = useDispatch();
 
     function handleChangingTextarea(event: React.ChangeEvent<HTMLTextAreaElement>) {
@@ -225,6 +225,9 @@ const SettingsBio: React.FC = () => {
                     {user === undefined ? 0 : user.bio.length}/{BIO_MAX_LENGTH}
                 </div>
             </div>
+            {bioError !== undefined && (
+                <div className="settings-username-field__error">{bioError}</div>
+            )}
         </div>
     );
 };
