@@ -1,0 +1,52 @@
+.errored-window {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    justify-content: center;
+    bottom: 70px;
+    display: none;
+    z-index: 10;
+
+    &-content {
+        display: flex;
+        font-family: 'Inter';
+        font-size: 14px;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+        padding: 15px 10px;
+        border-radius: 20px;
+        background-color: rgb(255, 131, 131);
+        color: white;
+    }
+
+    &__img {
+        width: 16px;
+        height: 16px;
+    }
+
+    &_visible {
+        display: flex;
+        
+        animation-name: copied;
+        animation-duration: 2s;
+        animation-iteration-count: 1;
+        animation-direction: normal;
+        animation-timing-function: linear;
+    }
+}
+
+@keyframes copied {
+    0% {
+        opacity: 0;
+    }
+    25% {
+        opacity: 1;
+    }
+    75% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

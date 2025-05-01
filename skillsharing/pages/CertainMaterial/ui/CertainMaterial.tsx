@@ -67,10 +67,13 @@ const CertainMaterial: React.FC = () => {
             {!isFetched && <div className="certain-material__spinner"></div>}
             {isFetched && material !== undefined && (
                 <div className="certain-material-content">
+                    <div className="certain-material-content_mobile">
+                        К сожалению, на вашем устройстве нельзя просмотреть PDF файл
+                    </div>
                     <object
                         data={MATERIALS_URL + '/' + material.filename}
                         type="application/pdf"
-                        width="600px"
+                        width="550px"
                         height="1000px"
                         className="certain-material-viewer"
                     >

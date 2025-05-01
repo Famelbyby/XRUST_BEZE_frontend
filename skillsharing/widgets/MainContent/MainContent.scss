@@ -17,7 +17,7 @@
         flex-direction: column;
         flex-grow: 1;
         overflow-y: scroll;
-        max-height: calc(100vh - 220px);
+        min-height: 0;
         gap: 10px;
 
         &::-webkit-scrollbar {
@@ -33,6 +33,7 @@
             font-size: 20px;
             font-family: 'Inter';
             color: #00000073;
+            flex-grow: 1;
 
             @include phones {
                 font-size: 18px;

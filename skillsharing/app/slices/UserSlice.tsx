@@ -11,12 +11,16 @@ export interface UserState {
     user: ProfileType | undefined;
     isFetched: boolean;
     isCopied: boolean;
+    isErrored: boolean;
+    errorMessage: string | undefined;
 }
 
 const initialState: UserState = {
     user: undefined,
     isFetched: false,
     isCopied: false,
+    isErrored: false,
+    errorMessage: undefined,
 };
 
 export const userSlice = createSlice({
@@ -29,6 +33,18 @@ export const userSlice = createSlice({
         },
         setIsCopied: (state: UserState, action: PayloadAction<boolean>) => {
             state.isCopied = action.payload;
+        },
+        setIsErrored: (
+            state: UserState,
+            action: PayloadAction<{ isErrored: boolean; message?: string | undefined }>,
+        ) => {
+            state.isErrored = action.payload.isErrored;
+
+            if (state.isErrored) {
+                state.errorMessage = action.payload.message;
+            } else {
+                state.errorMessage = undefined;
+            }
         },
     },
     extraReducers: (builder) => {
@@ -100,6 +116,6 @@ export const userSlice = createSlice({
     },
 });
 
-export const { setIsCopied, clearUser } = userSlice.actions;
+export const { setIsErrored, setIsCopied, clearUser } = userSlice.actions;
 
 export default userSlice.reducer;

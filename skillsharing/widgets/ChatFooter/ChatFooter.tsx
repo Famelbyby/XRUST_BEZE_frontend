@@ -28,6 +28,9 @@ import {
     setOldAttachments,
     setUpdate,
 } from '../../app/slices/ManageMessageSlice';
+import { MAX_ATTACHMENTS_LENGTH } from '../../shared/Consts/ValidatorsConts';
+import { setIsErrored } from '../../app/slices/UserSlice';
+import { ValidateAttachments } from '../../shared/Functions/Validators';
 
 const TEXTAREA_INITIAL_HEIGHT = 15;
 const MESSAGE_MAX_LENGTH = 800;
@@ -289,7 +292,27 @@ const ChatFooter: React.FC = () => {
         const files = event.target.files;
 
         if (files !== null) {
-            Array.from(files).forEach((newFile) => {
+            Array.from(files).forEach((newFile, index) => {
+                if (attachments.length + oldAttachments.length + index === MAX_ATTACHMENTS_LENGTH) {
+                    dispatch(
+                        setIsErrored({
+                            isErrored: true,
+                            message: 'Максимальное количество файлов - 10',
+                        }),
+                    );
+                    return;
+                }
+
+                if (!ValidateAttachments(attachments, newFile)) {
+                    dispatch(
+                        setIsErrored({
+                            isErrored: true,
+                            message: 'Максимальный размер сообщения - 100Мб',
+                        }),
+                    );
+                    return;
+                }
+
                 dispatch(addAttachment(newFile));
             });
         }

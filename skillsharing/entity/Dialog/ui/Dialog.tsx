@@ -31,7 +31,9 @@ const Dialog: React.FC<DialogProps> = ({ dialog }) => {
             className="dialog"
             aria-label="Перейти в чат"
             onClick={() => {
-                navigateTo(`/chat/${companion?.id}`);
+                if (dialog !== undefined) {
+                    navigateTo(`/chat/${companion?.id}`);
+                }
             }}
         >
             <div className="dialog-user">

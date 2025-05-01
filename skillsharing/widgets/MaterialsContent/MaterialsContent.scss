@@ -29,11 +29,10 @@
         display: flex;
         flex-grow: 5;
         max-width: 800px;
-        max-height: calc(100% - 20px);
+        min-height: 0;
         overflow: scroll;
 
         @include phones {
-            flex-grow: 0;
             width: 100%;
         }
 
