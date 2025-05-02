@@ -8,6 +8,7 @@
         flex-grow: 1;
         min-height: 0;
         overflow: scroll;
+        box-sizing: border-box;
 
         &::-webkit-scrollbar {
             display: none;
