@@ -1,7 +1,40 @@
+@mixin phones {
+    @media screen and (width <= 800px) {
+        @content;
+    }
+}
+
 .profile {
     &-page {
         display: flex;
         flex-grow: 1;
+        min-height: 0;
+    }
+
+    &-wrapper {
+        display: flex;
+        flex-grow: 1;
         padding: 40px 20px;
+
+        @include phones {
+            display: none;
+        }
+
+        &_mobile {
+            display: none;
+            flex-grow: 1;
+            flex-direction: column;
+            overflow: scroll;
+            padding: 20px;
+            gap: 30px;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            @include phones {
+                display: flex;
+            }
+        }
     }
 }

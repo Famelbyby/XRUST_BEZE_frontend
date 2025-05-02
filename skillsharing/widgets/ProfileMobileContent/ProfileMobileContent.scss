@@ -1,0 +1,93 @@
+.profile-mobile-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: 0;
+    overflow: scroll;
+    gap: 20px;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    &-description {
+        display: flex;
+        flex-direction: column;
+        font-family: 'Inter';
+        font-size: 14px;
+        gap: 15px;
+
+        &__field {
+            background: #f2f2f2;
+            padding: 5px;
+            border-radius: 7px;
+            color: #656565;
+            font-size: 12px;
+            min-height: 40px;
+        }
+    }
+
+    &-hrefs {
+        font-family: "Inter";
+        font-size: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        align-items: start;
+
+        &-examples {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+
+            &__href {
+                color: #0000ffb8;
+                text-decoration: underline;
+            }
+
+            &-item {
+                font-size: 13px;
+                padding: 5px 12px;
+                background-color: #e1e1e14d;
+                border-radius: 10px;
+            }
+        }
+
+        &__no-hrefs {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #00000073;
+        }
+    }
+
+    &-materials {
+        font-family: "Inter";
+        font-size: 14px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        padding-top: 5px;
+
+        &-go-page {
+            display: flex;
+            padding: 5px;
+            cursor: pointer;
+            transition-duration: 0.4s;
+            border-radius: 50%;
+
+            &:hover {
+                background-color: rgba(193, 193, 193, 0.3);
+            }
+
+            &__img {
+                transform: rotate(180deg);
+                width: 10px;
+                aspect-ratio: 1;
+            }
+        }
+    }
+}

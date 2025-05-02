@@ -16,7 +16,7 @@ const ProfileRightColumn: React.FC = () => {
 
     return (
         <div className="profile-right-column">
-            <ProfileHeader profile={user} />
+            <ProfileHeader />
             <div className="profile-content">
                 <div className="profile-description">
                     О себе
@@ -26,7 +26,7 @@ const ProfileRightColumn: React.FC = () => {
                                 <div className="profile-description__field-spinner"></div>
                             </div>
                         )}
-                        {user !== undefined && user.bio}
+                        {user !== undefined && (user.bio || '*стрекот сверчков*')}
                     </div>
                 </div>
                 {user !== undefined && (

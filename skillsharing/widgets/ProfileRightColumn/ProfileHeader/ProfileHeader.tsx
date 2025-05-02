@@ -7,12 +7,9 @@ import './ProfileHeader.scss';
 import { ProfileType } from '../../../pages/Profile/ui/ProfileTypes';
 import { Logout } from '../../../entity/User/api/User';
 
-interface ProfileHeaderPropTypes {
-    profile: ProfileType | undefined;
-}
-
-const ProfileHeader: React.FC<ProfileHeaderPropTypes> = ({ profile }) => {
+const ProfileHeader: React.FC = () => {
     const { user } = useSelector((state: AppState) => state.user);
+    const { user: profile } = useSelector((state: AppState) => state.profile);
     const ownUserID: ProfileType['id'] | undefined = user?.id;
     const lastSeen: Date | undefined =
         profile === undefined ? undefined : new Date(profile.last_active_at);
