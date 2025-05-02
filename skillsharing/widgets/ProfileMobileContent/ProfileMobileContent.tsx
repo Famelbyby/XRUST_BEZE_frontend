@@ -57,7 +57,7 @@ const ProfileMobileContent: React.FC = () => {
             <div className="profile-mobile-content-materials">
                 Учебные материалы
                 <Link
-                    to={`/profile-mobile-content-materials/${user?.id}`}
+                    to={`/profile-materials/${user?.id}`}
                     aria-label="Перейти к учебным материалам"
                 >
                     <div className="profile-mobile-content-materials-go-page">
