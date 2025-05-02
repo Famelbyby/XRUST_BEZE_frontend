@@ -1,3 +1,9 @@
+@mixin phones {
+    @media screen and (width <= 800px) {
+        @content;
+    }
+}
+
 .user-materials {
     &-page {
         flex-direction: column;
@@ -9,6 +15,10 @@
         min-height: 0;
         overflow: scroll;
         box-sizing: border-box;
+
+        @include phones {
+            padding: 10px;
+        }
 
         &::-webkit-scrollbar {
             display: none;
