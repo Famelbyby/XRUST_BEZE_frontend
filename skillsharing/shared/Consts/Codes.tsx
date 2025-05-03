@@ -1,6 +1,6 @@
 export const CODE_OK: number = 200;
 export const CODE_CREATED: number = 201;
-export const CODE_DELETED: number = 203;
+export const CODE_DELETED: number = 204;
 export const CODE_BAD: number = 400;
 export const CODE_NOT_FOUND: number = 404;
 export const CODE_NOT_AUTHED: number = 401;
