@@ -1,4 +1,5 @@
 import { CommunicationFormat, Skill } from '../../../shared/Consts/Interfaces';
+import ReviewType from '../../../entity/Review/ReviewTypes';
 
 export interface ProfileType {
     id: string;
@@ -13,4 +14,6 @@ export interface ProfileType {
     last_active_at: string;
     preferred_format: CommunicationFormat;
     hrefs: string[] | null;
+    reviews?: ReviewType[];
+    rating: number;
 }

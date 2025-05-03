@@ -1,18 +1,20 @@
 import React from 'react';
 import ProfileHeader from './ProfileHeader/ProfileHeader';
 import './ProfileRightColumn.scss';
-import { useSelector } from 'react-redux';
-import { AppState } from '../../app/AppStore';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, AppState } from '../../app/AppStore';
 import { Link } from 'react-router';
-
-// const hrefs: string[] = [
-//     "https://github.com",
-//     "https://vk.com",
-//     "https://twitch.com",
-// ];
+import Review from '../../entity/Review/Review';
+import { createPortal } from 'react-dom';
+import ModalWindow from '../../features/ModalWindow/ModalWindow';
+import { hideDeleteReviewModal } from '../../app/slices/ProfileSlice';
+import { DeleteReview } from '../../pages/Profile/api/Profile';
 
 const ProfileRightColumn: React.FC = () => {
-    const { user } = useSelector((state: AppState) => state.profile);
+    const { user, isHiddenDeleteReview, deleteReviewId } = useSelector(
+        (state: AppState) => state.profile,
+    );
+    const dispatch = useDispatch<AppDispatch>();
 
     return (
         <div className="profile-right-column">
@@ -75,23 +77,33 @@ const ProfileRightColumn: React.FC = () => {
                         </div>
                     </Link>
                 </div>
-                {/*<div className="profile-feedbacks">
+                <div className="profile-reviews">
                     Отзывы
-                    {profile !== undefined && profile.feedbacks.length > 0 &&
-                        profile.feedbacks.map((_, index: number) => {
-                            return (
-                                <div key={index}>
-                                </div>
-                            )
-                        })
-                    }
-                    {profile === undefined || profile.feedbacks.length === 0 && 
-                        <div className="profile-feedbacks__no-feedbacks">
-                            Отзывов нет
-                        </div>
-                    }
-                </div> */}
+                    {user !== undefined &&
+                        (user.reviews === undefined || user.reviews.length === 0) && (
+                            <div className="profile-reviews__no-reviews">Отзывов нет</div>
+                        )}
+                    {user !== undefined && user.reviews !== undefined && (
+                        <>
+                            {user.reviews.map((review) => {
+                                return <Review key={review.id} review={review} />;
+                            })}
+                        </>
+                    )}
+                </div>
             </div>
+            {!isHiddenDeleteReview &&
+                createPortal(
+                    <ModalWindow
+                        modalType={'delete'}
+                        closeModal={() => dispatch(hideDeleteReviewModal())}
+                        agreeTitle="Да"
+                        cancelTitle="Отменить"
+                        agreeFunc={() => dispatch(DeleteReview(deleteReviewId))}
+                        windowTitle="Вы уверены, что хотите удалить отзыв?"
+                    />,
+                    document.querySelector('#root')!,
+                )}
         </div>
     );
 };

@@ -226,7 +226,7 @@ const ChatHeader: React.FC = () => {
                                 <img
                                     id="delete-messages"
                                     className="chat-header-controls__img chat-header-controls__delete"
-                                    src="/ChatPage/delete.png"
+                                    src="/shared/delete.png"
                                     alt="Удалить сообщения"
                                     onClick={() => dispatch(showDeletingModal())}
                                 />

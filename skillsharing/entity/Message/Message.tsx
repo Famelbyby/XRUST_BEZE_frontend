@@ -67,13 +67,10 @@ const Message: React.FC<PropType> = ({ message, isSelected, isStructurizing }) =
                         </>
                     )}
                     {message.attachments !== undefined && (
-                        <div className="chat-content-message-attachments">
+                        <div className="chat-message-attachments">
                             {message.attachments.map((attachment) => {
                                 return (
-                                    <div
-                                        key={attachment}
-                                        className="chat-content-message-attachments-item"
-                                    >
+                                    <div key={attachment} className="chat-message-attachments-item">
                                         <a
                                             href={ATTACHMENTS_URL + attachment}
                                             download={attachment}
@@ -83,7 +80,7 @@ const Message: React.FC<PropType> = ({ message, isSelected, isStructurizing }) =
                                             }}
                                         >
                                             <img
-                                                className="chat-content-message-attachments-item__img"
+                                                className="chat-message-attachments-item__img"
                                                 src="/ChatPage/download.png"
                                                 alt=""
                                             />

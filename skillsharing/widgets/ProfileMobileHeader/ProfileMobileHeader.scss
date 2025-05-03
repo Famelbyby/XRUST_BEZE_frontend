@@ -11,6 +11,7 @@
 
     &__name {
         font-size: 18px;
+        word-break: break-all;
     }
 
     &-info {
@@ -41,6 +42,7 @@
         &__img {
             width: 15px;
             aspect-ratio: 1;
+            user-select: none;
         }
 
         &__title {
@@ -84,14 +86,15 @@
     }
 
     &__report, &__send-message, &__edit, &__logout {
-        width: 23px;
+        width: 20px;
         aspect-ratio: 1;
         cursor: pointer;
+        user-select: none;
 
         transition-duration: 0.2s;
 
         &:hover {
-            width: 24px;
+            width: 22px;
         }
     }
 }

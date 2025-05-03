@@ -10,3 +10,4 @@ export const LOG_IN_URL = '/log-in';
 export const USERS_URL = '/users';
 export const CHAT_URL = '/chat';
 export const STUDY_MATERIALS_URL = '/study-materials';
+export const REVIEW_URL = '/review';

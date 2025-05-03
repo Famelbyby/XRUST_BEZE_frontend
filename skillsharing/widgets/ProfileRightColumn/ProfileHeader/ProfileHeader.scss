@@ -19,7 +19,8 @@
         width: 100%;
         justify-content: space-between;
         align-items: start;
-        min-height: 120px;
+        flex-wrap: wrap;
+        gap: 10px;
 
         @include phones {
             flex-direction: column-reverse;
@@ -61,6 +62,7 @@
             &__img {
                 width: 17px;
                 height: 17px;
+                user-select: none;
             }
         }
     }
@@ -102,6 +104,7 @@
             border-radius: 12px;
             font-family: 'Inter';
             transition-duration: 0.2s;
+            user-select: none;
 
             &:hover {
                 transform: translateY(-2px);

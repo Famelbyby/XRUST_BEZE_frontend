@@ -13,6 +13,7 @@
         flex-direction: column;
         width: 100%;
         padding-right: 50px;
+        gap: 20px;
     }
 
     &-content {
@@ -30,15 +31,14 @@
         align-items: start;
 
         &__field {
-            box-sizing: border-box;
             display: flex;
-            padding: 17px;
+            padding: 10px;
             color: #656565;
             font-size: 16px;
             background-color: rgba(217, 217, 217, 0.3);
             border-radius: 10px;
-            max-width: 80%;
-            min-width: 80%;
+            width: 80%;
+            max-width: 700px;
             min-height: 100px;
 
             &-mock {
@@ -91,7 +91,7 @@
         }
     }
 
-    &-feedbacks {
+    &-reviews {
         font-family: "Inter";
         font-size: 20px;
         display: flex;
@@ -99,12 +99,13 @@
         gap: 10px;
         align-items: start;
 
-        &__no-feedbacks {
+        &__no-reviews {
             display: flex;
             width: 100%;
             justify-content: center;
-            color: rgba(0, 0, 0, 0.7);
-            font-size: 17px;
+            color: #00000069;
+            font-size: 20px;
+            padding-top: 10px;
         }
     }
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BACK_URL, USERS_URL } from '../../../shared/Consts/URLS';
+import { BACK_URL, REVIEW_URL, USERS_URL } from '../../../shared/Consts/URLS';
 import { CODE_OK } from '../../../shared/Consts/Codes';
 
 export const GetProfile = createAsyncThunk('profile/getProfileByID', async (userId: string) => {
@@ -22,4 +22,22 @@ export const GetProfile = createAsyncThunk('profile/getProfileByID', async (user
         });
 
     return { user: data, status: status, error };
+});
+
+export const DeleteReview = createAsyncThunk('profile/deleteReview', async (reviewId: string) => {
+    let status: number = CODE_OK;
+    let error: string | undefined;
+
+    await axios
+        .delete(BACK_URL + USERS_URL + REVIEW_URL + `/${reviewId}`)
+        .then((response) => {
+            status = response.status;
+            error = undefined;
+        })
+        .catch(({ response }) => {
+            status = response.status;
+            error = response.data;
+        });
+
+    return { status: status, error, reviewId };
 });

@@ -7,7 +7,6 @@ import { LoadAttachmentsResponse } from '../../shared/Consts/Interfaces';
 
 export interface ManageMessageState {
     attachments: File[];
-    inputText: string;
     oldAttachments: string[];
     attachmentsUploaded: boolean;
     attachmentURLs: undefined | string[];
@@ -15,7 +14,6 @@ export interface ManageMessageState {
 }
 
 const initialState: ManageMessageState = {
-    inputText: '',
     attachments: [],
     oldAttachments: [],
     attachmentsUploaded: false,
@@ -27,9 +25,6 @@ export const manageMessageSlice = createSlice({
     name: 'recorder',
     initialState,
     reducers: {
-        setInputText: (state: ManageMessageState, action: PayloadAction<string>) => {
-            state.inputText = action.payload;
-        },
         setOldAttachments: (state: ManageMessageState, action: PayloadAction<string[]>) => {
             state.oldAttachments = action.payload;
         },
@@ -74,7 +69,6 @@ export const manageMessageSlice = createSlice({
         },
         clearInputAndAttachments: (state: ManageMessageState) => {
             state.attachments = [];
-            state.inputText = '';
             state.attachmentsUploaded = false;
             state.attachmentURLs = undefined;
             state.oldAttachments = [];
@@ -97,7 +91,6 @@ export const {
     clearInputAndAttachments,
     deleteAttachment,
     addAttachment,
-    setInputText,
 } = manageMessageSlice.actions;
 
 export default manageMessageSlice.reducer;

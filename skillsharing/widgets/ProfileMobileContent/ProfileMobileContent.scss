@@ -24,6 +24,7 @@
             color: #656565;
             font-size: 12px;
             min-height: 40px;
+            width: 70%;
         }
     }
 
@@ -117,6 +118,7 @@
                 width: 15px;
                 height: 15px;
                 opacity: 0.5;
+                user-select: none;
             }
         }
 
@@ -129,7 +131,7 @@
                 font-family: 'Inter';
                 font-size: 12px;
                 background-color: rgba(217, 217, 217, 0.4);
-                padding: 5px 10px;
+                padding: 2px 5px;
                 border-radius: 20px;
                 user-select: none;
 

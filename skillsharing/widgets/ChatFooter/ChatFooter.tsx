@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     ISendingMessage,
     ISendingVoiceMessage,
@@ -24,7 +24,6 @@ import {
     addAttachment,
     clearInputAndAttachments,
     clearUpdate,
-    setInputText,
     setOldAttachments,
     setUpdate,
 } from '../../app/slices/ManageMessageSlice';
@@ -57,17 +56,12 @@ const ChatFooter: React.FC = () => {
     );
     const { isRecorded, recordDuration, isPlayingRecord, isRecording, voiceBlob, recordURL } =
         useSelector((state: AppState) => state.recorder);
-    const {
-        isUpdating,
-        attachmentURLs,
-        attachments,
-        attachmentsUploaded,
-        inputText,
-        oldAttachments,
-    } = useSelector((state: AppState) => state.manageMessage);
+    const { isUpdating, attachmentURLs, attachments, attachmentsUploaded, oldAttachments } =
+        useSelector((state: AppState) => state.manageMessage);
     const { user } = useSelector((state: AppState) => state.user);
     const dispatch = useDispatch<AppDispatch>();
     const userId: string = user!.id;
+    const [inputText, setInputText] = useState('');
 
     useEffect(() => {
         window.addEventListener('keypress', handleEnter);
@@ -124,7 +118,7 @@ const ChatFooter: React.FC = () => {
 
     useEffect(() => {
         if (editingMessage !== null) {
-            dispatch(setInputText(editingMessage.payload || ''));
+            setInputText(editingMessage.payload || '');
             dispatch(setOldAttachments(editingMessage.attachments || []));
             dispatch(setUpdate());
         }
@@ -202,6 +196,7 @@ const ChatFooter: React.FC = () => {
             MainWebSocket.sendMessage(JSON.stringify(messageJSON));
 
             dispatch(clearInputAndAttachments());
+            setInputText('');
             NormalizeTextarea('textarea', TEXTAREA_INITIAL_HEIGHT);
         } else {
             if (
@@ -211,6 +206,7 @@ const ChatFooter: React.FC = () => {
             ) {
                 dispatch(stopEditingMessage());
                 dispatch(clearInputAndAttachments());
+                setInputText('');
                 dispatch(clearUpdate());
                 return;
             }
@@ -230,6 +226,7 @@ const ChatFooter: React.FC = () => {
             MainWebSocket.sendMessage(JSON.stringify(messageJSON));
 
             dispatch(clearInputAndAttachments());
+            setInputText('');
             dispatch(clearUpdate());
             NormalizeTextarea('textarea', TEXTAREA_INITIAL_HEIGHT);
             dispatch(stopEditingMessage());
@@ -257,7 +254,7 @@ const ChatFooter: React.FC = () => {
         }
 
         NormalizeTextarea('textarea', TEXTAREA_INITIAL_HEIGHT);
-        dispatch(setInputText(textAreaInput.value));
+        setInputText(textAreaInput.value);
     }
 
     useEffect(() => {

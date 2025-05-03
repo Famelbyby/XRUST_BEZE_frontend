@@ -11,7 +11,7 @@ import { AppState } from '../../app/AppStore';
 const profileStatistics: StatisticItem[] = [
     {
         title: 'Оценка',
-        userKey: 'rate',
+        userKey: 'rating',
     },
 ];
 
@@ -52,7 +52,7 @@ const ProfileLeftColumn: React.FC = () => {
                                         <div className="profile-stats-item__example-spinner"></div>
                                     </div>
                                 )}
-                                {user !== undefined && 0}
+                                {user !== undefined && <>{user[stat.userKey]}</>}
                             </div>
                         </div>
                     );

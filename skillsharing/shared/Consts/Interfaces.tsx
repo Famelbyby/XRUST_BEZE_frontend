@@ -147,6 +147,10 @@ export interface LoadAvatarResponse extends AnyAPIResponse {
     avatarURL: string;
 }
 
+export interface DeleteReviewResponse extends AnyAPIResponse {
+    reviewId: string;
+}
+
 export interface UserResponse extends AnyAPIResponse {
     user: ProfileType;
 }
