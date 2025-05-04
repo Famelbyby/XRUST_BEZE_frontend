@@ -119,7 +119,8 @@ const ProfileRightColumn: React.FC = () => {
     const alreadyHaveReview =
         myUser !== undefined &&
         user !== undefined &&
-        (user.reviews || []).find((review) => review.user_id_by === myUser.id);
+        ((user.reviews || []).find((review) => review.user_id_by === myUser.id) ||
+            user.id === myUser.id);
     const dispatch = useDispatch<AppDispatch>();
 
     return (

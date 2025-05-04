@@ -109,6 +109,7 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 font-size: 14px;
+                min-height: 14px;
 
                 @include phones {
                     font-size: 12px;
