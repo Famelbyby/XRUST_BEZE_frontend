@@ -94,12 +94,12 @@
                     flex-grow: 1;
                     border: none;
                     background: inherit;
-                    font-size: 16px;
+                    font-size: 14px;
                     outline: none;
                     resize: none;
                     overflow-y: scroll;
                     max-height: 80px;
-                    font-family: "Inter";
+                    font-family: "Open Sans";
 
                     &::-webkit-scrollbar {
                         display: none;
@@ -264,6 +264,17 @@
                 cursor: pointer;
                 rotate: 45deg;
                 transition-duration: 0.2s;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+
+            &__cancel-update-review {
+                aspect-ratio: 1;
+                width: 16px;
+                transition-duration: 0.2s;
+                cursor: pointer;
 
                 &:hover {
                     transform: scale(1.1);

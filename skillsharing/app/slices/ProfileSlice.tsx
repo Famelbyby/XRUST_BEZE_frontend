@@ -5,14 +5,15 @@ import {
     DeleteReviewResponse,
     UserResponse,
 } from '../../shared/Consts/Interfaces';
-import { AddReview, DeleteReview, GetProfile } from '../../pages/Profile/api/Profile';
-import { CODE_CREATED, CODE_DELETED } from '../../shared/Consts/Codes';
+import { AddReview, DeleteReview, GetProfile, UpdateReview } from '../../pages/Profile/api/Profile';
+import { CODE_CREATED, CODE_DELETED, CODE_OK } from '../../shared/Consts/Codes';
 
 export interface ProfileState {
     user: ProfileType | undefined;
     isFetched: boolean;
     isHiddenDeleteReview: boolean;
     deleteReviewId: string;
+    updatingReviewId: string;
 }
 
 const initialState: ProfileState = {
@@ -20,6 +21,7 @@ const initialState: ProfileState = {
     isFetched: false,
     isHiddenDeleteReview: true,
     deleteReviewId: '',
+    updatingReviewId: '',
 };
 
 export const profileSlice = createSlice({
@@ -31,6 +33,7 @@ export const profileSlice = createSlice({
             state.isFetched = false;
             state.isHiddenDeleteReview = true;
             state.deleteReviewId = '';
+            state.updatingReviewId = '';
         },
         setIsHiddenDeleteReview: (
             state: ProfileState,
@@ -42,6 +45,12 @@ export const profileSlice = createSlice({
         hideDeleteReviewModal: (state: ProfileState) => {
             state.isHiddenDeleteReview = true;
             state.deleteReviewId = '';
+        },
+        setUpdatingReviewId: (state: ProfileState, action: PayloadAction<string>) => {
+            state.updatingReviewId = action.payload;
+        },
+        cancelUpdatingReview: (state: ProfileState) => {
+            state.updatingReviewId = '';
         },
     },
     extraReducers: (builder) => {
@@ -77,11 +86,35 @@ export const profileSlice = createSlice({
                 if (state.user !== undefined) {
                     state.user.reviews = [response.newReview, ...(state.user.reviews || [])];
                 }
+            })
+            .addCase(UpdateReview.fulfilled, (state: ProfileState, action) => {
+                const response = action.payload as unknown as AddReviewResponse;
+
+                if (response.status !== CODE_OK) {
+                    return;
+                }
+
+                const newReview = response.newReview;
+
+                if (state.user !== undefined) {
+                    state.user.reviews = (state.user.reviews || []).map((review) => {
+                        if (newReview.id !== review.id) {
+                            return review;
+                        }
+
+                        return newReview;
+                    });
+                }
             });
     },
 });
 
-export const { hideDeleteReviewModal, setIsHiddenDeleteReview, clearProfile } =
-    profileSlice.actions;
+export const {
+    setUpdatingReviewId,
+    cancelUpdatingReview,
+    hideDeleteReviewModal,
+    setIsHiddenDeleteReview,
+    clearProfile,
+} = profileSlice.actions;
 
 export default profileSlice.reducer;

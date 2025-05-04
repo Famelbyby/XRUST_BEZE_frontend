@@ -24,6 +24,12 @@ export interface Category {
     skills: string[];
 }
 
+export interface UpdateReviewRequest {
+    reviewId: string;
+    text: string;
+    rating: number;
+}
+
 export interface AddReviewRequest {
     text: string;
     rating: number;
