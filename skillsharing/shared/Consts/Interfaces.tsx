@@ -23,6 +23,13 @@ export interface Category {
     skills: string[];
 }
 
+export interface AddReviewRequest {
+    text: string;
+    rating: number;
+    user_id_by: string;
+    user_id_to: string;
+}
+
 export interface GetLastMessageResponse extends AnyAPIResponse {
     channelId: string;
     messages: IMessage[];

@@ -424,7 +424,7 @@ const ChatFooter: React.FC = () => {
                     <img
                         id="send-message"
                         className="chat-footer-controls__send-message"
-                        src="/ChatPage/send.png"
+                        src="/shared/send.png"
                         alt="send-message"
                         onClick={handleSending}
                     />

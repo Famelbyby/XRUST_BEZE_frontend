@@ -7,6 +7,13 @@
     animation-direction: alternate;
 }
 
+@mixin phones {
+    @media screen and (width <= 800px) {
+        @content;
+    }
+}
+
+
 .profile {
     &-right-column {
         display: flex;
@@ -14,6 +21,272 @@
         width: 100%;
         padding-right: 50px;
         gap: 20px;
+    }
+
+    &-add-review {
+        display: flex;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 15px;
+        padding: 10px;
+        transition-duration: 0.2s;
+        max-width: 700px;
+        width: 80%;
+        gap: 10px;
+        align-items: center;
+    
+        &-content {
+            display: flex;
+            flex-grow: 1;
+            flex-direction: column;
+            min-height: 65px;
+            justify-content: space-around;
+        }
+    
+        &-header {
+            display: flex;
+            gap: 10px;
+        }
+    
+        &-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+    
+            &__avatar {
+                cursor: pointer;
+                width: 65px;
+                height: 65px;
+                flex-shrink: 0;
+                border-radius: 10px;
+                object-fit: cover;
+    
+                @include phones {
+                    width: 50px;
+                    height: 50px;
+                }
+    
+                &-mock {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: rgb(128 128 128 / 34%);
+                    border-radius: 5px;
+                }
+    
+                &-spinner {
+                    border-radius: inherit;
+                    background-color: #ffffff47;
+                    animation-name: avatar-spinner;
+                    animation-duration: 1s;
+                    animation-iteration-count: infinite;
+                    animation-direction: alternate;
+                }
+            }
+    
+            &-info {
+                display: flex;
+                align-items: center;
+                flex-grow: 1;
+                gap: 10px;
+
+                &__input {
+                    display: flex;
+                    flex-grow: 1;
+                    border: none;
+                    background: inherit;
+                    font-size: 16px;
+                    outline: none;
+                    resize: none;
+                    overflow-y: scroll;
+                    max-height: 80px;
+                    font-family: "Inter";
+
+                    &::-webkit-scrollbar {
+                        display: none;
+                    }
+
+                    &:focus-visible {
+                        outline: none;
+                    }
+                }
+    
+                &__name {
+                    font-family: 'Inter';
+                    margin-bottom: 5px;
+                    font-size: 18px;
+                    word-break: break-all;
+                    cursor: pointer;    
+    
+                    @include phones {
+                        font-size: 14px;
+                        height: 15px;
+                        margin-bottom: 2px;
+                    }
+    
+                    &-mock {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        background-color: rgb(128 128 128 / 34%);
+                        width: 100px;
+                        border-radius: 5px;
+                    }
+    
+                    &-spinner {
+                        border-radius: inherit;
+                        background-color: #ffffff47;
+                        animation-name: avatar-spinner;
+                        animation-duration: 1s;
+                        animation-iteration-count: infinite;
+                        animation-direction: alternate;
+                    }
+                }
+    
+                &__text {
+                    margin-bottom: 2px;
+                    max-width: 20vw;
+                    font-family: 'Open Sans';
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    font-size: 14px;
+    
+                    @include phones {
+                        font-size: 12px;
+                        height: 15px;
+                    }
+    
+                    &-mock {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        background-color: rgb(128 128 128 / 34%);
+                        width: 50%;
+                        max-width: 20vh;
+                        border-radius: 5px;
+                    }
+    
+                    &-spinner {
+                        border-radius: inherit;
+                        background-color: #ffffff47;
+                        animation-name: avatar-spinner;
+                        animation-duration: 1s;
+                        animation-iteration-count: infinite;
+                        animation-direction: alternate;
+                    }
+    
+                    &_voiced {
+                        color: #6161ff;
+                    }
+                }
+    
+                &__time {
+                    font-family: "Inter";
+                    color: rgba(0, 0, 0, 0.4);
+                    font-size: 10px;
+                }
+            }
+        }
+    
+        &-info {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+    
+            &__tags {
+                height: 20px;
+                display: flex;
+                gap: 5px;
+                flex-wrap: wrap;
+                font-size: 15px;
+                padding-top: 2px;
+    
+                @include phones {
+                    font-size: 12px;
+                }
+    
+                &-mock {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: rgb(128 128 128 / 34%);
+                    width: 200px;
+                    max-width: 20vh;
+                    border-radius: 5px;
+                }
+    
+                &-spinner {
+                    border-radius: inherit;
+                    background-color: #ffffff47;
+                    animation-name: avatar-spinner;
+                    animation-duration: 1s;
+                    animation-iteration-count: infinite;
+                    animation-direction: alternate;
+                }
+            }
+        }
+    
+        &__server-error {
+            display: flex;
+            flex-grow: 1;
+            justify-content: center;
+            align-items: center;
+            font-size: 23px;
+            font-family: "Inter";
+            color: rgba(255, 0, 0, 0.4117647059);
+        }
+    
+        &-rating {
+            display: flex;
+            align-items: start;
+            height: 100%;
+            font-size: 14px;
+            font-family: 'Inter';
+            gap: 4px;
+            padding-top: 6px;
+    
+            &__img {
+                aspect-ratio: 1;
+                width: 15px;
+                cursor: pointer;
+            }
+        }
+    
+        &-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+
+            &__send-review {
+                width: 20px;
+                height: 20px;
+                cursor: pointer;
+                rotate: 45deg;
+                transition-duration: 0.2s;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+        }
+    
+        &-manage {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+    
+            &__edit, &__delete {
+                aspect-ratio: 1;
+                width: 16px;
+                cursor: pointer;
+                transition-duration: 0.2s;
+    
+                &:hover {
+                    width: 18px;
+                }
+            }
+        }
     }
 
     &-content {
