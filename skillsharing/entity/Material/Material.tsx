@@ -4,7 +4,7 @@ import { AVATAR_URL, MATERIALS_URL } from '../../shared/Consts/URLS';
 import { FormatRelativeTimeInPastInDays } from '../../shared/Functions/FormatDate';
 import { SECOND_IN_MILLISECONDS } from '../../shared/Consts/ValidatorsConts';
 import './Material.scss';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsCopied } from '../../app/slices/UserSlice';
 import { AppState } from '../../app/AppStore';
@@ -14,6 +14,8 @@ const Material: React.FC<MaterialItem> = (material) => {
     const navigateTo = useNavigate();
     const dispatch = useDispatch();
     const { user } = useSelector((state: AppState) => state.user);
+    const location = useLocation();
+    const onUserMaterialsPage = location.pathname.includes('profile-materials');
 
     return (
         <div className="material" onClick={() => navigateTo(`/materials/${material.id}`)}>
@@ -87,22 +89,27 @@ const Material: React.FC<MaterialItem> = (material) => {
                             alt=""
                         />
                     </div>
-                    {user !== undefined && user.id === material.author_id && (
-                        <div className="material-footer-delete">
-                            <img
-                                className="material-footer-delete__img"
-                                src="/shared/delete.png"
-                                alt="Удалить материал"
-                                onClick={(event) => {
-                                    event.stopPropagation();
+                    {user !== undefined &&
+                        user.id === material.author_id &&
+                        onUserMaterialsPage && (
+                            <div className="material-footer-delete">
+                                <img
+                                    className="material-footer-delete__img"
+                                    src="/shared/delete.png"
+                                    alt="Удалить материал"
+                                    onClick={(event) => {
+                                        event.stopPropagation();
 
-                                    dispatch(
-                                        setIsHiddenDeleteMaterial({ id: material.id, bool: false }),
-                                    );
-                                }}
-                            />
-                        </div>
-                    )}
+                                        dispatch(
+                                            setIsHiddenDeleteMaterial({
+                                                id: material.id,
+                                                bool: false,
+                                            }),
+                                        );
+                                    }}
+                                />
+                            </div>
+                        )}
                 </div>
             </div>
         </div>
