@@ -230,7 +230,8 @@
     &-manage {
         display: flex;
         align-items: center;
-        gap: 7px;
+        width: 40px;
+        justify-content: space-between;
 
         &__edit, &__delete {
             aspect-ratio: 1;
