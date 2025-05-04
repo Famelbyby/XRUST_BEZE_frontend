@@ -153,10 +153,16 @@
 
         &-delete {
             display: flex;
+            width: 17px;
 
             &__img {
                 aspect-ratio: 1;
-                width: 16px;
+                width: 17px;
+                transition-duration: 0.2s;
+
+                &:hover {
+                    width: 18px;
+                }
             }
         }
     }
