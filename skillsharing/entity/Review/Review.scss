@@ -103,13 +103,24 @@
 
             &__text {
                 margin-bottom: 2px;
-                max-width: 20vw;
                 font-family: 'Open Sans';
-                white-space: nowrap;
-                overflow: hidden;
+                overflow-y: scroll;
                 text-overflow: ellipsis;
                 font-size: 14px;
                 min-height: 14px;
+                max-height: 80px;
+
+                &::-webkit-scrollbar {
+                    width: 5px;
+                    background: none;
+                    border-radius: 10px;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    width: 5px;
+                    border-radius: 10px;
+                    background-color: rgba(2, 52, 255, 0.3098039216);
+                }
 
                 @include phones {
                     font-size: 12px;
@@ -213,6 +224,7 @@
     &-footer {
         display: flex;
         justify-content: space-between;
+        gap: 10px;
     }
 
     &-manage {

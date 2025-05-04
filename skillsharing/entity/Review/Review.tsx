@@ -48,7 +48,7 @@ const Review: React.FC<ReviewPropTypes> = ({ review }) => {
                 </div>
                 <div className="review-footer">
                     <div className="review-info">
-                        <span className={'review-user-info__text'}>{review.text}</span>
+                        <div className={'review-user-info__text'}>{review.text}</div>
                         <div className="review-user-info__time">
                             {FormatRelativeTimeInPastInDays(
                                 new Date(review.created * SECOND_IN_MILLISECONDS),
