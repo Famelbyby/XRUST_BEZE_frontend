@@ -150,5 +150,14 @@
                 }
             }
         }
+
+        &-delete {
+            display: flex;
+
+            &__img {
+                aspect-ratio: 1;
+                width: 16px;
+            }
+        }
     }
 }

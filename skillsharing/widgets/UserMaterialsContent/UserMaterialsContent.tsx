@@ -1,11 +1,18 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { AppState } from '../../app/AppStore';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, AppState } from '../../app/AppStore';
 import Material from '../../entity/Material/Material';
 import './UserMaterialsContent.scss';
+import { createPortal } from 'react-dom';
+import ModalWindow from '../../features/ModalWindow/ModalWindow';
+import { setIsHiddenDeleteMaterial } from '../../app/slices/UserMaterialsSlice';
+import { DeleteMaterial } from '../../pages/UserMaterials/api/UserMaterials';
 
 const UserMaterialsContent: React.FC = () => {
-    const { isFetched, materials } = useSelector((state: AppState) => state.userMaterials);
+    const { isFetched, materials, isHiddenDeleteWindow, deletedMaterialId } = useSelector(
+        (state: AppState) => state.userMaterials,
+    );
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
         if (materials.length === 0 && isFetched) {
@@ -53,6 +60,18 @@ const UserMaterialsContent: React.FC = () => {
                     )}
                 </div>
             )}
+            {!isHiddenDeleteWindow &&
+                createPortal(
+                    <ModalWindow
+                        modalType={'delete'}
+                        closeModal={() => dispatch(setIsHiddenDeleteMaterial({ bool: true }))}
+                        agreeTitle="Да"
+                        cancelTitle="Отменить"
+                        agreeFunc={() => dispatch(DeleteMaterial(deletedMaterialId))}
+                        windowTitle="Вы уверены, что хотите удалить учебный материал?"
+                    />,
+                    document.querySelector('#root')!,
+                )}
         </div>
     );
 };

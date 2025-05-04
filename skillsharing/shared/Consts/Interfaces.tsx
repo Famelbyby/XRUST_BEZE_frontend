@@ -32,6 +32,10 @@ export interface CertainMaterialResponse extends AnyAPIResponse {
     material: MaterialItem;
 }
 
+export interface DeleteMaterialResponse extends AnyAPIResponse {
+    materialId: string;
+}
+
 export interface UserMaterialsResponse extends AnyAPIResponse {
     materials: MaterialItem[];
 }
