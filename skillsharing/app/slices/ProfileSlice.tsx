@@ -105,6 +105,8 @@ export const profileSlice = createSlice({
                         return newReview;
                     });
                 }
+
+                state.updatingReviewId = '';
             });
     },
 });
