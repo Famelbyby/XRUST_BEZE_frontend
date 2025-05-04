@@ -1,8 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ProfileType } from '../../pages/Profile/ui/ProfileTypes';
-import { DeleteReviewResponse, UserResponse } from '../../shared/Consts/Interfaces';
-import { DeleteReview, GetProfile } from '../../pages/Profile/api/Profile';
-import { CODE_DELETED } from '../../shared/Consts/Codes';
+import {
+    AddReviewResponse,
+    DeleteReviewResponse,
+    UserResponse,
+} from '../../shared/Consts/Interfaces';
+import { AddReview, DeleteReview, GetProfile } from '../../pages/Profile/api/Profile';
+import { CODE_CREATED, CODE_DELETED } from '../../shared/Consts/Codes';
 
 export interface ProfileState {
     user: ProfileType | undefined;
@@ -61,6 +65,17 @@ export const profileSlice = createSlice({
                     state.user.reviews = state.user.reviews.filter(
                         (review) => review.id !== reviewId,
                     );
+                }
+            })
+            .addCase(AddReview.fulfilled, (state: ProfileState, action) => {
+                const response = action.payload as unknown as AddReviewResponse;
+
+                if (response.status !== CODE_CREATED) {
+                    return;
+                }
+
+                if (state.user !== undefined) {
+                    state.user.reviews = [response.newReview, ...(state.user.reviews || [])];
                 }
             });
     },

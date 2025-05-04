@@ -66,6 +66,6 @@ export const AddReview = createAsyncThunk(
                 error = response.data;
             });
 
-        return { user: data, status: status, error };
+        return { newReview: data, status: status, error };
     },
 );

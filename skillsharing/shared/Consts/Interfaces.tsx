@@ -2,6 +2,7 @@ import { DialogItem } from '../../entity/Dialog/ui/DialogTypes';
 import { IMessage } from '../../entity/Message/MessageTypes';
 import { ProfileType } from '../../pages/Profile/ui/ProfileTypes';
 import { MaterialItem } from '../../entity/Material/MaterialTypes';
+import ReviewType from '../../entity/Review/ReviewTypes';
 
 export interface TextFieldState {
     value: string;
@@ -160,6 +161,10 @@ export interface LoadAvatarResponse extends AnyAPIResponse {
 
 export interface DeleteReviewResponse extends AnyAPIResponse {
     reviewId: string;
+}
+
+export interface AddReviewResponse extends AnyAPIResponse {
+    newReview: ReviewType;
 }
 
 export interface UserResponse extends AnyAPIResponse {
