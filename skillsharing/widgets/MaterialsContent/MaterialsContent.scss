@@ -56,8 +56,8 @@
         gap: 20px;
 
         @include phones {
-            flex-grow: 0;
             gap: 10px;
+            max-width: 100%;
         }
     }
 
