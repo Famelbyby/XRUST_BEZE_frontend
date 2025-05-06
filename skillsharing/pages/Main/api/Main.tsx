@@ -59,7 +59,10 @@ export const GetFoundBySkillsUsers = createAsyncThunk(
         let status: number = CODE_OK;
         let error: string | undefined;
 
-        const concatSkills = skills.map((skill) => `skill=${skill}`).join('&');
+        const concatSkills = skills
+            .map((skill) => `skill=${skill}`)
+            .join('&')
+            .replace('+', '%2b');
 
         await axios
             .get(BACK_URL + USERS_URL + `/by-skills-to-share?limit=1000&offset=0&${concatSkills}`)
