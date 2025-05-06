@@ -83,6 +83,7 @@ const RightSide: React.FC = () => {
                 changedSkill={(skill) => changedSkillInput(skill)}
                 changedName={(nameInput) => changedNameInput(nameInput)}
                 globalSkills={globalSkills}
+                placeholder="Название материала"
             />
         </div>
     );

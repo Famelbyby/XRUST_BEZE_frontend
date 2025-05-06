@@ -7,12 +7,14 @@ interface FilterProps {
     globalSkills: string[];
     changedName: (name: string) => void;
     changedSkill: (skill: string[]) => void;
+    placeholder: string;
 }
 
 const FilterByNameAndSkills: React.FC<FilterProps> = ({
     changedSkill,
     changedName,
     globalSkills,
+    placeholder,
 }) => {
     const [materialNameInput, setMaterialNameInput] = useState('');
     const [filterType, setFilterType] = useState<FilterType>('name');
@@ -60,7 +62,7 @@ const FilterByNameAndSkills: React.FC<FilterProps> = ({
                         type="text"
                         className="filter-layout__name-input"
                         value={materialNameInput}
-                        placeholder="Название материала"
+                        placeholder={placeholder}
                         onChange={(event) => {
                             setMaterialNameInput(event.target.value);
                         }}
