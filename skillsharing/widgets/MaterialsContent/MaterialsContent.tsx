@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, AppState } from '../../app/AppStore';
 import Material from '../../entity/Material/Material';
 import { GetMaterialsByName, GetMaterialsByTags } from '../../pages/Materials/api/Materials';
-import { changeFilterType, clearMaterials } from '../../app/slices/MaterialsSlice';
+import { clearMaterials } from '../../app/slices/MaterialsSlice';
+import FilterByNameAndSkills from '../../features/FilterByNameAndSkills/FilterByNameAndSkills';
 import './MaterialsContent.scss';
 import { GetCategories } from '../../pages/Auth/api/Auth';
 
@@ -49,89 +50,40 @@ const LeftSide: React.FC = () => {
 
 const RightSide: React.FC = () => {
     const { user } = useSelector((state: AppState) => state.user);
-    const { filterType, globalSkills } = useSelector((state: AppState) => state.materials);
-    const [materialNameInput, setMaterialNameInput] = useState('');
-    const [materialSkillInput, setMaterialSkillInput] = useState('');
+    const { globalSkills } = useSelector((state: AppState) => state.materials);
     const dispatch = useDispatch<AppDispatch>();
+
+    function changedNameInput(nameInput: string) {
+        if (nameInput === '') {
+            if (user !== undefined) {
+                dispatch(GetMaterialsByTags(user.skills_to_learn.map((skill) => skill.name)));
+            }
+        } else {
+            dispatch(GetMaterialsByName(nameInput));
+        }
+    }
+
+    function changedSkillInput(tagInput: string[]) {
+        if (tagInput.length === 0) {
+            if (user !== undefined) {
+                dispatch(GetMaterialsByTags(user.skills_to_learn.map((skill) => skill.name)));
+            }
+        } else {
+            dispatch(GetMaterialsByTags(tagInput));
+        }
+    }
 
     useEffect(() => {
         dispatch(GetCategories());
     }, []);
 
-    useEffect(() => {
-        if (materialNameInput === '') {
-            if (user !== undefined) {
-                dispatch(GetMaterialsByTags(user.skills_to_learn.map((skill) => skill.name)));
-            }
-        } else {
-            dispatch(GetMaterialsByName(materialNameInput));
-        }
-    }, [materialNameInput]);
-
-    useEffect(() => {
-        if (materialSkillInput === '') {
-            if (user !== undefined) {
-                dispatch(GetMaterialsByTags(user.skills_to_learn.map((skill) => skill.name)));
-            }
-        } else {
-            dispatch(GetMaterialsByTags([materialSkillInput]));
-        }
-    }, [materialSkillInput]);
-
     return (
         <div className="materials-content-right-side">
-            <div className="materials-content-filter">
-                Фильтр по
-                <select
-                    className="materials-content-filter-select"
-                    onChange={(event) => {
-                        setMaterialNameInput('');
-                        setMaterialSkillInput('');
-                        dispatch(changeFilterType(event.target.value));
-                    }}
-                >
-                    <option className="materials-content-filter__option" value={'name'} selected>
-                        названию
-                    </option>
-                    <option className="materials-content-filter__option" value={'skill'}>
-                        навыку
-                    </option>
-                </select>
-            </div>
-            <div className="materials-content-inputs">
-                {filterType === 'name' && (
-                    <input
-                        type="text"
-                        className="materials-content__name-input"
-                        value={materialNameInput}
-                        placeholder="Название материала"
-                        onChange={(event) => {
-                            setMaterialNameInput(event.target.value);
-                        }}
-                    />
-                )}
-                {filterType === 'skill' && (
-                    <select
-                        className="materials-content__skill-select"
-                        onChange={(event) => {
-                            setMaterialSkillInput(event.target.value);
-                        }}
-                    >
-                        <option value={''} selected key={'nothing'}>
-                            ...
-                        </option>
-                        {globalSkills.map((glSkill, index) => {
-                            return (
-                                <>
-                                    <option value={glSkill} key={index}>
-                                        {glSkill}
-                                    </option>
-                                </>
-                            );
-                        })}
-                    </select>
-                )}
-            </div>
+            <FilterByNameAndSkills
+                changedSkill={(skill) => changedSkillInput(skill)}
+                changedName={(nameInput) => changedNameInput(nameInput)}
+                globalSkills={globalSkills}
+            />
         </div>
     );
 };

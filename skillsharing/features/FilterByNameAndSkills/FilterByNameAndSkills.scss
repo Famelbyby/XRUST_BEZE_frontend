@@ -13,53 +13,11 @@
     }
 }
 
-.materials-content {
+.filter-layout {
     display: flex;
-    min-height: 0;
-    gap: 50px;
+    flex-direction: column;
     flex-grow: 1;
-
-    @include phones {
-        flex-direction: column-reverse;
-        justify-content: start;
-        gap: 20px;
-    }
-
-    &-left-side {
-        display: flex;
-        flex-grow: 5;
-        max-width: 800px;
-        min-height: 0;
-        overflow: scroll;
-
-        @include phones {
-            width: 100%;
-        }
-
-        &::-webkit-scrollbar {
-            display: none;
-        }
-    }
-
-    &-list {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        flex-grow: 1;
-    }
-
-    &-right-side {
-        display: flex;
-        flex-direction: column;
-        min-width: 30%;
-        max-width: 30%;
-        gap: 20px;
-
-        @include phones {
-            flex-grow: 0;
-            gap: 10px;
-        }
-    }
+    gap: 20px;
 
     &-filter {
         display: flex;
@@ -100,7 +58,6 @@
         font-family: Inter;
         color: #00000069;
         align-items: center;
-        text-align: center;
 
         @include phones {
             font-size: 18px;
@@ -136,5 +93,34 @@
             outline: none;
             border: 1px solid rgba(0, 0, 0, 0.8);
         }
+    }
+
+    &-inputs {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    &-added-skills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+
+        &-item {
+            display: flex;
+            padding: 5px 8px;
+            background-color: rgba(0, 0, 0, 0.0980392157);
+            border-radius: 20px;
+            font-family: 'Inter';
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+    }
+
+    &__delete-skill {
+        width: 12px;
+        height: 12px;
+        cursor: pointer;
     }
 }

@@ -6,7 +6,7 @@ import { CODE_OK } from '../../../shared/Consts/Codes';
 
 export const GetMatchedUsers = createAsyncThunk(
     'main/getMatchedUsers',
-    async ({ userId, callback }: MatchUserRequest) => {
+    async ({ userId }: MatchUserRequest) => {
         let data: unknown;
         let status: number = CODE_OK;
         let error: string | undefined;
@@ -17,8 +17,6 @@ export const GetMatchedUsers = createAsyncThunk(
                 status = response.status;
                 data = response.data;
                 error = undefined;
-
-                callback();
             })
             .catch(({ response }) => {
                 status = response.status;
@@ -32,7 +30,7 @@ export const GetMatchedUsers = createAsyncThunk(
 
 export const GetFoundByNameUsers = createAsyncThunk(
     'main/getFoundByNameUsers',
-    async ({ userId, query, callback }: FindByNameUsersRequest) => {
+    async ({ userId, query }: FindByNameUsersRequest) => {
         let data: unknown;
         let status: number = CODE_OK;
         let error: string | undefined;
@@ -43,8 +41,32 @@ export const GetFoundByNameUsers = createAsyncThunk(
                 status = response.status;
                 data = response.data.users;
                 error = undefined;
+            })
+            .catch(({ response }) => {
+                status = response.status;
+                data = undefined;
+                error = response.data;
+            });
 
-                callback();
+        return { foundUsers: data, status: status, error };
+    },
+);
+
+export const GetFoundBySkillsUsers = createAsyncThunk(
+    'main/getBySkills',
+    async (skills: string[]) => {
+        let data: unknown;
+        let status: number = CODE_OK;
+        let error: string | undefined;
+
+        const concatSkills = skills.map((skill) => `skill=${skill}`).join('&');
+
+        await axios
+            .get(BACK_URL + USERS_URL + `/by-skills-to-share?limit=1000&offset=0&${concatSkills}`)
+            .then((response) => {
+                status = response.status;
+                data = response.data.users;
+                error = undefined;
             })
             .catch(({ response }) => {
                 status = response.status;

@@ -113,13 +113,11 @@ export interface MessageResponse extends AnyAPIResponse {
 
 export interface MatchUserRequest {
     userId: string;
-    callback: () => void;
 }
 
 export interface FindByNameUsersRequest {
     userId: string;
     query: string;
-    callback: () => void;
 }
 
 export interface ChannelRequest {

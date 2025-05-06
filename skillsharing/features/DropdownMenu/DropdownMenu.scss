@@ -10,6 +10,7 @@
         padding: 5px;
         font-family: 'Inter';
         font-size: 14px;
+        width: calc(100% - 5px);
 
         &:focus-visible {
             outline: none;

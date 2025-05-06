@@ -10,7 +10,15 @@
         flex-grow: 1;
         gap: 30px;
         min-height: 0;
-    }
+        justify-content: space-between;
+
+        &-left-side {
+            display: flex;
+            flex-grow: 5;
+            gap: 30px;
+            min-height: 0;
+        }
+    }    
 
     &-results {
         display: flex;
