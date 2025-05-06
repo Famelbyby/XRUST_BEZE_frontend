@@ -80,12 +80,7 @@ const ProfileMobileHeader: React.FC = () => {
                         alt="Пожаловаться"
                     />
                     <Link to={`/chat/${profile.id}`}>
-                        <div
-                            className="profile-mobile-header-logout-wrapper"
-                            onClick={() => {
-                                dispatch(Logout());
-                            }}
-                        >
+                        <div className="profile-mobile-header-send-message-wrapper">
                             <img
                                 className="profile-mobile-header__send-message"
                                 src="/ProfilePage/chat2.png"

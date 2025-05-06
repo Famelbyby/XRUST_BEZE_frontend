@@ -14,6 +14,7 @@ export const MAX_ATTACHMENTS_LENGTH = 10;
 export const MAX_ATTACHMENTS_SIZE = 100 * BYTES_IN_MB;
 export const MAX_HREFS_COUNT = 5;
 export const WRONG_HREF = 'Неправильный формат';
+export const ATLEAST_ONE_SKILL = 'Надо выбрать хотя бы один';
 export const VALID_AVATAR_EXTENSIONS = ['.png', '.jpeg', '.jpg', '.webp'];
 export const RUSSIAN_MONTHS = [
     'января',

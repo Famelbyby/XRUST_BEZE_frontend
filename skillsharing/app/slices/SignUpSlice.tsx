@@ -26,7 +26,8 @@ import {
     AUTH_SIGNUP_EMAIL_EXIST,
     AUTH_SIGNUP_USERNAME_EXIST,
 } from '../../shared/Consts/Errors';
-import { MAX_HREFS_COUNT } from '../../shared/Consts/ValidatorsConts';
+import { ATLEAST_ONE_SKILL, MAX_HREFS_COUNT } from '../../shared/Consts/ValidatorsConts';
+import { CapitalizeString } from '../../shared/Functions/FormatStrings';
 
 type SignUpStep = 1 | 2 | 3;
 
@@ -41,7 +42,9 @@ export interface SignUpState {
     isPending: boolean;
     globalSkills: string[];
     skills_to_learn: Skill[];
+    skillsToLearnError: string | undefined;
     skills_to_share: Skill[];
+    skillsToShareError: string | undefined;
     step: SignUpStep;
     hrefs: {
         value: string;
@@ -84,6 +87,8 @@ const initialState: SignUpState = {
     skills_to_share: [],
     step: 1,
     hrefs: [],
+    skillsToLearnError: ATLEAST_ONE_SKILL,
+    skillsToShareError: ATLEAST_ONE_SKILL,
 };
 
 export const signupSlice = createSlice({
@@ -189,12 +194,16 @@ export const signupSlice = createSlice({
         ) => {
             state.preferred_format = action.payload;
         },
-        addSkillToLearn: (state: SignUpState) => {
+        addSkillToLearn: (state: SignUpState, action: PayloadAction<string | undefined>) => {
+            const newSkill = action.payload;
+
             state.skills_to_learn.push({
-                name: state.globalSkills[0],
+                name: newSkill || state.globalSkills[0],
                 level: 'beginner',
                 description: '',
             });
+
+            state.skillsToLearnError = undefined;
         },
         deleteSkillFromLearn: (state: SignUpState, action: PayloadAction<string>) => {
             const skillName: string = action.payload;
@@ -211,6 +220,10 @@ export const signupSlice = createSlice({
                 ...state.skills_to_learn.slice(0, index),
                 ...state.skills_to_learn.slice(index + 1),
             ];
+
+            if (state.skills_to_learn.length === 0) {
+                state.skillsToLearnError = ATLEAST_ONE_SKILL;
+            }
         },
         editedSkillToLearn: (state: SignUpState, action: PayloadAction<[number, string]>) => {
             const [index, skillName] = action.payload;
@@ -222,12 +235,16 @@ export const signupSlice = createSlice({
 
             state.skills_to_learn[index].level = skillLevel as SkillLevel;
         },
-        addSkillToShare: (state: SignUpState) => {
+        addSkillToShare: (state: SignUpState, action: PayloadAction<string | undefined>) => {
+            const newSkill = action.payload;
+
             state.skills_to_share.push({
-                name: state.globalSkills[0],
+                name: newSkill || state.globalSkills[0],
                 level: 'beginner',
                 description: '',
             });
+
+            state.skillsToShareError = undefined;
         },
         deleteSkillFromShare: (state: SignUpState, action: PayloadAction<string>) => {
             const skillName: string = action.payload;
@@ -244,6 +261,8 @@ export const signupSlice = createSlice({
                 ...state.skills_to_share.slice(0, index),
                 ...state.skills_to_share.slice(index + 1),
             ];
+
+            state.skillsToShareError = ATLEAST_ONE_SKILL;
         },
         editedSkillToShare: (state: SignUpState, action: PayloadAction<[number, string]>) => {
             const [index, skillName] = action.payload;
@@ -358,13 +377,8 @@ export const signupSlice = createSlice({
 
                 state.globalSkills = state.globalSkills
                     .filter((value, index, array) => array.indexOf(value) === index)
-                    .sort((a, b) => a.charCodeAt(0) - b.charCodeAt(0));
-                state.skills_to_learn = [
-                    { name: state.globalSkills[0], level: 'beginner', description: '' },
-                ];
-                state.skills_to_share = [
-                    { name: state.globalSkills[0], level: 'beginner', description: '' },
-                ];
+                    .sort((a, b) => a.charCodeAt(0) - b.charCodeAt(0))
+                    .map((skill) => CapitalizeString(skill));
                 state.avatar.URL = undefined;
                 state.avatar.error = undefined;
                 state.avatar.file = undefined;

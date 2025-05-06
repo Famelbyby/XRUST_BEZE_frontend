@@ -14,17 +14,15 @@ import {
     editedBioField,
     addSkillToLearn,
     deleteSkillFromLearn,
-    editedSkillToLearn,
     editedSkillToLearnLevel,
-    editedSkillToShare,
-    editedSkillToShareLevel,
-    addSkillToShare,
-    deleteSkillFromShare,
     increaseStep,
     decreaseStep,
     deleteHref,
     addHref,
     changeHref,
+    addSkillToShare,
+    deleteSkillFromShare,
+    editedSkillToShareLevel,
 } from '../../app/slices/SignUpSlice';
 import { AppDispatch, AppState } from '../../app/AppStore';
 import './SignUp.scss';
@@ -37,6 +35,7 @@ import { CommunicationFormat } from '../../shared/Consts/Interfaces';
 import { BIO_MAX_LENGTH, MAX_HREFS_COUNT } from '../../shared/Consts/ValidatorsConts';
 import Loader from '../../features/Loader/Loader';
 import { Helmet } from 'react-helmet';
+import SkillToLayout from '../../features/SkillToLayout/SkillToLayout';
 
 const SignUpAvatar: React.FC = () => {
     const { avatar } = useSelector((state: AppState) => state.signup);
@@ -144,6 +143,8 @@ const SignUpRegisterButton: React.FC = () => {
         skills_to_learn,
         skills_to_share,
         hrefs,
+        skillsToLearnError,
+        skillsToShareError,
     } = useSelector((state: AppState) => state.signup);
     const dispatch = useDispatch<AppDispatch>();
 
@@ -182,7 +183,9 @@ const SignUpRegisterButton: React.FC = () => {
                     identifier.value === '' ||
                     email.value === '' ||
                     repeatPassword.value === '' ||
-                    hrefs.find((href) => href.error !== undefined)
+                    hrefs.find((href) => href.error !== undefined) ||
+                    skillsToLearnError !== undefined ||
+                    skillsToShareError !== undefined
                 ) {
                     return;
                 }
@@ -304,172 +307,40 @@ const SignUpBio: React.FC = () => {
 };
 
 const SignUpSkillToLearn: React.FC = () => {
-    const { skills_to_learn, globalSkills } = useSelector((state: AppState) => state.signup);
+    const { skills_to_learn, globalSkills, skillsToLearnError } = useSelector(
+        (state: AppState) => state.signup,
+    );
     const dispatch = useDispatch<AppDispatch>();
 
     return (
-        <div className="sign-up-sktl">
-            Выберите навыки для изучения
-            <div className="sign-up-sktl-cases">
-                {skills_to_learn.map((skill, index) => {
-                    return (
-                        <div className="sign-up-sktl-case" key={index}>
-                            <select
-                                className="sign-up-sktl-case-select-skill"
-                                onChange={(event) => {
-                                    dispatch(editedSkillToLearn([index, event.target.value]));
-                                }}
-                            >
-                                {globalSkills.map((glSkill) => {
-                                    return (
-                                        <>
-                                            {glSkill === skill.name && (
-                                                <option value={glSkill} selected key={index}>
-                                                    {glSkill}
-                                                </option>
-                                            )}
-                                            {glSkill !== skill.name && (
-                                                <option value={glSkill} key={index}>
-                                                    {glSkill}
-                                                </option>
-                                            )}
-                                        </>
-                                    );
-                                })}
-                            </select>
-                            <select
-                                className="sign-up-sktl-case-select-level"
-                                onChange={(event) => {
-                                    dispatch(editedSkillToLearnLevel([index, event.target.value]));
-                                }}
-                            >
-                                {['beginner', 'intermediate', 'advanced'].map((level) => {
-                                    return (
-                                        <>
-                                            {level === skill.level && (
-                                                <option value={level} selected key={index}>
-                                                    {level}
-                                                </option>
-                                            )}
-                                            {level !== skill.level && (
-                                                <option value={level} key={index}>
-                                                    {level}
-                                                </option>
-                                            )}
-                                        </>
-                                    );
-                                })}
-                            </select>
-                            {skills_to_learn.length !== 1 && (
-                                <img
-                                    className="sign-up-sktl-case__delete-img"
-                                    src="/shared/cancel.png"
-                                    alt="Удалить навык"
-                                    onClick={() => dispatch(deleteSkillFromLearn(skill.name))}
-                                />
-                            )}
-                        </div>
-                    );
-                })}
-                {skills_to_learn.length < 5 && (
-                    <div
-                        className="sign-up-sktl-cases-add-skill"
-                        onClick={() => dispatch(addSkillToLearn())}
-                    >
-                        <img
-                            className="sign-up-sktl-cases-add-skill__img"
-                            src="/shared/plus.png"
-                            alt="Добавить навык для изучения"
-                        />
-                    </div>
-                )}
-            </div>
-        </div>
+        <SkillToLayout
+            skills={skills_to_learn}
+            globalSkills={globalSkills}
+            error={skillsToLearnError}
+            title={'Выберите навыки для изучения'}
+            addSkill={(name) => dispatch(addSkillToLearn(name))}
+            deleteSkill={(name) => dispatch(deleteSkillFromLearn(name))}
+            editedLevel={([index, name]) => dispatch(editedSkillToLearnLevel([index, name]))}
+        />
     );
 };
 
 const SignUpSkillToShare: React.FC = () => {
-    const { skills_to_share, globalSkills } = useSelector((state: AppState) => state.signup);
+    const { skills_to_share, globalSkills, skillsToShareError } = useSelector(
+        (state: AppState) => state.signup,
+    );
     const dispatch = useDispatch<AppDispatch>();
 
     return (
-        <div className="sign-up-sktl">
-            Выберите навыки, которому хотите обучать
-            <div className="sign-up-sktl-cases">
-                {skills_to_share.map((skill, index) => {
-                    return (
-                        <div className="sign-up-sktl-case" key={index}>
-                            <select
-                                className="sign-up-sktl-case-select-skill"
-                                onChange={(event) => {
-                                    dispatch(editedSkillToShare([index, event.target.value]));
-                                }}
-                            >
-                                {globalSkills.map((glSkill) => {
-                                    return (
-                                        <>
-                                            {glSkill === skill.name && (
-                                                <option value={glSkill} selected key={index}>
-                                                    {glSkill}
-                                                </option>
-                                            )}
-                                            {glSkill !== skill.name && (
-                                                <option value={glSkill} key={index}>
-                                                    {glSkill}
-                                                </option>
-                                            )}
-                                        </>
-                                    );
-                                })}
-                            </select>
-                            <select
-                                className="sign-up-sktl-case-select-level"
-                                onChange={(event) => {
-                                    dispatch(editedSkillToShareLevel([index, event.target.value]));
-                                }}
-                            >
-                                {['beginner', 'intermediate', 'advanced'].map((level) => {
-                                    return (
-                                        <>
-                                            {level === skill.level && (
-                                                <option value={level} selected key={index}>
-                                                    {level}
-                                                </option>
-                                            )}
-                                            {level !== skill.level && (
-                                                <option value={level} key={index}>
-                                                    {level}
-                                                </option>
-                                            )}
-                                        </>
-                                    );
-                                })}
-                            </select>
-                            {skills_to_share.length !== 1 && (
-                                <img
-                                    className="sign-up-sktl-case__delete-img"
-                                    src="/shared/cancel.png"
-                                    alt="Удалить навык"
-                                    onClick={() => dispatch(deleteSkillFromShare(skill.name))}
-                                />
-                            )}
-                        </div>
-                    );
-                })}
-                {skills_to_share.length < 5 && (
-                    <div
-                        className="sign-up-sktl-cases-add-skill"
-                        onClick={() => dispatch(addSkillToShare())}
-                    >
-                        <img
-                            className="sign-up-sktl-cases-add-skill__img"
-                            src="/shared/plus.png"
-                            alt="Добавить навык для изучения"
-                        />
-                    </div>
-                )}
-            </div>
-        </div>
+        <SkillToLayout
+            skills={skills_to_share}
+            globalSkills={globalSkills}
+            error={skillsToShareError}
+            title={'Выберите навыки, которому хотите обучать'}
+            addSkill={(name) => dispatch(addSkillToShare(name))}
+            deleteSkill={(name) => dispatch(deleteSkillFromShare(name))}
+            editedLevel={([index, name]) => dispatch(editedSkillToShareLevel([index, name]))}
+        />
     );
 };
 

@@ -78,7 +78,7 @@
         margin-top: 1px;
     }
 
-    &-logout-wrapper {
+    &-logout-wrapper, &-send-message-wrapper {
         display: flex;
         padding: 8px;
         background: #6c9eff;
@@ -94,7 +94,7 @@
         transition-duration: 0.2s;
 
         &:hover {
-            width: 22px;
+            width: 21px;
         }
     }
 }

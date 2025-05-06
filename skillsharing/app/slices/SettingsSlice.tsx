@@ -18,7 +18,7 @@ import {
 } from '../../shared/Functions/Validators';
 import { GetProfile } from '../../pages/Profile/api/Profile';
 import { UpdateProfile } from '../../pages/Settings/api/Settings';
-import { MAX_HREFS_COUNT } from '../../shared/Consts/ValidatorsConts';
+import { ATLEAST_ONE_SKILL, MAX_HREFS_COUNT } from '../../shared/Consts/ValidatorsConts';
 import { SETTINGS_PROFANITY_DETECTED, SETTINGS_USERNAME_EXIST } from '../../shared/Consts/Errors';
 
 export interface SettingsState {
@@ -33,6 +33,8 @@ export interface SettingsState {
         value: string;
         error: string | undefined;
     }[];
+    skillsToLearnError: string | undefined;
+    skillsToShareError: string | undefined;
 }
 
 const initialState: SettingsState = {
@@ -48,10 +50,12 @@ const initialState: SettingsState = {
     },
     isPending: false,
     hrefs: [],
+    skillsToLearnError: undefined,
+    skillsToShareError: undefined,
 };
 
 export const settingsSlice = createSlice({
-    name: 'structurizedMessage',
+    name: 'settings',
     initialState,
     reducers: {
         setPreferredFormat: (state: SettingsState, action: PayloadAction<CommunicationFormat>) => {
@@ -87,16 +91,20 @@ export const settingsSlice = createSlice({
         clearUpdated: (state: SettingsState) => {
             state.isUpdated = false;
         },
-        addSkillToLearn: (state: SettingsState) => {
+        addSkillToLearn: (state: SettingsState, action: PayloadAction<string | undefined>) => {
             if (state.user === undefined) {
                 return;
             }
 
+            const newSkill = action.payload;
+
             state.user.skills_to_learn.push({
-                name: state.globalSkills[0],
+                name: newSkill || state.globalSkills[0],
                 level: 'beginner',
                 description: '',
             });
+
+            state.skillsToLearnError = undefined;
         },
         deleteSkillFromLearn: (state: SettingsState, action: PayloadAction<string>) => {
             const skillName: string = action.payload;
@@ -117,6 +125,10 @@ export const settingsSlice = createSlice({
                 ...state.user.skills_to_learn.slice(0, index),
                 ...state.user.skills_to_learn.slice(index + 1),
             ];
+
+            if (state.user.skills_to_learn.length === 0) {
+                state.skillsToLearnError = ATLEAST_ONE_SKILL;
+            }
         },
         editedSkillToLearn: (state: SettingsState, action: PayloadAction<[number, string]>) => {
             const [index, skillName] = action.payload;
@@ -139,16 +151,20 @@ export const settingsSlice = createSlice({
 
             state.user.skills_to_learn[index].level = skillLevel as SkillLevel;
         },
-        addSkillToShare: (state: SettingsState) => {
+        addSkillToShare: (state: SettingsState, action: PayloadAction<string | undefined>) => {
             if (state.user === undefined) {
                 return;
             }
 
+            const newSkill = action.payload;
+
             state.user.skills_to_share.push({
-                name: state.globalSkills[0],
+                name: newSkill || state.globalSkills[0],
                 level: 'beginner',
                 description: '',
             });
+
+            state.skillsToShareError = undefined;
         },
         deleteSkillFromShare: (state: SettingsState, action: PayloadAction<string>) => {
             const skillName: string = action.payload;
@@ -169,6 +185,10 @@ export const settingsSlice = createSlice({
                 ...state.user.skills_to_share.slice(0, index),
                 ...state.user.skills_to_share.slice(index + 1),
             ];
+
+            if (state.user.skills_to_share.length === 0) {
+                state.skillsToShareError = ATLEAST_ONE_SKILL;
+            }
         },
         editedSkillToShare: (state: SettingsState, action: PayloadAction<[number, string]>) => {
             const [index, skillName] = action.payload;
@@ -222,6 +242,8 @@ export const settingsSlice = createSlice({
             state.isPending = false;
             state.hrefs = [];
             state.bioError = undefined;
+            state.skillsToLearnError = undefined;
+            state.skillsToShareError = undefined;
         },
         addHrefSettings: (state: SettingsState) => {
             if (state.hrefs.length === MAX_HREFS_COUNT) {
@@ -273,6 +295,8 @@ export const settingsSlice = createSlice({
                 state.avatar.file = undefined;
                 state.usernameError = undefined;
                 state.hrefs = [];
+                state.skillsToLearnError = undefined;
+                state.skillsToShareError = undefined;
 
                 if (state.user !== undefined) {
                     state.user.hrefs?.forEach((href) => {
@@ -296,6 +320,8 @@ export const settingsSlice = createSlice({
                 state.avatar.file = undefined;
                 state.usernameError = undefined;
                 state.hrefs = [];
+                state.skillsToLearnError = undefined;
+                state.skillsToShareError = undefined;
 
                 if (state.user !== undefined) {
                     state.user.hrefs?.forEach((href) => {
@@ -319,6 +345,8 @@ export const settingsSlice = createSlice({
                 state.avatar.file = undefined;
                 state.usernameError = undefined;
                 state.hrefs = [];
+                state.skillsToLearnError = undefined;
+                state.skillsToShareError = undefined;
 
                 if (state.user !== undefined) {
                     state.user.hrefs?.forEach((href) => {
@@ -351,6 +379,8 @@ export const settingsSlice = createSlice({
                 state.avatar.file = undefined;
                 state.usernameError = undefined;
                 state.hrefs = [];
+                state.skillsToLearnError = undefined;
+                state.skillsToShareError = undefined;
 
                 if (state.user !== undefined) {
                     state.user.hrefs?.forEach((href) => {
@@ -378,6 +408,8 @@ export const settingsSlice = createSlice({
 
                 state.bioError = undefined;
                 state.usernameError = undefined;
+                state.skillsToLearnError = undefined;
+                state.skillsToShareError = undefined;
 
                 if (data.error !== undefined) {
                     switch (data.error.error) {

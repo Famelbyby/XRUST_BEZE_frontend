@@ -1,15 +1,31 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { AppState } from '../../app/AppStore';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, AppState } from '../../app/AppStore';
 import './ProfileMobileContent.scss';
 import { Link } from 'react-router';
 import { CommunicationFormat, Skill } from '../../shared/Consts/Interfaces';
 import { CapitalizeString } from '../../shared/Functions/FormatStrings';
 import { PREFERRED_FORMAT_TRANSLATION } from '../../shared/Consts/Translations';
+import { hideDeleteReviewModal } from '../../app/slices/ProfileSlice';
+import { DeleteReview } from '../../pages/Profile/api/Profile';
+import { createPortal } from 'react-dom';
+import ModalWindow from '../../features/ModalWindow/ModalWindow';
+import ProfileAddReview from '../../features/ProfileAddReview/ProfileAddReview';
+import Review from '../../entity/Review/Review';
 
 const ProfileMobileContent: React.FC = () => {
-    const { user: profile } = useSelector((state: AppState) => state.profile);
+    const {
+        user: profile,
+        isHiddenDeleteReview,
+        deleteReviewId,
+    } = useSelector((state: AppState) => state.profile);
     const { user: myUser } = useSelector((state: AppState) => state.user);
+    const alreadyHaveReview =
+        myUser !== undefined &&
+        profile !== undefined &&
+        ((profile.reviews || []).find((review) => review.user_id_by === myUser.id) ||
+            profile.id === myUser.id);
+    const dispatch = useDispatch<AppDispatch>();
 
     return (
         <div className="profile-mobile-content">
@@ -137,6 +153,35 @@ const ProfileMobileContent: React.FC = () => {
                     </div>
                 </Link>
             </div>
+            <div className="profile-mobile-content-reviews">
+                Отзывы
+                {!alreadyHaveReview && <ProfileAddReview />}
+                {profile !== undefined &&
+                    (profile.reviews === undefined || profile.reviews.length === 0) && (
+                        <div className="profile-mobile-content-reviews__no-reviews">
+                            Отзывов нет
+                        </div>
+                    )}
+                {profile !== undefined && profile.reviews !== undefined && (
+                    <>
+                        {profile.reviews.map((review) => {
+                            return <Review key={review.id} review={review} />;
+                        })}
+                    </>
+                )}
+            </div>
+            {!isHiddenDeleteReview &&
+                createPortal(
+                    <ModalWindow
+                        modalType={'delete'}
+                        closeModal={() => dispatch(hideDeleteReviewModal())}
+                        agreeTitle="Да"
+                        cancelTitle="Отменить"
+                        agreeFunc={() => dispatch(DeleteReview(deleteReviewId))}
+                        windowTitle="Вы уверены, что хотите удалить отзыв?"
+                    />,
+                    document.querySelector('#root')!,
+                )}
         </div>
     );
 };

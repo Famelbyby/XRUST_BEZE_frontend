@@ -203,4 +203,22 @@
             }
         }
     }
+
+    &-reviews {
+        font-family: "Inter";
+        font-size: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: start;
+
+        &__no-reviews {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            color: #00000069;
+            font-size: 18px;
+            padding-top: 10px;
+        }
+    }
 }

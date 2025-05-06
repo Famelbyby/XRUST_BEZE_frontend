@@ -9,9 +9,15 @@ import Loader from '../../features/Loader/Loader';
 
 const SettingsFooter: React.FC = () => {
     const navigatoTo = useNavigate();
-    const { user, usernameError, avatar, isPending, hrefs } = useSelector(
-        (state: AppState) => state.settings,
-    );
+    const {
+        user,
+        usernameError,
+        avatar,
+        isPending,
+        hrefs,
+        skillsToLearnError,
+        skillsToShareError,
+    } = useSelector((state: AppState) => state.settings);
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
@@ -38,7 +44,9 @@ const SettingsFooter: React.FC = () => {
                         if (
                             usernameError ||
                             avatar.error !== undefined ||
-                            hrefs.find((href) => href.error !== undefined)
+                            hrefs.find((href) => href.error !== undefined) ||
+                            skillsToLearnError !== undefined ||
+                            skillsToShareError !== undefined
                         ) {
                             return;
                         }
