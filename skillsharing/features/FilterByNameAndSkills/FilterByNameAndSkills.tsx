@@ -29,6 +29,24 @@ const FilterByNameAndSkills: React.FC<FilterProps> = ({
     );
 
     useEffect(() => {
+        const name = query.get('name');
+
+        if (name !== null) {
+            if (name !== materialNameInput) {
+                setMaterialNameInput(name);
+            }
+
+            return;
+        }
+
+        const querySkills = query.getAll('skill');
+
+        if (querySkills.length !== skills.length) {
+            setSkills(querySkills);
+        }
+    }, [query]);
+
+    useEffect(() => {
         if (filterType === 'name') {
             changedName(materialNameInput);
 
