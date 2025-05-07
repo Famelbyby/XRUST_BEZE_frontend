@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FilterType } from '../../shared/Consts/Interfaces';
 import './FilterByNameAndSkills.scss';
 import DropdownMenu from '../DropdownMenu/DropdownMenu';
+import { useSearchParams } from 'react-router';
 
 interface FilterProps {
     globalSkills: string[];
@@ -19,20 +20,41 @@ const FilterByNameAndSkills: React.FC<FilterProps> = ({
     const [materialNameInput, setMaterialNameInput] = useState('');
     const [filterType, setFilterType] = useState<FilterType>('name');
     const [skills, setSkills] = useState<string[]>([]);
+    const [query, setQuery] = useSearchParams();
 
     const enabledSkills = globalSkills.filter(
         (globalSkill) => !skills.find((skill) => skill === globalSkill),
     );
 
     useEffect(() => {
+        const name = query.get('name');
+        const skills = query.getAll('skill');
+
+        setMaterialNameInput(name || '');
+        setSkills(skills || []);
+    }, []);
+
+    useEffect(() => {
         if (filterType === 'name') {
             changedName(materialNameInput);
+
+            if (materialNameInput === '') {
+                setQuery(undefined);
+            } else {
+                setQuery({ name: materialNameInput });
+            }
         }
     }, [materialNameInput]);
 
     useEffect(() => {
         if (filterType === 'skill') {
             changedSkill(skills);
+
+            if (skills.length === 0) {
+                setQuery(undefined);
+            } else {
+                setQuery({ skill: skills });
+            }
         }
     }, [skills]);
 
