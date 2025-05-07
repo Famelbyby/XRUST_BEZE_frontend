@@ -21,9 +21,9 @@
 
     &-attachments {
         display: flex;
-        flex-direction: row-reverse;
         gap: 10px;
         flex-wrap: wrap;
+        padding: 0 20px;
 
         &-item {
             display: flex;

@@ -129,6 +129,10 @@
             }
         }
 
+        &-share__img {
+            transform: scale(-1, 1);
+        }
+
         &-author {
             display: flex;
             gap: 10px;

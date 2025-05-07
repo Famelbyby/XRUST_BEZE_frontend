@@ -15,7 +15,7 @@ function MinutesEndingInRussian(minutes: number): string {
     switch (true) {
         case minutes % 10 === 1 && minutes % 100 !== 11:
             return 'у';
-        case minutes % 10 < 5 && (minutes < 10 || minutes > 14):
+        case minutes % 10 !== 0 && minutes % 10 < 5 && (minutes < 10 || minutes > 14):
             return 'ы';
         default:
             return '';
@@ -31,7 +31,7 @@ function HoursEndingInRussian(hours: number): string {
     switch (true) {
         case hours % 10 === 1:
             return '';
-        case hours % 10 < 5 && (hours < 10 || hours > 14):
+        case hours % 10 !== 0 && hours % 10 < 5 && (hours < 10 || hours > 14):
             return 'а';
         default:
             return 'ов';
@@ -47,7 +47,7 @@ function DaysEndingInRussian(days: number): string {
     switch (true) {
         case days % 10 === 1 && days % 100 !== 11:
             return 'день';
-        case days % 10 < 5 && (days % 100 < 10 || days % 100 > 14):
+        case days % 10 !== 0 && days % 10 < 5 && (days % 100 < 10 || days % 100 > 14):
             return 'дня';
         default:
             return 'дней';

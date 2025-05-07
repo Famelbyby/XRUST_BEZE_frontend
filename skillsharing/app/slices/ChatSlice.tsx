@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { IMessage } from '../../entity/Message/MessageTypes';
 import { ProfileType } from '../../pages/Profile/ui/ProfileTypes';
 import { ChannelReponse, UserResponse } from '../../shared/Consts/Interfaces';
-import { CODE_BAD } from '../../shared/Consts/Codes';
+import { CODE_NOT_FOUND } from '../../shared/Consts/Codes';
 import { GetChannelByIds, GetCompanion } from '../../pages/Chat/api/Chat';
 
 export interface MessagesState {
@@ -62,6 +62,11 @@ export const chatSlice = createSlice({
             state.noPeerError = false;
             state.noChatError = false;
             state.structurizedMessageId = '';
+            state.structurizingMessages = [];
+            state.companion = undefined;
+            state.isFetched = false;
+            state.isHiddenDeletingModal = true;
+            state.isHiddenStructurizedModal = true;
         },
         replaceMessages: (state: MessagesState, action: PayloadAction<IMessage[]>) => {
             const messages: IMessage[] = action.payload;
@@ -198,7 +203,7 @@ export const chatSlice = createSlice({
             .addCase(GetChannelByIds.fulfilled, (state: MessagesState, action) => {
                 const response = action.payload as unknown as ChannelReponse;
 
-                if (response.status === CODE_BAD) {
+                if (response.status === CODE_NOT_FOUND) {
                     state.noChatError = true;
                     state.noPeerError = false;
                     state.messages = [];
