@@ -74,9 +74,21 @@ const DialogsContent: React.FC = () => {
                         })}
                     {filteredDialogs !== undefined &&
                         filteredDialogs.length > 0 &&
-                        filteredDialogs.map((dialog: DialogItem) => {
-                            return <Dialog dialog={dialog} key={dialog.channel_id} />;
-                        })}
+                        [...filteredDialogs]
+                            .sort((a, b) => {
+                                if (b.last_message === null) {
+                                    return 1;
+                                }
+
+                                if (a.last_message === null) {
+                                    return -1;
+                                }
+
+                                return b.last_message.created_at - a.last_message.created_at;
+                            })
+                            .map((dialog: DialogItem) => {
+                                return <Dialog dialog={dialog} key={dialog.channel_id} />;
+                            })}
                     {filteredDialogs !== undefined && filteredDialogs.length === 0 && (
                         <div className="dialogs__no-chats">Чатов нет</div>
                     )}
