@@ -64,12 +64,26 @@ const FilterByNameAndSkills: React.FC<FilterProps> = ({
                         setFilterType(event.target.value as FilterType);
                     }}
                 >
-                    <option className="filter-layout-filter__option" value={'name'} selected>
-                        названию
-                    </option>
-                    <option className="filter-layout-filter__option" value={'skill'}>
-                        навыку
-                    </option>
+                    {filterType === 'name' && (
+                        <option className="filter-layout-filter__option" value={'name'} selected>
+                            названию
+                        </option>
+                    )}
+                    {filterType !== 'name' && (
+                        <option className="filter-layout-filter__option" value={'name'} selected>
+                            названию
+                        </option>
+                    )}
+                    {filterType === 'skill' && (
+                        <option className="filter-layout-filter__option" value={'skill'} selected>
+                            навыку
+                        </option>
+                    )}
+                    {filterType !== 'skill' && (
+                        <option className="filter-layout-filter__option" value={'skill'}>
+                            навыку
+                        </option>
+                    )}
                 </select>
             </div>
             <div className="filter-layout-inputs">

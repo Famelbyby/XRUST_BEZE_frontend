@@ -90,14 +90,9 @@ const RightSide: React.FC = () => {
 };
 
 const MaterialsContent: React.FC = () => {
-    const { user } = useSelector((state: AppState) => state.user);
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
-        if (user !== undefined) {
-            dispatch(GetMaterialsByTags(user.skills_to_learn.map((skill) => skill.name)));
-        }
-
         return () => {
             dispatch(clearMaterials());
         };
