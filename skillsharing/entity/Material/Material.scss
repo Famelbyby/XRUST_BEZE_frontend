@@ -41,9 +41,7 @@
             }
         }
 
-        &__tags {
-            color: #00000069;
-
+        &-tags {
             @include phones {
                 font-size: 12px;
             }

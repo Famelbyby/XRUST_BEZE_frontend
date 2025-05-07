@@ -21,8 +21,10 @@ const Material: React.FC<MaterialItem> = (material) => {
         <div className="material" onClick={() => navigateTo(`/materials/${material.id}`)}>
             <div className="material-header">
                 <div className="material-header__title">{material.name}</div>
-                <div className="material-header__tags">
-                    {material.tags.reduce((accum, currentTag) => accum + currentTag + ' ', '')}
+                <div className="material-header-tags">
+                    {material.tags.map((tag) => {
+                        return <div className="material-header-tags__item">{tag}</div>;
+                    })}
                 </div>
             </div>
             <div className="material-footer">
