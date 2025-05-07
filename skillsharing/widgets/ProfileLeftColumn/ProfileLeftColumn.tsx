@@ -79,7 +79,10 @@ const ProfileLeftColumn: React.FC = () => {
                     {user !== undefined &&
                         user.skills_to_share.map((skill: Skill) => {
                             return (
-                                <Link to={`/main-page?skill=${skill.name}`} key={skill.name}>
+                                <Link
+                                    to={`/main-page?skill=${skill.name.replaceAll('+', '%2b')}`}
+                                    key={skill.name}
+                                >
                                     <div
                                         className={`profile-tags-array__tag profile-tags-array__tag_${skill.level}`}
                                         title={`${CapitalizeString(skill.level)}`}
@@ -100,7 +103,10 @@ const ProfileLeftColumn: React.FC = () => {
                         {user !== undefined &&
                             user.skills_to_learn.map((skill: Skill) => {
                                 return (
-                                    <Link to={`/main-page?skill=${skill.name}`} key={skill.name}>
+                                    <Link
+                                        to={`/main-page?skill=${skill.name.replaceAll('+', '%2b')}`}
+                                        key={skill.name}
+                                    >
                                         <div
                                             className={`profile-to-learn-array__tag profile-to-learn-array__tag_${skill.level}`}
                                             title={`${CapitalizeString(skill.level)}`}
