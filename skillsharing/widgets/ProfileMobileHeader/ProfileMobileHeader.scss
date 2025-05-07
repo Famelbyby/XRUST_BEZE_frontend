@@ -10,7 +10,7 @@
     }
 
     &__name {
-        font-size: 18px;
+        font-size: 14px;
         word-break: break-all;
     }
 
@@ -30,7 +30,7 @@
             flex-direction: column;
             font-family: 'Inter';
             height: 55px;
-            gap: 10px;
+            justify-content: space-around;
         }
     }
 
@@ -40,13 +40,13 @@
         align-items: center;
 
         &__img {
-            width: 15px;
+            width: 12px;
             aspect-ratio: 1;
             user-select: none;
         }
 
         &__title {
-            font-size: 12px;
+            font-size: 10px;
             color: #7e7e7e;
         }
     }
@@ -55,7 +55,7 @@
         display: flex;
         align-items: center;
         gap: 5px;
-        padding-top: 2px;
+        padding-top: 8px;
 
         &__img {
             width: 17px;
@@ -86,7 +86,7 @@
     }
 
     &__report, &__send-message, &__edit, &__logout {
-        width: 20px;
+        width: 18px;
         aspect-ratio: 1;
         cursor: pointer;
         user-select: none;
@@ -94,7 +94,7 @@
         transition-duration: 0.2s;
 
         &:hover {
-            width: 21px;
+            width: 19px;
         }
     }
 }

@@ -84,9 +84,8 @@
         font-size: 13px;
 
         @include phones {
-            padding: 7px;
             font-size: 11px;
-            width: 300px;
+            max-width: 300px;
         }
 
         &:focus-visible {

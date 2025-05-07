@@ -91,13 +91,18 @@ const ProfileMobileContent: React.FC = () => {
                         {profile !== undefined &&
                             profile.skills_to_share.map((skill: Skill) => {
                                 return (
-                                    <div
-                                        className={`profile-mobile-content-tags-array__tag profile-mobile-content-tags-array__tag_${skill.level}`}
-                                        title={`${CapitalizeString(skill.level)}`}
+                                    <Link
+                                        to={`/main-page?skill=${skill.name.replaceAll('+', '%2b')}`}
                                         key={skill.name}
                                     >
-                                        {skill.name}
-                                    </div>
+                                        <div
+                                            className={`profile-mobile-content-tags-array__tag profile-mobile-content-tags-array__tag_${skill.level}`}
+                                            title={`${CapitalizeString(skill.level)}`}
+                                            key={skill.name}
+                                        >
+                                            {skill.name}
+                                        </div>
+                                    </Link>
                                 );
                             })}
                     </div>
@@ -113,13 +118,18 @@ const ProfileMobileContent: React.FC = () => {
                             {profile !== undefined &&
                                 profile.skills_to_learn.map((skill: Skill) => {
                                     return (
-                                        <div
-                                            className={`profile-mobile-content-to-learn-array__tag profile-mobile-content-to-learn-array__tag_${skill.level}`}
-                                            title={`${CapitalizeString(skill.level)}`}
+                                        <Link
+                                            to={`/main-page?skill=${skill.name.replaceAll('+', '%2b')}`}
                                             key={skill.name}
                                         >
-                                            {skill.name}
-                                        </div>
+                                            <div
+                                                className={`profile-mobile-content-to-learn-array__tag profile-mobile-content-to-learn-array__tag_${skill.level}`}
+                                                title={`${CapitalizeString(skill.level)}`}
+                                                key={skill.name}
+                                            >
+                                                {skill.name}
+                                            </div>
+                                        </Link>
                                     );
                                 })}
                         </div>

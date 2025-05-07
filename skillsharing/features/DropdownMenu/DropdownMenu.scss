@@ -1,3 +1,9 @@
+@mixin phones {
+    @media screen and (width <= 800px) {
+        @content;
+    }
+}
+
 .dropdown-menu {
     display: flex;
     flex-direction: column;
@@ -9,6 +15,10 @@
         padding: 10px;
         font-family: "Inter";
         font-size: 13px;
+
+        @include phones {
+            font-size: 11px;
+        }
 
         &:focus-visible {
             outline: none;
