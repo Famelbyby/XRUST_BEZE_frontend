@@ -1,3 +1,9 @@
+@mixin phones {
+    @media screen and (width <= 800px) {
+        @content;
+    }
+}
+
 .settings-footer {
     display: flex;
     width: 100%;
@@ -5,12 +11,17 @@
     align-items: center;
     justify-content: center;
     border-top: 1px solid;
+    
+    @include phones {
+        padding: 5px 0;
+    }
 
     &-buttons {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 60px;
+        user-select: none;
     }
 
     &__cancel, &__save {
@@ -20,6 +31,10 @@
         cursor: pointer;
         transition-duration: 0.2s;
         border: none;
+
+        @include phones {
+            padding: 7px 15px;
+        }
 
         &:hover {
             transform: translateY(-2px);

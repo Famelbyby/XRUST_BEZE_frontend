@@ -7,14 +7,26 @@
     animation-direction: alternate;
 }
 
+@mixin phones {
+    @media screen and (width <= 800px) {
+        @content;
+    }
+}
+
 .settings {
     &-left-column {
         display: flex;
         flex-direction: column;
-        width: 300px;
+        max-width: 300px;
         align-items: center;
         margin-right: 30px;
         gap: 30px;
+
+        @include phones {
+            margin-right: 0px;
+            width: 100%;
+            gap: 20px;
+        }
     }
 
     &-avatar {
@@ -24,6 +36,11 @@
         align-items: start;
         width: 100%;
         gap: 10px;
+
+        @include phones {
+            align-items: center;
+            font-size: 16px;
+        }
 
         &__error {
             font-size: 12px;
@@ -35,9 +52,13 @@
         &-set {
             position: relative;
             width: 200px;
-            height: 200px;
+            aspect-ratio: 1;
             border-radius: 7px;
             cursor: pointer;
+
+            @include phones {
+                width: 70px;
+            }
 
             &:hover {
                 .settings-avatar-set__img {
@@ -98,11 +119,22 @@
         flex-direction: column;
         gap: 10px;
 
+        @include phones {
+            align-items: center;
+            flex-direction: row;
+            font-size: 16px;
+        }
+
         &-select {
             padding: 5px 10px;
             border-radius: 8px;
             font-size: 14px;
             font-family: 'Inter';
+
+            @include phones {
+                padding: 3px;
+                font-size: 12px;
+            }
 
             &:focus {
                 outline: none;
