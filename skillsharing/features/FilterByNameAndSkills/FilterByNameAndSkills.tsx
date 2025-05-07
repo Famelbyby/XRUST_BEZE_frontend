@@ -35,7 +35,9 @@ const FilterByNameAndSkills: React.FC<FilterProps> = ({
             if (materialNameInput === '') {
                 setQuery(undefined);
             } else {
-                setQuery({ name: materialNameInput });
+                if (query.get('name') !== materialNameInput) {
+                    setQuery({ name: materialNameInput });
+                }
             }
         }
     }, [materialNameInput]);
@@ -47,7 +49,9 @@ const FilterByNameAndSkills: React.FC<FilterProps> = ({
             if (skills.length === 0) {
                 setQuery(undefined);
             } else {
-                setQuery({ skill: skills });
+                if (skills.length !== (query.getAll('skill') || []).length) {
+                    setQuery({ skill: skills });
+                }
             }
         }
     }, [skills]);
