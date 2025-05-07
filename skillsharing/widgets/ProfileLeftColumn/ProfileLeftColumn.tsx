@@ -7,6 +7,7 @@ import { CommunicationFormat, Skill } from '../../shared/Consts/Interfaces';
 import { AVATAR_URL } from '../../shared/Consts/URLS';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../app/AppStore';
+import { Link } from 'react-router';
 
 const profileStatistics: StatisticItem[] = [
     {
@@ -78,13 +79,14 @@ const ProfileLeftColumn: React.FC = () => {
                     {user !== undefined &&
                         user.skills_to_share.map((skill: Skill) => {
                             return (
-                                <div
-                                    className={`profile-tags-array__tag profile-tags-array__tag_${skill.level}`}
-                                    title={`${CapitalizeString(skill.level)}`}
-                                    key={skill.name}
-                                >
-                                    {skill.name}
-                                </div>
+                                <Link to={`/main-page?skill=${skill.name}`} key={skill.name}>
+                                    <div
+                                        className={`profile-tags-array__tag profile-tags-array__tag_${skill.level}`}
+                                        title={`${CapitalizeString(skill.level)}`}
+                                    >
+                                        {skill.name}
+                                    </div>
+                                </Link>
                             );
                         })}
                 </div>
@@ -98,13 +100,15 @@ const ProfileLeftColumn: React.FC = () => {
                         {user !== undefined &&
                             user.skills_to_learn.map((skill: Skill) => {
                                 return (
-                                    <div
-                                        className={`profile-to-learn-array__tag profile-to-learn-array__tag_${skill.level}`}
-                                        title={`${CapitalizeString(skill.level)}`}
-                                        key={skill.name}
-                                    >
-                                        {skill.name}
-                                    </div>
+                                    <Link to={`/main-page?skill=${skill.name}`} key={skill.name}>
+                                        <div
+                                            className={`profile-to-learn-array__tag profile-to-learn-array__tag_${skill.level}`}
+                                            title={`${CapitalizeString(skill.level)}`}
+                                            key={skill.name}
+                                        >
+                                            {skill.name}
+                                        </div>
+                                    </Link>
                                 );
                             })}
                     </div>
