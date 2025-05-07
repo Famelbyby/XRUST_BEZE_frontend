@@ -14,14 +14,6 @@ import { GetCategories } from '../../pages/Auth/api/Auth';
 
 const MainlLeftSide: React.FC = () => {
     const { foundUsers } = useSelector((state: AppState) => state.mainPageUsers);
-    const { user } = useSelector((state: AppState) => state.user);
-    const dispatch = useDispatch<AppDispatch>();
-
-    useEffect(() => {
-        if (user !== undefined) {
-            dispatch(GetMatchedUsers({ userId: user.id }));
-        }
-    }, [user, dispatch]);
 
     return (
         <div className="main-content-left-side">
