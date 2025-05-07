@@ -22,7 +22,12 @@ const initialState: MainState = {
 export const mainSlice = createSlice({
     name: 'main',
     initialState,
-    reducers: {},
+    reducers: {
+        clearFoundUsers: (state: MainState) => {
+            state.foundUsers = undefined;
+            state.globalSkills = [];
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(GetMatchedUsers.fulfilled, (state: MainState, action) => {
@@ -83,5 +88,7 @@ export const mainSlice = createSlice({
             });
     },
 });
+
+export const { clearFoundUsers } = mainSlice.actions;
 
 export default mainSlice.reducer;

@@ -11,6 +11,7 @@ import { AppDispatch, AppState } from '../../app/AppStore';
 import './MainContent.scss';
 import FilterByNameAndSkills from '../../features/FilterByNameAndSkills/FilterByNameAndSkills';
 import { GetCategories } from '../../pages/Auth/api/Auth';
+import { clearFoundUsers } from '../../app/slices/MainSlice';
 
 const MainlLeftSide: React.FC = () => {
     const { foundUsers } = useSelector((state: AppState) => state.mainPageUsers);
@@ -82,6 +83,12 @@ const MainRightSide: React.FC = () => {
 };
 
 const MainContent: React.FC = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(clearFoundUsers());
+    }, []);
+
     return (
         <div className="main-content">
             <MainlLeftSide />
