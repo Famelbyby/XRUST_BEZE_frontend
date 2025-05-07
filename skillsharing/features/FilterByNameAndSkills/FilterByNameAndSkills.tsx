@@ -17,10 +17,12 @@ const FilterByNameAndSkills: React.FC<FilterProps> = ({
     globalSkills,
     placeholder,
 }) => {
-    const [filterType, setFilterType] = useState<FilterType>('name');
     const [query, setQuery] = useSearchParams();
     const [skills, setSkills] = useState<string[]>(query.getAll('skill') || []);
     const [materialNameInput, setMaterialNameInput] = useState(query.get('name') || '');
+    const [filterType, setFilterType] = useState<FilterType>(
+        materialNameInput === '' && skills.length !== 0 ? 'skill' : 'name',
+    );
 
     const enabledSkills = globalSkills.filter(
         (globalSkill) => !skills.find((skill) => skill === globalSkill),
