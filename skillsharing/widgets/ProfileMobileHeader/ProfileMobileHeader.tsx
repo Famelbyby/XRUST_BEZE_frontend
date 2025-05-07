@@ -50,7 +50,9 @@ const ProfileMobileHeader: React.FC = () => {
                         src="/ProfilePage/star.png"
                         alt="Оценка"
                     />
-                    <div className="profile-mobile-header-rating__title">{0}</div>
+                    <div className="profile-mobile-header-rating__title">
+                        {profile?.rating || 0}
+                    </div>
                 </div>
             </div>
             {profile !== undefined && ownUserID === profile.id && (

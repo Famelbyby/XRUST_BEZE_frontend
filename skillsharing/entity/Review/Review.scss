@@ -88,6 +88,8 @@
                 @include phones {
                     font-size: 14px;
                     margin-bottom: 2px;
+                    height: 15px;
+                    overflow: hidden;
                 }
 
                 &-mock {
@@ -174,7 +176,6 @@
         flex-grow: 1;
 
         &__tags {
-            height: 20px;
             display: flex;
             gap: 5px;
             flex-wrap: wrap;
@@ -182,8 +183,9 @@
             padding-top: 2px;
 
             @include phones {
-                font-size: 12px;
+                font-size: 10px;
                 padding: 0;
+                gap: 2px;
             }
 
             &-mock {
