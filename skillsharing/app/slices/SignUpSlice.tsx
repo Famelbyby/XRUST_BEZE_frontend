@@ -25,8 +25,19 @@ import {
     AUTH_SIGNUP_MODERATION,
     AUTH_SIGNUP_EMAIL_EXIST,
     AUTH_SIGNUP_USERNAME_EXIST,
+    AUTH_SIGNUP_VALIDATION,
 } from '../../shared/Consts/Errors';
-import { ATLEAST_ONE_SKILL, MAX_HREFS_COUNT } from '../../shared/Consts/ValidatorsConts';
+import {
+    ATLEAST_ONE_SKILL,
+    BAD_USERNAME,
+    EMAIL_ALREADY_EXISTS,
+    MAX_HREFS_COUNT,
+    PASSWORD_MISMATCH,
+    USERNAME_ALREADY_EXISTS,
+    WRONG_EMAIL_FORMAT,
+    WRONG_PASSWORD_FORMAT,
+    WRONG_USERNAME_FORMAT,
+} from '../../shared/Consts/ValidatorsConts';
 import { CapitalizeString } from '../../shared/Functions/FormatStrings';
 
 type SignUpStep = 1 | 2 | 3;
@@ -101,8 +112,7 @@ export const signupSlice = createSlice({
             let isValid: boolean = ValidatePassword(state.password.value);
 
             if (!isValid) {
-                state.password.error =
-                    'Длина пароля - от 8 до 64 символов. Должны быть хотя бы одна заглавная буква, одна строчная, одна цифра и один спецсимвол: !@#$%^&*';
+                state.password.error = WRONG_PASSWORD_FORMAT;
             } else {
                 state.password.error = undefined;
             }
@@ -110,7 +120,7 @@ export const signupSlice = createSlice({
             isValid = MatchPasswords(state.password.value, state.repeatPassword.value);
 
             if (!isValid) {
-                state.repeatPassword.error = 'Пароли не совпадают';
+                state.repeatPassword.error = PASSWORD_MISMATCH;
             } else {
                 state.repeatPassword.error = undefined;
             }
@@ -121,15 +131,14 @@ export const signupSlice = createSlice({
             let isValid: boolean = ValidatePassword(state.repeatPassword.value);
 
             if (!isValid) {
-                state.repeatPassword.error =
-                    'Длина пароля - от 8 до 64 символов. Должны быть хотя бы одна заглавная буква, одна строчная, одна цифра и один спецсимвол: !@#$%^&*';
+                state.repeatPassword.error = WRONG_PASSWORD_FORMAT;
                 return;
             }
 
             isValid = MatchPasswords(state.password.value, state.repeatPassword.value);
 
             if (!isValid) {
-                state.repeatPassword.error = 'Пароли не совпадают';
+                state.repeatPassword.error = PASSWORD_MISMATCH;
             } else {
                 state.repeatPassword.error = undefined;
             }
@@ -140,8 +149,7 @@ export const signupSlice = createSlice({
             const isValid: boolean = ValidateUsername(state.identifier.value);
 
             if (!isValid) {
-                state.identifier.error =
-                    'Длина имени - от 3 до 25 символов. Содержит только символы латинского алфавита, нижние подчеркивания и точки';
+                state.identifier.error = WRONG_USERNAME_FORMAT;
             } else {
                 state.identifier.error = undefined;
             }
@@ -155,7 +163,7 @@ export const signupSlice = createSlice({
             const isValid: boolean = ValidateEmail(state.email.value);
 
             if (!isValid) {
-                state.email.error = 'Неправильный формат почты';
+                state.email.error = WRONG_EMAIL_FORMAT;
             } else {
                 state.email.error = undefined;
             }
@@ -349,16 +357,23 @@ export const signupSlice = createSlice({
 
                 switch (data.error?.error) {
                     case AUTH_SIGNUP_EMAIL_EXIST:
-                        state.email.error = 'Пользователь с такой почтой уже существует';
+                        state.email.error = EMAIL_ALREADY_EXISTS;
                         state.step = 1;
                         break;
                     case AUTH_SIGNUP_USERNAME_EXIST:
-                        state.identifier.error = 'Пользователь с таким именем уже существует';
+                        state.identifier.error = USERNAME_ALREADY_EXISTS;
                         state.step = 1;
                         break;
                     case AUTH_SIGNUP_MODERATION:
-                        state.identifier.error = 'Неподходящее имя';
+                        state.identifier.error = BAD_USERNAME;
                         state.step = 1;
+                        break;
+                    case AUTH_SIGNUP_VALIDATION:
+                        if (data.error.validation_error_fields?.includes('Email')) {
+                            state.email.error = WRONG_EMAIL_FORMAT;
+                            state.step = 1;
+                        }
+
                         break;
                 }
             })

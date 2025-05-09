@@ -43,7 +43,7 @@ export function ValidateUsername(username: string): boolean {
  * @returns is email valid
  */
 export function ValidateEmail(email: string): boolean {
-    if (!email.match(/(.)*@(.*)/)) {
+    if (!email.match(/(.)+@(.)+\.(.)+/)) {
         return false;
     }
 

@@ -30,3 +30,14 @@ export const RUSSIAN_MONTHS = [
     'ноября',
     'декабря',
 ];
+
+export const WRONG_EMAIL_FORMAT = 'Неправильный формат почты';
+export const EMAIL_ALREADY_EXISTS = 'Пользователь с такой почтой уже существует';
+export const USERNAME_ALREADY_EXISTS = 'Пользователь с таким именем уже существует';
+export const BAD_USERNAME = 'Неподходящее имя';
+export const WRONG_PASSWORD_FORMAT =
+    'Длина пароля - от 8 до 64 символов. Должны быть хотя бы одна заглавная буква, одна строчная, одна цифра и один спецсимвол: !@#$%^&*';
+export const WRONG_USERNAME_FORMAT =
+    'Длина имени - от 3 до 25 символов. Содержит только символы латинского алфавита, нижние подчеркивания и точки';
+export const PASSWORD_MISMATCH = 'Пароли не совпадают';
+export const BAD_BIO = 'Неподходящее описание';

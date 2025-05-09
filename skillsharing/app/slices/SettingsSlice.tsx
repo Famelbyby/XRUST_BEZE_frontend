@@ -18,7 +18,14 @@ import {
 } from '../../shared/Functions/Validators';
 import { GetProfile } from '../../pages/Profile/api/Profile';
 import { UpdateProfile } from '../../pages/Settings/api/Settings';
-import { ATLEAST_ONE_SKILL, MAX_HREFS_COUNT } from '../../shared/Consts/ValidatorsConts';
+import {
+    ATLEAST_ONE_SKILL,
+    BAD_BIO,
+    BAD_USERNAME,
+    MAX_HREFS_COUNT,
+    USERNAME_ALREADY_EXISTS,
+    WRONG_USERNAME_FORMAT,
+} from '../../shared/Consts/ValidatorsConts';
 import { SETTINGS_PROFANITY_DETECTED, SETTINGS_USERNAME_EXIST } from '../../shared/Consts/Errors';
 
 export interface SettingsState {
@@ -75,8 +82,7 @@ export const settingsSlice = createSlice({
             const isValid: boolean = ValidateUsername(action.payload);
 
             if (!isValid) {
-                state.usernameError =
-                    'Длина имени - от 3 до 25 символов. Содержит только символы латинского алфавита, нижние подчеркивания и точки';
+                state.usernameError = WRONG_USERNAME_FORMAT;
             } else {
                 state.usernameError = undefined;
             }
@@ -414,15 +420,15 @@ export const settingsSlice = createSlice({
                 if (data.error !== undefined) {
                     switch (data.error.error) {
                         case SETTINGS_USERNAME_EXIST:
-                            state.usernameError = 'Такое имя уже занято';
+                            state.usernameError = USERNAME_ALREADY_EXISTS;
                             break;
                         case SETTINGS_PROFANITY_DETECTED:
                             if (data.error.profanity_error_fields?.includes('Username')) {
-                                state.usernameError = 'Неподходящее имя';
+                                state.usernameError = BAD_USERNAME;
                             }
 
                             if (data.error.profanity_error_fields?.includes('Bio')) {
-                                state.bioError = 'Неподходящее описание';
+                                state.bioError = BAD_BIO;
                             }
                     }
                 }

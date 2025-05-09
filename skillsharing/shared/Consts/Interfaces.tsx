@@ -71,6 +71,7 @@ export interface AvatarFieldState {
 export interface ErrorResponse {
     error: string;
     profanity_error_fields?: string[];
+    validation_error_fields?: string[];
 }
 
 export interface AnyAPIResponse {

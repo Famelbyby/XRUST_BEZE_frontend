@@ -33,6 +33,10 @@ import { ValidateAttachments } from '../../shared/Functions/Validators';
 
 const TEXTAREA_INITIAL_HEIGHT = 15;
 const MESSAGE_MAX_LENGTH = 800;
+const MEDIA_RECORDER_OPTIONS = {
+    audioBitsPerSecond: 16000,
+    audioBitrateMode: 'constant',
+};
 
 let mediaRecorder: undefined | MediaRecorder;
 
@@ -80,7 +84,7 @@ const ChatFooter: React.FC = () => {
         async function toggleRecordingVoiceMessage() {
             if (!isRecording) {
                 const mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                mediaRecorder = new MediaRecorder(mediaStream);
+                mediaRecorder = new MediaRecorder(mediaStream, MEDIA_RECORDER_OPTIONS);
                 mediaRecorder.start();
 
                 dispatch(startRecording());
