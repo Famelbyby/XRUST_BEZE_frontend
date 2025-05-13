@@ -1,13 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../../app/AppStore';
 import { IMessage } from '../Message/MessageTypes';
 import { FormatHoursMinutes, FormatMinutesSecondDuration } from '../../shared/Functions/FormatDate';
-import {
-    decryptVoiceMessage,
-    encryptVoiceMessage,
-    toggleSelectedMessage,
-} from '../../app/slices/ChatSlice';
+import { toggleSelectedMessage } from '../../app/slices/ChatSlice';
 import { SECOND_IN_MILLISECONDS } from '../../shared/Consts/ValidatorsConts';
 import './VoiceMessage.scss';
 import {
@@ -23,9 +19,17 @@ interface PropType {
     isSelected: boolean;
     isStructurizing: boolean;
     isDecrypted: boolean;
+    encryptVoiceMessage: (voiceMessageId: string) => void;
+    decryptVoiceMessage: (voiceMessageId: string) => void;
 }
 
-const VoiceMessage: React.FC<PropType> = ({ message, isSelected, isDecrypted }) => {
+const VoiceMessage: React.FC<PropType> = ({
+    message,
+    isSelected,
+    isDecrypted,
+    encryptVoiceMessage,
+    decryptVoiceMessage,
+}) => {
     const { user } = useSelector((state: AppState) => state.user);
     const { voiceMessageId, isPlayingMessage, currentTime } = useSelector(
         (state: AppState) => state.recorder,
@@ -37,6 +41,8 @@ const VoiceMessage: React.FC<PropType> = ({ message, isSelected, isDecrypted }) 
     const isOwnMessage = user_id === message.user_id;
     const dispatch = useDispatch();
     const player = document.getElementById('voice-messages-recorder') as HTMLMediaElement;
+
+    const [isShown, setIsShown] = useState(isDecrypted);
 
     useEffect(() => {
         let deleteIndex: undefined | number;
@@ -121,7 +127,7 @@ const VoiceMessage: React.FC<PropType> = ({ message, isSelected, isDecrypted }) 
                         {message.recognized_voice !== undefined && (
                             <img
                                 className={
-                                    isDecrypted
+                                    isShown
                                         ? 'chat-voice-message-content__encrypted_shown'
                                         : 'chat-voice-message-content__encrypted'
                                 }
@@ -130,11 +136,13 @@ const VoiceMessage: React.FC<PropType> = ({ message, isSelected, isDecrypted }) 
                                 onClick={(event) => {
                                     event.stopPropagation();
 
-                                    if (isDecrypted) {
-                                        dispatch(encryptVoiceMessage(message.message_id));
+                                    if (isShown) {
+                                        encryptVoiceMessage(message.message_id);
                                     } else {
-                                        dispatch(decryptVoiceMessage(message.message_id));
+                                        decryptVoiceMessage(message.message_id);
                                     }
+
+                                    setIsShown(!isShown);
                                 }}
                             />
                         )}
@@ -193,7 +201,7 @@ const VoiceMessage: React.FC<PropType> = ({ message, isSelected, isDecrypted }) 
                             )}
                         </div>
                     </div>
-                    {isDecrypted && (
+                    {isShown && (
                         <div className="chat-voice-message-content__decrypted-message">
                             {message.recognized_voice !== undefined
                                 ? message.recognized_voice

@@ -20,7 +20,6 @@ export interface MessagesState {
     isHiddenStructurizedModal: boolean;
     structurizingMessages: Array<string>;
     structurizedMessageId: string;
-    decryptedMessages: Set<string>;
 }
 
 const initialState: MessagesState = {
@@ -37,7 +36,6 @@ const initialState: MessagesState = {
     isHiddenStructurizedModal: true,
     structurizingMessages: [],
     structurizedMessageId: '',
-    decryptedMessages: new Set(),
 };
 
 export const chatSlice = createSlice({
@@ -79,12 +77,6 @@ export const chatSlice = createSlice({
             if (messages.length > 0) {
                 state.channelID = messages[0].channel_id!;
             }
-        },
-        decryptVoiceMessage: (state: MessagesState, action: PayloadAction<string>) => {
-            state.decryptedMessages.add(action.payload);
-        },
-        encryptVoiceMessage: (state: MessagesState, action: PayloadAction<string>) => {
-            state.decryptedMessages.delete(action.payload);
         },
         messageRecognized: (state: MessagesState, action: PayloadAction<IMessage>) => {
             const newMessage: IMessage = action.payload;
@@ -303,8 +295,6 @@ export const {
     editMessage,
     stopEditingMessage,
     updateMessage,
-    encryptVoiceMessage,
-    decryptVoiceMessage,
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

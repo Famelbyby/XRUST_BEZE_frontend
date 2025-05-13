@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../../entity/Message/Message';
 import VoiceMessage from '../../entity/VoiceMessage/VoiceMessage';
@@ -18,11 +18,12 @@ import { deleteAttachment } from '../../app/slices/ManageMessageSlice';
 import { RoundSize } from '../../shared/Functions/FormatStrings';
 
 const ChatContent: React.FC = () => {
-    const { messages, selectedMessages, structurizingMessages, decryptedMessages } = useSelector(
+    const { messages, selectedMessages, structurizingMessages } = useSelector(
         (state: AppState) => state.chatMessages,
     );
     const { attachments, oldAttachments } = useSelector((state: AppState) => state.manageMessage);
     const dispatch = useDispatch<AppDispatch>();
+    const decryptedMessages = useRef(new Set<string>());
 
     /**
      * Adds messages movement in chat
@@ -72,6 +73,14 @@ const ChatContent: React.FC = () => {
             });
         }
     }, []);
+
+    function encryptVoiceMessage(voiceMessageId: string) {
+        decryptedMessages.current.delete(voiceMessageId);
+    }
+
+    function decryptVoiceMessage(voiceMessageId: string) {
+        decryptedMessages.current.add(voiceMessageId);
+    }
 
     return (
         <div id="chat-content" className="chat-content">
@@ -165,7 +174,13 @@ const ChatContent: React.FC = () => {
                         <>
                             {message.voice !== undefined && (
                                 <VoiceMessage
-                                    isDecrypted={decryptedMessages.has(message.message_id)}
+                                    isDecrypted={decryptedMessages.current.has(message.message_id)}
+                                    encryptVoiceMessage={(voiceMessageId) =>
+                                        encryptVoiceMessage(voiceMessageId)
+                                    }
+                                    decryptVoiceMessage={(voiceMessageId) =>
+                                        decryptVoiceMessage(voiceMessageId)
+                                    }
                                     isSelected={isSelected}
                                     message={message}
                                     key={new Date().getMilliseconds()}
