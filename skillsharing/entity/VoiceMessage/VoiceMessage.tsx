@@ -204,22 +204,6 @@ const VoiceMessage: React.FC<PropType> = ({
                             )}
                         </div>
                     </div>
-                    {message.structurized !== undefined && (
-                        <>
-                            <div className="chat-content-structured">
-                                <StructurizedMessageContent message={message} isOnPage={false} />
-                            </div>
-                            <Link
-                                className="chat-content-link"
-                                to={`/structurized-messages/${message.message_id}`}
-                                aria-label=""
-                            >
-                                <div className="chat-content-link__go-to-page">
-                                    Перейти на отдельную страницу
-                                </div>
-                            </Link>
-                        </>
-                    )}
                     {isShown && (
                         <div className="chat-voice-message-content__decrypted-message">
                             {message.recognized_voice !== undefined
@@ -227,6 +211,26 @@ const VoiceMessage: React.FC<PropType> = ({
                                 : 'Расшифровываем...'}
                         </div>
                     )}
+                    {message.structurized !== undefined &&
+                        message.recognized_voice !== undefined && (
+                            <>
+                                <div className="chat-content-structured">
+                                    <StructurizedMessageContent
+                                        message={message}
+                                        isOnPage={false}
+                                    />
+                                </div>
+                                <Link
+                                    className="chat-content-link"
+                                    to={`/structurized-messages/${message.message_id}`}
+                                    aria-label=""
+                                >
+                                    <div className="chat-content-link__go-to-page">
+                                        Перейти на отдельную страницу
+                                    </div>
+                                </Link>
+                            </>
+                        )}
                     <div className="chat-content__time">
                         {isStructurizing && (
                             <div className="chat-content__structurizing">структуризируется</div>
