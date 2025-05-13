@@ -24,6 +24,9 @@ import CertainMaterial from '../pages/CertainMaterial/ui/CertainMaterial';
 import Materials from '../pages/Materials/ui/Materials';
 import CopiedWindow from '../features/CopiedWindow/CopiedWindow';
 import ErrorWindow from '../features/ErrorWindow/ErrorWindow';
+import { enableMapSet } from 'immer';
+
+enableMapSet();
 
 function App() {
     const { user, isFetched } = useSelector((state: AppState) => state.user);

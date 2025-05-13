@@ -18,7 +18,7 @@ import { deleteAttachment } from '../../app/slices/ManageMessageSlice';
 import { RoundSize } from '../../shared/Functions/FormatStrings';
 
 const ChatContent: React.FC = () => {
-    const { messages, selectedMessages, structurizingMessages } = useSelector(
+    const { messages, selectedMessages, structurizingMessages, decryptedMessages } = useSelector(
         (state: AppState) => state.chatMessages,
     );
     const { attachments, oldAttachments } = useSelector((state: AppState) => state.manageMessage);
@@ -165,6 +165,7 @@ const ChatContent: React.FC = () => {
                         <>
                             {message.voice !== undefined && (
                                 <VoiceMessage
+                                    isDecrypted={decryptedMessages.has(message.message_id)}
                                     isSelected={isSelected}
                                     message={message}
                                     key={new Date().getMilliseconds()}

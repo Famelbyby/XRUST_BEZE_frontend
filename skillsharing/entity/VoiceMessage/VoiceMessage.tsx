@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../../app/AppStore';
 import { IMessage } from '../Message/MessageTypes';
 import { FormatHoursMinutes, FormatMinutesSecondDuration } from '../../shared/Functions/FormatDate';
-import { toggleSelectedMessage } from '../../app/slices/ChatSlice';
+import {
+    decryptVoiceMessage,
+    encryptVoiceMessage,
+    toggleSelectedMessage,
+} from '../../app/slices/ChatSlice';
 import { SECOND_IN_MILLISECONDS } from '../../shared/Consts/ValidatorsConts';
 import './VoiceMessage.scss';
 import {
@@ -18,9 +22,10 @@ interface PropType {
     message: IMessage;
     isSelected: boolean;
     isStructurizing: boolean;
+    isDecrypted: boolean;
 }
 
-const VoiceMessage: React.FC<PropType> = ({ message, isSelected }) => {
+const VoiceMessage: React.FC<PropType> = ({ message, isSelected, isDecrypted }) => {
     const { user } = useSelector((state: AppState) => state.user);
     const { voiceMessageId, isPlayingMessage, currentTime } = useSelector(
         (state: AppState) => state.recorder,
@@ -32,8 +37,6 @@ const VoiceMessage: React.FC<PropType> = ({ message, isSelected }) => {
     const isOwnMessage = user_id === message.user_id;
     const dispatch = useDispatch();
     const player = document.getElementById('voice-messages-recorder') as HTMLMediaElement;
-
-    const [isDecrypted, setIsDecrypted] = useState(false);
 
     useEffect(() => {
         let deleteIndex: undefined | number;
@@ -126,7 +129,11 @@ const VoiceMessage: React.FC<PropType> = ({ message, isSelected }) => {
                             onClick={(event) => {
                                 event.stopPropagation();
 
-                                setIsDecrypted(!isDecrypted);
+                                if (isDecrypted) {
+                                    dispatch(encryptVoiceMessage(message.message_id));
+                                } else {
+                                    dispatch(decryptVoiceMessage(message.message_id));
+                                }
                             }}
                         />
                         <img
