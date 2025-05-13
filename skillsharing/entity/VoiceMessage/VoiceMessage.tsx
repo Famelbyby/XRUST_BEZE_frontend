@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../../app/AppStore';
 import { IMessage } from '../Message/MessageTypes';
 import { FormatHoursMinutes, FormatMinutesSecondDuration } from '../../shared/Functions/FormatDate';
-import { toggleSelectedMessage } from '../../app/slices/ChatSlice';
+import { showStructurizedModal, toggleSelectedMessage } from '../../app/slices/ChatSlice';
 import { SECOND_IN_MILLISECONDS } from '../../shared/Consts/ValidatorsConts';
 import './VoiceMessage.scss';
 import {
@@ -13,6 +13,8 @@ import {
     setPlayMessage,
 } from '../../app/slices/RecorderSlice';
 import RangeBar from '../../features/RangeBar/RangeBar';
+import StructurizedMessageContent from '../../widgets/StructurizedMessageContent/StructurizedMessageContent';
+import { Link } from 'react-router';
 
 interface PropType {
     message: IMessage;
@@ -29,6 +31,7 @@ const VoiceMessage: React.FC<PropType> = ({
     isDecrypted,
     encryptVoiceMessage,
     decryptVoiceMessage,
+    isStructurizing,
 }) => {
     const { user } = useSelector((state: AppState) => state.user);
     const { voiceMessageId, isPlayingMessage, currentTime } = useSelector(
@@ -201,6 +204,22 @@ const VoiceMessage: React.FC<PropType> = ({
                             )}
                         </div>
                     </div>
+                    {message.structurized !== undefined && (
+                        <>
+                            <div className="chat-content-structured">
+                                <StructurizedMessageContent message={message} isOnPage={false} />
+                            </div>
+                            <Link
+                                className="chat-content-link"
+                                to={`/structurized-messages/${message.message_id}`}
+                                aria-label=""
+                            >
+                                <div className="chat-content-link__go-to-page">
+                                    Перейти на отдельную страницу
+                                </div>
+                            </Link>
+                        </>
+                    )}
                     {isShown && (
                         <div className="chat-voice-message-content__decrypted-message">
                             {message.recognized_voice !== undefined
@@ -208,15 +227,26 @@ const VoiceMessage: React.FC<PropType> = ({
                                 : 'Расшифровываем...'}
                         </div>
                     )}
-                    <div className="chat-content__time">{messageTime}</div>
+                    <div className="chat-content__time">
+                        {isStructurizing && (
+                            <div className="chat-content__structurizing">структуризируется</div>
+                        )}
+                        {messageTime}
+                    </div>
                 </div>
-                {/* {message.structurized === undefined && 
-                    <img className="chat-message-wrapper__structurize-img" src="/ChatPage/ai.png" alt="Структуризировать" title="Структуризировать сообщение" onClick={(event) => {
-                        dispatch(showStructurizedModal(message.message_id));
+                {message.structurized === undefined && (
+                    <img
+                        className="chat-message-wrapper__structurize-img"
+                        src="/ChatPage/ai.png"
+                        alt="Структуризировать"
+                        title="Структуризировать сообщение"
+                        onClick={(event) => {
+                            dispatch(showStructurizedModal(message.message_id));
 
-                        event.stopPropagation();
-                    }}/>
-                } */}
+                            event.stopPropagation();
+                        }}
+                    />
+                )}
             </div>
             {isSelected && (
                 <div
