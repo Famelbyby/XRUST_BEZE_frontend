@@ -13,6 +13,7 @@ export interface IMessage extends ISendingMessage, IDeletingMessage, IUpdatingMe
     structurized?: string;
     voice?: string;
     voice_duration?: number;
+    recognized_voice?: string;
 }
 
 export interface IDeletingMessage {

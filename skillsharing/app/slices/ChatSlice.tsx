@@ -78,6 +78,33 @@ export const chatSlice = createSlice({
                 state.channelID = messages[0].channel_id!;
             }
         },
+        messageRecognized: (state: MessagesState, action: PayloadAction<IMessage>) => {
+            const newMessage: IMessage = action.payload;
+
+            if (state.channelID === '') {
+                state.channelID = newMessage.channel_id!;
+            }
+
+            if (state.channelID !== newMessage.channel_id) {
+                return;
+            }
+
+            if (state.messages === undefined) {
+                return;
+            }
+
+            const voiceIndex = state.messages.findIndex(
+                (message) => message.message_id === newMessage.message_id,
+            );
+
+            if (voiceIndex !== -1) {
+                state.messages = [
+                    ...state.messages.slice(0, voiceIndex),
+                    newMessage,
+                    ...state.messages.slice(voiceIndex + 1),
+                ];
+            }
+        },
         addMessage: (state: MessagesState, action: PayloadAction<IMessage>) => {
             const newMessage: IMessage = action.payload;
 
@@ -259,6 +286,7 @@ export const {
     showDeletingModal,
     hideDeletingModal,
     clearAllMessages,
+    messageRecognized,
     addMessage,
     replaceMessages,
     toggleSelectedMessage,

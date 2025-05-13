@@ -53,7 +53,7 @@ const ProfileLeftColumn: React.FC = () => {
                                         <div className="profile-stats-item__example-spinner"></div>
                                     </div>
                                 )}
-                                {user !== undefined && <>{user[stat.userKey]}</>}
+                                {user !== undefined && <>{user[stat.userKey].toPrecision(5)}</>}
                             </div>
                         </div>
                     );

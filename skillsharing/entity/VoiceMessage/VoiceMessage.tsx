@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../../app/AppStore';
 import { IMessage } from '../Message/MessageTypes';
@@ -32,6 +32,8 @@ const VoiceMessage: React.FC<PropType> = ({ message, isSelected }) => {
     const isOwnMessage = user_id === message.user_id;
     const dispatch = useDispatch();
     const player = document.getElementById('voice-messages-recorder') as HTMLMediaElement;
+
+    const [isDecrypted, setIsDecrypted] = useState(false);
 
     useEffect(() => {
         let deleteIndex: undefined | number;
@@ -114,6 +116,20 @@ const VoiceMessage: React.FC<PropType> = ({ message, isSelected }) => {
                 >
                     <div className="chat-voice-message-content">
                         <img
+                            className={
+                                isDecrypted
+                                    ? 'chat-voice-message-content__encrypted_shown'
+                                    : 'chat-voice-message-content__encrypted'
+                            }
+                            src="/ChatPage/down-arrow_purple.png"
+                            alt="Decrypt voice"
+                            onClick={(event) => {
+                                event.stopPropagation();
+
+                                setIsDecrypted(!isDecrypted);
+                            }}
+                        />
+                        <img
                             className="chat-voice-message-content__img"
                             src={
                                 '/shared/' +
@@ -168,6 +184,13 @@ const VoiceMessage: React.FC<PropType> = ({ message, isSelected }) => {
                             )}
                         </div>
                     </div>
+                    {isDecrypted && (
+                        <div className="chat-voice-message-content__decrypted-message">
+                            {message.recognized_voice !== undefined
+                                ? message.recognized_voice
+                                : 'Расшифровываем...'}
+                        </div>
+                    )}
                     <div className="chat-content__time">{messageTime}</div>
                 </div>
                 {/* {message.structurized === undefined && 

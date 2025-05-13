@@ -3,7 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../../entity/Message/Message';
 import VoiceMessage from '../../entity/VoiceMessage/VoiceMessage';
 import { IMessage } from '../../entity/Message/MessageTypes';
-import { addMessage, deleteMessage, updateMessage } from '../../app/slices/ChatSlice';
+import {
+    addMessage,
+    deleteMessage,
+    messageRecognized,
+    updateMessage,
+} from '../../app/slices/ChatSlice';
 import { AppDispatch, AppState } from '../../app/AppStore';
 import './ChatContent.scss';
 import { FormatDayMonthYear } from '../../shared/Functions/FormatDate';
@@ -28,7 +33,12 @@ const ChatContent: React.FC = () => {
 
             switch (message.type) {
                 case 'send_message':
-                    dispatch(addMessage(message));
+                    if (message.event === 'EventVoiceRecognized') {
+                        dispatch(messageRecognized(message));
+                    } else {
+                        dispatch(addMessage(message));
+                    }
+
                     break;
                 case 'update_message':
                     dispatch(updateMessage(message));

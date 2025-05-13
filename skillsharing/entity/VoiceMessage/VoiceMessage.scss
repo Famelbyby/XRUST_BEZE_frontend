@@ -1,5 +1,11 @@
 $borderRad: 15px;
 
+@mixin phones {
+    @media screen and (width <= 800px) {
+        @content;
+    }
+}
+
 .chat {
     &-voice-message {
         display: flex;
@@ -34,6 +40,7 @@ $borderRad: 15px;
             align-items: center;
             justify-content: space-between;
             gap: 3px;
+            margin: auto;
 
             &__img {
                 width: 20px;
@@ -51,11 +58,63 @@ $borderRad: 15px;
                 font-family: 'Inter';
                 font-size: 13px;
                 width: 37px;
+                color: white;
             }
 
             &__plot {
                 width: 100px;
             }
+
+            &__encrypted {
+                aspect-ratio: 1;
+                width: 20px;
+                filter: brightness(2);
+                transition-duration: 0.2s;
+                margin-right: 5px;
+
+                &_shown {
+                    transform: scaleY(-1);
+                    aspect-ratio: 1;
+                    width: 20px;
+                    filter: brightness(2);
+                    transition-duration: 0.2s;
+                    margin-right: 5px;
+
+                    &:hover {
+                        transform: scale(1.2, -1.2);
+                    }
+                }
+
+                &:hover {
+                    transform: scale(1.2);
+                }
+            }
+
+            &__decrypted-message {
+                width: 100%;
+                word-break: break-word;
+                margin: auto;
+                overflow: hidden;
+                font-family: 'Inter';
+                font-size: 14px;
+
+                border-left: 3px solid #ab69ff;
+                padding: 5px 10px 5px 5px;
+                background-color: #a5a5ff;
+                margin-top: 4px;
+                margin-bottom: 0px;
+                color: white;
+                box-sizing: border-box;
+
+                animation-name: show-decrypted;
+                animation-duration: 0.2s;
+                animation-iteration-count: 1;
+                animation-fill-mode: forwards;
+            }
+        }
+
+        @include phones {
+            max-width: 240px;
         }
     }
 }
