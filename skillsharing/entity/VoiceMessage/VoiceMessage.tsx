@@ -238,7 +238,7 @@ const VoiceMessage: React.FC<PropType> = ({
                         {messageTime}
                     </div>
                 </div>
-                {message.structurized === undefined && (
+                {message.structurized === undefined && message.recognized_voice !== undefined && (
                     <img
                         className="chat-message-wrapper__structurize-img"
                         src="/ChatPage/ai.png"
