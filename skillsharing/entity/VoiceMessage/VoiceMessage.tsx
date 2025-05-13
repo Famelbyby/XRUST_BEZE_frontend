@@ -118,24 +118,26 @@ const VoiceMessage: React.FC<PropType> = ({ message, isSelected, isDecrypted }) 
                     key={message.message_id}
                 >
                     <div className="chat-voice-message-content">
-                        <img
-                            className={
-                                isDecrypted
-                                    ? 'chat-voice-message-content__encrypted_shown'
-                                    : 'chat-voice-message-content__encrypted'
-                            }
-                            src="/ChatPage/down-arrow_purple.png"
-                            alt="Decrypt voice"
-                            onClick={(event) => {
-                                event.stopPropagation();
-
-                                if (isDecrypted) {
-                                    dispatch(encryptVoiceMessage(message.message_id));
-                                } else {
-                                    dispatch(decryptVoiceMessage(message.message_id));
+                        {message.recognized_voice !== undefined && (
+                            <img
+                                className={
+                                    isDecrypted
+                                        ? 'chat-voice-message-content__encrypted_shown'
+                                        : 'chat-voice-message-content__encrypted'
                                 }
-                            }}
-                        />
+                                src="/ChatPage/down-arrow_purple.png"
+                                alt="Decrypt voice"
+                                onClick={(event) => {
+                                    event.stopPropagation();
+
+                                    if (isDecrypted) {
+                                        dispatch(encryptVoiceMessage(message.message_id));
+                                    } else {
+                                        dispatch(decryptVoiceMessage(message.message_id));
+                                    }
+                                }}
+                            />
+                        )}
                         <img
                             className="chat-voice-message-content__img"
                             src={
