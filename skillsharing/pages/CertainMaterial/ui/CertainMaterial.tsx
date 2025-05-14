@@ -49,6 +49,12 @@ const CertainMaterial: React.FC = () => {
 
     const isPdfFile = material !== undefined && material.filename.endsWith('.pdf');
 
+    useEffect(() => {
+        if (!isPdfFile) {
+            navigateTo(-1);
+        }
+    }, []);
+
     return (
         <div className="certain-material">
             <div className="user-materials-header-go-back">
