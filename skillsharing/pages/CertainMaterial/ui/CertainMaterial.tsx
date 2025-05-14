@@ -72,7 +72,12 @@ const CertainMaterial: React.FC = () => {
                     </div>
                     <object
                         data={MATERIALS_URL + '/' + material.filename}
-                        type="application/pdf"
+                        type={
+                            'application/' +
+                            (material.filename.endsWith('.pdf')
+                                ? 'pdf'
+                                : 'vnd.openxmlformats-officedocument.wordprocessingml.document')
+                        }
                         width="550px"
                         height="1000px"
                         className="certain-material-viewer"
