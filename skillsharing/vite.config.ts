@@ -26,6 +26,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
     workbox: {
         cleanupOutdatedCaches: true,
     },
+    selfDestroying: true,
 };
 
 // https://vite.dev/config/
