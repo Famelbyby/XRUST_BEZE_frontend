@@ -53,7 +53,7 @@ const CertainMaterial: React.FC = () => {
         if (!isPdfFile && material !== undefined) {
             navigateTo(-1);
         }
-    }, []);
+    }, [material]);
 
     return (
         <div className="certain-material">
