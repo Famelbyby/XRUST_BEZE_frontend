@@ -7,7 +7,6 @@ import { clearCertainMaterial } from '../../../app/slices/CertainMaterialSlice';
 import NotFound from '../../../features/404/404';
 import { MATERIALS_URL } from '../../../shared/Consts/URLS';
 import './CertainMaterial.scss';
-import DocViewer from 'react-doc-viewer';
 
 const CertainMaterial: React.FC = () => {
     const { isFetched, material } = useSelector((state: AppState) => state.certainMaterial);
@@ -73,9 +72,6 @@ const CertainMaterial: React.FC = () => {
                     <div className="certain-material-content_mobile">
                         К сожалению, на вашем устройстве нельзя просмотреть PDF файл
                     </div>
-                    {!isPdfFile && material !== undefined && (
-                        <DocViewer documents={[{ uri: MATERIALS_URL + '/' + material.filename }]} />
-                    )}
                     {isPdfFile && (
                         <object
                             data={MATERIALS_URL + '/' + material.filename}

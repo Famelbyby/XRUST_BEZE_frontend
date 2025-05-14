@@ -18,7 +18,24 @@ const Material: React.FC<MaterialItem> = (material) => {
     const onUserMaterialsPage = location.pathname.includes('profile-materials');
 
     return (
-        <div className="material" onClick={() => navigateTo(`/materials/${material.id}`)}>
+        <div
+            className="material"
+            onClick={() => {
+                const isPdfFile = material !== undefined && material.filename.endsWith('.pdf');
+
+                if (isPdfFile) {
+                    navigateTo(`/materials/${material.id}`);
+                } else {
+                    const hrefToDownload = document.getElementById(
+                        `download-material-${material.id}`,
+                    );
+
+                    if (hrefToDownload !== null) {
+                        hrefToDownload.click();
+                    }
+                }
+            }}
+        >
             <div className="material-header">
                 <div className="material-header__title">{material.name}</div>
                 <div className="material-header-tags">
@@ -56,6 +73,7 @@ const Material: React.FC<MaterialItem> = (material) => {
                 </div>
                 <div className="material-footer-right">
                     <a
+                        id={`download-material-${material.id}`}
                         href={MATERIALS_URL + '/' + material.filename}
                         aria-label=""
                         download={material.name}
