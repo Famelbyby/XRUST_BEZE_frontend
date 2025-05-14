@@ -11,12 +11,14 @@ export const UpdateProfile = createAsyncThunk(
         let status: number = CODE_OK;
         let error: string | undefined;
 
+        const filterHrefs = hrefs.map((href) => href !== '');
+
         const newAvatar: string = avatar || user.avatar;
 
         await axios
             .put(
                 BACK_URL + USERS_URL + `/${user.id}`,
-                JSON.stringify({ ...user, avatar: newAvatar, hrefs }),
+                JSON.stringify({ ...user, avatar: newAvatar, hrefs: filterHrefs }),
             )
             .then((response) => {
                 status = response.status;

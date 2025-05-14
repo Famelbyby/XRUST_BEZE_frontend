@@ -24,7 +24,6 @@ import {
     BAD_USERNAME,
     MAX_HREFS_COUNT,
     USERNAME_ALREADY_EXISTS,
-    WRONG_HREF,
     WRONG_USERNAME_FORMAT,
 } from '../../shared/Consts/ValidatorsConts';
 import { SETTINGS_PROFANITY_DETECTED, SETTINGS_USERNAME_EXIST } from '../../shared/Consts/Errors';
@@ -259,7 +258,7 @@ export const settingsSlice = createSlice({
 
             state.hrefs.push({
                 value: '',
-                error: WRONG_HREF,
+                error: undefined,
             });
         },
         deleteHrefSettings: (state: SettingsState, action: PayloadAction<number>) => {
@@ -282,10 +281,6 @@ export const settingsSlice = createSlice({
             }
 
             state.hrefs[index].value = nextValue;
-
-            if (nextValue === '') {
-                state.hrefs[index].error = WRONG_HREF;
-            }
         },
     },
     extraReducers: (builder) => {
