@@ -47,6 +47,8 @@ const CertainMaterial: React.FC = () => {
         };
     }, [material, isFetched]);
 
+    const isPdfFile = material !== undefined && material.filename.endsWith('.pdf');
+
     return (
         <div className="certain-material">
             <div className="user-materials-header-go-back">
@@ -70,26 +72,34 @@ const CertainMaterial: React.FC = () => {
                     <div className="certain-material-content_mobile">
                         К сожалению, на вашем устройстве нельзя просмотреть PDF файл
                     </div>
-                    <object
-                        data={MATERIALS_URL + '/' + material.filename}
-                        type={
-                            'application/' +
-                            (material.filename.endsWith('.pdf')
-                                ? 'pdf'
-                                : 'vnd.openxmlformats-officedocument.wordprocessingml.document')
-                        }
-                        width="550px"
-                        height="1000px"
-                        className="certain-material-viewer"
-                    >
-                        <p>
-                            Your browser does not support PDFs.{' '}
-                            <a href={MATERIALS_URL + material.filename} download={material.name}>
-                                Download the PDF
-                            </a>
-                            .
-                        </p>
-                    </object>
+                    {!isPdfFile && material !== undefined && (
+                        <iframe
+                            src={MATERIALS_URL + '/' + material.filename}
+                            width={'550px'}
+                            height={'1000px'}
+                            className="certain-material-viewer"
+                        ></iframe>
+                    )}
+                    {isPdfFile && (
+                        <object
+                            data={MATERIALS_URL + '/' + material.filename}
+                            type={'application/pdf'}
+                            width="550px"
+                            height="1000px"
+                            className="certain-material-viewer"
+                        >
+                            <p>
+                                Your browser does not support this file extension.{' '}
+                                <a
+                                    href={MATERIALS_URL + material.filename}
+                                    download={material.name}
+                                >
+                                    Download the PDF
+                                </a>
+                                .
+                            </p>
+                        </object>
+                    )}
                 </div>
             )}
             {isFetched && material === undefined && <NotFound />}
