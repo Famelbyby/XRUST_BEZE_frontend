@@ -11,7 +11,7 @@ export const UpdateProfile = createAsyncThunk(
         let status: number = CODE_OK;
         let error: string | undefined;
 
-        const filterHrefs = hrefs.map((href) => href !== '');
+        const filterHrefs = hrefs.filter((href) => href !== '');
 
         const newAvatar: string = avatar || user.avatar;
 
