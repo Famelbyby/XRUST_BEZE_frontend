@@ -9,7 +9,7 @@ import StructurizedMessageContent from '../../widgets/StructurizedMessageContent
 import { Link } from 'react-router';
 import { SECOND_IN_MILLISECONDS } from '../../shared/Consts/ValidatorsConts';
 import { ATTACHMENTS_URL } from '../../shared/Consts/URLS';
-import DescriptionWidow from '../../features/DescriptionWindow/DescriptionWindow';
+import DescriptionWindow from '../../features/DescriptionWindow/DescriptionWindow';
 import { STRUCTURIZE_MESSAGE } from '../../shared/Consts/LocalStorageKeys';
 
 interface PropType {
@@ -125,12 +125,13 @@ const Message: React.FC<PropType> = ({
                                 }}
                             />
                             {needDes && (
-                                <DescriptionWidow
+                                <DescriptionWindow
                                     windowClass="description-window-structurize-message"
-                                    title="Нажмите для объяснения"
                                     confirm={{ key: STRUCTURIZE_MESSAGE, text: 'Понятно' }}
                                     callback={() => setNeedDes(false)}
-                                />
+                                >
+                                    Нажмите для объяснения
+                                </DescriptionWindow>
                             )}
                         </div>
                     )}

@@ -1,8 +1,7 @@
 import React from 'react';
 import './DescriptionWindow.scss';
 
-interface DescriptionWidowProps {
-    title: string;
+interface DescriptionWindowProps extends React.PropsWithChildren {
     confirm?: {
         text: string;
         key: string;
@@ -11,15 +10,15 @@ interface DescriptionWidowProps {
     windowClass: string;
 }
 
-const DescriptionWidow: React.FC<DescriptionWidowProps> = ({
+const DescriptionWindow: React.FC<DescriptionWindowProps> = ({
     windowClass,
-    title,
     confirm,
     callback,
+    children,
 }) => {
     return (
         <div className={'description-window ' + windowClass}>
-            {title}
+            {children}
             {confirm !== undefined && (
                 <div
                     className="description-window__confirm"
@@ -41,4 +40,4 @@ const DescriptionWidow: React.FC<DescriptionWidowProps> = ({
     );
 };
 
-export default DescriptionWidow;
+export default DescriptionWindow;

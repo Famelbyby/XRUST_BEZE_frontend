@@ -8,6 +8,7 @@ import { AVATAR_URL } from '../../shared/Consts/URLS';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../app/AppStore';
 import { Link } from 'react-router';
+import DescriptionWindow from '../../features/DescriptionWindow/DescriptionWindow';
 
 const profileStatistics: StatisticItem[] = [
     {
@@ -15,6 +16,39 @@ const profileStatistics: StatisticItem[] = [
         userKey: 'rating',
     },
 ];
+
+const skillLevels = [
+    {
+        color: 'green',
+        title: 'Начинающий',
+    },
+    {
+        color: 'yellow',
+        title: 'Средний',
+    },
+    {
+        color: 'red',
+        title: 'Продвинутый',
+    },
+];
+
+const SkillLevelsExplaining: React.FC = () => {
+    return (
+        <div className="skill-levels">
+            {skillLevels.map((skillLevel) => {
+                return (
+                    <div key={skillLevel.title} className="skill-level-row">
+                        <div
+                            className="skill-level__color"
+                            style={{ backgroundColor: skillLevel.color }}
+                        ></div>
+                        <div className="skill-level__title">{skillLevel.title}</div>
+                    </div>
+                );
+            })}
+        </div>
+    );
+};
 
 const ProfileLeftColumn: React.FC = () => {
     const { user } = useSelector((state: AppState) => state.profile);
@@ -63,12 +97,16 @@ const ProfileLeftColumn: React.FC = () => {
                 <div className="profile-tags-header">
                     <div className="profile-tags-header__title">
                         Навыки
-                        <img
-                            className="profile-tags-header__img"
-                            title="Пользователь делится следующими навыками"
-                            src="/shared/question.png"
-                            alt=""
-                        />
+                        <div className="profile-tags-header-question">
+                            <img
+                                className="profile-tags-header__img"
+                                src="/shared/question.png"
+                                alt=""
+                            />
+                            <DescriptionWindow windowClass="description-window-skills-level-explaining">
+                                <SkillLevelsExplaining />
+                            </DescriptionWindow>
+                        </div>
                     </div>
                     <div className="profile-tags-header__count">
                         {user === undefined && 0}
