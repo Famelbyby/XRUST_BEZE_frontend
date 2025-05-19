@@ -172,7 +172,7 @@ const ChatContent: React.FC = () => {
                     }
 
                     const isConfirmedStructurization: boolean =
-                        localStorage.getItem(STRUCTURIZE_MESSAGE) !== null && index === 0;
+                        localStorage.getItem(STRUCTURIZE_MESSAGE) !== null && index !== 0;
 
                     return (
                         <>
