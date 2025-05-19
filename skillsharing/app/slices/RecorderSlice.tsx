@@ -4,6 +4,7 @@ import { LoadVoiceRecord } from '../../pages/Chat/api/Chat';
 import { LoadVoiceRecordResponse } from '../../shared/Consts/Interfaces';
 import { VOICE_URL } from '../../shared/Consts/URLS';
 import { SECOND_IN_MILLISECONDS } from '../../shared/Consts/ValidatorsConts';
+import { VOICE_SPEED, VOICE_VOLUME } from '../../shared/Consts/LocalStorageKeys';
 
 export interface RecorderState {
     isRecording: boolean;
@@ -29,8 +30,8 @@ const initialState: RecorderState = {
     isRecorded: false,
     isPlayingMessage: false,
     voiceMessageId: undefined,
-    volume: +(localStorage.getItem('voice-volume') || '0.5'),
-    speed: +(localStorage.getItem('voice-speed') || '1'),
+    volume: +(localStorage.getItem(VOICE_VOLUME) || '0.5'),
+    speed: +(localStorage.getItem(VOICE_SPEED) || '1'),
     recordURL: undefined,
     voiceBlob: undefined,
     currentTime: 0,
@@ -153,7 +154,7 @@ export const recorderSlice = createSlice({
 
             state.volume = nextVolume;
             state.currentTime = audioPlayer.currentTime;
-            localStorage.setItem('voice-volume', action.payload);
+            localStorage.setItem(VOICE_VOLUME, action.payload);
         },
         setSpeed: (state: RecorderState, action: PayloadAction<string>) => {
             const nextSpeed: number = +action.payload;
@@ -167,7 +168,7 @@ export const recorderSlice = createSlice({
 
             state.speed = nextSpeed;
             state.currentTime = audioPlayer.currentTime;
-            localStorage.setItem('voice-speed', action.payload);
+            localStorage.setItem(VOICE_SPEED, action.payload);
         },
         setCurrentTime: (state: RecorderState, action: PayloadAction<string>) => {
             const nextTimeInPercentage: number = +action.payload;

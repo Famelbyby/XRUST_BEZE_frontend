@@ -16,6 +16,7 @@ import MainWebSocket from '../../shared/WebSocket';
 import { DAY_IN_MILLISECONDS, SECOND_IN_MILLISECONDS } from '../../shared/Consts/ValidatorsConts';
 import { deleteAttachment } from '../../app/slices/ManageMessageSlice';
 import { RoundSize } from '../../shared/Functions/FormatStrings';
+import { STRUCTURIZE_MESSAGE } from '../../shared/Consts/LocalStorageKeys';
 
 const ChatContent: React.FC = () => {
     const { messages, selectedMessages, structurizingMessages } = useSelector(
@@ -88,7 +89,7 @@ const ChatContent: React.FC = () => {
                 <div className="chat-content-attachments">
                     {attachments.map((attachment, index) => {
                         return (
-                            <div className="chat-content-attachments-item">
+                            <div key={`new-${index}`} className="chat-content-attachments-item">
                                 <img
                                     className="chat-content-attachments-item__img"
                                     src="/ChatPage/download.png"
@@ -110,7 +111,7 @@ const ChatContent: React.FC = () => {
                     })}
                     {oldAttachments.map((_, index) => {
                         return (
-                            <div className="chat-content-attachments-item">
+                            <div key={`old-${index}`} className="chat-content-attachments-item">
                                 <img
                                     className="chat-content-attachments-item__img"
                                     src="/ChatPage/download.png"
@@ -170,6 +171,9 @@ const ChatContent: React.FC = () => {
                         }
                     }
 
+                    const isConfirmedStructurization: boolean =
+                        localStorage.getItem(STRUCTURIZE_MESSAGE) !== null && index === 0;
+
                     return (
                         <>
                             {message.voice !== undefined && (
@@ -193,6 +197,7 @@ const ChatContent: React.FC = () => {
                                     message={message}
                                     key={new Date().getMilliseconds()}
                                     isSelected={isSelected}
+                                    needsDescription={!isConfirmedStructurization}
                                 />
                             )}
                             {needTime && (

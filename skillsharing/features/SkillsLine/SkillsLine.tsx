@@ -11,7 +11,10 @@ const SkillsLine: React.FC<TagsLinePropTypes> = ({ skills }) => {
         <>
             {skills.map((skill: Skill) => {
                 return (
-                    <div className={`skills-line__item skills-line__item_${skill.level}`}>
+                    <div
+                        key={skill.name}
+                        className={`skills-line__item skills-line__item_${skill.level}`}
+                    >
                         {skill.name}
                     </div>
                 );

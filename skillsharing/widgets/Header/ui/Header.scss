@@ -14,9 +14,24 @@
     align-items: center;
     background-color: rgba(217, 217, 217, 0.4);
     min-height: 64px;
+    max-height: 64px;
 
     @include phones {
         padding: 10px;
+    }
+
+    &-main-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #571aff;
+        font-weight: 400;
+        font-size: 26px;
+        font-family: Syncopate-Bold, sans-serif;
+
+        @include phones {
+            font-size: 0;
+        }
     }
 
     &_none-user {
@@ -24,10 +39,7 @@
     }
 
     &-logo {
-        color: #6229ff;
-        font-weight: 400;
-        font-size: 26px;
-        font-family: Syncopate-Bold, sans-serif;
+        width: 50px;
     }
 
     &-searchbar {

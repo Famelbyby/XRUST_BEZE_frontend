@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IMessage } from './MessageTypes';
 import './Message.scss';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,14 +9,22 @@ import StructurizedMessageContent from '../../widgets/StructurizedMessageContent
 import { Link } from 'react-router';
 import { SECOND_IN_MILLISECONDS } from '../../shared/Consts/ValidatorsConts';
 import { ATTACHMENTS_URL } from '../../shared/Consts/URLS';
+import DescriptionWidow from '../../features/DescriptionWindow/DescriptionWindow';
+import { STRUCTURIZE_MESSAGE } from '../../shared/Consts/LocalStorageKeys';
 
 interface PropType {
     message: IMessage;
     isSelected: boolean;
     isStructurizing: boolean;
+    needsDescription?: boolean;
 }
 
-const Message: React.FC<PropType> = ({ message, isSelected, isStructurizing }) => {
+const Message: React.FC<PropType> = ({
+    message,
+    isSelected,
+    isStructurizing,
+    needsDescription,
+}) => {
     const { user } = useSelector((state: AppState) => state.user);
     const user_id: IMessage['user_id'] = user!.id;
     const messageTime: string = FormatHoursMinutes(
@@ -24,6 +32,7 @@ const Message: React.FC<PropType> = ({ message, isSelected, isStructurizing }) =
     );
     const isOwnMessage = user_id === message.user_id;
     const dispatch = useDispatch();
+    const [needDes, setNeedDes] = useState(needsDescription);
 
     return (
         <div
@@ -92,7 +101,7 @@ const Message: React.FC<PropType> = ({ message, isSelected, isStructurizing }) =
                     )}
                     <div className="chat-content__time">
                         {isStructurizing && (
-                            <div className="chat-content__structurizing">структуризируется</div>
+                            <div className="chat-content__structurizing">объясняется</div>
                         )}
                         {message.updated_at !== message.created_at && (
                             <div className="chat-content__time_redacted">ред.</div>
@@ -103,17 +112,27 @@ const Message: React.FC<PropType> = ({ message, isSelected, isStructurizing }) =
                 {message.structurized === undefined &&
                     message.payload !== undefined &&
                     message.payload !== '' && (
-                        <img
-                            className="chat-message-wrapper__structurize-img"
-                            src="/ChatPage/ai.png"
-                            alt="Структуризировать"
-                            title="Структуризировать сообщение"
-                            onClick={(event) => {
-                                dispatch(showStructurizedModal(message.message_id));
+                        <div className="chat-message-wrapper-structurize">
+                            <img
+                                className="chat-message-wrapper-structurize__img"
+                                src="/ChatPage/ai.png"
+                                alt="Объяснить подробнее"
+                                title="Объяснить подробнее"
+                                onClick={(event) => {
+                                    dispatch(showStructurizedModal(message.message_id));
 
-                                event.stopPropagation();
-                            }}
-                        />
+                                    event.stopPropagation();
+                                }}
+                            />
+                            {needDes && (
+                                <DescriptionWidow
+                                    windowClass="description-window-structurize-message"
+                                    title="Нажмите для объяснения"
+                                    confirm={{ key: STRUCTURIZE_MESSAGE, text: 'Понятно' }}
+                                    callback={() => setNeedDes(false)}
+                                />
+                            )}
+                        </div>
                     )}
             </div>
             {isSelected && (

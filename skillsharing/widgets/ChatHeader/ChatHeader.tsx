@@ -255,7 +255,7 @@ const ChatHeader: React.FC = () => {
                         agreeTitle="Да"
                         cancelTitle="Отменить"
                         agreeFunc={() => structurizeMessage(structurizedMessageId)}
-                        windowTitle="Вы уверены, что хотите структуризировать выделенное сообщение? Это может занять несколько минут"
+                        windowTitle="Вы уверены, что хотите подробнее разъяснить сообщение? Это может занять несколько минут"
                     />,
                     document.querySelector('#root')!,
                 )}
