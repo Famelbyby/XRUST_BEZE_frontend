@@ -7,7 +7,6 @@
     animation-direction: alternate;
 }
 
-
 .profile {
     &-left-column {
         display: flex;
@@ -119,6 +118,18 @@
                 height: 15px;
                 opacity: 0.5;
                 user-select: none;
+
+                &:hover {
+                    + .description-window {
+                        display: flex;
+                        animation-name: skill-levels-explaining;
+                        animation-timing-function: linear;
+                        animation-delay: 0.3s;
+                        animation-duration: 0.2s;
+                        animation-fill-mode: forwards;
+                        animation-iteration-count: 1;
+                    }
+                }
             }
         }
 
@@ -208,7 +219,7 @@
         flex-direction: column;
     }
 
-    .skill {
+    &-skill {
         &-levels {
             display: flex;
             flex-direction: column;

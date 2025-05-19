@@ -44,21 +44,10 @@
     &-skills-level-explaining {
         background-color: #c6c6c6;
         top: -60px;
-        left: -45px;
+        left: -37px;
         padding: 7px;
         color: white;
         display: none;
-        transition-delay: 0.3s;
-
-        &:hover {
-            display: flex;
-            animation-name: skill-levels-explaining;
-            animation-timing-function: linear;
-            animation-delay: 0.3s;
-            animation-duration: 0.2s;
-            animation-fill-mode: forwards;
-            animation-iteration-count: 1;
-        }
 
         &__arrow {
             clip-path: polygon(0 0, 50% 100%, 100% 0, 0 0);     
