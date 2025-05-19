@@ -94,6 +94,10 @@
             display: flex;
             align-items: end;
             margin-bottom: 10px;
+
+            &-question {
+                position: relative;
+            }
             
             &__title {
                 display: flex;
@@ -202,5 +206,11 @@
         font-size: 17px;
         font-family: 'Inter';
         flex-direction: column;
+    }
+}
+
+.skill {
+    &-levels {
+        
     }
 }

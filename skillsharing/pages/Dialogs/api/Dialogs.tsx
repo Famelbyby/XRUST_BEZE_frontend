@@ -8,7 +8,7 @@ export const GetDialogs = createAsyncThunk('dialogs/getDialogs', async (userID: 
     let status: number = CODE_OK;
 
     await axios
-        .get(BACK_URL + CHAT_URL + `/channels?user_id=` + userID)
+        .get(BACK_URL + CHAT_URL + `/channels?limit=1000&offset=0&user_id=` + userID)
         .then((response) => {
             status = response.status;
             data = response.data.channels;
