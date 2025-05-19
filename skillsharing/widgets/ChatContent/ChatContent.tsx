@@ -171,8 +171,8 @@ const ChatContent: React.FC = () => {
                         }
                     }
 
-                    const isConfirmedStructurization: boolean =
-                        localStorage.getItem(STRUCTURIZE_MESSAGE) !== null && index !== 0;
+                    const needToShowExplanation: boolean =
+                        localStorage.getItem(STRUCTURIZE_MESSAGE) === null && index === 0;
 
                     return (
                         <>
@@ -189,6 +189,7 @@ const ChatContent: React.FC = () => {
                                     message={message}
                                     key={new Date().getMilliseconds()}
                                     isStructurizing={isStructurizing}
+                                    needsDescription={needToShowExplanation}
                                 />
                             )}
                             {message.voice === undefined && (
@@ -197,7 +198,7 @@ const ChatContent: React.FC = () => {
                                     message={message}
                                     key={new Date().getMilliseconds()}
                                     isSelected={isSelected}
-                                    needsDescription={!isConfirmedStructurization}
+                                    needsDescription={!needToShowExplanation}
                                 />
                             )}
                             {needTime && (
