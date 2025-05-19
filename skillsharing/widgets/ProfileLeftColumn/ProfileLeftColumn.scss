@@ -207,10 +207,26 @@
         font-family: 'Inter';
         flex-direction: column;
     }
-}
 
-.skill {
-    &-levels {
-        
+    .skill {
+        &-levels {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        &-level {
+            &-row {
+                display: flex;
+                align-items: center;
+                gap: 3px;
+            }
+
+            &__color {
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+            }
+        }
     }
 }

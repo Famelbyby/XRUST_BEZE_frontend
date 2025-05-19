@@ -23,26 +23,26 @@ const skillLevels = [
         title: 'Начинающий',
     },
     {
-        color: 'yellow',
+        color: '#ffff4d',
         title: 'Средний',
     },
     {
-        color: 'red',
+        color: '#ff7f7f',
         title: 'Продвинутый',
     },
 ];
 
 const SkillLevelsExplaining: React.FC = () => {
     return (
-        <div className="skill-levels">
+        <div className="profile-skill-levels">
             {skillLevels.map((skillLevel) => {
                 return (
-                    <div key={skillLevel.title} className="skill-level-row">
+                    <div key={skillLevel.title} className="profile-skill-level-row">
                         <div
-                            className="skill-level__color"
+                            className="profile-skill-level__color"
                             style={{ backgroundColor: skillLevel.color }}
                         ></div>
-                        <div className="skill-level__title">{skillLevel.title}</div>
+                        <div className="profile-skill-level__title">{skillLevel.title}</div>
                     </div>
                 );
             })}
