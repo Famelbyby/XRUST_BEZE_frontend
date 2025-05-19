@@ -231,9 +231,10 @@
             }
 
             &__color {
-                width: 7px;
-                height: 7px;
+                width: 8px;
+                height: 8px;
                 border-radius: 50%;
+                border: 1px solid #bfbfbf;
             }
         }
     }

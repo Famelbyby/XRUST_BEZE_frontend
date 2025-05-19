@@ -2,7 +2,7 @@ import React from 'react';
 
 const skillLevels = [
     {
-        color: 'green',
+        color: '#4eea8e',
         title: 'Начинающий',
     },
     {
