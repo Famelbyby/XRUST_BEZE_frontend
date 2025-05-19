@@ -49,6 +49,8 @@
         color: white;
         display: none;
         opacity: 0;
+        transition-duration: 0.2s;
+        transition-delay: 0.3s;
 
         &__arrow {
             clip-path: polygon(0 0, 50% 100%, 100% 0, 0 0);     
