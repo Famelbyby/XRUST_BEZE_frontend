@@ -198,7 +198,7 @@ const ChatContent: React.FC = () => {
                                     message={message}
                                     key={new Date().getMilliseconds()}
                                     isSelected={isSelected}
-                                    needsDescription={!needToShowExplanation}
+                                    needsDescription={needToShowExplanation}
                                 />
                             )}
                             {needTime && (
