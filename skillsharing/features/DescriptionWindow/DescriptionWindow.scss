@@ -48,18 +48,10 @@
         padding: 7px;
         color: white;
         display: none;
+        opacity: 0;
 
         &__arrow {
             clip-path: polygon(0 0, 50% 100%, 100% 0, 0 0);     
         }
-    }
-}
-
-@keyframes skill-levels-explaining {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
     }
 }
