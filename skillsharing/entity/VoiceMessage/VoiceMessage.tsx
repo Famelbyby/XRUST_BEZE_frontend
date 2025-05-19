@@ -15,12 +15,15 @@ import {
 import RangeBar from '../../features/RangeBar/RangeBar';
 import StructurizedMessageContent from '../../widgets/StructurizedMessageContent/StructurizedMessageContent';
 import { Link } from 'react-router';
+import DescriptionWindow from '../../features/DescriptionWindow/DescriptionWindow';
+import { STRUCTURIZE_MESSAGE } from '../../shared/Consts/LocalStorageKeys';
 
 interface PropType {
     message: IMessage;
     isSelected: boolean;
     isStructurizing: boolean;
     isDecrypted: boolean;
+    needsDescription?: boolean;
     encryptVoiceMessage: (voiceMessageId: string) => void;
     decryptVoiceMessage: (voiceMessageId: string) => void;
 }
@@ -32,6 +35,7 @@ const VoiceMessage: React.FC<PropType> = ({
     encryptVoiceMessage,
     decryptVoiceMessage,
     isStructurizing,
+    needsDescription,
 }) => {
     const { user } = useSelector((state: AppState) => state.user);
     const { voiceMessageId, isPlayingMessage, currentTime } = useSelector(
@@ -46,6 +50,7 @@ const VoiceMessage: React.FC<PropType> = ({
     const player = document.getElementById('voice-messages-recorder') as HTMLMediaElement;
 
     const [isShown, setIsShown] = useState(isDecrypted);
+    const [needDes, setNeedDes] = useState(needsDescription);
 
     useEffect(() => {
         let deleteIndex: undefined | number;
@@ -239,17 +244,28 @@ const VoiceMessage: React.FC<PropType> = ({
                     </div>
                 </div>
                 {message.structurized === undefined && message.recognized_voice !== undefined && (
-                    <img
-                        className="chat-message-wrapper__structurize-img"
-                        src="/ChatPage/ai.png"
-                        alt="Структуризировать"
-                        title="Структуризировать сообщение"
-                        onClick={(event) => {
-                            dispatch(showStructurizedModal(message.message_id));
+                    <div className="chat-message-wrapper-structurize">
+                        <img
+                            className="chat-message-wrapper__structurize-img"
+                            src="/ChatPage/ai.png"
+                            alt="Структуризировать"
+                            title="Структуризировать сообщение"
+                            onClick={(event) => {
+                                dispatch(showStructurizedModal(message.message_id));
 
-                            event.stopPropagation();
-                        }}
-                    />
+                                event.stopPropagation();
+                            }}
+                        />
+                        {needDes && (
+                            <DescriptionWindow
+                                windowClass="description-window-structurize-message"
+                                confirm={{ key: STRUCTURIZE_MESSAGE, text: 'Понятно' }}
+                                callback={() => setNeedDes(false)}
+                            >
+                                Нажмите для объяснения
+                            </DescriptionWindow>
+                        )}
+                    </div>
                 )}
             </div>
             {isSelected && (
