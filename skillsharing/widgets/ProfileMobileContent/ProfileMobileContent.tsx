@@ -12,6 +12,8 @@ import { createPortal } from 'react-dom';
 import ModalWindow from '../../features/ModalWindow/ModalWindow';
 import ProfileAddReview from '../../features/ProfileAddReview/ProfileAddReview';
 import Review from '../../entity/Review/Review';
+import DescriptionWindow from '../../features/DescriptionWindow/DescriptionWindow';
+import SkillLevelsExplaining from '../../features/SkillsLevelExplaining/SkillsLevelExplaining';
 
 const ProfileMobileContent: React.FC = () => {
     const {
@@ -79,12 +81,17 @@ const ProfileMobileContent: React.FC = () => {
                     <div className="profile-mobile-content-tags-header">
                         <div className="profile-mobile-content-tags-header__title">
                             Навыки
-                            <img
-                                className="profile-mobile-content-tags-header__img"
-                                title="Пользователь делится следующими навыками"
-                                src="/shared/question.png"
-                                alt=""
-                            />
+                            <div className="profile-tags-header-question">
+                                <img
+                                    className="profile-mobile-content-tags-header__img"
+                                    title="Пользователь делится следующими навыками"
+                                    src="/shared/question.png"
+                                    alt=""
+                                />
+                                <DescriptionWindow windowClass="description-window-skills-level-explaining">
+                                    <SkillLevelsExplaining />
+                                </DescriptionWindow>
+                            </div>
                         </div>
                     </div>
                     <div className="profile-mobile-content-tags-array">

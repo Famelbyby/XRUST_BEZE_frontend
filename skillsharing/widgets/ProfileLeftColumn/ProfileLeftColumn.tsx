@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { AppState } from '../../app/AppStore';
 import { Link } from 'react-router';
 import DescriptionWindow from '../../features/DescriptionWindow/DescriptionWindow';
+import SkillLevelsExplaining from '../../features/SkillsLevelExplaining/SkillsLevelExplaining';
 
 const profileStatistics: StatisticItem[] = [
     {
@@ -16,39 +17,6 @@ const profileStatistics: StatisticItem[] = [
         userKey: 'rating',
     },
 ];
-
-const skillLevels = [
-    {
-        color: 'green',
-        title: 'Начинающий',
-    },
-    {
-        color: '#ffff4d',
-        title: 'Средний',
-    },
-    {
-        color: '#ff7f7f',
-        title: 'Продвинутый',
-    },
-];
-
-const SkillLevelsExplaining: React.FC = () => {
-    return (
-        <div className="profile-skill-levels">
-            {skillLevels.map((skillLevel) => {
-                return (
-                    <div key={skillLevel.title} className="profile-skill-level-row">
-                        <div
-                            className="profile-skill-level__color"
-                            style={{ backgroundColor: skillLevel.color }}
-                        ></div>
-                        <div className="profile-skill-level__title">{skillLevel.title}</div>
-                    </div>
-                );
-            })}
-        </div>
-    );
-};
 
 const ProfileLeftColumn: React.FC = () => {
     const { user } = useSelector((state: AppState) => state.profile);

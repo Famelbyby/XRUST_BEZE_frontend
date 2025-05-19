@@ -51,7 +51,7 @@ const ProfileMobileHeader: React.FC = () => {
                         alt="Оценка"
                     />
                     <div className="profile-mobile-header-rating__title">
-                        {profile?.rating || 0}
+                        {profile?.rating.toPrecision(5) || 0}
                     </div>
                 </div>
             </div>
