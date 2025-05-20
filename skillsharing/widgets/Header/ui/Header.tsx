@@ -21,7 +21,12 @@ const Header: React.FC = () => {
             </Link>
             {user !== undefined && (
                 <div className="header-profile">
-                    <Link to={`/profile/${user.id}`} aria-label="Профиль">
+                    <Link
+                        to={`/profile/${user.id}`}
+                        aria-label="Профиль"
+                        className="header-profile-href"
+                    >
+                        <div className="header-profile__name">{user.username}</div>
                         <img
                             className="header-profile__avatar"
                             src={AVATAR_URL + user.avatar}
