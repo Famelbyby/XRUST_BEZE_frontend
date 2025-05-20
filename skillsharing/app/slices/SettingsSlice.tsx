@@ -457,6 +457,10 @@ export const settingsSlice = createSlice({
                 state.globalSkills = state.globalSkills
                     .filter((value, index, array) => array.indexOf(value) === index)
                     .sort((a, b) => a.charCodeAt(0) - b.charCodeAt(0));
+
+                /* eslint-disable */
+                console.log(state.globalSkills);
+                /* eslint-enable */
             });
     },
 });
