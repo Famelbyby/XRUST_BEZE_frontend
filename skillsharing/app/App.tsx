@@ -30,7 +30,9 @@ import { enableMapSet } from 'immer';
 enableMapSet();
 
 function App() {
-    const { user, isFetched, justResigtered } = useSelector((state: AppState) => state.user);
+    const { user, isFetched, justResigtered, online } = useSelector(
+        (state: AppState) => state.user,
+    );
     const dispatch = useDispatch<AppDispatch>();
     const navigateTo = useNavigate();
 
@@ -43,14 +45,18 @@ function App() {
     }, [dispatch]);
 
     useEffect(() => {
-        if (user !== undefined) {
-            MainWebSocket.openConnection(user.id);
-
+        if (online && user !== undefined) {
             if (justResigtered) {
                 navigateTo(`/profile/${user.id}`);
             } else {
                 navigateTo(`/main-page`);
             }
+        }
+    }, [online]);
+
+    useEffect(() => {
+        if (user !== undefined) {
+            MainWebSocket.openConnection(user.id);
         } else {
             MainWebSocket.closeConnection();
         }

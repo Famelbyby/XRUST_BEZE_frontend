@@ -14,6 +14,7 @@ export interface UserState {
     isErrored: boolean;
     errorMessage: string | undefined;
     justResigtered: boolean;
+    online: boolean;
 }
 
 const initialState: UserState = {
@@ -23,6 +24,7 @@ const initialState: UserState = {
     isErrored: false,
     errorMessage: undefined,
     justResigtered: false,
+    online: false,
 };
 
 export const userSlice = createSlice({
@@ -32,6 +34,8 @@ export const userSlice = createSlice({
         clearUser: (state: UserState) => {
             state.user = undefined;
             state.isFetched = false;
+            state.justResigtered = false;
+            state.online = false;
         },
         setIsCopied: (state: UserState, action: PayloadAction<boolean>) => {
             state.isCopied = action.payload;
@@ -64,6 +68,7 @@ export const userSlice = createSlice({
 
                 state.isFetched = true;
                 state.user = data.user;
+                state.online = true;
             })
             .addCase(GetProfile.fulfilled, (state: UserState, action) => {
                 const data = action.payload as UserResponse;
@@ -83,6 +88,7 @@ export const userSlice = createSlice({
 
                 if (data.status === CODE_OK) {
                     state.user = data.user;
+                    state.online = true;
                 }
 
                 state.isFetched = true;
@@ -93,6 +99,7 @@ export const userSlice = createSlice({
                 if (data.status === CODE_OK) {
                     state.user = data.user;
                     state.justResigtered = true;
+                    state.online = true;
                 }
 
                 state.isFetched = true;
@@ -115,6 +122,8 @@ export const userSlice = createSlice({
 
                 state.user = undefined;
                 state.isFetched = true;
+                state.online = false;
+                state.justResigtered = false;
             });
     },
 });
