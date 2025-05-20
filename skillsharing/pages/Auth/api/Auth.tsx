@@ -27,7 +27,7 @@ export const TryAuth = createAsyncThunk(
             .catch(({ response }) => {
                 status = response.status;
                 data = undefined;
-                error = response.data.error;
+                error = response.data;
             });
 
         return { user: data as ProfileType, status, error };

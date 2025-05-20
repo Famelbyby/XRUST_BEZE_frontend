@@ -1,0 +1,50 @@
+@mixin phones {
+    @media screen and (width <= 800px) {
+        @content;
+    }
+}
+
+.landing {
+    &-page {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: 0;
+        overflow-y: scroll;
+        flex-grow: 1;
+    }
+
+    &-content {
+        flex-grow: 1;
+    }
+
+    &-footer {
+        display: flex;
+        height: 60px;
+        background-color: #329dff;
+        color: #ffffff9e;
+        font-family: 'Inter';
+        font-size: 12px;
+        align-items: center;
+        padding: 10px 25px;
+        box-sizing: border-box;
+        justify-content: space-between;
+
+        @include phones() {
+            font-size: 10px;
+            height: 50px;
+        }
+
+        &-logo {
+            &__img {
+                width: 40px;
+                aspect-ratio: 1;
+                opacity: 0.5;
+
+                @include phones() {
+                    width: 30px;
+                }
+            }
+        }
+    }
+}
