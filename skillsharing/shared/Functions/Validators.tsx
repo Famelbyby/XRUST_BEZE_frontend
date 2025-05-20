@@ -30,7 +30,7 @@ export function ValidateUsername(username: string): boolean {
         return false;
     }
 
-    if (username.match(/(.)*[|!\\/+=\-{}[*^&$%#@№`~()?\]](.)*/)) {
+    if (username.match(/(.)*[\s|!\\/+=\-{}[*^&$%#@№`~()?\]](.)*/)) {
         return false;
     }
 
@@ -44,6 +44,10 @@ export function ValidateUsername(username: string): boolean {
  */
 export function ValidateEmail(email: string): boolean {
     if (!email.match(/(.)+@(.)+\.(.)+/)) {
+        return false;
+    }
+
+    if (email.match(/\s/g)) {
         return false;
     }
 
