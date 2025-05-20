@@ -34,10 +34,6 @@
         }
     }
 
-    &_none-user {
-        justify-content: start;
-    }
-
     &-logo {
         width: 50px;
     }
@@ -89,6 +85,39 @@
         &__notifications {
             width: 20px;
             height: 20px;
+        }
+    }
+
+    &-auth-buttons {
+        display: flex;
+        column-gap: 30px;
+        align-items: center;
+        font-family: 'Inter';
+        font-size: 17px;
+
+        @include phones() {
+            font-size: 12px;
+            column-gap: 15px;
+        }
+
+        &__log-in, &__sign-up {
+            transition-duration: 0.2s;
+            cursor: pointer;
+
+            &:hover {
+                transform: scale(1.05);
+            }
+        }
+
+        &__log-in {
+            color: #329dff;
+        }
+
+        &__sign-up {
+            background-color: #329dff;
+            color: white;
+            padding: 7px 11px;
+            border-radius: 7px;
         }
     }
 }

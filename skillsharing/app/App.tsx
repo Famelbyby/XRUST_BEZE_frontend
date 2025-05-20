@@ -1,5 +1,5 @@
 import './App.scss';
-import { Navigate, Route } from 'react-router';
+import { Navigate, Route, useNavigate } from 'react-router';
 import Header from '../widgets/Header/ui/Header';
 import SideBar from '../widgets/SideBar/ui/SideBar';
 import MobileSideBar from '../widgets/MobileSideBar/MobileSideBar';
@@ -24,13 +24,15 @@ import CertainMaterial from '../pages/CertainMaterial/ui/CertainMaterial';
 import Materials from '../pages/Materials/ui/Materials';
 import CopiedWindow from '../features/CopiedWindow/CopiedWindow';
 import ErrorWindow from '../features/ErrorWindow/ErrorWindow';
+import Landing from '../pages/Landing/ui/Landing';
 import { enableMapSet } from 'immer';
 
 enableMapSet();
 
 function App() {
-    const { user, isFetched } = useSelector((state: AppState) => state.user);
+    const { user, isFetched, justResigtered } = useSelector((state: AppState) => state.user);
     const dispatch = useDispatch<AppDispatch>();
+    const navigateTo = useNavigate();
 
     useEffect(() => {
         dispatch(GetUserByCookie());
@@ -43,6 +45,12 @@ function App() {
     useEffect(() => {
         if (user !== undefined) {
             MainWebSocket.openConnection(user.id);
+
+            if (justResigtered) {
+                navigateTo(`/profile/${user.id}`);
+            } else {
+                navigateTo(`/main-page`);
+            }
         } else {
             MainWebSocket.closeConnection();
         }
@@ -61,7 +69,8 @@ function App() {
                 )}
                 {user === undefined && isFetched && (
                     <Routes>
-                        <Route path="" element={<Auth />}>
+                        <Route path="" element={<Landing />} />
+                        <Route path="auth" element={<Auth />}>
                             <Route index element={<Navigate to="log-in" replace />} />
                             <Route path="sign-up" element={<SignUp />} />
                             <Route path="log-in" element={<LogIn />} />
@@ -73,6 +82,7 @@ function App() {
                     <>
                         <SideBar />
                         <Routes>
+                            <Route path="" element={<Landing />} />
                             <Route path="/main-page" element={<Main />} />
                             <Route path="/profile">
                                 <Route path=":userID" element={<Profile />} />
@@ -88,7 +98,7 @@ function App() {
                             </Route>
                             <Route path="/materials" element={<Materials />} />
                             <Route path="/materials/:materialID" element={<CertainMaterial />} />
-                            <Route path="*" element={<Navigate to="/main-page" replace />} />
+                            <Route path="*" element={<Navigate to="/" replace />} />
                         </Routes>
                         <MobileSideBar />
                     </>

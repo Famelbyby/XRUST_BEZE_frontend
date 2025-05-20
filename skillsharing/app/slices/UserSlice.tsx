@@ -13,6 +13,7 @@ export interface UserState {
     isCopied: boolean;
     isErrored: boolean;
     errorMessage: string | undefined;
+    justResigtered: boolean;
 }
 
 const initialState: UserState = {
@@ -21,6 +22,7 @@ const initialState: UserState = {
     isCopied: false,
     isErrored: false,
     errorMessage: undefined,
+    justResigtered: false,
 };
 
 export const userSlice = createSlice({
@@ -90,6 +92,7 @@ export const userSlice = createSlice({
 
                 if (data.status === CODE_OK) {
                     state.user = data.user;
+                    state.justResigtered = true;
                 }
 
                 state.isFetched = true;
