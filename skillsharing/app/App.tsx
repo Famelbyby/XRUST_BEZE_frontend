@@ -30,7 +30,7 @@ import { enableMapSet } from 'immer';
 enableMapSet();
 
 function App() {
-    const { user, isFetched, justResigtered, online } = useSelector(
+    const { user, isFetched, justResigtered, justLogedIn } = useSelector(
         (state: AppState) => state.user,
     );
     const dispatch = useDispatch<AppDispatch>();
@@ -45,14 +45,16 @@ function App() {
     }, [dispatch]);
 
     useEffect(() => {
-        if (online && user !== undefined) {
+        if (user !== undefined) {
             if (justResigtered) {
                 navigateTo(`/profile/${user.id}`);
-            } else {
-                navigateTo(`/main-page`);
+            }
+
+            if (justLogedIn) {
+                navigateTo(`/profile/${user.id}`);
             }
         }
-    }, [online]);
+    }, [justResigtered, justLogedIn, user]);
 
     useEffect(() => {
         if (user !== undefined) {
