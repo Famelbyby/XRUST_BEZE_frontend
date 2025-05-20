@@ -9,6 +9,7 @@ interface FilterProps {
     changedName: (name: string) => void;
     changedSkill: (skill: string[]) => void;
     placeholder: string;
+    inputTitle?: string;
 }
 
 const FilterByNameAndSkills: React.FC<FilterProps> = ({
@@ -16,6 +17,7 @@ const FilterByNameAndSkills: React.FC<FilterProps> = ({
     changedName,
     globalSkills,
     placeholder,
+    inputTitle = 'названию',
 }) => {
     const [query, setQuery] = useSearchParams();
     const [skills, setSkills] = useState<string[]>(query.getAll('skill') || []);
@@ -88,12 +90,12 @@ const FilterByNameAndSkills: React.FC<FilterProps> = ({
                 >
                     {filterType === 'name' && (
                         <option className="filter-layout-filter__option" value={'name'} selected>
-                            названию
+                            {inputTitle}
                         </option>
                     )}
                     {filterType !== 'name' && (
                         <option className="filter-layout-filter__option" value={'name'} selected>
-                            названию
+                            {inputTitle}
                         </option>
                     )}
                     {filterType === 'skill' && (

@@ -77,6 +77,7 @@ const MainRightSide: React.FC = () => {
                 changedName={(nameInput) => changedNameInput(nameInput)}
                 globalSkills={globalSkills}
                 placeholder="Имя пользователя"
+                inputTitle="имени"
             />
         </div>
     );
