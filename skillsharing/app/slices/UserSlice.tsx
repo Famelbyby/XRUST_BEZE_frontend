@@ -76,6 +76,7 @@ export const userSlice = createSlice({
                     return;
                 }
 
+                state.justLogedIn = state.justResigtered = false;
                 const profile = data.user;
 
                 if (profile !== undefined && state.user && profile.id === state.user.id) {
@@ -110,6 +111,8 @@ export const userSlice = createSlice({
                 }
 
                 state.user = data.user;
+                state.justLogedIn = false;
+                state.justResigtered = false;
             })
             .addCase(Logout.fulfilled, (state: UserState, action) => {
                 const data = action.payload as unknown as AnyAPIResponse;
