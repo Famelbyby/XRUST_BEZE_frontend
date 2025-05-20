@@ -75,7 +75,7 @@ export const userSlice = createSlice({
                 state.isFetched = true;
                 state.user = data.user;
 
-                if (![SIGN_UP_URL, LOG_IN_URL].includes(window.location.pathname)) {
+                if (!['/', '', SIGN_UP_URL, LOG_IN_URL].includes(window.location.pathname)) {
                     state.firstPage = window.location.pathname;
                 }
             })
