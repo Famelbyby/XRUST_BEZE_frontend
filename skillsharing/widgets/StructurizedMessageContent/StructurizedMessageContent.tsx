@@ -2,6 +2,7 @@ import React from 'react';
 import './StructurizedMessageContent.scss';
 import ReactMarkdown from 'react-markdown';
 import { IMessage } from '../../entity/Message/MessageTypes';
+import { ReplaceHrefsToMarkDown } from '../../shared/Functions/FormatStrings';
 
 interface StructurizedMessageContentPropTypes {
     message: IMessage | undefined;
@@ -16,7 +17,9 @@ const StructurizedMessageContent: React.FC<StructurizedMessageContentPropTypes> 
         <div className={'str-message-content' + (isOnPage ? ' str-message-content_paddinged' : '')}>
             {message !== undefined && (
                 <div className="str-message-markdown">
-                    <ReactMarkdown>{message.structurized}</ReactMarkdown>
+                    <ReactMarkdown>
+                        {ReplaceHrefsToMarkDown(message.structurized!, /http(s)?:\/\/(\S)*/g)}
+                    </ReactMarkdown>
                 </div>
             )}
             {message === undefined && (

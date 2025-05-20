@@ -26,3 +26,15 @@ export function RoundSize(bytes: number): string {
 
     return result;
 }
+
+export function ReplaceHrefsToMarkDown(initial: string, replaceFrom: RegExp): string {
+    const result = initial.match(replaceFrom);
+
+    if (result !== null) {
+        result.forEach((href) => {
+            initial = initial.replace(href, `[${href}](${href})`);
+        });
+    }
+
+    return initial;
+}
