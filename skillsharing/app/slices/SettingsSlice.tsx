@@ -27,6 +27,7 @@ import {
     WRONG_USERNAME_FORMAT,
 } from '../../shared/Consts/ValidatorsConts';
 import { SETTINGS_PROFANITY_DETECTED, SETTINGS_USERNAME_EXIST } from '../../shared/Consts/Errors';
+import { CapitalizeString } from '../../shared/Functions/FormatStrings';
 
 export interface SettingsState {
     user: ProfileType | undefined;
@@ -450,22 +451,16 @@ export const settingsSlice = createSlice({
                     return;
                 }
 
+                state.globalSkills = [];
+
                 data.categories.forEach((category) => {
                     state.globalSkills = [...state.globalSkills, ...category.skills];
                 });
 
-                /* eslint-disable */
-                console.log(data);
-                console.log(state.globalSkills);
-                /* eslint-enable */
-
-                state.globalSkills = state.globalSkills.sort(
-                    (a, b) => a.charCodeAt(0) - b.charCodeAt(0),
-                );
-
-                /* eslint-disable */
-                console.log(state.globalSkills);
-                /* eslint-enable */
+                state.globalSkills = state.globalSkills
+                    .filter((value, index, array) => array.indexOf(value) === index)
+                    .sort((a, b) => a.charCodeAt(0) - b.charCodeAt(0))
+                    .map((skill) => CapitalizeString(skill));
             });
     },
 });
