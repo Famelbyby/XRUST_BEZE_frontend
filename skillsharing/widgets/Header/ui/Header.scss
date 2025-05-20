@@ -24,10 +24,11 @@
         display: flex;
         align-items: center;
         gap: 10px;
-        color: #329dff;
-        font-weight: 400;
+        color: #5B5AFF;
+        font-weight: 900;
         font-size: 26px;
-        font-family: Syncopate-Bold, sans-serif;
+        font-family: 'Inter';
+        font-style: italic;
 
         @include phones {
             font-size: 0;
@@ -157,10 +158,10 @@
         }
 
         &__log-in, &__sign-up {
-            color: #329dff;
+            color: #5B5AFF;
 
             &::after {
-                background-color: #329dff;
+                background-color: #5B5AFF;
             }
         }
     }

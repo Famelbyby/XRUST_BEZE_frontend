@@ -79,7 +79,7 @@
 
         &-goals {
             display: flex;
-            background-color: #329dff;
+            background-color: #5B5AFF;
             color: white;
             font-family: 'Inter';
             font-size: 35px;
@@ -191,7 +191,7 @@
     &-footer {
         display: flex;
         height: 60px;
-        background-color: #329dff;
+        background-color: #5B5AFF;
         color: #ffffff9e;
         font-family: 'Inter';
         font-size: 12px;
@@ -206,15 +206,10 @@
         }
 
         &-logo {
-            &__img {
-                width: 40px;
-                aspect-ratio: 1;
-                opacity: 0.5;
-
-                @include phones() {
-                    width: 30px;
-                }
-            }
+            font-size: 20px;
+            font-family: 'Inter';
+            font-style: italic;
+            font-weight: 900;
         }
     }
 }

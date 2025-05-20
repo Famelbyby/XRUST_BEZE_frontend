@@ -12,7 +12,6 @@ const Header: React.FC = () => {
     return (
         <div className={'header' + (user === undefined ? ' header_none-user' : '')}>
             <Link to={'/'} className="header-main-link" aria-label="Главная">
-                <img className="header-logo" src="/shared/skillsharing_logo2.png" alt="Главная" />
                 SkillSharing
             </Link>
             {user !== undefined && (
