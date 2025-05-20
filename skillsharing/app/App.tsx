@@ -15,7 +15,7 @@ import { useEffect } from 'react';
 import { GetUserByCookie } from '../entity/User/api/User';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, AppState } from './AppStore';
-import { clearUser } from './slices/UserSlice';
+import { clearFirstPage, clearUser } from './slices/UserSlice';
 import Settings from '../pages/Settings/ui/Settings';
 import StructurizedMessage from '../pages/StructurizedMessage/ui/StructurizedMessage';
 import MainWebSocket from '../shared/WebSocket';
@@ -26,11 +26,12 @@ import CopiedWindow from '../features/CopiedWindow/CopiedWindow';
 import ErrorWindow from '../features/ErrorWindow/ErrorWindow';
 import Landing from '../pages/Landing/ui/Landing';
 import { enableMapSet } from 'immer';
+import { LOG_IN_URL } from '../shared/Consts/URLS';
 
 enableMapSet();
 
 function App() {
-    const { user, isFetched, justResigtered, justLogedIn } = useSelector(
+    const { user, isFetched, justResigtered, justLogedIn, firstPage } = useSelector(
         (state: AppState) => state.user,
     );
     const dispatch = useDispatch<AppDispatch>();
@@ -47,11 +48,16 @@ function App() {
     useEffect(() => {
         if (user !== undefined) {
             if (justResigtered) {
-                navigateTo(`/profile/${user.id}`);
+                navigateTo(`/profile/${user.id}`, { replace: true });
             }
 
             if (justLogedIn) {
-                navigateTo(`/profile/${user.id}`);
+                if (firstPage !== '') {
+                    navigateTo(firstPage, { replace: true });
+                    dispatch(clearFirstPage());
+                } else {
+                    navigateTo(`/main-page`, { replace: true });
+                }
             }
         }
     }, [justResigtered, justLogedIn, user]);
@@ -83,12 +89,12 @@ function App() {
                             <Route path="sign-up" element={<SignUp />} />
                             <Route path="log-in" element={<LogIn />} />
                         </Route>
-                        <Route path="*" element={<Navigate to="/" replace />} />
+                        <Route path="*" element={<Navigate to={LOG_IN_URL} replace />} />
                     </Routes>
                 )}
                 {user !== undefined && (
                     <>
-                        <SideBar />
+                        {location.pathname !== '/' && <SideBar />}
                         <Routes>
                             <Route path="" element={<Landing />} />
                             <Route path="/main-page" element={<Main />} />

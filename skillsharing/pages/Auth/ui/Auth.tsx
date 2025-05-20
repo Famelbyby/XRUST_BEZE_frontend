@@ -10,7 +10,7 @@ const Auth: React.FC = () => {
         <div className="auth-page">
             <div className="auth-window">
                 <div className="auth-header">
-                    <Link to={LOG_IN_URL} aria-label="">
+                    <Link replace to={LOG_IN_URL} aria-label="">
                         <div
                             className={
                                 'auth-log-in' +
@@ -20,7 +20,7 @@ const Auth: React.FC = () => {
                             Вход
                         </div>
                     </Link>
-                    <Link to={SIGN_UP_URL} aria-label="">
+                    <Link replace to={SIGN_UP_URL} aria-label="">
                         <div
                             className={
                                 'auth-sign-up' +

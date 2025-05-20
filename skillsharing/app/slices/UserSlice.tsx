@@ -6,6 +6,7 @@ import { CODE_OK, CODE_FORBIDDEN, CODE_NOT_AUTHED } from '../../shared/Consts/Co
 import { AnyAPIResponse, UserResponse } from '../../shared/Consts/Interfaces';
 import { GetProfile } from '../../pages/Profile/api/Profile';
 import { UpdateProfile } from '../../pages/Settings/api/Settings';
+import { LOG_IN_URL, SIGN_UP_URL } from '../../shared/Consts/URLS';
 
 export interface UserState {
     user: ProfileType | undefined;
@@ -15,6 +16,7 @@ export interface UserState {
     errorMessage: string | undefined;
     justResigtered: boolean;
     justLogedIn: boolean;
+    firstPage: string;
 }
 
 const initialState: UserState = {
@@ -25,6 +27,7 @@ const initialState: UserState = {
     errorMessage: undefined,
     justResigtered: false,
     justLogedIn: false,
+    firstPage: '',
 };
 
 export const userSlice = createSlice({
@@ -36,6 +39,9 @@ export const userSlice = createSlice({
             state.isFetched = false;
             state.justResigtered = false;
             state.justLogedIn = false;
+        },
+        clearFirstPage: (state: UserState) => {
+            state.firstPage = '';
         },
         setIsCopied: (state: UserState, action: PayloadAction<boolean>) => {
             state.isCopied = action.payload;
@@ -68,6 +74,10 @@ export const userSlice = createSlice({
 
                 state.isFetched = true;
                 state.user = data.user;
+
+                if (![SIGN_UP_URL, LOG_IN_URL].includes(window.location.pathname)) {
+                    state.firstPage = window.location.pathname;
+                }
             })
             .addCase(GetProfile.fulfilled, (state: UserState, action) => {
                 const data = action.payload as UserResponse;
@@ -129,6 +139,6 @@ export const userSlice = createSlice({
     },
 });
 
-export const { setIsErrored, setIsCopied, clearUser } = userSlice.actions;
+export const { clearFirstPage, setIsErrored, setIsCopied, clearUser } = userSlice.actions;
 
 export default userSlice.reducer;
