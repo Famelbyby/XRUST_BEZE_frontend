@@ -52,12 +52,13 @@
         &-set {
             position: relative;
             width: 200px;
-            aspect-ratio: 1;
+            height: 200px;
             border-radius: 7px;
             cursor: pointer;
 
             @include phones {
                 width: 70px;
+                height: 70px;
             }
 
             &:hover {
