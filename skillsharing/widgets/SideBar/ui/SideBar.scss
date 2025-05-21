@@ -20,6 +20,26 @@
         align-items: center;
         padding: 8px 10px;
         border-radius: 10px;
+        position: relative;
+
+        &:hover {
+            &::after {
+                width: 70%;
+                left: 15%;
+            }
+        }
+
+        &::after {
+            background: black;
+            width: 0px;
+            height: 1px;
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 0px;
+            
+            transition-duration: 0.2s;
+        }
 
         &__img {
             width: 25px;
@@ -34,6 +54,11 @@
         }
 
         &_selected {
+            display: flex;
+            align-items: center;
+            padding: 8px 10px;
+            border-radius: 10px;
+            position: relative;
             background-color: #80808042;
         }
     }

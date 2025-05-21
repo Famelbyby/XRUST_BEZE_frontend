@@ -51,10 +51,9 @@ const SideBar: React.FC = () => {
                     <Link to={item.linkTo} key={item.id} aria-label={item.title}>
                         <div
                             className={
-                                'sidebar-item' +
-                                (ComparePathnames(location.pathname, item.linkTo)
+                                ComparePathnames(location.pathname, item.linkTo)
                                     ? ' sidebar-item_selected'
-                                    : '')
+                                    : 'sidebar-item'
                             }
                         >
                             <img className="sidebar-item__img" src={item.icon} alt="" />
