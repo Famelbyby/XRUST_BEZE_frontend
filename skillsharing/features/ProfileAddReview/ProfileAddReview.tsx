@@ -86,10 +86,6 @@ const ProfileAddReview: React.FC = () => {
                                 src="/shared/send.png"
                                 alt="Отправить комментарий"
                                 onClick={() => {
-                                    if (textareaInput === '') {
-                                        return;
-                                    }
-
                                     dispatch(
                                         AddReview({
                                             text: textareaInput,
