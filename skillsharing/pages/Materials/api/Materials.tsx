@@ -9,7 +9,7 @@ export const GetMaterialsByTags = createAsyncThunk(
         let status: number = CODE_OK;
         let data: unknown;
 
-        const queryTags = tags.map((tag) => `tag=${tag.toLowerCase()}`).join('&');
+        const queryTags = tags.map((tag) => `tag=${tag}`).join('&');
 
         await axios
             .get(BACK_URL + STUDY_MATERIALS_URL + `/by-tags?${queryTags}`)
