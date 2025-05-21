@@ -23,9 +23,6 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
         start_url: 'https://skill-sharing.ru/',
         orientation: 'portrait',
     },
-    workbox: {
-        cleanupOutdatedCaches: true,
-    },
     selfDestroying: true,
 };
 
