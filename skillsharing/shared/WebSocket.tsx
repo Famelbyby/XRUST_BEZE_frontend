@@ -44,6 +44,7 @@ class MainWebSocket {
     closeConnection = () => {
         if (this.socket !== undefined) {
             this.socket.close(1000);
+            this.socket = undefined;
         }
     };
 }
