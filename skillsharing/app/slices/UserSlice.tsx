@@ -135,6 +135,7 @@ export const userSlice = createSlice({
                 state.isFetched = true;
                 state.justLogedIn = false;
                 state.justResigtered = false;
+                state.firstPage = '';
             });
     },
 });
