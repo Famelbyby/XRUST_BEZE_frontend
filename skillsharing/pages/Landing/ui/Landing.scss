@@ -70,6 +70,7 @@
                 left: 0px;
                 top: 0px;
                 filter: brightness(0.5);
+                user-select: none;
             }
         }
 
@@ -117,6 +118,7 @@
                     max-width: 40vw;
                     max-height: 600px;
                     object-fit: cover;
+                    user-select: none;
 
                     @include phones() {
                         max-width: 100%;
