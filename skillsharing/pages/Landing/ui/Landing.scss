@@ -201,6 +201,7 @@
         padding: 10px 25px;
         box-sizing: border-box;
         justify-content: space-between;
+        user-select: none;
 
         @include phones() {
             font-size: 10px;
