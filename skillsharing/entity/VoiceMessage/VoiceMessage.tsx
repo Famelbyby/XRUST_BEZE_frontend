@@ -246,7 +246,7 @@ const VoiceMessage: React.FC<PropType> = ({
                 {message.structurized === undefined && message.recognized_voice !== undefined && (
                     <div className="chat-message-wrapper-structurize">
                         <img
-                            className="chat-message-wrapper-structurize-img"
+                            className="chat-message-wrapper-structurize__img"
                             src="/ChatPage/ai.png"
                             alt=""
                             title="Объяснить подробнее"
