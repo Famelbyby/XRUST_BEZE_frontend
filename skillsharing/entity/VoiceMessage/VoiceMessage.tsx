@@ -238,7 +238,7 @@ const VoiceMessage: React.FC<PropType> = ({
                         )}
                     <div className="chat-content__time">
                         {isStructurizing && (
-                            <div className="chat-content__structurizing">структуризируется</div>
+                            <div className="chat-content__structurizing">объясняется</div>
                         )}
                         {messageTime}
                     </div>
@@ -246,10 +246,10 @@ const VoiceMessage: React.FC<PropType> = ({
                 {message.structurized === undefined && message.recognized_voice !== undefined && (
                     <div className="chat-message-wrapper-structurize">
                         <img
-                            className="chat-message-wrapper__structurize-img"
+                            className="chat-message-wrapper-structurize-img"
                             src="/ChatPage/ai.png"
-                            alt="Структуризировать"
-                            title="Структуризировать сообщение"
+                            alt=""
+                            title="Объяснить подробнее"
                             onClick={(event) => {
                                 dispatch(showStructurizedModal(message.message_id));
 

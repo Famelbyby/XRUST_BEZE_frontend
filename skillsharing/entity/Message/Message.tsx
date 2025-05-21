@@ -116,7 +116,7 @@ const Message: React.FC<PropType> = ({
                             <img
                                 className="chat-message-wrapper-structurize__img"
                                 src="/ChatPage/ai.png"
-                                alt="Объяснить подробнее"
+                                alt=""
                                 title="Объяснить подробнее"
                                 onClick={(event) => {
                                     dispatch(showStructurizedModal(message.message_id));
