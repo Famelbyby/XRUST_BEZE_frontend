@@ -23,7 +23,6 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
         start_url: 'https://skill-sharing.ru/',
         orientation: 'portrait',
     },
-    selfDestroying: true,
 };
 
 // https://vite.dev/config/
