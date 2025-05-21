@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react-swc';
 import { VitePWA, VitePWAOptions } from 'vite-plugin-pwa';
 
 const manifestForPlugin: Partial<VitePWAOptions> = {
-    registerType: 'prompt',
+    registerType: 'autoUpdate',
     manifest: {
         name: 'Skill Sharing',
         short_name: 'Skill Sharing',
@@ -22,6 +22,9 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
         scope: 'https://skill-sharing.ru/',
         start_url: 'https://skill-sharing.ru/',
         orientation: 'portrait',
+    },
+    workbox: {
+        cleanupOutdatedCaches: true,
     },
 };
 
