@@ -48,15 +48,7 @@ export const materialsSlice = createSlice({
                     return;
                 }
 
-                state.globalSkills = [];
-
-                data.categories.forEach((category) => {
-                    state.globalSkills = [...state.globalSkills, ...category.skills];
-                });
-
-                state.globalSkills = state.globalSkills
-                    .filter((value, index, array) => array.indexOf(value) === index)
-                    .sort((a, b) => a.charCodeAt(0) - b.charCodeAt(0));
+                state.globalSkills = data.categories;
             });
     },
 });

@@ -106,7 +106,16 @@ export const GetCategories = createAsyncThunk('auth/getCategories', async () => 
         .get(BACK_URL + '/skills')
         .then((response) => {
             status = response.status;
-            data = response.data;
+            data = [];
+
+            (response.data as Category[]).forEach((cat) => {
+                data = [...(data as string[]), ...cat.skills];
+            });
+
+            data = (data as string[])
+                .filter((value, index, array) => array.indexOf(value) === index)
+                .sort((a, b) => a.charCodeAt(0) - b.charCodeAt(0));
+
             error = undefined;
         })
         .catch(({ response }) => {
@@ -115,5 +124,5 @@ export const GetCategories = createAsyncThunk('auth/getCategories', async () => 
             error = response.data;
         });
 
-    return { categories: data as Category[], status: status, error };
+    return { categories: data as string[], status: status, error };
 });

@@ -55,7 +55,7 @@ export interface UserMaterialsResponse extends AnyAPIResponse {
 }
 
 export interface CategoryResponse extends AnyAPIResponse {
-    categories: Category[];
+    categories: string[];
 }
 
 export interface PasswordFieldState extends TextFieldState {

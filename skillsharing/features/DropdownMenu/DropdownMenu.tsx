@@ -8,9 +8,10 @@ interface DropdownMenuProps {
 }
 
 const DropdownMenu: React.FC<DropdownMenuProps> = ({ callback, menu }) => {
-    //const [isChosen, setIsChosen] = useState(false);
     const [input, setInput] = useState('');
-    const filteredMenu = menu.filter((item) => item.startsWith(CapitalizeString(input)));
+    const filteredMenu = menu.filter((item) =>
+        CapitalizeString(item).startsWith(CapitalizeString(input)),
+    );
 
     return (
         <div className="dropdown-menu">
