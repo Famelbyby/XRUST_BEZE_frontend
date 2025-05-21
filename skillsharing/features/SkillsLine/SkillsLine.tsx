@@ -14,6 +14,7 @@ const SkillsLine: React.FC<TagsLinePropTypes> = ({ skills }) => {
                     <div
                         key={skill.name}
                         className={`skills-line__item skills-line__item_${skill.level}`}
+                        aria-label={skill.name}
                     >
                         {skill.name}
                     </div>

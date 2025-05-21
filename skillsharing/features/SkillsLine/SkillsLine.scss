@@ -1,5 +1,9 @@
 .skills-line {
     &__item {
+        max-width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+
         &_beginner {
             color: #BCBCFF;
         }

@@ -21,7 +21,7 @@ const MainHeader: React.FC = () => {
                     !
                 </div>
                 <div className="main-header-questions">
-                    Появились вопросы? Мы подобрали Вам экспертов по вашим навыкам
+                    Появились вопросы? Мы подобрали экспертов по вашим навыкам
                 </div>
             </div>
         </div>
