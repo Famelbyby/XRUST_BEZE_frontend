@@ -180,8 +180,8 @@
     &-remove-selection {
         display: flex;
         align-items: center;
-        gap: 18px;
-        color: #1c2fd1c2;
+        gap: 10px;
+        color: #5b5aff;
         font-size: 21px;
         font-family: 'Inter';
 
@@ -201,6 +201,11 @@
             width: 25px;
             height: 25px;
             cursor: pointer;
+            transition-duration: 0.2s;
+
+            &:hover {
+                transform: scale(1.05);
+            }
         }
     }
 }

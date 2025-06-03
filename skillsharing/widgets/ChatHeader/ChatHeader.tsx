@@ -200,6 +200,7 @@ const ChatHeader: React.FC = () => {
                                     <img
                                         className="chat-header-controls__img chat-header-controls__edit"
                                         src="/shared/pen.png"
+                                        title="Изменить сообщение"
                                         alt="Изменить сообщение"
                                         onClick={() => {
                                             dispatch(editMessage());
@@ -210,6 +211,7 @@ const ChatHeader: React.FC = () => {
                                     className="chat-header-controls__img chat-header-controls__copy"
                                     src="/ChatPage/copy.png"
                                     alt="Копировать сообщение"
+                                    title="Копировать сообщение"
                                     onClick={() => {
                                         navigator.clipboard.writeText(
                                             selectedMessages[0].payload || '',
@@ -227,6 +229,7 @@ const ChatHeader: React.FC = () => {
                                     id="delete-messages"
                                     className="chat-header-controls__img chat-header-controls__delete"
                                     src="/shared/delete.png"
+                                    title="Удалить сообщения"
                                     alt="Удалить сообщения"
                                     onClick={() => dispatch(showDeletingModal())}
                                 />

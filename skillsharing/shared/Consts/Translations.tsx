@@ -7,3 +7,9 @@ export const PREFERRED_FORMAT_TRANSLATION: Record<CommunicationFormat, string> =
 };
 
 export const PREFERRED_FORMAT_TYPES: CommunicationFormat[] = ['text', 'video', 'voice'];
+
+export const SKILL_LEVELS_IN_RUSSIAN = {
+    advanced: 'продвинутый',
+    intermediate: 'средний',
+    beginner: 'начинающий',
+};

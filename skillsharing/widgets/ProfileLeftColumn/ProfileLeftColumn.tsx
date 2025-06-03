@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import { StatisticItem } from './ProfileLeftColumnTypes';
 import { CapitalizeString } from '../../shared/Functions/FormatStrings';
-import { PREFERRED_FORMAT_TRANSLATION } from '../../shared/Consts/Translations';
+import {
+    PREFERRED_FORMAT_TRANSLATION,
+    SKILL_LEVELS_IN_RUSSIAN,
+} from '../../shared/Consts/Translations';
 import './ProfileLeftColumn.scss';
 import { CommunicationFormat, Skill } from '../../shared/Consts/Interfaces';
 import { AVATAR_URL } from '../../shared/Consts/URLS';
@@ -91,7 +94,7 @@ const ProfileLeftColumn: React.FC = () => {
                                 >
                                     <div
                                         className={`profile-tags-array__tag profile-tags-array__tag_${skill.level}`}
-                                        title={`${CapitalizeString(skill.level)}`}
+                                        title={`${CapitalizeString(SKILL_LEVELS_IN_RUSSIAN[skill.level])}`}
                                     >
                                         {skill.name}
                                     </div>
@@ -115,7 +118,7 @@ const ProfileLeftColumn: React.FC = () => {
                                     >
                                         <div
                                             className={`profile-to-learn-array__tag profile-to-learn-array__tag_${skill.level}`}
-                                            title={`${CapitalizeString(skill.level)}`}
+                                            title={`${CapitalizeString(SKILL_LEVELS_IN_RUSSIAN[skill.level])}`}
                                             key={skill.name}
                                         >
                                             {skill.name}

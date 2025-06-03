@@ -269,7 +269,9 @@ export const signupSlice = createSlice({
                 ...state.skills_to_share.slice(index + 1),
             ];
 
-            state.skillsToShareError = ATLEAST_ONE_SKILL;
+            if (state.skills_to_share.length === 0) {
+                state.skillsToShareError = ATLEAST_ONE_SKILL;
+            }
         },
         editedSkillToShare: (state: SignUpState, action: PayloadAction<[number, string]>) => {
             const [index, skillName] = action.payload;
