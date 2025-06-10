@@ -12,6 +12,10 @@ self.addEventListener('install', (event) => {
 self.addEventListener('fetch', (event) => {
     const { url } = event.request;
 
+    if (!url.startsWith('http')) {
+        return;
+    }
+
     // Пропускаем запросы, которые не должны кэшироваться
     if (NO_CACHE_URLS.some((path) => url.includes(path))) {
         event.respondWith(fetch(event.request));
@@ -23,12 +27,11 @@ self.addEventListener('fetch', (event) => {
         caches.match(event.request).then((cached) => {
             return (
                 cached ||
-                (url.startsWith('http') &&
-                    fetch(event.request).then((response) => {
-                        const clone = response.clone();
-                        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-                        return response;
-                    }))
+                fetch(event.request).then((response) => {
+                    const clone = response.clone();
+                    caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+                    return response;
+                })
             );
         }),
     );
