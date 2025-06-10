@@ -24,9 +24,6 @@
     <title>SkillSharing - пространство для обмена навыками</title>
   </head>
   <body>
-    <script>
-      if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/sw.js', { scope: '/' })})}
-    </script>
     <div id="root"></div>
     <script type="module" src="/app/main.tsx"></script>
   </body>

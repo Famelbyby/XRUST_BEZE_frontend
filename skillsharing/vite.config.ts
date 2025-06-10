@@ -1,16 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import { VitePWA, VitePWAOptions } from 'vite-plugin-pwa';
-import { registerRoute } from 'workbox-routing';
-import { NetworkFirst } from 'workbox-strategies';
-
-// Не кэшировать API-запросы
-registerRoute(
-    ({ url }) => !url.pathname.includes('/api/'),
-    new NetworkFirst({
-        cacheName: 'my-cache',
-    }),
-);
 
 const manifestForPlugin: Partial<VitePWAOptions> = {
     registerType: 'autoUpdate',
@@ -36,15 +26,6 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
     workbox: {
         cleanupOutdatedCaches: true,
         globPatterns: ['**/*.{js,css,html,ico,png,svg,json,vue,txt,woff2}'],
-        runtimeCaching: [
-            {
-                urlPattern: ({ url }) => !url.pathname.includes('/api/'),
-                handler: 'NetworkFirst',
-                options: {
-                    cacheName: 'my-cache',
-                },
-            },
-        ],
     },
 };
 
