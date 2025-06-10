@@ -25,7 +25,7 @@
   </head>
   <body>
     <script>
-      if('serviceWorker' in navigator) {window.addEventListener('load', () => {console.log('i m here'); navigator.serviceWorker.register('/sw.js', { scope: '/' })})}
+      if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/sw.js', { scope: '/' })})}
     </script>
     <div id="root"></div>
     <script type="module" src="/app/main.tsx"></script>

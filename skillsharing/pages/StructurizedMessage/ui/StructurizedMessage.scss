@@ -1,9 +1,21 @@
+@mixin phones {
+    @media screen and (width <= 800px) {
+        @content;
+    }
+}
+
 .str-message {
     &-page {
         display: flex;
         width: 100%;
         justify-content: center;
         padding: 10px 0 20px;
+        flex-grow: 1;
+        min-height: 0;
+
+        @include phones() {
+            padding: 10px 0;
+        }
     }
 
     &-dialog {
