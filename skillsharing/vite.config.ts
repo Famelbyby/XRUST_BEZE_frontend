@@ -32,7 +32,10 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,json,vue,txt,woff2,pdf,docx}'],
         runtimeCaching: [
             {
-                urlPattern: ({ url }) => !(url as NormalURL).pathname.startsWith('/api/v1/static'),
+                urlPattern: ({ url }) =>
+                    !(url as NormalURL).pathname.startsWith(
+                        'https://skill-sharing.ru/api/v1/static',
+                    ),
                 handler: 'NetworkFirst',
             },
         ],
