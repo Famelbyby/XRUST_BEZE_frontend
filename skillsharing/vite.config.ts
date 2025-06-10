@@ -25,6 +25,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
     },
     workbox: {
         cleanupOutdatedCaches: true,
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,json,vue,txt,woff2,pdf,docx}'],
     },
 };
 
