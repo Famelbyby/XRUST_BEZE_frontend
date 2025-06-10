@@ -1,5 +1,5 @@
 const CACHE_NAME = 'my-cache';
-const NO_CACHE_URLS = ['/api/']; // URL, которые не кэшируем
+const NO_CACHE_URLS = ['/api/v1/static']; // URL, которые не кэшируем
 
 self.addEventListener('install', (event) => {
     event.waitUntil(
