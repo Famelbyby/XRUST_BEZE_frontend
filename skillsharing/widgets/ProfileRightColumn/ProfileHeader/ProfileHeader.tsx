@@ -8,7 +8,7 @@ import { ProfileType } from '../../../pages/Profile/ui/ProfileTypes';
 import { Logout } from '../../../entity/User/api/User';
 
 const ProfileHeader: React.FC = () => {
-    const { user } = useSelector((state: AppState) => state.user);
+    const { user, theme } = useSelector((state: AppState) => state.user);
     const { user: profile } = useSelector((state: AppState) => state.profile);
     const ownUserID: ProfileType['id'] | undefined = user?.id;
     const lastSeen: Date | undefined =
@@ -26,8 +26,20 @@ const ProfileHeader: React.FC = () => {
                     )}
                     {profile !== undefined && profile.username}
                 </div>
-                <div className="profile-brief-last-seen">
-                    <img className="profile-brief-last-seen__img" src="/shared/clock.png" alt="" />
+                <div
+                    className={
+                        'profile-brief-last-seen' +
+                        (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
+                    }
+                >
+                    <img
+                        className={
+                            'profile-brief-last-seen__img' +
+                            (theme === 'light' ? '' : ` ${theme}-mode__img`)
+                        }
+                        src="/shared/clock.png"
+                        alt=""
+                    />
                     {profile !== undefined && <>{FormatRelativeTimeInPastInDays(lastSeen!)}</>}
                     {profile === undefined && <>давно-давно...</>}
                 </div>
@@ -37,7 +49,10 @@ const ProfileHeader: React.FC = () => {
                     <Link to={'/settings'}>
                         <div className="profile-buttons-edit">
                             <img
-                                className="profile-buttons-edit__img"
+                                className={
+                                    'profile-buttons-edit__img' +
+                                    (theme === 'light' ? '' : ` ${theme}-mode__img`)
+                                }
                                 src="/shared/pen.png"
                                 alt=""
                             />
@@ -45,7 +60,10 @@ const ProfileHeader: React.FC = () => {
                         </div>
                     </Link>
                     <div
-                        className="profile-buttons-exit"
+                        className={
+                            'profile-buttons-exit' +
+                            (theme === 'light' ? '' : ` ${theme}-mode__bright-block`)
+                        }
                         onClick={() => {
                             dispatch(Logout());
                         }}
@@ -63,14 +81,22 @@ const ProfileHeader: React.FC = () => {
                 <div className="profile-buttons profile-buttons_other">
                     <div className="profile-buttons-report">
                         <img
-                            className="profile-buttons-report__img"
+                            className={
+                                'profile-buttons-report__img' +
+                                (theme === 'light' ? '' : ` ${theme}-mode__img`)
+                            }
                             src="/ProfilePage/report.png"
                             alt=""
                         />
                         Пожаловаться
                     </div>
                     <Link to={`/chat/${profile.id}`}>
-                        <div className="profile-buttons-chat">
+                        <div
+                            className={
+                                'profile-buttons-chat' +
+                                (theme === 'light' ? '' : ` ${theme}-mode__bright-block`)
+                            }
+                        >
                             <img
                                 className="profile-buttons-chat__img"
                                 src="/ProfilePage/chat2.png"

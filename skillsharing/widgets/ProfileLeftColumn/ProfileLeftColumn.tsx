@@ -23,7 +23,7 @@ const profileStatistics: StatisticItem[] = [
 
 const ProfileLeftColumn: React.FC = () => {
     const { user } = useSelector((state: AppState) => state.profile);
-    const { user: myUser } = useSelector((state: AppState) => state.user);
+    const { user: myUser, theme } = useSelector((state: AppState) => state.user);
 
     useEffect(() => {
         if (user !== undefined) {
@@ -47,7 +47,11 @@ const ProfileLeftColumn: React.FC = () => {
                     />
                 )}
             </div>
-            <div className="profile-stats">
+            <div
+                className={
+                    'profile-stats' + (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
+                }
+            >
                 {profileStatistics.map((stat) => {
                     return (
                         <div className="profile-stats-item" key={stat.title}>
@@ -79,7 +83,12 @@ const ProfileLeftColumn: React.FC = () => {
                             </DescriptionWindow>
                         </div>
                     </div>
-                    <div className="profile-tags-header__count">
+                    <div
+                        className={
+                            'profile-tags-header__count' +
+                            (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
+                        }
+                    >
                         {user === undefined && 0}
                         {user !== undefined && user.skills_to_share.length}
                     </div>

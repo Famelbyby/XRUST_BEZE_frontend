@@ -15,7 +15,7 @@ const ProfileRightColumn: React.FC = () => {
     const { user, isHiddenDeleteReview, deleteReviewId } = useSelector(
         (state: AppState) => state.profile,
     );
-    const { user: myUser } = useSelector((state: AppState) => state.user);
+    const { user: myUser, theme } = useSelector((state: AppState) => state.user);
     const alreadyHaveReview =
         myUser !== undefined &&
         user !== undefined &&
@@ -29,7 +29,12 @@ const ProfileRightColumn: React.FC = () => {
             <div className="profile-content">
                 <div className="profile-description">
                     О себе
-                    <div className="profile-description__field">
+                    <div
+                        className={
+                            'profile-description__field' +
+                            (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
+                        }
+                    >
                         {user === undefined && (
                             <div className="profile-description__field-mock">
                                 <div className="profile-description__field-spinner"></div>
@@ -65,7 +70,14 @@ const ProfileRightColumn: React.FC = () => {
                             </div>
                         )}
                         {(user.hrefs === null || (user.hrefs && user.hrefs.length === 0)) && (
-                            <div className="profile-hrefs__no-hrefs">Тут пусто</div>
+                            <div
+                                className={
+                                    'profile-hrefs__no-hrefs' +
+                                    (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
+                                }
+                            >
+                                Тут пусто
+                            </div>
                         )}
                     </div>
                 )}
@@ -77,7 +89,10 @@ const ProfileRightColumn: React.FC = () => {
                     >
                         <div className="profile-materials-go-page">
                             <img
-                                className="profile-materials-go-page__img"
+                                className={
+                                    'profile-materials-go-page__img' +
+                                    (theme === 'light' ? '' : ` ${theme}-mode__img`)
+                                }
                                 src="/shared/go-back.png"
                                 alt=""
                             />
@@ -89,7 +104,14 @@ const ProfileRightColumn: React.FC = () => {
                     {!alreadyHaveReview && <ProfileAddReview />}
                     {user !== undefined &&
                         (user.reviews === undefined || user.reviews.length === 0) && (
-                            <div className="profile-reviews__no-reviews">Отзывов нет</div>
+                            <div
+                                className={
+                                    'profile-reviews__no-reviews' +
+                                    (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
+                                }
+                            >
+                                Отзывов нет
+                            </div>
                         )}
                     {user !== undefined && user.reviews !== undefined && (
                         <>

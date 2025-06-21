@@ -13,6 +13,7 @@ import ProfileMobileHeader from '../../../widgets/ProfileMobileHeader/ProfileMob
 import ProfileMobileContent from '../../../widgets/ProfileMobileContent/ProfileMobileContent';
 
 const Profile: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { user, isFetched } = useSelector((state: AppState) => state.profile);
     const params = useParams();
     const dispatch = useDispatch<AppDispatch>();
@@ -50,7 +51,12 @@ const Profile: React.FC = () => {
             {user === undefined && isFetched && <NotFound />}
             {(user !== undefined || !isFetched) && (
                 <>
-                    <div className="profile-wrapper">
+                    <div
+                        className={
+                            'profile-wrapper' +
+                            (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
+                        }
+                    >
                         <ProfileLeftColumn />
                         <ProfileRightColumn />
                     </div>
