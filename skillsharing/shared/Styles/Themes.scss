@@ -1,0 +1,42 @@
+$darkGreenDullText: #50bc80;
+$darkGreenBack: #143c42;
+$darkGreenBrightText: #e8ede0;
+$darkGreenMiddleBlock: #39666d;
+
+.dark-green-mode {
+    &__bright-right-border {
+        border-right: none;
+    }
+
+    &__bright-block {
+        background-color: $darkGreenDullText;
+    }
+
+    &__middle-block {
+        background-color: $darkGreenMiddleBlock;
+    }
+
+    &__dull-text {
+        color: $darkGreenDullText;
+
+        &::after {
+            background-color: $darkGreenDullText;
+        }
+    }
+
+    &__block {
+        background-color: $darkGreenBack;
+    }
+
+    &__bright-text {
+        color: $darkGreenBrightText;
+
+        &::after {
+            background-color: $darkGreenBrightText;
+        }
+    }
+
+    &__img {
+        filter: invert(0.8);
+    }
+}

@@ -27,11 +27,12 @@ import ErrorWindow from '../features/ErrorWindow/ErrorWindow';
 import Landing from '../pages/Landing/ui/Landing';
 import { enableMapSet } from 'immer';
 import { LOG_IN_URL } from '../shared/Consts/URLS';
+import '../shared/Styles/Themes.scss';
 
 enableMapSet();
 
 function App() {
-    const { user, isFetched, justResigtered, justLogedIn, firstPage } = useSelector(
+    const { user, isFetched, justResigtered, justLogedIn, firstPage, theme } = useSelector(
         (state: AppState) => state.user,
     );
     const dispatch = useDispatch<AppDispatch>();
@@ -75,7 +76,7 @@ function App() {
             <Header />
             <CopiedWindow />
             <ErrorWindow />
-            <div className="main-part">
+            <div className={'main-part' + (theme === 'light' ? '' : ` ${theme}-mode__block`)}>
                 {user === undefined && !isFetched && (
                     <div className="main-part__waiting">
                         <div className="main-part__spinner"></div>

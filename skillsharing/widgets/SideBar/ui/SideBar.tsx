@@ -15,7 +15,7 @@ interface sideBarItem {
 const SideBar: React.FC = () => {
     const location = useLocation();
 
-    const { user } = useSelector((state: AppState) => state.user);
+    const { user, theme } = useSelector((state: AppState) => state.user);
 
     const sideBarItems: sideBarItem[] = [
         {
@@ -45,19 +45,35 @@ const SideBar: React.FC = () => {
     ];
 
     return (
-        <div className="sidebar">
+        <div
+            className={
+                'sidebar' +
+                (theme === 'light'
+                    ? ''
+                    : ` ${theme}-mode__block ${theme}-mode__bright-right-border`)
+            }
+        >
             {sideBarItems.map((item) => {
                 return (
                     <Link to={item.linkTo} key={item.id} aria-label={item.title}>
                         <div
                             className={
                                 ComparePathnames(location.pathname, item.linkTo)
-                                    ? ' sidebar-item_selected'
-                                    : 'sidebar-item'
+                                    ? ' sidebar-item_selected' +
+                                      (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
+                                    : 'sidebar-item' +
+                                      (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
                             }
                         >
-                            <img className="sidebar-item__img" src={item.icon} alt="" />
-                            <div className="sidebar-item__title">{item.title}</div>
+                            <img
+                                className={
+                                    'sidebar-item__img' +
+                                    (theme === 'light' ? '' : ` ${theme}-mode__img`)
+                                }
+                                src={item.icon}
+                                alt=""
+                            />
+                            <div className={'sidebar-item__title'}>{item.title}</div>
                         </div>
                     </Link>
                 );

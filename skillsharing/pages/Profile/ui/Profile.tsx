@@ -43,7 +43,7 @@ const Profile: React.FC = () => {
     }, [user, isFetched]);
 
     return (
-        <div className="profile-page">
+        <div className={'profile-page'}>
             <Helmet>
                 <title>Профиль</title>
             </Helmet>

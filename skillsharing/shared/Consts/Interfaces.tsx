@@ -9,6 +9,8 @@ export interface TextFieldState {
     error: string | undefined;
 }
 
+export type Theme = 'light' | 'dark' | 'dark-green';
+
 export type SkillLevel = 'beginner' | 'intermediate' | 'advanced';
 export type CommunicationFormat = 'voice' | 'text' | 'video';
 export type FilterType = 'name' | 'skill';

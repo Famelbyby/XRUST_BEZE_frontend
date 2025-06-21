@@ -62,7 +62,7 @@ const ChatFooter: React.FC = () => {
         useSelector((state: AppState) => state.recorder);
     const { isUpdating, attachmentURLs, attachments, attachmentsUploaded, oldAttachments } =
         useSelector((state: AppState) => state.manageMessage);
-    const { user } = useSelector((state: AppState) => state.user);
+    const { user, theme } = useSelector((state: AppState) => state.user);
     const dispatch = useDispatch<AppDispatch>();
     const userId: string = user!.id;
     const [inputText, setInputText] = useState('');
@@ -338,11 +338,19 @@ const ChatFooter: React.FC = () => {
                 </div>
             )}
             <div className="chat-footer-fields">
-                {isRecording && <div className="chat-footer-fields__microphone-background"></div>}
+                {isRecording && (
+                    <div
+                        className={
+                            'chat-footer-fields__microphone-background' +
+                            (theme === 'light' ? '' : ` ${theme}-mode__bright-block`)
+                        }
+                    ></div>
+                )}
                 <img
                     id="record-voice-message"
                     className={
                         'chat-footer-fields__microphone' +
+                        (theme === 'light' ? '' : ` ${theme}-mode__img`) +
                         (isRecording ? ' chat-footer-fields__microphone_recording' : '')
                     }
                     src={'/ChatPage/microphone' + (isRecording ? '_white' : '') + '.png'}
@@ -351,7 +359,10 @@ const ChatFooter: React.FC = () => {
                 {!isRecorded && (
                     <textarea
                         id="textarea"
-                        className="chat-footer-fields__textarea"
+                        className={
+                            'chat-footer-fields__textarea' +
+                            (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
+                        }
                         value={inputText}
                         placeholder="Ваше сообщение..."
                         onChange={handleChangingTextareaInput}
@@ -392,7 +403,10 @@ const ChatFooter: React.FC = () => {
                 {!isRecorded && (
                     <>
                         <img
-                            className="chat-footer-controls__attach-file"
+                            className={
+                                'chat-footer-controls__attach-file' +
+                                (theme === 'light' ? '' : ` ${theme}-mode__img`)
+                            }
                             src="/shared/plus.png"
                             alt="Прикрепить файл"
                             onClick={() => {
@@ -416,7 +430,10 @@ const ChatFooter: React.FC = () => {
                 )}
                 {isRecorded && (
                     <img
-                        className="chat-footer-controls__delete-recording"
+                        className={
+                            'chat-footer-controls__delete-recording' +
+                            (theme === 'light' ? '' : ` ${theme}-mode__img`)
+                        }
                         src="/shared/cancel.png"
                         alt="Удалить запись"
                         onClick={() => {
@@ -427,7 +444,7 @@ const ChatFooter: React.FC = () => {
                 {editingMessage === null && (
                     <img
                         id="send-message"
-                        className="chat-footer-controls__send-message"
+                        className={'chat-footer-controls__send-message'}
                         src="/shared/send.png"
                         alt="send-message"
                         onClick={handleSending}

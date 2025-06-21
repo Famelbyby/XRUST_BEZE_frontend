@@ -12,6 +12,8 @@
         min-height: 0;
         overflow-y: scroll;
         flex-grow: 1;
+        background-color: white;
+        z-index: 0;
     }
 
     &-content {

@@ -9,6 +9,7 @@ import './MaterialsContent.scss';
 import { GetCategories } from '../../pages/Auth/api/Auth';
 
 const LeftSide: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { isFetched, materials } = useSelector((state: AppState) => state.materials);
 
     return (
@@ -19,7 +20,12 @@ const LeftSide: React.FC = () => {
                 </div>
             )}
             {isFetched && materials.length === 0 && (
-                <div className="materials-content__no-materials">
+                <div
+                    className={
+                        'materials-content__no-materials' +
+                        (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
+                    }
+                >
                     Подходящих материалов не найдено
                 </div>
             )}

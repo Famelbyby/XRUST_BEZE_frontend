@@ -3,7 +3,7 @@ import { ProfileType } from '../../pages/Profile/ui/ProfileTypes';
 import { GetUserByCookie, Logout } from '../../entity/User/api/User';
 import { TryAuth, TryRegister } from '../../pages/Auth/api/Auth';
 import { CODE_OK, CODE_FORBIDDEN, CODE_NOT_AUTHED } from '../../shared/Consts/Codes';
-import { AnyAPIResponse, UserResponse } from '../../shared/Consts/Interfaces';
+import { AnyAPIResponse, Theme, UserResponse } from '../../shared/Consts/Interfaces';
 import { GetProfile } from '../../pages/Profile/api/Profile';
 import { UpdateProfile } from '../../pages/Settings/api/Settings';
 import { LOG_IN_URL, SIGN_UP_URL } from '../../shared/Consts/URLS';
@@ -17,6 +17,7 @@ export interface UserState {
     justResigtered: boolean;
     justLogedIn: boolean;
     firstPage: string;
+    theme: Theme;
 }
 
 const initialState: UserState = {
@@ -28,6 +29,7 @@ const initialState: UserState = {
     justResigtered: false,
     justLogedIn: false,
     firstPage: '',
+    theme: (localStorage.getItem('theme') || 'light') as Theme,
 };
 
 export const userSlice = createSlice({

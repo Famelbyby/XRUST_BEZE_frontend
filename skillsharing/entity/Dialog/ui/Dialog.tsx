@@ -11,7 +11,7 @@ import SkillsLine from '../../../features/SkillsLine/SkillsLine';
 import { SECOND_IN_MILLISECONDS } from '../../../shared/Consts/ValidatorsConts';
 
 const Dialog: React.FC<DialogProps> = ({ dialog }) => {
-    const { user } = useSelector((state: AppState) => state.user);
+    const { user, theme } = useSelector((state: AppState) => state.user);
     const navigateTo = useNavigate();
 
     let companion: ProfileType | undefined = undefined;
@@ -69,7 +69,8 @@ const Dialog: React.FC<DialogProps> = ({ dialog }) => {
                                 'dialog-user-info__last-message' +
                                 (dialog.last_message!.voice ||
                                 dialog.last_message!.payload === undefined
-                                    ? ' dialog-user-info__last-message_voiced'
+                                    ? ' dialog-user-info__last-message_voiced' +
+                                      (theme === 'light' ? '' : ` ${theme}-mode__dull-text`)
                                     : '')
                             }
                         >
@@ -81,7 +82,12 @@ const Dialog: React.FC<DialogProps> = ({ dialog }) => {
                         </span>
                     )}
 
-                    <div className="dialog-user-info__message-time">
+                    <div
+                        className={
+                            'dialog-user-info__message-time' +
+                            (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
+                        }
+                    >
                         {dialog !== undefined && (
                             <>
                                 {FormatRelativeTimeInPastInDays(

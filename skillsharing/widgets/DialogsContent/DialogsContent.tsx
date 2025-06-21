@@ -13,7 +13,7 @@ const DialogsContent: React.FC = () => {
     const { dialogs, filteredDialogs, isServerError } = useSelector(
         (state: AppState) => state.dialogs,
     );
-    const { user } = useSelector((state: AppState) => state.user);
+    const { user, theme } = useSelector((state: AppState) => state.user);
     const dispatch = useDispatch<AppDispatch>();
 
     /**
@@ -90,7 +90,14 @@ const DialogsContent: React.FC = () => {
                                 return <Dialog dialog={dialog} key={dialog.channel_id} />;
                             })}
                     {filteredDialogs !== undefined && filteredDialogs.length === 0 && (
-                        <div className="dialogs__no-chats">Чатов нет</div>
+                        <div
+                            className={
+                                'dialogs__no-chats' +
+                                (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
+                            }
+                        >
+                            Чатов нет
+                        </div>
                     )}
                 </>
             )}

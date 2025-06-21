@@ -3,6 +3,8 @@ import { FilterType } from '../../shared/Consts/Interfaces';
 import './FilterByNameAndSkills.scss';
 import DropdownMenu from '../DropdownMenu/DropdownMenu';
 import { useSearchParams } from 'react-router';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../app/AppStore';
 
 interface FilterProps {
     globalSkills: string[];
@@ -19,6 +21,8 @@ const FilterByNameAndSkills: React.FC<FilterProps> = ({
     placeholder,
     inputTitle = 'названию',
 }) => {
+    const { theme } = useSelector((state: AppState) => state.user);
+
     const [query, setQuery] = useSearchParams();
     const [skills, setSkills] = useState<string[]>(query.getAll('skill') || []);
     const [materialNameInput, setMaterialNameInput] = useState(query.get('name') || '');
@@ -81,7 +85,10 @@ const FilterByNameAndSkills: React.FC<FilterProps> = ({
             <div className="filter-layout-filter">
                 Фильтр по
                 <select
-                    className="filter-layout-filter-select"
+                    className={
+                        'filter-layout-filter-select' +
+                        (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
+                    }
                     onChange={(event) => {
                         setMaterialNameInput('');
                         setSkills([]);
@@ -89,22 +96,49 @@ const FilterByNameAndSkills: React.FC<FilterProps> = ({
                     }}
                 >
                     {filterType === 'name' && (
-                        <option className="filter-layout-filter__option" value={'name'} selected>
+                        <option
+                            className={
+                                'filter-layout-filter__option' +
+                                (theme === 'light' ? '' : ` ${theme}-mode__block`)
+                            }
+                            value={'name'}
+                            selected
+                        >
                             {inputTitle}
                         </option>
                     )}
                     {filterType !== 'name' && (
-                        <option className="filter-layout-filter__option" value={'name'} selected>
+                        <option
+                            className={
+                                'filter-layout-filter__option' +
+                                (theme === 'light' ? '' : ` ${theme}-mode__block`)
+                            }
+                            value={'name'}
+                            selected
+                        >
                             {inputTitle}
                         </option>
                     )}
                     {filterType === 'skill' && (
-                        <option className="filter-layout-filter__option" value={'skill'} selected>
+                        <option
+                            className={
+                                'filter-layout-filter__option' +
+                                (theme === 'light' ? '' : ` ${theme}-mode__block`)
+                            }
+                            value={'skill'}
+                            selected
+                        >
                             навыку
                         </option>
                     )}
                     {filterType !== 'skill' && (
-                        <option className="filter-layout-filter__option" value={'skill'}>
+                        <option
+                            className={
+                                'filter-layout-filter__option' +
+                                (theme === 'light' ? '' : ` ${theme}-mode__block`)
+                            }
+                            value={'skill'}
+                        >
                             навыку
                         </option>
                     )}

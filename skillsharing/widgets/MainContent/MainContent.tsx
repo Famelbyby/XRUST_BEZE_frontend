@@ -15,15 +15,28 @@ import { clearFoundUsers } from '../../app/slices/MainSlice';
 
 const MainlLeftSide: React.FC = () => {
     const { foundUsers } = useSelector((state: AppState) => state.mainPageUsers);
+    const { theme } = useSelector((state: AppState) => state.user);
 
     return (
         <div className="main-content-left-side">
             <div className="main-results">
                 {foundUsers === undefined && (
-                    <div className="main-results__waiting">Обрабатываем Ваш запрос, секундочку</div>
+                    <div
+                        className={
+                            'main-results__waiting' +
+                            (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
+                        }
+                    >
+                        Обрабатываем Ваш запрос, секундочку
+                    </div>
                 )}
                 {foundUsers !== undefined && foundUsers.length === 0 && (
-                    <div className="main-results__no-results">
+                    <div
+                        className={
+                            'main-results__no-results' +
+                            (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
+                        }
+                    >
                         К сожалению, подходящих экспертов найдено не было
                     </div>
                 )}

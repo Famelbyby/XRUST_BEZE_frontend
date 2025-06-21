@@ -94,6 +94,10 @@
             &::-webkit-scrollbar {
                 display: none;
             }
+
+            &::-webkit-input-placeholder {
+                color: inherit;
+            }
         }
     }
 

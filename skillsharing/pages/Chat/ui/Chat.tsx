@@ -60,7 +60,7 @@ const Chat: React.FC = () => {
     }, [noPeerError]);
 
     return (
-        <div className="chat-page">
+        <div className={'chat-page'}>
             <Helmet>
                 <title>Чат</title>
             </Helmet>
