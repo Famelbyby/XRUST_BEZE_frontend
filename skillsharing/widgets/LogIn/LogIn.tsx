@@ -15,6 +15,7 @@ import Loader from '../../features/Loader/Loader';
 import { Helmet } from 'react-helmet';
 
 const LogInEnterButton: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { identifier, password, isPending, isEmailValid } = useSelector(
         (state: AppState) => state.login,
     );
@@ -22,7 +23,7 @@ const LogInEnterButton: React.FC = () => {
 
     return (
         <div
-            className="log-in__button"
+            className={'log-in__button' + (theme === 'light' ? '' : ` ${theme}-mode__bright-block`)}
             onClick={() => {
                 if (isPending) {
                     return;
@@ -63,11 +64,13 @@ const LogInEnterButton: React.FC = () => {
 };
 
 const LogInIdentifier: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { identifier } = useSelector((state: AppState) => state.login);
     const dispatch = useDispatch<AppDispatch>();
 
     return (
         <TextField
+            theme={theme}
             title="Почта или имя"
             value={identifier.value}
             error={identifier.error}
@@ -78,11 +81,13 @@ const LogInIdentifier: React.FC = () => {
 };
 
 const LogInPassword: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { password } = useSelector((state: AppState) => state.login);
     const dispatch = useDispatch<AppDispatch>();
 
     return (
         <PasswordField
+            theme={theme}
             title="Пароль"
             value={password.value}
             onChangingField={(data: string) => dispatch(editedPasswordField(data))}

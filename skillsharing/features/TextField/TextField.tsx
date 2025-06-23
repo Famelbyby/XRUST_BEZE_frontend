@@ -7,6 +7,7 @@ interface TextFieldPropTypes<Type> {
     value: Type;
     error: string | undefined;
     placeholder: string;
+    theme?: string;
 }
 
 const TextField: React.FC<TextFieldPropTypes<string>> = ({
@@ -15,9 +16,10 @@ const TextField: React.FC<TextFieldPropTypes<string>> = ({
     value,
     error,
     placeholder,
+    theme = 'light',
 }) => {
     return (
-        <div className="text-field">
+        <div className={'text-field' + (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)}>
             {title}
             <div className="text-field-content">
                 <input

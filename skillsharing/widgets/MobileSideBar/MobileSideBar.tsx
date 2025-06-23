@@ -15,7 +15,7 @@ interface mobileSideBarItem {
 const MobileSideBar: React.FC = () => {
     const location = useLocation();
 
-    const { user } = useSelector((state: AppState) => state.user);
+    const { user, theme } = useSelector((state: AppState) => state.user);
 
     const sideBarItems: mobileSideBarItem[] = [
         {
@@ -57,7 +57,14 @@ const MobileSideBar: React.FC = () => {
                                     : '')
                             }
                         >
-                            <img className="mobile-sidebar-item__img" src={item.icon} alt="" />
+                            <img
+                                className={
+                                    'mobile-sidebar-item__img' +
+                                    (theme === 'light' ? '' : ` ${theme}-mode__img`)
+                                }
+                                src={item.icon}
+                                alt=""
+                            />
                         </div>
                     </Link>
                 );

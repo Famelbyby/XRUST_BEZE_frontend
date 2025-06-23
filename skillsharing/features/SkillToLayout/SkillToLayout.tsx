@@ -10,6 +10,7 @@ interface SkillToLayoutProps {
     addSkill: (skill: string) => void;
     editedLevel: ([index, level]: [number, string]) => void;
     deleteSkill: (name: string) => void;
+    theme?: string;
 }
 
 const SkillToLayout: React.FC<SkillToLayoutProps> = ({
@@ -20,13 +21,14 @@ const SkillToLayout: React.FC<SkillToLayoutProps> = ({
     addSkill,
     editedLevel,
     deleteSkill,
+    theme = 'light',
 }) => {
     const enabledSkills = globalSkills.filter(
         (globalSkill) => !skills.find((skill) => skill.name === globalSkill),
     );
 
     return (
-        <div className="sign-up-sktl">
+        <div className={'sign-up-sktl' + (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)}>
             {title}
             {skills.length < 5 && (
                 <DropdownMenu menu={enabledSkills} callback={(newSkill) => addSkill(newSkill)} />
@@ -61,7 +63,10 @@ const SkillToLayout: React.FC<SkillToLayoutProps> = ({
                                 })}
                             </select>
                             <img
-                                className="sign-up-sktl-case__delete-img"
+                                className={
+                                    'sign-up-sktl-case__delete-img' +
+                                    (theme === 'light' ? '' : ` ${theme}-mode__img`)
+                                }
                                 src="/shared/cancel.png"
                                 alt="Удалить навык"
                                 onClick={() => deleteSkill(skill.name)}

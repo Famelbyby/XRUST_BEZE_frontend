@@ -8,6 +8,7 @@ interface PasswordFieldPropTypes<Type> {
     toggleIsHidden: () => void;
     error: string | undefined;
     isHidden: boolean;
+    theme?: string;
 }
 
 const TextField: React.FC<PasswordFieldPropTypes<string>> = ({
@@ -17,9 +18,12 @@ const TextField: React.FC<PasswordFieldPropTypes<string>> = ({
     toggleIsHidden,
     isHidden,
     error,
+    theme = 'light',
 }) => {
     return (
-        <div className="password-field">
+        <div
+            className={'password-field' + (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)}
+        >
             {title}
             <div className={'password-field-content'}>
                 <input

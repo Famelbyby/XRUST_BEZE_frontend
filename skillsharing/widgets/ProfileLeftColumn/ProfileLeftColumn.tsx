@@ -47,16 +47,17 @@ const ProfileLeftColumn: React.FC = () => {
                     />
                 )}
             </div>
-            <div
-                className={
-                    'profile-stats' + (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
-                }
-            >
+            <div className={'profile-stats'}>
                 {profileStatistics.map((stat) => {
                     return (
                         <div className="profile-stats-item" key={stat.title}>
                             <div className="profile-stats-item__example-title">{stat.title}</div>
-                            <div className="profile-stats-item__example-value">
+                            <div
+                                className={
+                                    'profile-stats-item__example-value' +
+                                    (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
+                                }
+                            >
                                 {user === undefined && (
                                     <div className="profile-stats-item__example-mock">
                                         <div className="profile-stats-item__example-spinner"></div>

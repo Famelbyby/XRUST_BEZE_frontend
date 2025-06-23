@@ -38,11 +38,14 @@ import { Helmet } from 'react-helmet';
 import SkillToLayout from '../../features/SkillToLayout/SkillToLayout';
 
 const SignUpAvatar: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { avatar } = useSelector((state: AppState) => state.signup);
     const dispatch = useDispatch();
 
     return (
-        <div className="sign-up-avatar">
+        <div
+            className={'sign-up-avatar' + (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)}
+        >
             Выберите аватарку
             <div className="sign-up-avatar-field">
                 <img
@@ -89,11 +92,17 @@ const SignUpAvatar: React.FC = () => {
 };
 
 const SignUpPreferredFormat: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { preferred_format } = useSelector((state: AppState) => state.signup);
     const dispatch = useDispatch();
 
     return (
-        <div className="sign-up-preferred-format">
+        <div
+            className={
+                'sign-up-preferred-format' +
+                (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
+            }
+        >
             Предпочитаю общаться
             <select
                 className="sign-up-preferred-format-select"
@@ -146,6 +155,7 @@ const SignUpRegisterButton: React.FC = () => {
         skillsToLearnError,
         skillsToShareError,
     } = useSelector((state: AppState) => state.signup);
+    const { theme } = useSelector((state: AppState) => state.user);
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
@@ -168,7 +178,9 @@ const SignUpRegisterButton: React.FC = () => {
 
     return (
         <div
-            className="sign-up__button-reg"
+            className={
+                'sign-up__button-reg' + (theme === 'light' ? '' : ` ${theme}-mode__bright-block`)
+            }
             onClick={() => {
                 if (isPending) {
                     return;
@@ -216,11 +228,13 @@ const SignUpRegisterButton: React.FC = () => {
 };
 
 const SignUpIdentifier: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { identifier } = useSelector((state: AppState) => state.signup);
     const dispatch = useDispatch<AppDispatch>();
 
     return (
         <TextField
+            theme={theme}
             title="Имя"
             value={identifier.value}
             error={identifier.error}
@@ -231,11 +245,13 @@ const SignUpIdentifier: React.FC = () => {
 };
 
 const SignUpEmail: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { email } = useSelector((state: AppState) => state.signup);
     const dispatch = useDispatch<AppDispatch>();
 
     return (
         <TextField
+            theme={theme}
             title="Почта"
             value={email.value}
             error={email.error}
@@ -246,11 +262,13 @@ const SignUpEmail: React.FC = () => {
 };
 
 const SignUpPassword: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { password } = useSelector((state: AppState) => state.signup);
     const dispatch = useDispatch<AppDispatch>();
 
     return (
         <PasswordField
+            theme={theme}
             title="Пароль"
             value={password.value}
             onChangingField={(data: string) => dispatch(editedPasswordField(data))}
@@ -262,11 +280,13 @@ const SignUpPassword: React.FC = () => {
 };
 
 const SignUpRepeatPassword: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { repeatPassword } = useSelector((state: AppState) => state.signup);
     const dispatch = useDispatch<AppDispatch>();
 
     return (
         <PasswordField
+            theme={theme}
             title="Повторите пароль"
             value={repeatPassword.value}
             onChangingField={(data: string) => dispatch(editedRepeatPasswordField(data))}
@@ -278,6 +298,7 @@ const SignUpRepeatPassword: React.FC = () => {
 };
 
 const SignUpBio: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { bio } = useSelector((state: AppState) => state.signup);
     const dispatch = useDispatch<AppDispatch>();
 
@@ -288,7 +309,7 @@ const SignUpBio: React.FC = () => {
     }
 
     return (
-        <div className="sign-up-bio">
+        <div className={'sign-up-bio' + (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)}>
             О себе
             <div className="sign-up-bio-field">
                 <textarea
@@ -307,6 +328,7 @@ const SignUpBio: React.FC = () => {
 };
 
 const SignUpSkillToLearn: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { skills_to_learn, globalSkills, skillsToLearnError } = useSelector(
         (state: AppState) => state.signup,
     );
@@ -314,6 +336,7 @@ const SignUpSkillToLearn: React.FC = () => {
 
     return (
         <SkillToLayout
+            theme={theme}
             skills={skills_to_learn}
             globalSkills={globalSkills}
             error={skillsToLearnError}
@@ -326,6 +349,7 @@ const SignUpSkillToLearn: React.FC = () => {
 };
 
 const SignUpSkillToShare: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { skills_to_share, globalSkills, skillsToShareError } = useSelector(
         (state: AppState) => state.signup,
     );
@@ -333,6 +357,7 @@ const SignUpSkillToShare: React.FC = () => {
 
     return (
         <SkillToLayout
+            theme={theme}
             skills={skills_to_share}
             globalSkills={globalSkills}
             error={skillsToShareError}
@@ -345,6 +370,7 @@ const SignUpSkillToShare: React.FC = () => {
 };
 
 const SignUpNextStepButton: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { identifier, password, email, repeatPassword, hrefs } = useSelector(
         (state: AppState) => state.signup,
     );
@@ -352,7 +378,9 @@ const SignUpNextStepButton: React.FC = () => {
 
     return (
         <div
-            className="sign-up__button-next"
+            className={
+                'sign-up__button-next' + (theme === 'light' ? '' : ` ${theme}-mode__bright-block`)
+            }
             onClick={() => {
                 if (
                     identifier.error !== undefined ||
@@ -392,11 +420,12 @@ const SignUpPreviousStepButton: React.FC = () => {
 };
 
 const SignUpHrefs: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { hrefs } = useSelector((state: AppState) => state.signup);
     const dispatch = useDispatch();
 
     return (
-        <div className="sign-up-hrefs">
+        <div className={'sign-up-hrefs' + (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)}>
             Личные ссылки
             <div className="sign-up-hrefs-examples">
                 {hrefs.map((href: { value: string; error: string | undefined }, index: number) => {
@@ -417,7 +446,10 @@ const SignUpHrefs: React.FC = () => {
                                     }
                                 />
                                 <img
-                                    className="sign-up-hrefs-examples-item__img"
+                                    className={
+                                        'sign-up-hrefs-examples-item__img' +
+                                        (theme === 'light' ? '' : ` ${theme}-mode__img`)
+                                    }
                                     src="/shared/cancel.png"
                                     alt="Удалить ссылку"
                                     onClick={() => dispatch(deleteHref(index))}
@@ -435,7 +467,10 @@ const SignUpHrefs: React.FC = () => {
                         onClick={() => dispatch(addHref())}
                     >
                         <img
-                            className="sign-up-hrefs-examples-add-href__img"
+                            className={
+                                'sign-up-hrefs-examples-add-href__img' +
+                                (theme === 'light' ? '' : ` ${theme}-mode__img`)
+                            }
                             src="/shared/plus.png"
                             alt="Добавить ссылку"
                         />
