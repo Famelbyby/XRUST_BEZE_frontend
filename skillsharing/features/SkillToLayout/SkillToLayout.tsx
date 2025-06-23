@@ -28,7 +28,7 @@ const SkillToLayout: React.FC<SkillToLayoutProps> = ({
     );
 
     return (
-        <div className={'sign-up-sktl' + (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)}>
+        <div className={'sign-up-sktl' + ` ${theme}-mode__bright-text`}>
             {title}
             {skills.length < 5 && (
                 <DropdownMenu menu={enabledSkills} callback={(newSkill) => addSkill(newSkill)} />
@@ -63,10 +63,7 @@ const SkillToLayout: React.FC<SkillToLayoutProps> = ({
                                 })}
                             </select>
                             <img
-                                className={
-                                    'sign-up-sktl-case__delete-img' +
-                                    (theme === 'light' ? '' : ` ${theme}-mode__img`)
-                                }
+                                className={'sign-up-sktl-case__delete-img' + ` ${theme}-mode__img`}
                                 src="/shared/cancel.png"
                                 alt="Удалить навык"
                                 onClick={() => deleteSkill(skill.name)}

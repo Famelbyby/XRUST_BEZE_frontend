@@ -103,7 +103,7 @@ const ProfileLeftColumn: React.FC = () => {
                                     key={skill.name}
                                 >
                                     <div
-                                        className={`profile-tags-array__tag profile-tags-array__tag_${skill.level}`}
+                                        className={`profile-tags-array__tag profile-tags-array__tag_${skill.level} ${theme}-mode__${skill.level}-block`}
                                         title={`${CapitalizeString(SKILL_LEVELS_IN_RUSSIAN[skill.level])}`}
                                     >
                                         {skill.name}
@@ -127,7 +127,7 @@ const ProfileLeftColumn: React.FC = () => {
                                         key={skill.name}
                                     >
                                         <div
-                                            className={`profile-to-learn-array__tag profile-to-learn-array__tag_${skill.level}`}
+                                            className={`profile-to-learn-array__tag profile-to-learn-array__tag_${skill.level} ${theme}-mode__${skill.level}-block`}
                                             title={`${CapitalizeString(SKILL_LEVELS_IN_RUSSIAN[skill.level])}`}
                                             key={skill.name}
                                         >

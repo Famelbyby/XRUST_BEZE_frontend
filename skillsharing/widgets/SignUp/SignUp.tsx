@@ -178,9 +178,7 @@ const SignUpRegisterButton: React.FC = () => {
 
     return (
         <div
-            className={
-                'sign-up__button-reg' + (theme === 'light' ? '' : ` ${theme}-mode__bright-block`)
-            }
+            className={'sign-up__button-reg' + ` ${theme}-mode__bright-block`}
             onClick={() => {
                 if (isPending) {
                     return;
@@ -309,7 +307,7 @@ const SignUpBio: React.FC = () => {
     }
 
     return (
-        <div className={'sign-up-bio' + (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)}>
+        <div className={'sign-up-bio' + ` ${theme}-mode__bright-text`}>
             О себе
             <div className="sign-up-bio-field">
                 <textarea
@@ -378,9 +376,7 @@ const SignUpNextStepButton: React.FC = () => {
 
     return (
         <div
-            className={
-                'sign-up__button-next' + (theme === 'light' ? '' : ` ${theme}-mode__bright-block`)
-            }
+            className={'sign-up__button-next' + ` ${theme}-mode__bright-block`}
             onClick={() => {
                 if (
                     identifier.error !== undefined ||
@@ -425,7 +421,7 @@ const SignUpHrefs: React.FC = () => {
     const dispatch = useDispatch();
 
     return (
-        <div className={'sign-up-hrefs' + (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)}>
+        <div className={'sign-up-hrefs' + ` ${theme}-mode__bright-text`}>
             Личные ссылки
             <div className="sign-up-hrefs-examples">
                 {hrefs.map((href: { value: string; error: string | undefined }, index: number) => {
@@ -447,8 +443,7 @@ const SignUpHrefs: React.FC = () => {
                                 />
                                 <img
                                     className={
-                                        'sign-up-hrefs-examples-item__img' +
-                                        (theme === 'light' ? '' : ` ${theme}-mode__img`)
+                                        'sign-up-hrefs-examples-item__img' + ` ${theme}-mode__img`
                                     }
                                     src="/shared/cancel.png"
                                     alt="Удалить ссылку"
@@ -468,8 +463,7 @@ const SignUpHrefs: React.FC = () => {
                     >
                         <img
                             className={
-                                'sign-up-hrefs-examples-add-href__img' +
-                                (theme === 'light' ? '' : ` ${theme}-mode__img`)
+                                'sign-up-hrefs-examples-add-href__img' + ` ${theme}-mode__img`
                             }
                             src="/shared/plus.png"
                             alt="Добавить ссылку"

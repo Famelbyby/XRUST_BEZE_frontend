@@ -28,7 +28,7 @@ const Dialog: React.FC<DialogProps> = ({ dialog }) => {
 
     return (
         <div
-            className="dialog"
+            className={'dialog' + ` ${theme}-mode__middle-block_hovered`}
             aria-label="Перейти в чат"
             onClick={() => {
                 if (dialog !== undefined) {
@@ -70,7 +70,7 @@ const Dialog: React.FC<DialogProps> = ({ dialog }) => {
                                 (dialog.last_message!.voice ||
                                 dialog.last_message!.payload === undefined
                                     ? ' dialog-user-info__last-message_voiced' +
-                                      (theme === 'light' ? '' : ` ${theme}-mode__dull-text`)
+                                      ` ${theme}-mode__dull-text`
                                     : '')
                             }
                         >
@@ -83,10 +83,7 @@ const Dialog: React.FC<DialogProps> = ({ dialog }) => {
                     )}
 
                     <div
-                        className={
-                            'dialog-user-info__message-time' +
-                            (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
-                        }
+                        className={'dialog-user-info__message-time' + ` ${theme}-mode__bright-text`}
                     >
                         {dialog !== undefined && (
                             <>

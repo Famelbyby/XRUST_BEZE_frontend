@@ -58,10 +58,7 @@ const MobileSideBar: React.FC = () => {
                             }
                         >
                             <img
-                                className={
-                                    'mobile-sidebar-item__img' +
-                                    (theme === 'light' ? '' : ` ${theme}-mode__img`)
-                                }
+                                className={'mobile-sidebar-item__img' + ` ${theme}-mode__img`}
                                 src={item.icon}
                                 alt=""
                             />

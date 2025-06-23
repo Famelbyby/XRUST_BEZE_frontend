@@ -2,6 +2,9 @@ $darkGreenDullText: #50bc80;
 $darkGreenBack: #143c42;
 $darkGreenBrightText: #e8ede0;
 $darkGreenMiddleBlock: #39666d;
+$darkGreenAdvanced: #2e7d32;
+$darkGreenIntermediate: #43a047;
+$darkGreenBeginner: #81c784;
 
 .dark-green-mode {
     &__bright-right-border {
@@ -14,6 +17,12 @@ $darkGreenMiddleBlock: #39666d;
 
     &__middle-block {
         background-color: $darkGreenMiddleBlock;
+
+        &_hovered {
+            &:hover {
+                background-color: #39666d;
+            }
+        }
     }
 
     &__dull-text {
@@ -38,5 +47,29 @@ $darkGreenMiddleBlock: #39666d;
 
     &__img {
         filter: invert(0.8);
+    }
+
+    &__advanced-block {
+        background-color: $darkGreenAdvanced;
+    }
+
+    &__intermediate-block {
+        background-color: $darkGreenIntermediate;
+    }
+
+    &__beginner-block {
+        background-color: $darkGreenBeginner;
+    }
+
+    &__advanced-text {
+        color: $darkGreenAdvanced;
+    }
+
+    &__intermediate-text {
+        color: $darkGreenIntermediate;
+    }
+
+    &__beginner-text {
+        color: $darkGreenBeginner;
     }
 }
