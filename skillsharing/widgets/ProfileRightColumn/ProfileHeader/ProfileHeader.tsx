@@ -26,17 +26,9 @@ const ProfileHeader: React.FC = () => {
                     )}
                     {profile !== undefined && profile.username}
                 </div>
-                <div
-                    className={
-                        'profile-brief-last-seen' +
-                        (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
-                    }
-                >
+                <div className={'profile-brief-last-seen' + ` ${theme}-mode__bright-text`}>
                     <img
-                        className={
-                            'profile-brief-last-seen__img' +
-                            (theme === 'light' ? '' : ` ${theme}-mode__img`)
-                        }
+                        className={'profile-brief-last-seen__img' + ` ${theme}-mode__img`}
                         src="/shared/clock.png"
                         alt=""
                     />
@@ -79,7 +71,7 @@ const ProfileHeader: React.FC = () => {
             )}
             {profile !== undefined && ownUserID !== profile.id && (
                 <div className="profile-buttons profile-buttons_other">
-                    <div className="profile-buttons-report">
+                    {/* <div className="profile-buttons-report">
                         <img
                             className={
                                 'profile-buttons-report__img' +
@@ -89,7 +81,7 @@ const ProfileHeader: React.FC = () => {
                             alt=""
                         />
                         Пожаловаться
-                    </div>
+                    </div> */}
                     <Link to={`/chat/${profile.id}`}>
                         <div
                             className={
