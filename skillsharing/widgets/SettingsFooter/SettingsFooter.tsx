@@ -18,6 +18,7 @@ const SettingsFooter: React.FC = () => {
         skillsToLearnError,
         skillsToShareError,
     } = useSelector((state: AppState) => state.settings);
+    const { theme } = useSelector((state: AppState) => state.user);
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
@@ -39,7 +40,7 @@ const SettingsFooter: React.FC = () => {
                     Отменить
                 </div>
                 <div
-                    className="settings-footer__save"
+                    className={'settings-footer__save' + ` ${theme}-mode__bright-block`}
                     onClick={() => {
                         if (
                             usernameError ||

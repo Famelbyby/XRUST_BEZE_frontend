@@ -8,12 +8,13 @@ import SkillsLine from '../SkillsLine/SkillsLine';
 
 interface FoundUserPropTypes {
     user: ProfileType;
+    theme?: string;
 }
 
-const FoundUser: React.FC<FoundUserPropTypes> = ({ user }) => {
+const FoundUser: React.FC<FoundUserPropTypes> = ({ user, theme = 'light' }) => {
     return (
         <Link to={`/profile/${user.id}`} aria-label="Профиль">
-            <div className="found-user">
+            <div className={'found-user' + ` ${theme}-mode__middle-block_hovered`}>
                 <div className="found-user-avatar">
                     <img className="found-user-avatar__img" src={AVATAR_URL + user.avatar} alt="" />
                 </div>
@@ -25,9 +26,9 @@ const FoundUser: React.FC<FoundUserPropTypes> = ({ user }) => {
                         </div>
                     </div>
                     <div className="found-user-footer">
-                        <div className="found-user-last-seen">
+                        <div className={'found-user-last-seen' + ` ${theme}-mode__bright-text`}>
                             <img
-                                className="found-user-last-seen__img"
+                                className={'found-user-last-seen__img' + ` ${theme}-mode__img`}
                                 src="/shared/clock.png"
                                 alt=""
                             />

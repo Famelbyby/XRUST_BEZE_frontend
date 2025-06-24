@@ -24,7 +24,7 @@ const TEXTAREA_INITIAL_HEIGHT = 23;
 const TEXTAREA_ID = 'textarea';
 
 const Review: React.FC<ReviewPropTypes> = ({ review }) => {
-    const { user } = useSelector((state: AppState) => state.user);
+    const { user, theme } = useSelector((state: AppState) => state.user);
     const { updatingReviewId } = useSelector((state: AppState) => state.profile);
     const dispatch = useDispatch<AppDispatch>();
     const [rating, setRating] = useState(1);
@@ -61,13 +61,18 @@ const Review: React.FC<ReviewPropTypes> = ({ review }) => {
                         {review.id === updatingReviewId && (
                             <div className="profile-add-review-rating">
                                 {[1, 2, 3, 4, 5].map((rate) => {
+                                    const ifYellowStar = rate <= rating;
+
                                     return (
                                         <img
                                             key={rate}
-                                            className="profile-add-review-rating__img"
+                                            className={
+                                                'profile-add-review-rating__img' +
+                                                (!ifYellowStar ? ` ${theme}-mode__img` : '')
+                                            }
                                             src={
                                                 '/ProfilePage/star' +
-                                                (rate <= rating ? '_yellow' : '') +
+                                                (ifYellowStar ? '_yellow' : '') +
                                                 '.png'
                                             }
                                             alt=""
@@ -98,7 +103,10 @@ const Review: React.FC<ReviewPropTypes> = ({ review }) => {
                         {review.id === updatingReviewId && (
                             <textarea
                                 id="textarea"
-                                className={'profile-add-review-user-info__input'}
+                                className={
+                                    'profile-add-review-user-info__input' +
+                                    ` ${theme}-mode__bright-text`
+                                }
                                 value={textareaInput}
                                 onChange={(event) => handleChangingTextareaInput(event)}
                                 placeholder="Ваш комментарий..."
@@ -107,7 +115,7 @@ const Review: React.FC<ReviewPropTypes> = ({ review }) => {
                         {review.id !== updatingReviewId && (
                             <div className={'review-user-info__text'}>{review.text}</div>
                         )}
-                        <div className="review-user-info__time">
+                        <div className={'review-user-info__time' + `${theme}-mode__bright-text`}>
                             {FormatRelativeTimeInPastInDays(
                                 new Date(review.created * SECOND_IN_MILLISECONDS),
                             )}
@@ -118,7 +126,7 @@ const Review: React.FC<ReviewPropTypes> = ({ review }) => {
                         updatingReviewId !== review.id && (
                             <div className="review-manage">
                                 <img
-                                    className="review-manage__edit"
+                                    className={'review-manage__edit' + ` ${theme}-mode__img`}
                                     src="/shared/pen.png"
                                     alt="Изменить"
                                     onClick={() => {
@@ -128,7 +136,7 @@ const Review: React.FC<ReviewPropTypes> = ({ review }) => {
                                     }}
                                 />
                                 <img
-                                    className="review-manage__delete"
+                                    className={'review-manage__delete' + ` ${theme}-mode__img`}
                                     src="/shared/delete.png"
                                     alt="Удалить"
                                     onClick={() => {
@@ -142,7 +150,10 @@ const Review: React.FC<ReviewPropTypes> = ({ review }) => {
                     {review.id === updatingReviewId && (
                         <div className="review-manage">
                             <img
-                                className="profile-add-review-footer__cancel-update-review"
+                                className={
+                                    'profile-add-review-footer__cancel-update-review' +
+                                    ` ${theme}-mode__img`
+                                }
                                 src="/shared/cancel.png"
                                 alt="Отменить обновление"
                                 onClick={() => {

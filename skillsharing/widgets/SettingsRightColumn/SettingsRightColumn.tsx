@@ -24,6 +24,7 @@ import {
 import SkillToLayout from '../../features/SkillToLayout/SkillToLayout';
 
 const SettingsSkillToLearn: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { user, globalSkills, skillsToLearnError } = useSelector(
         (state: AppState) => state.settings,
     );
@@ -31,6 +32,7 @@ const SettingsSkillToLearn: React.FC = () => {
 
     return (
         <SkillToLayout
+            theme={theme}
             skills={user!.skills_to_learn}
             globalSkills={globalSkills}
             error={skillsToLearnError}
@@ -43,6 +45,7 @@ const SettingsSkillToLearn: React.FC = () => {
 };
 
 const SettingsSkillToShare: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { user, globalSkills, skillsToShareError } = useSelector(
         (state: AppState) => state.settings,
     );
@@ -50,6 +53,7 @@ const SettingsSkillToShare: React.FC = () => {
 
     return (
         <SkillToLayout
+            theme={theme}
             skills={user!.skills_to_share}
             globalSkills={globalSkills}
             error={skillsToShareError}
@@ -94,6 +98,7 @@ const SettingsBio: React.FC = () => {
 };
 
 const SettingsHrefs: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { hrefs } = useSelector((state: AppState) => state.settings);
     const dispatch = useDispatch();
 
@@ -137,7 +142,9 @@ const SettingsHrefs: React.FC = () => {
                         onClick={() => dispatch(addHrefSettings())}
                     >
                         <img
-                            className="settings-hrefs-examples-add-href__img"
+                            className={
+                                'settings-hrefs-examples-add-href__img' + ` ${theme}-mode__img`
+                            }
                             src="/shared/plus.png"
                             alt="Добавить ссылку"
                         />

@@ -12,7 +12,7 @@ import { GetCategories } from '../../Auth/api/Auth';
 import { Helmet } from 'react-helmet';
 
 const Settings: React.FC = () => {
-    const { user, isFetched } = useSelector((state: AppState) => state.user);
+    const { user, isFetched, theme } = useSelector((state: AppState) => state.user);
     const { isUpdated } = useSelector((state: AppState) => state.settings);
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
@@ -37,7 +37,7 @@ const Settings: React.FC = () => {
     }, [isUpdated, dispatch, navigate, user]);
 
     return (
-        <div className="settings-page">
+        <div className={'settings-page' + ` ${theme}-mode__bright-text`}>
             <Helmet>
                 <title>Настройки</title>
             </Helmet>

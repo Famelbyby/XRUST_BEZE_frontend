@@ -1,21 +1,32 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../app/AppStore';
 
-const skillLevels = [
+interface SkillLevels {
+    [index: string]: string;
+}
+
+const skillLevels: SkillLevels[] = [
     {
-        color: '#D8D8FF',
+        lightColor: '#D8D8FF',
+        'dark-greenColor': '#81c784',
         title: 'Начинающий',
     },
     {
-        color: '#AFAFFF',
+        lightColor: '#AFAFFF',
+        'dark-greenColor': '#43a047',
         title: 'Средний',
     },
     {
-        color: '#7978FF',
+        lightColor: '#7978FF',
+        'dark-greenColor': '#2e7d32',
         title: 'Продвинутый',
     },
 ];
 
 const SkillLevelsExplaining: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
+
     return (
         <div className="profile-skill-levels">
             {skillLevels.map((skillLevel) => {
@@ -23,7 +34,7 @@ const SkillLevelsExplaining: React.FC = () => {
                     <div key={skillLevel.title} className="profile-skill-level-row">
                         <div
                             className="profile-skill-level__color"
-                            style={{ backgroundColor: skillLevel.color }}
+                            style={{ backgroundColor: skillLevel[theme + 'Color'] }}
                         ></div>
                         <div className="profile-skill-level__title">{skillLevel.title}</div>
                     </div>

@@ -38,7 +38,13 @@ const UserMaterialsContent: React.FC = () => {
                 </div>
             )}
             {isFetched && materials.length === 0 && (
-                <div className="user-materials-content__no-materials">Материалов нет</div>
+                <div
+                    className={
+                        'user-materials-content__no-materials' + ` ${theme}-mode__bright-text`
+                    }
+                >
+                    Материалов нет
+                </div>
             )}
             {isFetched && materials.length > 0 && (
                 <div className="user-materials-content-list">

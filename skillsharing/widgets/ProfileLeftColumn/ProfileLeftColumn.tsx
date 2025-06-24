@@ -75,7 +75,7 @@ const ProfileLeftColumn: React.FC = () => {
                         Навыки
                         <div className="profile-tags-header-question">
                             <img
-                                className="profile-tags-header__img"
+                                className={'profile-tags-header__img' + ` ${theme}-mode__img`}
                                 src="/shared/question.png"
                                 alt=""
                             />

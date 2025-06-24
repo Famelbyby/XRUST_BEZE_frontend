@@ -13,7 +13,6 @@
     }
 }
 
-
 .profile {
     &-right-column {
         display: flex;
@@ -107,6 +106,10 @@
 
                     &::-webkit-scrollbar {
                         display: none;
+                    }
+
+                    &::-webkit-input-placeholder {
+                        color: inherit;
                     }
 
                     &:focus-visible {

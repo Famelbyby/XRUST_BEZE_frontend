@@ -57,7 +57,10 @@ const ProfileRightColumn: React.FC = () => {
                                                 <a
                                                     href={href}
                                                     target="_blank"
-                                                    className="profile-hrefs-examples__href"
+                                                    className={
+                                                        'profile-hrefs-examples__href' +
+                                                        ` ${theme}-mode__dull-text`
+                                                    }
                                                     aria-label={`Ссылка на ${href}`}
                                                 >
                                                     {href}

@@ -43,7 +43,7 @@ const MainlLeftSide: React.FC = () => {
                 {foundUsers !== undefined &&
                     foundUsers.length > 0 &&
                     foundUsers.map((filteredUser: ProfileType, index: number) => {
-                        return <FoundUser key={index} user={filteredUser} />;
+                        return <FoundUser key={index} user={filteredUser} theme={theme} />;
                     })}
             </div>
         </div>

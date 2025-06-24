@@ -9,6 +9,7 @@ import { MATERIALS_URL } from '../../../shared/Consts/URLS';
 import './CertainMaterial.scss';
 
 const CertainMaterial: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { isFetched, material } = useSelector((state: AppState) => state.certainMaterial);
     const params = useParams();
     const dispatch = useDispatch<AppDispatch>();
@@ -66,7 +67,7 @@ const CertainMaterial: React.FC = () => {
                     }}
                 >
                     <img
-                        className="user-materials-header-go-back__img"
+                        className={'user-materials-header-go-back__img' + ` ${theme}-mode__img`}
                         src="/shared/go-back.png"
                         alt=""
                     />
@@ -75,7 +76,11 @@ const CertainMaterial: React.FC = () => {
             {!isFetched && <div className="certain-material__spinner"></div>}
             {isFetched && material !== undefined && (
                 <div className="certain-material-content">
-                    <div className="certain-material-content_mobile">
+                    <div
+                        className={
+                            'certain-material-content_mobile' + ` ${theme}-mode__bright-text`
+                        }
+                    >
                         К сожалению, на вашем устройстве нельзя просмотреть PDF файл
                     </div>
                     {isPdfFile && (
