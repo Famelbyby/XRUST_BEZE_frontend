@@ -19,6 +19,7 @@ import { RoundSize } from '../../shared/Functions/FormatStrings';
 import { STRUCTURIZE_MESSAGE } from '../../shared/Consts/LocalStorageKeys';
 
 const ChatContent: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { messages, selectedMessages, structurizingMessages } = useSelector(
         (state: AppState) => state.chatMessages,
     );
@@ -136,7 +137,9 @@ const ChatContent: React.FC = () => {
                 </div>
             )}
             {messages !== undefined && messages.length === 0 && (
-                <div className="chat-content__no-messages">Сообщений нет</div>
+                <div className={'chat-content__no-messages' + ` ${theme}-mode__bright-text`}>
+                    Сообщений нет
+                </div>
             )}
             {messages !== undefined &&
                 messages.length > 0 &&
@@ -203,7 +206,12 @@ const ChatContent: React.FC = () => {
                             )}
                             {needTime && (
                                 <div className="chat-content-day-field" key={message.message_id}>
-                                    <div className="chat-content-day-field__day">
+                                    <div
+                                        className={
+                                            'chat-content-day-field__day' +
+                                            ` ${theme}-mode__bright-block ${theme}-mode__bright-text`
+                                        }
+                                    >
                                         {FormatDayMonthYear(messTime)}
                                     </div>
                                 </div>

@@ -30,7 +30,7 @@ import {
 import { MAX_ATTACHMENTS_LENGTH } from '../../shared/Consts/ValidatorsConts';
 import { setIsErrored } from '../../app/slices/UserSlice';
 import { ValidateAttachments } from '../../shared/Functions/Validators';
-import { SEND_RELATED_TO_COLOR } from '../../shared/Consts/Translations';
+import { CHECK_RELATED_TO_COLOR, SEND_RELATED_TO_COLOR } from '../../shared/Consts/Translations';
 
 const TEXTAREA_INITIAL_HEIGHT = 15;
 const MESSAGE_MAX_LENGTH = 800;
@@ -327,7 +327,7 @@ const ChatFooter: React.FC = () => {
             {isUpdating && (
                 <div className="chat-footer-stop-updating">
                     <img
-                        className="chat-footer-stop-updating__img"
+                        className={'chat-footer-stop-updating__img' + ` ${theme}-mode__img`}
                         src="/shared/cancel_black.png"
                         alt="Отменить редактирование"
                         onClick={() => {
@@ -455,15 +455,15 @@ const ChatFooter: React.FC = () => {
                     <img
                         id="update-message"
                         className="chat-footer-controls__update-message"
-                        src="/ChatPage/check.png"
+                        src={'/ChatPage/' + CHECK_RELATED_TO_COLOR[theme] + '.png'}
                         alt="update-message"
                         onClick={handleSending}
                     />
                 )}
             </div>
-            <div className="chat-footer-scrolldown">
+            <div className={'chat-footer-scrolldown' + ` ${theme}-mode__bright-block`}>
                 <img
-                    className="chat-footer-scrolldown__button"
+                    className={'chat-footer-scrolldown__button' + ` ${theme}-mode__img`}
                     src="/ChatPage/down-arrow.png"
                     alt="Scroll to bottom"
                 />

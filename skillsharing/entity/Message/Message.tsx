@@ -25,7 +25,7 @@ const Message: React.FC<PropType> = ({
     isStructurizing,
     needsDescription,
 }) => {
-    const { user } = useSelector((state: AppState) => state.user);
+    const { user, theme } = useSelector((state: AppState) => state.user);
     const user_id: IMessage['user_id'] = user!.id;
     const messageTime: string = FormatHoursMinutes(
         new Date(message.created_at * SECOND_IN_MILLISECONDS),
@@ -55,7 +55,13 @@ const Message: React.FC<PropType> = ({
                 }
             >
                 <div
-                    className={'chat-message chat-message_' + (isOwnMessage ? 'right' : 'left')}
+                    className={
+                        'chat-message chat-message_' +
+                        (isOwnMessage
+                            ? `right ${theme}-mode__bright-block`
+                            : `left ${theme}-mode__brighter-block`) +
+                        ` ${theme}-mode__bright-text`
+                    }
                     key={message.message_id}
                 >
                     <div className="chat-content__text">{message.payload}</div>
@@ -99,7 +105,7 @@ const Message: React.FC<PropType> = ({
                             })}
                         </div>
                     )}
-                    <div className="chat-content__time">
+                    <div className={'chat-content__time' + ` ${theme}-mode__bright-text`}>
                         {isStructurizing && (
                             <div className="chat-content__structurizing">объясняется</div>
                         )}
@@ -126,6 +132,7 @@ const Message: React.FC<PropType> = ({
                             />
                             {needDes && (
                                 <DescriptionWindow
+                                    theme={theme}
                                     windowClass="description-window-structurize-message"
                                     confirm={{ key: STRUCTURIZE_MESSAGE, text: 'Понятно' }}
                                     callback={() => setNeedDes(false)}
@@ -140,11 +147,12 @@ const Message: React.FC<PropType> = ({
                 <div
                     className={
                         'chat-message-checked-mark chat-message-checked-mark_' +
-                        (isOwnMessage ? 'right' : 'left')
+                        (isOwnMessage ? 'right' : 'left') +
+                        ` ${theme}-mode__bright-block`
                     }
                 >
                     <img
-                        className="chat-message-checked-mark__img"
+                        className={'chat-message-checked-mark__img' + ` ${theme}-mode__img`}
                         src="/ChatPage/selected.png"
                         alt="selected"
                     />

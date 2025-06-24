@@ -34,7 +34,7 @@ function handleDeletePressing(event: KeyboardEvent) {
 
 const ChatHeader: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const { user } = useSelector((state: AppState) => state.user);
+    const { user, theme } = useSelector((state: AppState) => state.user);
     const {
         selectedMessages,
         channelID,
@@ -106,7 +106,7 @@ const ChatHeader: React.FC = () => {
     }
 
     return (
-        <div className="chat-header">
+        <div className={'chat-header' + ` ${theme}-mode__bright-text`}>
             {selectedMessagesCount === 0 && (
                 <>
                     <div className="chat-header-go-back">
@@ -118,7 +118,7 @@ const ChatHeader: React.FC = () => {
                             }}
                         >
                             <img
-                                className="chat-header-go-back__img"
+                                className={'chat-header-go-back__img' + ` ${theme}-mode__img`}
                                 src="/shared/go-back.png"
                                 alt=""
                             />
@@ -158,7 +158,12 @@ const ChatHeader: React.FC = () => {
                                     </div>
                                 )}
                                 {companion !== undefined && (
-                                    <div className="chat-header-user__online">
+                                    <div
+                                        className={
+                                            'chat-header-user__online' +
+                                            ` ${theme}-mode__bright-text`
+                                        }
+                                    >
                                         {FormatRelativeTimeInPastInDays(
                                             new Date(companion.last_active_at),
                                         )}
@@ -177,14 +182,20 @@ const ChatHeader: React.FC = () => {
                             <div className="chat-header-chat-info__tags">
                                 <SkillsLine skills={companion.skills_to_share} />
                             </div>
-                            <div className="chat-header-chat-info__rating">Оценка 0</div>
+                            <div
+                                className={
+                                    'chat-header-chat-info__rating' + ` ${theme}-mode__bright-text`
+                                }
+                            >
+                                Оценка {companion.rating.toPrecision(2)}
+                            </div>
                         </div>
                     )}
                 </>
             )}
             {selectedMessagesCount > 0 && (
                 <>
-                    <div className="chat-header-remove-selection">
+                    <div className={'chat-header-remove-selection' + ` ${theme}-mode__dull-text`}>
                         <img
                             className="chat-header-remove-selection__img"
                             src="/ChatPage/cross.png"
@@ -198,7 +209,10 @@ const ChatHeader: React.FC = () => {
                             <>
                                 {isMyMessages && selectedMessages[0].voice === undefined && (
                                     <img
-                                        className="chat-header-controls__img chat-header-controls__edit"
+                                        className={
+                                            'chat-header-controls__img chat-header-controls__edit' +
+                                            ` ${theme}-mode__img`
+                                        }
                                         src="/shared/pen.png"
                                         title="Изменить сообщение"
                                         alt="Изменить сообщение"
@@ -208,7 +222,10 @@ const ChatHeader: React.FC = () => {
                                     />
                                 )}
                                 <img
-                                    className="chat-header-controls__img chat-header-controls__copy"
+                                    className={
+                                        'chat-header-controls__img chat-header-controls__copy' +
+                                        ` ${theme}-mode__img`
+                                    }
                                     src="/ChatPage/copy.png"
                                     alt="Копировать сообщение"
                                     title="Копировать сообщение"
@@ -227,7 +244,10 @@ const ChatHeader: React.FC = () => {
                             <>
                                 <img
                                     id="delete-messages"
-                                    className="chat-header-controls__img chat-header-controls__delete"
+                                    className={
+                                        'chat-header-controls__img chat-header-controls__delete' +
+                                        ` ${theme}-mode__img`
+                                    }
                                     src="/shared/delete.png"
                                     title="Удалить сообщения"
                                     alt="Удалить сообщения"

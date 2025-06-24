@@ -8,6 +8,7 @@ interface DescriptionWindowProps extends React.PropsWithChildren {
     };
     callback?: () => void;
     windowClass: string;
+    theme?: string;
 }
 
 const DescriptionWindow: React.FC<DescriptionWindowProps> = ({
@@ -15,13 +16,14 @@ const DescriptionWindow: React.FC<DescriptionWindowProps> = ({
     confirm,
     callback,
     children,
+    theme = 'light',
 }) => {
     return (
         <div className={'description-window ' + windowClass}>
             {children}
             {confirm !== undefined && (
                 <div
-                    className="description-window__confirm"
+                    className={'description-window__confirm' + ` ${theme}-mode__bright-block`}
                     onClick={(event) => {
                         event.stopPropagation();
 

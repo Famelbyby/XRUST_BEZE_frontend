@@ -7,6 +7,7 @@ $darkGreenIntermediate: #43a047;
 $darkGreenBeginner: #81c784;
 $darkGreenError: #4de5dc;
 $darkGreenBrightBorder: #e8ede07a;
+$darkGreenBrighterBlock: #85c8a3;
 
 .dark-green-mode {
     &__bright-right-border {
@@ -19,6 +20,10 @@ $darkGreenBrightBorder: #e8ede07a;
 
     &__bright-block {
         background-color: $darkGreenDullText;
+    }
+
+    &__brighter-block {
+        background-color: $darkGreenBrighterBlock;
     }
 
     &__middle-block {

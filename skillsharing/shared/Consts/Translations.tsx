@@ -19,3 +19,9 @@ export const SEND_RELATED_TO_COLOR = {
     'dark-green': 'send_green',
     'dark-orange': 'send_orange',
 };
+
+export const CHECK_RELATED_TO_COLOR = {
+    light: 'check',
+    'dark-green': 'check_green',
+    'dark-orange': 'check_orange',
+};

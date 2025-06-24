@@ -20,7 +20,7 @@ const Chat: React.FC = () => {
     const peerID: string | undefined = params.chatID;
     const dispatch = useDispatch<AppDispatch>();
     const { noPeerError, noChatError } = useSelector((state: AppState) => state.chatMessages);
-    const { user } = useSelector((state: AppState) => state.user);
+    const { user, theme } = useSelector((state: AppState) => state.user);
     const { voiceMessageId } = useSelector((state: AppState) => state.recorder);
 
     useEffect(() => {
@@ -78,7 +78,7 @@ const Chat: React.FC = () => {
                             <img className="chat-go-back__img" src="/shared/go-back.png" alt="" />
                         </div>
                     </div>
-                    <div className="chat-dialog">
+                    <div className={'chat-dialog' + ` ${theme}-mode__middle-block`}>
                         {voiceMessageId !== undefined && <RecorderBar />}
                         <ChatHeader />
                         <ChatContent />
