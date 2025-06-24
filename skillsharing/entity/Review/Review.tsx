@@ -44,7 +44,7 @@ const Review: React.FC<ReviewPropTypes> = ({ review }) => {
     }
 
     return (
-        <div className="review">
+        <div className={'review' + ` ${theme}-mode__bright-border`}>
             <Link to={`/profile/${review.user_id_by}`}>
                 <img
                     className="review-user__avatar"
@@ -115,7 +115,7 @@ const Review: React.FC<ReviewPropTypes> = ({ review }) => {
                         {review.id !== updatingReviewId && (
                             <div className={'review-user-info__text'}>{review.text}</div>
                         )}
-                        <div className={'review-user-info__time' + `${theme}-mode__bright-text`}>
+                        <div className={'review-user-info__time' + ` ${theme}-mode__bright-text`}>
                             {FormatRelativeTimeInPastInDays(
                                 new Date(review.created * SECOND_IN_MILLISECONDS),
                             )}

@@ -45,14 +45,7 @@ const SideBar: React.FC = () => {
     ];
 
     return (
-        <div
-            className={
-                'sidebar' +
-                (theme === 'light'
-                    ? ''
-                    : ` ${theme}-mode__block ${theme}-mode__bright-right-border`)
-            }
-        >
+        <div className={'sidebar' + ` ${theme}-mode__block ${theme}-mode__bright-right-border`}>
             {sideBarItems.map((item) => {
                 return (
                     <Link to={item.linkTo} key={item.id} aria-label={item.title}>

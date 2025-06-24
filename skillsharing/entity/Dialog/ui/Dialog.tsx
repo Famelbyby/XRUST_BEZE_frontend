@@ -28,7 +28,9 @@ const Dialog: React.FC<DialogProps> = ({ dialog }) => {
 
     return (
         <div
-            className={'dialog' + ` ${theme}-mode__middle-block_hovered`}
+            className={
+                'dialog' + ` ${theme}-mode__middle-block_hovered ${theme}-mode__bright-border`
+            }
             aria-label="Перейти в чат"
             onClick={() => {
                 if (dialog !== undefined) {
