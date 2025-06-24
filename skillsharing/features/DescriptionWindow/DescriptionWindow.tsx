@@ -19,7 +19,7 @@ const DescriptionWindow: React.FC<DescriptionWindowProps> = ({
     theme = 'light',
 }) => {
     return (
-        <div className={'description-window ' + windowClass + `${theme}-mode__block`}>
+        <div className={'description-window ' + windowClass + ` ${theme}-mode__block`}>
             {children}
             {confirm !== undefined && (
                 <div

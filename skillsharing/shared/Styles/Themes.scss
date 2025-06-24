@@ -29,7 +29,7 @@ $darkGreenBrighterBlock: #85c8a3;
     &__bright-block_hovered-scroll {
         &:hover {
             &::-webkit-scrollbar-thumb {
-                background-color: $darkGreenBrightText;
+                background-color: $darkGreenDullText;
             }
         }
     }
