@@ -6,14 +6,15 @@ $darkGreenAdvanced: #2e7d32;
 $darkGreenIntermediate: #43a047;
 $darkGreenBeginner: #81c784;
 $darkGreenError: #4de5dc;
+$darkGreenBrightBorder: #e8ede07a;
 
 .dark-green-mode {
     &__bright-right-border {
-        border-right: 1px solid $darkGreenBrightText;
+        border-right: 1px solid $darkGreenBrightBorder;
     }
 
     &__bright-border {
-        border: 1px solid $darkGreenBrightText;
+        border: 1px solid $darkGreenBrightBorder;
     }
 
     &__bright-block {
