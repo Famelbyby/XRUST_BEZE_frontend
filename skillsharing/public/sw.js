@@ -1,24 +1,24 @@
 const CACHE_NAME = 'my-cache';
-const NO_CACHE_URLS = ['/api', '/assets/index', '/assets/react']; // URL, которые не кэшируем
+const NO_CACHE_URLS = ['/api', '/assets']; // URL, которые не кэшируем
 
-self.addEventListener('install', (event) => {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => {
-            return cache.addAll([
-                '/index.html',
-                '/AuthPage',
-                '/ChatPage',
-                'DialogsPage',
-                'Header',
-                'LandingPage',
-                'ProfilePage',
-                'shared',
-                'SideBar',
-                'UserMaterialsPage',
-            ]); // Стартовый кэш
-        }),
-    );
-});
+// self.addEventListener('install', (event) => {
+//     event.waitUntil(
+//         caches.open(CACHE_NAME).then((cache) => {
+//             return cache.addAll([
+//                 '/index.html',
+//                 '/AuthPage',
+//                 '/ChatPage',
+//                 'DialogsPage',
+//                 'Header',
+//                 'LandingPage',
+//                 'ProfilePage',
+//                 'shared',
+//                 'SideBar',
+//                 'UserMaterialsPage',
+//             ]); // Стартовый кэш
+//         }),
+//     );
+// });
 
 self.addEventListener('fetch', (event) => {
     const { url } = event.request;
