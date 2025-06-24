@@ -19,7 +19,7 @@ const Material: React.FC<MaterialItem> = (material) => {
 
     return (
         <div
-            className={'material' + ` ${theme}-mode__midlle-block_hovered`}
+            className={'material' + ` ${theme}-mode__middle-block_hovered`}
             onClick={() => {
                 const isPdfFile = material !== undefined && material.filename.endsWith('.pdf');
 

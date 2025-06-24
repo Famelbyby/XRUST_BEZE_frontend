@@ -5,6 +5,7 @@ $darkGreenMiddleBlock: #39666d;
 $darkGreenAdvanced: #2e7d32;
 $darkGreenIntermediate: #43a047;
 $darkGreenBeginner: #81c784;
+$darkGreenError: #1ffff2;
 
 .dark-green-mode {
     &__bright-right-border {
@@ -71,5 +72,13 @@ $darkGreenBeginner: #81c784;
 
     &__beginner-text {
         color: $darkGreenBeginner;
+    }
+
+    &__error-block {
+        background-color: $darkGreenError;
+    }
+
+    &__error-text {
+        color: $darkGreenError;
     }
 }

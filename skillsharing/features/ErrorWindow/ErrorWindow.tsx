@@ -5,7 +5,7 @@ import { setIsErrored } from '../../app/slices/UserSlice';
 import './ErroredWindow.scss';
 
 const ErrorWindow: React.FC = () => {
-    const { isErrored, errorMessage } = useSelector((state: AppState) => state.user);
+    const { isErrored, errorMessage, theme } = useSelector((state: AppState) => state.user);
     const window = useRef<HTMLDivElement | null>(null);
     const dispatch = useDispatch();
 
@@ -25,7 +25,9 @@ const ErrorWindow: React.FC = () => {
 
     return (
         <div ref={window} className="errored-window">
-            <div className="errored-window-content">{errorMessage}</div>
+            <div className={'errored-window-content' + ` ${theme}-mode__error-block`}>
+                {errorMessage}
+            </div>
         </div>
     );
 };

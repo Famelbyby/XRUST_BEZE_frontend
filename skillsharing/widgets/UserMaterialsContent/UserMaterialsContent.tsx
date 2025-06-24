@@ -9,6 +9,7 @@ import { setIsHiddenDeleteMaterial } from '../../app/slices/UserMaterialsSlice';
 import { DeleteMaterial } from '../../pages/UserMaterials/api/UserMaterials';
 
 const UserMaterialsContent: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { isFetched, materials, isHiddenDeleteWindow, deletedMaterialId } = useSelector(
         (state: AppState) => state.userMaterials,
     );
@@ -63,6 +64,7 @@ const UserMaterialsContent: React.FC = () => {
             {!isHiddenDeleteWindow &&
                 createPortal(
                     <ModalWindow
+                        theme={theme}
                         modalType={'delete'}
                         closeModal={() => dispatch(setIsHiddenDeleteMaterial({ bool: true }))}
                         agreeTitle="Да"

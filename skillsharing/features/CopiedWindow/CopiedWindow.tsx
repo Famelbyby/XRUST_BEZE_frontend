@@ -5,7 +5,7 @@ import { setIsCopied } from '../../app/slices/UserSlice';
 import './CopiedWindow.scss';
 
 const CopiedWindow: React.FC = () => {
-    const { isCopied } = useSelector((state: AppState) => state.user);
+    const { isCopied, theme } = useSelector((state: AppState) => state.user);
     const window = useRef<HTMLDivElement | null>(null);
     const dispatch = useDispatch();
 
@@ -25,7 +25,7 @@ const CopiedWindow: React.FC = () => {
 
     return (
         <div ref={window} className="copied-window">
-            <div className="copied-window-content">
+            <div className={'copied-window-content' + ` ${theme}-mode__bright-block`}>
                 Скопировано
                 <img
                     id="copied-window"
