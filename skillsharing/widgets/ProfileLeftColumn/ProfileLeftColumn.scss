@@ -96,6 +96,8 @@
 
             &-question {
                 position: relative;
+                display: flex;
+                align-items: center;
             }
             
             &__title {
