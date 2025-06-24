@@ -138,7 +138,12 @@ const ProfileMobileContent: React.FC = () => {
                                 Я хочу изучить
                             </div>
                         </div>
-                        <div className="profile-mobile-content-to-learn-array">
+                        <div
+                            className={
+                                'profile-mobile-content-to-learn-array' +
+                                ` ${theme}-mode__bright-text`
+                            }
+                        >
                             {profile !== undefined &&
                                 profile.skills_to_learn.map((skill: Skill) => {
                                     return (
@@ -147,7 +152,7 @@ const ProfileMobileContent: React.FC = () => {
                                             key={skill.name}
                                         >
                                             <div
-                                                className={`profile-mobile-content-to-learn-array__tag profile-mobile-content-to-learn-array__tag_${skill.level}`}
+                                                className={`profile-mobile-content-to-learn-array__tag profile-mobile-content-to-learn-array__tag_${skill.level} ${theme}-mode__${skill.level}-block`}
                                                 title={`${CapitalizeString(skill.level)}`}
                                                 key={skill.name}
                                             >
@@ -180,7 +185,10 @@ const ProfileMobileContent: React.FC = () => {
                 >
                     <div className="profile-mobile-content-materials-go-page">
                         <img
-                            className="profile-mobile-content-materials-go-page__img"
+                            className={
+                                'profile-mobile-content-materials-go-page__img' +
+                                ` ${theme}-mode__img`
+                            }
                             src="/shared/go-back.png"
                             alt=""
                         />
@@ -192,7 +200,12 @@ const ProfileMobileContent: React.FC = () => {
                 {!alreadyHaveReview && <ProfileAddReview />}
                 {profile !== undefined &&
                     (profile.reviews === undefined || profile.reviews.length === 0) && (
-                        <div className="profile-mobile-content-reviews__no-reviews">
+                        <div
+                            className={
+                                'profile-mobile-content-reviews__no-reviews' +
+                                ` ${theme}-mode__bright-text`
+                            }
+                        >
                             Отзывов нет
                         </div>
                     )}

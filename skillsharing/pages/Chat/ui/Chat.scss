@@ -32,11 +32,10 @@
 
         @include phones {
             padding: 0;
-            position: fixed;
-            height: 100%;
-            top: 0;
-            left: 0;
             background-color: white;
+            flex-grow: 1;
+            max-height: 100vh;
+            transform: translateY(-63px);
         }
     }
 

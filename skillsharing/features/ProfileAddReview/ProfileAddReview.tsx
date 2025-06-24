@@ -10,7 +10,7 @@ const TEXTAREA_INITIAL_HEIGHT = 23;
 const TEXTAREA_ID = 'textarea';
 
 const ProfileAddReview: React.FC = () => {
-    const { user } = useSelector((state: AppState) => state.user);
+    const { user, theme } = useSelector((state: AppState) => state.user);
     const { user: profile } = useSelector((state: AppState) => state.profile);
     const [textareaInput, setTextareaInput] = useState('');
     const [rating, setRating] = useState(1);
@@ -36,7 +36,7 @@ const ProfileAddReview: React.FC = () => {
     return (
         <>
             {user !== undefined && profile !== undefined && (
-                <div className="profile-add-review">
+                <div className={'profile-add-review' + ` ${theme}-mode__bright-border`}>
                     <img
                         className="profile-add-review-user__avatar"
                         src={AVATAR_URL + user.avatar}
@@ -50,13 +50,18 @@ const ProfileAddReview: React.FC = () => {
                                 </div>
                                 <div className="profile-add-review-rating">
                                     {[1, 2, 3, 4, 5].map((rate) => {
+                                        const ifYellowStar = rate <= rating;
+
                                         return (
                                             <img
                                                 key={rate}
-                                                className="profile-add-review-rating__img"
+                                                className={
+                                                    'profile-add-review-rating__img' +
+                                                    (!ifYellowStar ? ` ${theme}-mode__img` : '')
+                                                }
                                                 src={
                                                     '/ProfilePage/star' +
-                                                    (rate <= rating ? '_yellow' : '') +
+                                                    (ifYellowStar ? '_yellow' : '') +
                                                     '.png'
                                                 }
                                                 alt=""
@@ -75,7 +80,10 @@ const ProfileAddReview: React.FC = () => {
                             <div className="profile-add-review-info">
                                 <textarea
                                     id="textarea"
-                                    className={'profile-add-review-user-info__input'}
+                                    className={
+                                        'profile-add-review-user-info__input' +
+                                        ` ${theme}-mode__bright-text`
+                                    }
                                     value={textareaInput}
                                     onChange={(event) => handleChangingTextareaInput(event)}
                                     placeholder="Ваш комментарий..."
