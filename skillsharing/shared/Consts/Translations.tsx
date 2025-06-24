@@ -27,7 +27,7 @@ export const CHECK_RELATED_TO_COLOR = {
 };
 
 export const CROSS_RELATED_TO_COLOR = {
-    light: 'check',
-    'dark-green': 'check_green',
-    'dark-orange': 'check_orange',
+    light: 'cross',
+    'dark-green': 'cross_green',
+    'dark-orange': 'cross_orange',
 };
