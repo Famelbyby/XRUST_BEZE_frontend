@@ -10,9 +10,7 @@ const Materials: React.FC = () => {
     const { theme } = useSelector((state: AppState) => state.user);
 
     return (
-        <div
-            className={'materials-page' + (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)}
-        >
+        <div className={'materials-page' + ` ${theme}-mode__bright-text`}>
             <Helmet>
                 <title>Учебные материалы</title>
             </Helmet>

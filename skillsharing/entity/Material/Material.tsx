@@ -13,13 +13,13 @@ import { setIsHiddenDeleteMaterial } from '../../app/slices/UserMaterialsSlice';
 const Material: React.FC<MaterialItem> = (material) => {
     const navigateTo = useNavigate();
     const dispatch = useDispatch();
-    const { user } = useSelector((state: AppState) => state.user);
+    const { user, theme } = useSelector((state: AppState) => state.user);
     const location = useLocation();
     const onUserMaterialsPage = location.pathname.includes('profile-materials');
 
     return (
         <div
-            className="material"
+            className={'material' + ` ${theme}-mode__midlle-block_hovered`}
             onClick={() => {
                 const isPdfFile = material !== undefined && material.filename.endsWith('.pdf');
 
@@ -40,14 +40,26 @@ const Material: React.FC<MaterialItem> = (material) => {
                 <div className="material-header__title">{material.name}</div>
                 <div className="material-header-tags">
                     {material.tags.map((tag) => {
-                        return <div className="material-header-tags__item">{tag}</div>;
+                        return (
+                            <div
+                                className={
+                                    'material-header-tags__item' + ` ${theme}-mode__advanced-block`
+                                }
+                            >
+                                {tag}
+                            </div>
+                        );
                     })}
                 </div>
             </div>
             <div className="material-footer">
                 <div className="material-footer-left">
-                    <div className="material-footer-time">
-                        <img className="material-footer-time__img" src="/shared/clock.png" alt="" />
+                    <div className={'material-footer-time' + ` ${theme}-mode__bright-text`}>
+                        <img
+                            className={'material-footer-time__img' + ` ${theme}-mode__img`}
+                            src="/shared/clock.png"
+                            alt=""
+                        />
                         {FormatRelativeTimeInPastInDays(
                             new Date(material.created * SECOND_IN_MILLISECONDS),
                         )}
@@ -84,7 +96,7 @@ const Material: React.FC<MaterialItem> = (material) => {
                         <div className="material-footer-download">
                             скачать
                             <img
-                                className="material-footer-download__img"
+                                className={'material-footer-download__img' + ` ${theme}-mode__img`}
                                 src="/UserMaterialsPage/download.png"
                                 alt=""
                             />
@@ -104,7 +116,7 @@ const Material: React.FC<MaterialItem> = (material) => {
                     >
                         поделиться
                         <img
-                            className="material-footer-share__img"
+                            className={'material-footer-share__img' + ` ${theme}-mode__img`}
                             src="/UserMaterialsPage/share.png"
                             alt=""
                         />
@@ -114,7 +126,9 @@ const Material: React.FC<MaterialItem> = (material) => {
                         onUserMaterialsPage && (
                             <div className="material-footer-delete">
                                 <img
-                                    className="material-footer-delete__img"
+                                    className={
+                                        'material-footer-delete__img' + ` ${theme}-mode__img`
+                                    }
                                     src="/shared/delete.png"
                                     alt="Удалить материал"
                                     onClick={(event) => {

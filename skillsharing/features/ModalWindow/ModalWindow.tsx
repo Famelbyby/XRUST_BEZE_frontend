@@ -10,6 +10,7 @@ export interface ModalWindowProps {
     agreeFunc: () => void;
     closeModal: () => void;
     modalType: ModalType;
+    theme?: string;
 }
 
 const ModalWindow: React.FC<ModalWindowProps> = ({
@@ -19,6 +20,7 @@ const ModalWindow: React.FC<ModalWindowProps> = ({
     agreeFunc,
     closeModal,
     modalType,
+    theme = 'light',
 }) => {
     useEffect(() => {
         function handleClick(event: MouseEvent) {
@@ -66,7 +68,8 @@ const ModalWindow: React.FC<ModalWindowProps> = ({
                     <div
                         className={
                             'modal-window-footer__agree-button modal-window-footer__agree-button_' +
-                            modalType
+                            modalType +
+                            ` ${theme}-mode__bright-block`
                         }
                         onClick={() => {
                             setTimeout(agreeFunc, 500);

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import { AppDispatch } from '../../../app/AppStore';
+import { AppDispatch, AppState } from '../../../app/AppStore';
 import { GetUserMaterials } from '../api/UserMaterials';
 import UserMaterialsHeader from '../../../widgets/UserMaterialsHeader/UserMaterialsHeader';
 import UserMaterialsContent from '../../../widgets/UserMaterialsContent/UserMaterialsContent';
@@ -11,6 +11,8 @@ import { Helmet } from 'react-helmet';
 
 const UserMaterials: React.FC = () => {
     const params = useParams();
+
+    const { theme } = useSelector((state: AppState) => state.user);
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
@@ -26,7 +28,7 @@ const UserMaterials: React.FC = () => {
     }, []);
 
     return (
-        <div className="user-materials-page">
+        <div className={'user-materials-page' + ` ${theme}-mode__bright-text`}>
             <Helmet>
                 <title>Учебные материалы пользователя</title>
             </Helmet>

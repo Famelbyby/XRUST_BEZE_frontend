@@ -20,12 +20,7 @@ const LeftSide: React.FC = () => {
                 </div>
             )}
             {isFetched && materials.length === 0 && (
-                <div
-                    className={
-                        'materials-content__no-materials' +
-                        (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
-                    }
-                >
+                <div className={'materials-content__no-materials' + ` ${theme}-mode__bright-text`}>
                     Подходящих материалов не найдено
                 </div>
             )}
