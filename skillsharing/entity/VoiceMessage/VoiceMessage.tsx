@@ -219,7 +219,7 @@ const VoiceMessage: React.FC<PropType> = ({
                         <div
                             className={
                                 'chat-voice-message-content__decrypted-message' +
-                                ` ${theme}-mode__bright-text`
+                                ` ${theme}-mode__bright-text ${theme}-mode__block ${theme}-mode__bright-left-border`
                             }
                         >
                             {message.recognized_voice !== undefined

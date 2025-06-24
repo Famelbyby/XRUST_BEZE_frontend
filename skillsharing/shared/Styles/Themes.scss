@@ -8,6 +8,7 @@ $darkGreenBeginner: #81c784;
 $darkGreenError: #4de5dc;
 $darkGreenBrightBorder: #e8ede07a;
 $darkGreenBrighterBlock: #85c8a3;
+$darkGreenDullBorder: #008377;
 
 .dark-green-mode {
     &__bright-right-border {
@@ -32,6 +33,10 @@ $darkGreenBrighterBlock: #85c8a3;
                 background-color: $darkGreenDullText;
             }
         }
+    }
+
+    &__bright-left-border {
+        border-left: 1px solid $darkGreenDullBorder;
     }
 
     &__middle-block {
