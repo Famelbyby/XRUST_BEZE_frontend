@@ -33,7 +33,11 @@ const SkillToLayout: React.FC<SkillToLayoutProps> = ({
             {skills.length < 5 && (
                 <DropdownMenu menu={enabledSkills} callback={(newSkill) => addSkill(newSkill)} />
             )}
-            {error !== undefined && <div className="sign-up-sktl__no-skills-error">{error}</div>}
+            {error !== undefined && (
+                <div className={'sign-up-sktl__no-skills-error' + ` ${theme}-mode__error-text`}>
+                    {error}
+                </div>
+            )}
             <div className="sign-up-sktl-cases">
                 {skills.map((skill, index) => {
                     return (

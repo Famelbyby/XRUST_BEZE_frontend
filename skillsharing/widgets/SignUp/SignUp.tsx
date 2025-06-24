@@ -43,9 +43,7 @@ const SignUpAvatar: React.FC = () => {
     const dispatch = useDispatch();
 
     return (
-        <div
-            className={'sign-up-avatar' + (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)}
-        >
+        <div className={'sign-up-avatar' + ` ${theme}-mode__bright-text`}>
             Выберите аватарку
             <div className="sign-up-avatar-field">
                 <img
@@ -84,7 +82,7 @@ const SignUpAvatar: React.FC = () => {
                     dispatch(editedAvatarField(inputFiles[0]));
                 }}
             />
-            <div className="sign-up-avatar__error">
+            <div className={'sign-up-avatar__error' + ` ${theme}-mode__error-text`}>
                 {avatar.error === undefined ? '' : avatar.error}
             </div>
         </div>

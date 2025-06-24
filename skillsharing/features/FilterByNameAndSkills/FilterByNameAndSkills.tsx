@@ -165,7 +165,12 @@ const FilterByNameAndSkills: React.FC<FilterProps> = ({
                         <div className="filter-layout-added-skills">
                             {skills.map((skill) => {
                                 return (
-                                    <div className="filter-layout-added-skills-item">
+                                    <div
+                                        className={
+                                            'filter-layout-added-skills-item' +
+                                            ` ${theme}-mode__bright-block`
+                                        }
+                                    >
                                         {skill}
                                         <img
                                             className="filter-layout__delete-skill"
