@@ -68,14 +68,23 @@ const Message: React.FC<PropType> = ({
                     {message.structurized !== undefined && (
                         <>
                             <div className="chat-content-structured">
-                                <StructurizedMessageContent message={message} isOnPage={false} />
+                                <StructurizedMessageContent
+                                    theme={theme}
+                                    message={message}
+                                    isOnPage={false}
+                                />
                             </div>
                             <Link
                                 className="chat-content-link"
                                 to={`/structurized-messages/${message.message_id}`}
                                 aria-label=""
                             >
-                                <div className="chat-content-link__go-to-page">
+                                <div
+                                    className={
+                                        'chat-content-link__go-to-page' +
+                                        ` ${theme}-mode__bright-text`
+                                    }
+                                >
                                     Перейти на отдельную страницу
                                 </div>
                             </Link>
@@ -95,7 +104,10 @@ const Message: React.FC<PropType> = ({
                                             }}
                                         >
                                             <img
-                                                className="chat-message-attachments-item__img"
+                                                className={
+                                                    'chat-message-attachments-item__img' +
+                                                    ` ${theme}-mode__img`
+                                                }
                                                 src="/ChatPage/download.png"
                                                 alt=""
                                             />
@@ -120,7 +132,9 @@ const Message: React.FC<PropType> = ({
                     message.payload !== '' && (
                         <div className="chat-message-wrapper-structurize">
                             <img
-                                className="chat-message-wrapper-structurize__img"
+                                className={
+                                    'chat-message-wrapper-structurize__img' + ` ${theme}-mode__img`
+                                }
                                 src="/ChatPage/ai.png"
                                 alt=""
                                 title="Объяснить подробнее"

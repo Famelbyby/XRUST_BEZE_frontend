@@ -42,11 +42,13 @@ const FoundUser: React.FC<FoundUserPropTypes> = ({ user, theme = 'light' }) => {
                         <div className="found-user-stats">
                             <div className="found-user-footer__rate">
                                 Оценка
-                                <div className="found-user-footer__num">0</div>
+                                <div className="found-user-footer__num">{user.rating}</div>
                             </div>
                             <div className="found-user-footer__feedbacks">
                                 Отзывы
-                                <div className="found-user-footer__num">0</div>
+                                <div className="found-user-footer__num">
+                                    {(user.reviews || []).length}
+                                </div>
                             </div>
                         </div>
                     </div>

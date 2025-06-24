@@ -19,6 +19,7 @@ import { createPortal } from 'react-dom';
 import SkillsLine from '../../features/SkillsLine/SkillsLine';
 import ModalWindow from '../../features/ModalWindow/ModalWindow';
 import { setIsCopied } from '../../app/slices/UserSlice';
+import { CROSS_RELATED_TO_COLOR } from '../../shared/Consts/Translations';
 
 function handleDeletePressing(event: KeyboardEvent) {
     if (event.key !== 'Delete') {
@@ -198,7 +199,7 @@ const ChatHeader: React.FC = () => {
                     <div className={'chat-header-remove-selection' + ` ${theme}-mode__dull-text`}>
                         <img
                             className="chat-header-remove-selection__img"
-                            src="/ChatPage/cross.png"
+                            src={'/ChatPage/' + CROSS_RELATED_TO_COLOR[theme] + '.png'}
                             alt="Отменить выделение"
                             onClick={() => dispatch(removeSelectedMessages())}
                         />
@@ -273,6 +274,7 @@ const ChatHeader: React.FC = () => {
             {!isHiddenStructurizedModal &&
                 createPortal(
                     <ModalWindow
+                        theme={theme}
                         modalType={'structurize'}
                         closeModal={() => dispatch(hideStructurizedModal())}
                         agreeTitle="Да"

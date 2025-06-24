@@ -360,17 +360,19 @@ const ChatFooter: React.FC = () => {
                 {!isRecorded && (
                     <textarea
                         id="textarea"
-                        className={
-                            'chat-footer-fields__textarea' +
-                            (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
-                        }
+                        className={'chat-footer-fields__textarea' + ` ${theme}-mode__bright-text`}
                         value={inputText}
                         placeholder="Ваше сообщение..."
                         onChange={handleChangingTextareaInput}
                     />
                 )}
                 {isRecorded && (
-                    <div id="recorded-voice-message" className="chat-footer-recorded-voice-message">
+                    <div
+                        id="recorded-voice-message"
+                        className={
+                            'chat-footer-recorded-voice-message' + ` ${theme}-mode__bright-block`
+                        }
+                    >
                         {!isPlayingRecord && (
                             <img
                                 className="chat-footer-recorded-voice-message__toggler"
@@ -393,7 +395,10 @@ const ChatFooter: React.FC = () => {
                         )}
                         <div
                             id="recorder-duration"
-                            className="chat-footer-recorded-voice-message__duration"
+                            className={
+                                'chat-footer-recorded-voice-message__duration' +
+                                ` ${theme}-mode__bright-text`
+                            }
                         >
                             {FormatMinutesSecondDuration(recordDuration)}
                         </div>
@@ -404,10 +409,7 @@ const ChatFooter: React.FC = () => {
                 {!isRecorded && (
                     <>
                         <img
-                            className={
-                                'chat-footer-controls__attach-file' +
-                                (theme === 'light' ? '' : ` ${theme}-mode__img`)
-                            }
+                            className={'chat-footer-controls__attach-file' + ` ${theme}-mode__img`}
                             src="/shared/plus.png"
                             alt="Прикрепить файл"
                             onClick={() => {

@@ -85,22 +85,41 @@ const ChatContent: React.FC = () => {
     }
 
     return (
-        <div id="chat-content" className="chat-content">
+        <div
+            id="chat-content"
+            className={'chat-content' + ` ${theme}-mode__bright-block_hovered-scroll`}
+        >
             {oldAttachments.length + attachments.length !== 0 && (
                 <div className="chat-content-attachments">
                     {attachments.map((attachment, index) => {
                         return (
-                            <div key={`new-${index}`} className="chat-content-attachments-item">
+                            <div
+                                key={`new-${index}`}
+                                className={
+                                    'chat-content-attachments-item' +
+                                    ` ${theme}-mode__brighter-block`
+                                }
+                            >
                                 <img
-                                    className="chat-content-attachments-item__img"
+                                    className={
+                                        'chat-content-attachments-item__img' + ` ${theme}-mode__img`
+                                    }
                                     src="/ChatPage/download.png"
                                     alt=""
                                 />
-                                <div className="chat-content-attachments-item__size">
+                                <div
+                                    className={
+                                        'chat-content-attachments-item__size' +
+                                        ` ${theme}-mode__bright-text`
+                                    }
+                                >
                                     {RoundSize(attachment.size)}
                                 </div>
                                 <img
-                                    className="chat-content-attachments-item__delete"
+                                    className={
+                                        'chat-content-attachments-item__delete' +
+                                        ` ${theme}-mode__img`
+                                    }
                                     src="/shared/cancel_black.png"
                                     alt=""
                                     onClick={() => {
@@ -114,12 +133,17 @@ const ChatContent: React.FC = () => {
                         return (
                             <div key={`old-${index}`} className="chat-content-attachments-item">
                                 <img
-                                    className="chat-content-attachments-item__img"
+                                    className={
+                                        'chat-content-attachments-item__img' + ` ${theme}-mode__img`
+                                    }
                                     src="/ChatPage/download.png"
                                     alt=""
                                 />
                                 <img
-                                    className="chat-content-attachments-item__delete"
+                                    className={
+                                        'chat-content-attachments-item__delete' +
+                                        ` ${theme}-mode__img`
+                                    }
                                     src="/shared/cancel_black.png"
                                     alt=""
                                     onClick={() => {

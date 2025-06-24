@@ -14,7 +14,7 @@ const StructurizedMessage: React.FC = () => {
     const { badMessageError, message } = useSelector(
         (state: AppState) => state.structurizedMessage,
     );
-    const { user } = useSelector((state: AppState) => state.user);
+    const { user, theme } = useSelector((state: AppState) => state.user);
     const dispatch = useDispatch<AppDispatch>();
     const params = useParams();
     const messageId = params.messageId;
@@ -60,13 +60,13 @@ const StructurizedMessage: React.FC = () => {
                             }}
                         >
                             <img
-                                className="str-message-go-back__img"
+                                className={'str-message-go-back__img' + ` ${theme}-mode__img`}
                                 src="/shared/go-back.png"
                                 alt=""
                             />
                         </div>
                     </div>
-                    <StructurizedMessageContent message={message} isOnPage={true} />
+                    <StructurizedMessageContent theme={theme} message={message} isOnPage={true} />
                 </>
             )}
             {badMessageError && <NotFound />}

@@ -75,7 +75,11 @@ const Chat: React.FC = () => {
                                 navigateTo(-1);
                             }}
                         >
-                            <img className="chat-go-back__img" src="/shared/go-back.png" alt="" />
+                            <img
+                                className={'chat-go-back__img' + ` ${theme}-mode__img`}
+                                src="/shared/go-back.png"
+                                alt=""
+                            />
                         </div>
                     </div>
                     <div className={'chat-dialog' + ` ${theme}-mode__middle-block`}>

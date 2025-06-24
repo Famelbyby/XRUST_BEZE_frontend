@@ -37,7 +37,7 @@ const VoiceMessage: React.FC<PropType> = ({
     isStructurizing,
     needsDescription,
 }) => {
-    const { user } = useSelector((state: AppState) => state.user);
+    const { user, theme } = useSelector((state: AppState) => state.user);
     const { voiceMessageId, isPlayingMessage, currentTime } = useSelector(
         (state: AppState) => state.recorder,
     );
@@ -127,7 +127,10 @@ const VoiceMessage: React.FC<PropType> = ({
                 <div
                     id={`voice-message-content-${message.message_id}`}
                     className={
-                        'chat-voice-message chat-voice-message_' + (isOwnMessage ? 'right' : 'left')
+                        'chat-voice-message chat-voice-message_' +
+                        (isOwnMessage
+                            ? `right ${theme}-mode__bright-block`
+                            : `left ${theme}-mode__brighter-block`)
                     }
                     key={message.message_id}
                 >
@@ -198,7 +201,10 @@ const VoiceMessage: React.FC<PropType> = ({
                             />
                         )}
                         <div
-                            className="chat-voice-message-content__duration"
+                            className={
+                                'chat-voice-message-content__duration' +
+                                ` ${theme}-mode__bright-text`
+                            }
                             id={`voice-message-${message.message_id}-duration`}
                         >
                             {voiceMessageId === message.message_id && (
@@ -210,7 +216,12 @@ const VoiceMessage: React.FC<PropType> = ({
                         </div>
                     </div>
                     {isShown && (
-                        <div className="chat-voice-message-content__decrypted-message">
+                        <div
+                            className={
+                                'chat-voice-message-content__decrypted-message' +
+                                ` ${theme}-mode__bright-text`
+                            }
+                        >
                             {message.recognized_voice !== undefined
                                 ? message.recognized_voice
                                 : 'Расшифровываем...'}
@@ -221,6 +232,7 @@ const VoiceMessage: React.FC<PropType> = ({
                             <>
                                 <div className="chat-content-structured">
                                     <StructurizedMessageContent
+                                        theme={theme}
                                         message={message}
                                         isOnPage={false}
                                     />
@@ -230,7 +242,12 @@ const VoiceMessage: React.FC<PropType> = ({
                                     to={`/structurized-messages/${message.message_id}`}
                                     aria-label=""
                                 >
-                                    <div className="chat-content-link__go-to-page">
+                                    <div
+                                        className={
+                                            'chat-content-link__go-to-page' +
+                                            ` ${theme}-mode__bright-text`
+                                        }
+                                    >
                                         Перейти на отдельную страницу
                                     </div>
                                 </Link>
@@ -238,7 +255,13 @@ const VoiceMessage: React.FC<PropType> = ({
                         )}
                     <div className="chat-content__time">
                         {isStructurizing && (
-                            <div className="chat-content__structurizing">объясняется</div>
+                            <div
+                                className={
+                                    'chat-content__structurizing' + ` ${theme}-mode__bright-text`
+                                }
+                            >
+                                объясняется
+                            </div>
                         )}
                         {messageTime}
                     </div>
@@ -246,7 +269,9 @@ const VoiceMessage: React.FC<PropType> = ({
                 {message.structurized === undefined && message.recognized_voice !== undefined && (
                     <div className="chat-message-wrapper-structurize">
                         <img
-                            className="chat-message-wrapper-structurize__img"
+                            className={
+                                'chat-message-wrapper-structurize__img' + ` ${theme}-mode__img`
+                            }
                             src="/ChatPage/ai.png"
                             alt=""
                             title="Объяснить подробнее"
@@ -258,6 +283,7 @@ const VoiceMessage: React.FC<PropType> = ({
                         />
                         {needDes && (
                             <DescriptionWindow
+                                theme={theme}
                                 windowClass="description-window-structurize-message"
                                 confirm={{ key: STRUCTURIZE_MESSAGE, text: 'Понятно' }}
                                 callback={() => setNeedDes(false)}
@@ -272,11 +298,12 @@ const VoiceMessage: React.FC<PropType> = ({
                 <div
                     className={
                         'chat-message-checked-mark chat-message-checked-mark_' +
-                        (isOwnMessage ? 'right' : 'left')
+                        (isOwnMessage ? 'right' : 'left') +
+                        ` ${theme}-mode__bright-block`
                     }
                 >
                     <img
-                        className="chat-message-checked-mark__img"
+                        className={'chat-message-checked-mark__img' + ` ${theme}-mode__img`}
                         src="/ChatPage/selected.png"
                         alt="selected"
                     />

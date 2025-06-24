@@ -56,12 +56,13 @@ const RecorderBarSpeedRange: React.FC = () => {
 };
 
 const RecorderBar: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
     const { isPlayingMessage } = useSelector((state: AppState) => state.recorder);
     const dispatch = useDispatch();
 
     return (
         <div className="recorder-field">
-            <div className="recorder-bar">
+            <div className={'recorder-bar' + ` ${theme}-mode__bright-block`}>
                 <img
                     className="recorder-bar__toggler"
                     src={'/shared/' + (isPlayingMessage ? 'pause' : 'play-button') + '_white.png'}

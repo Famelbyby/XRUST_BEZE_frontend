@@ -6,16 +6,22 @@ import { IMessage } from '../../entity/Message/MessageTypes';
 interface StructurizedMessageContentPropTypes {
     message: IMessage | undefined;
     isOnPage: boolean;
+    theme?: string;
 }
 
 const StructurizedMessageContent: React.FC<StructurizedMessageContentPropTypes> = ({
     message,
     isOnPage,
+    theme = 'light',
 }) => {
     return (
         <div className={'str-message-content' + (isOnPage ? ' str-message-content_paddinged' : '')}>
             {message !== undefined && (
-                <div className="str-message-markdown">
+                <div
+                    className={
+                        'str-message-markdown' + ` ${theme}-mode__bright-block_hovered-scroll`
+                    }
+                >
                     <ReactMarkdown>{message.structurized!}</ReactMarkdown>
                 </div>
             )}
