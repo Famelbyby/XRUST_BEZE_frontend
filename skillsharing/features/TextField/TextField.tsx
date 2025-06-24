@@ -19,14 +19,16 @@ const TextField: React.FC<TextFieldPropTypes<string>> = ({
     theme = 'light',
 }) => {
     return (
-        <div className={'text-field' + (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)}>
+        <div className={'text-field' + ` ${theme}-mode__bright-text`}>
             {title}
             <div className="text-field-content">
                 <input
                     type="text"
                     className={
                         'text-field-content__input' +
-                        (error === undefined ? '' : ' text-field-content__input_errored')
+                        (error === undefined
+                            ? ''
+                            : ' text-field-content__input_errored' + ` ${theme}-mode__error-border`)
                     }
                     placeholder={placeholder}
                     value={value}
@@ -36,7 +38,9 @@ const TextField: React.FC<TextFieldPropTypes<string>> = ({
                     }}
                 />
             </div>
-            <div className="text-field__error">{error === undefined ? '' : error}</div>
+            <div className={'text-field__error' + ` ${theme}-mode__error-text`}>
+                {error === undefined ? '' : error}
+            </div>
         </div>
     );
 };

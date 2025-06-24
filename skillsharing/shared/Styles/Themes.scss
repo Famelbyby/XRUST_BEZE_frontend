@@ -104,4 +104,8 @@ $darkGreenDullBorder: #008377;
     &__error-text {
         color: $darkGreenError;
     }
+
+    &__error-border {
+        border: 1px solid $darkGreenError;
+    }
 }

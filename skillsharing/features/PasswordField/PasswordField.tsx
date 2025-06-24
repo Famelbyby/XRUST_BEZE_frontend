@@ -30,7 +30,10 @@ const TextField: React.FC<PasswordFieldPropTypes<string>> = ({
                     type={isHidden ? 'password' : 'text'}
                     className={
                         'password-field-content__input' +
-                        (error ? ' password-field-content__input_errored' : '')
+                        (error
+                            ? ' password-field-content__input_errored' +
+                              ` ${theme}-mode__error-border`
+                            : '')
                     }
                     placeholder=""
                     value={value}
@@ -46,7 +49,9 @@ const TextField: React.FC<PasswordFieldPropTypes<string>> = ({
                     onClick={toggleIsHidden}
                 />
             </div>
-            <div className="password-field__error">{error === undefined ? '' : error}</div>
+            <div className={'password-field__error' + ` ${theme}-mode__error-text`}>
+                {error === undefined ? '' : error}
+            </div>
         </div>
     );
 };

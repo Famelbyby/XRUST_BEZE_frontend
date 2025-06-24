@@ -11,7 +11,7 @@ const Auth: React.FC = () => {
 
     return (
         <div className="auth-page">
-            <div className={'auth-window'}>
+            <div className={'auth-window' + ` ${theme}-mode__middle-block`}>
                 <div className={'auth-header'}>
                     <Link replace to={LOG_IN_URL} aria-label="">
                         <div
