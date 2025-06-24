@@ -36,13 +36,15 @@ self.addEventListener('fetch', (event) => {
     // Кэшируем остальное
     event.respondWith(
         caches.match(event.request).then((cached) => {
-            return (
-                fetch(event.request).then((response) => {
-                    const clone = response.clone();
-                    caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-                    return response;
-                }) || cached
-            );
+            if (!navigator.onLine) {
+                return cached;
+            }
+
+            return fetch(event.request).then((response) => {
+                const clone = response.clone();
+                caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+                return response;
+            });
         }),
     );
 });
