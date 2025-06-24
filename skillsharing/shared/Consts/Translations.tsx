@@ -13,3 +13,9 @@ export const SKILL_LEVELS_IN_RUSSIAN = {
     intermediate: 'средний',
     beginner: 'начинающий',
 };
+
+export const SEND_RELATED_TO_COLOR = {
+    light: 'send',
+    'dark-green': 'send_green',
+    'dark-orange': 'send_orange',
+};

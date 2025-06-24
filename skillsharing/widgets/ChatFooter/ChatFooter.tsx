@@ -30,6 +30,7 @@ import {
 import { MAX_ATTACHMENTS_LENGTH } from '../../shared/Consts/ValidatorsConts';
 import { setIsErrored } from '../../app/slices/UserSlice';
 import { ValidateAttachments } from '../../shared/Functions/Validators';
+import { SEND_RELATED_TO_COLOR } from '../../shared/Consts/Translations';
 
 const TEXTAREA_INITIAL_HEIGHT = 15;
 const MESSAGE_MAX_LENGTH = 800;
@@ -445,7 +446,7 @@ const ChatFooter: React.FC = () => {
                     <img
                         id="send-message"
                         className={'chat-footer-controls__send-message'}
-                        src="/shared/send.png"
+                        src={'/shared/' + SEND_RELATED_TO_COLOR[theme] + '.png'}
                         alt="send-message"
                         onClick={handleSending}
                     />

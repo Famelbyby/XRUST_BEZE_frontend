@@ -5,6 +5,7 @@ import { NormalizeTextarea } from '../../shared/Functions/FormatComponents';
 import { AVATAR_URL } from '../../shared/Consts/URLS';
 import SkillsLine from '../SkillsLine/SkillsLine';
 import { AddReview } from '../../pages/Profile/api/Profile';
+import { SEND_RELATED_TO_COLOR } from '../../shared/Consts/Translations';
 
 const TEXTAREA_INITIAL_HEIGHT = 23;
 const TEXTAREA_ID = 'textarea';
@@ -91,7 +92,7 @@ const ProfileAddReview: React.FC = () => {
                             </div>
                             <img
                                 className="profile-add-review-footer__send-review"
-                                src="/shared/send.png"
+                                src={'/shared/' + SEND_RELATED_TO_COLOR[theme] + '.png'}
                                 alt="Отправить комментарий"
                                 onClick={() => {
                                     dispatch(
