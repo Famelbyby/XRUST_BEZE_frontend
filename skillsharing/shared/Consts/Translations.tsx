@@ -31,3 +31,9 @@ export const CROSS_RELATED_TO_COLOR = {
     'dark-green': 'cross_green',
     'dark-orange': 'cross_orange',
 };
+
+export const DISC5_RELATED_TO_COLOR = {
+    light: 'disc5',
+    'dark-green': 'disc5_green',
+    'dark-orange': 'disc5_orange',
+};

@@ -1,7 +1,12 @@
 import React from 'react';
 import './Landing.scss';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../../app/AppStore';
+import { DISC5_RELATED_TO_COLOR } from '../../../shared/Consts/Translations';
 
 const LandingContent: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
+
     return (
         <div className="landing-content">
             <div className="landing-content-brief">
@@ -18,7 +23,7 @@ const LandingContent: React.FC = () => {
                     пользователями.
                 </div>
             </div>
-            <div className="landing-content-goals">
+            <div className={'landing-content-goals' + ` ${theme}-mode__bright-block`}>
                 <div className="landing-content-goals__title">
                     Мы стремимся объединить людей разных специальностей для взаимопомощи, будь то
                     студенты младших/старших курсов, то лишь поступающие абитуриенты, то опытные и
@@ -73,7 +78,7 @@ const LandingContent: React.FC = () => {
                     <div className="landing-content-functions-preview">
                         <img
                             className="landing-content-functions-preview__img"
-                            src="/LandingPage/disc5.jpg"
+                            src={'/LandingPage/' + DISC5_RELATED_TO_COLOR[theme] + '.jpg'}
                             alt=""
                         />
                     </div>
@@ -96,8 +101,10 @@ const LandingContent: React.FC = () => {
 };
 
 const LandingFooter: React.FC = () => {
+    const { theme } = useSelector((state: AppState) => state.user);
+
     return (
-        <div className="landing-footer">
+        <div className={'landing-footer' + ` ${theme}-mode__bright-block`}>
             <div className="landing-footer-copyrights">© XRUST BEZE 2025</div>
             <div className="landing-footer-logo">SkillSharing</div>
         </div>
