@@ -10,7 +10,7 @@ import { Logout } from '../../entity/User/api/User';
 
 const ProfileMobileHeader: React.FC = () => {
     const { user: profile } = useSelector((state: AppState) => state.profile);
-    const { user } = useSelector((state: AppState) => state.user);
+    const { user, theme } = useSelector((state: AppState) => state.user);
     const dispatch = useDispatch<AppDispatch>();
     const ownUserID: ProfileType['id'] | undefined = user?.id;
 
@@ -27,11 +27,18 @@ const ProfileMobileHeader: React.FC = () => {
                         <div className="profile-mobile-header__name">{profile?.username}</div>
                         <div className="profile-mobile-header-last-seen">
                             <img
-                                className="profile-mobile-header-last-seen__img"
+                                className={
+                                    'profile-mobile-header-last-seen__img' + ` ${theme}-mode__img`
+                                }
                                 src="/shared/clock.png"
                                 alt="В сети"
                             />
-                            <div className="profile-mobile-header-last-seen__title">
+                            <div
+                                className={
+                                    'profile-mobile-header-last-seen__title' +
+                                    ` ${theme}-mode__bright-text`
+                                }
+                            >
                                 {profile !== undefined && (
                                     <>
                                         {FormatRelativeTimeInPastInDays(
@@ -46,7 +53,7 @@ const ProfileMobileHeader: React.FC = () => {
                 </div>
                 <div className="profile-mobile-header-rating">
                     <img
-                        className="profile-mobile-header-rating__img"
+                        className={'profile-mobile-header-rating__img' + ` ${theme}-mode__img`}
                         src="/ProfilePage/star.png"
                         alt="Оценка"
                     />
@@ -58,10 +65,16 @@ const ProfileMobileHeader: React.FC = () => {
             {profile !== undefined && ownUserID === profile.id && (
                 <div className="profile-buttons">
                     <Link to={'/settings'}>
-                        <img className="profile-mobile-header__edit" src="/shared/pen.png" alt="" />
+                        <img
+                            className={'profile-mobile-header__edit' + ` ${theme}-mode__img`}
+                            src="/shared/pen.png"
+                            alt=""
+                        />
                     </Link>
                     <div
-                        className="profile-mobile-header-logout-wrapper"
+                        className={
+                            'profile-mobile-header-logout-wrapper' + ` ${theme}-mode__bright-block`
+                        }
                         onClick={() => {
                             dispatch(Logout());
                         }}
@@ -76,13 +89,18 @@ const ProfileMobileHeader: React.FC = () => {
             )}
             {profile !== undefined && ownUserID !== profile.id && (
                 <div className="profile-mobile-header-buttons">
-                    <img
+                    {/* <img
                         className="profile-mobile-header__report"
                         src="/ProfilePage/report.png"
                         alt="Пожаловаться"
-                    />
+                    /> */}
                     <Link to={`/chat/${profile.id}`}>
-                        <div className="profile-mobile-header-send-message-wrapper">
+                        <div
+                            className={
+                                'profile-mobile-header-send-message-wrapper' +
+                                ` ${theme}-mode__bright-block`
+                            }
+                        >
                             <img
                                 className="profile-mobile-header__send-message"
                                 src="/ProfilePage/chat2.png"

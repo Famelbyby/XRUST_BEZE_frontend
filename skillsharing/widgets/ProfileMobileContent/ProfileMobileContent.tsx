@@ -21,7 +21,7 @@ const ProfileMobileContent: React.FC = () => {
         isHiddenDeleteReview,
         deleteReviewId,
     } = useSelector((state: AppState) => state.profile);
-    const { user: myUser } = useSelector((state: AppState) => state.user);
+    const { user: myUser, theme } = useSelector((state: AppState) => state.user);
     const alreadyHaveReview =
         myUser !== undefined &&
         profile !== undefined &&
@@ -59,7 +59,10 @@ const ProfileMobileContent: React.FC = () => {
                                             <a
                                                 href={href}
                                                 target="_blank"
-                                                className="profile-mobile-content-hrefs-examples__href"
+                                                className={
+                                                    'profile-mobile-content-hrefs-examples__href' +
+                                                    ` ${theme}-mode__dull-text`
+                                                }
                                                 aria-label={`Ссылка на ${href}`}
                                             >
                                                 {href}
@@ -72,7 +75,14 @@ const ProfileMobileContent: React.FC = () => {
                         </div>
                     )}
                     {(profile.hrefs === null || (profile.hrefs && profile.hrefs.length === 0)) && (
-                        <div className="profile-mobile-content-hrefs__no-hrefs">Тут пусто</div>
+                        <div
+                            className={
+                                'profile-mobile-content-hrefs__no-hrefs' +
+                                ` ${theme}-mode__bright-text`
+                            }
+                        >
+                            Тут пусто
+                        </div>
                     )}
                 </div>
             )}
@@ -83,7 +93,10 @@ const ProfileMobileContent: React.FC = () => {
                             Навыки
                             <div className="profile-tags-header-question">
                                 <img
-                                    className="profile-mobile-content-tags-header__img"
+                                    className={
+                                        'profile-mobile-content-tags-header__img' +
+                                        ` ${theme}-mode__img`
+                                    }
                                     title="Пользователь делится следующими навыками"
                                     src="/shared/question.png"
                                     alt=""
@@ -94,7 +107,11 @@ const ProfileMobileContent: React.FC = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="profile-mobile-content-tags-array">
+                    <div
+                        className={
+                            'profile-mobile-content-tags-array' + ` ${theme}-mode__bright-text`
+                        }
+                    >
                         {profile !== undefined &&
                             profile.skills_to_share.map((skill: Skill) => {
                                 return (
@@ -103,7 +120,7 @@ const ProfileMobileContent: React.FC = () => {
                                         key={skill.name}
                                     >
                                         <div
-                                            className={`profile-mobile-content-tags-array__tag profile-mobile-content-tags-array__tag_${skill.level}`}
+                                            className={`profile-mobile-content-tags-array__tag profile-mobile-content-tags-array__tag_${skill.level} ${theme}-mode__${skill.level}-block`}
                                             title={`${CapitalizeString(skill.level)}`}
                                             key={skill.name}
                                         >
@@ -190,6 +207,7 @@ const ProfileMobileContent: React.FC = () => {
             {!isHiddenDeleteReview &&
                 createPortal(
                     <ModalWindow
+                        theme={theme}
                         modalType={'delete'}
                         closeModal={() => dispatch(hideDeleteReviewModal())}
                         agreeTitle="Да"

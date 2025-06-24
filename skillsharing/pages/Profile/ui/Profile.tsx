@@ -51,16 +51,11 @@ const Profile: React.FC = () => {
             {user === undefined && isFetched && <NotFound />}
             {(user !== undefined || !isFetched) && (
                 <>
-                    <div
-                        className={
-                            'profile-wrapper' +
-                            (theme === 'light' ? '' : ` ${theme}-mode__bright-text`)
-                        }
-                    >
+                    <div className={'profile-wrapper' + ` ${theme}-mode__bright-text`}>
                         <ProfileLeftColumn />
                         <ProfileRightColumn />
                     </div>
-                    <div className="profile-wrapper_mobile">
+                    <div className={'profile-wrapper_mobile' + ` ${theme}-mode__bright-text`}>
                         <ProfileMobileHeader />
                         <ProfileMobileContent />
                     </div>

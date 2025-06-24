@@ -128,6 +128,7 @@ const ProfileRightColumn: React.FC = () => {
             {!isHiddenDeleteReview &&
                 createPortal(
                     <ModalWindow
+                        theme={theme}
                         modalType={'delete'}
                         closeModal={() => dispatch(hideDeleteReviewModal())}
                         agreeTitle="Да"
