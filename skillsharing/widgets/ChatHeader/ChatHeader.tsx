@@ -257,6 +257,7 @@ const ChatHeader: React.FC = () => {
                                 {!isHiddenDeletingModal &&
                                     createPortal(
                                         <ModalWindow
+                                            theme={theme}
                                             modalType={'delete'}
                                             closeModal={() => dispatch(hideDeletingModal())}
                                             agreeTitle="Удалить"
