@@ -10,6 +10,18 @@ $darkGreenBrightBorder: #e8ede07a;
 $darkGreenBrighterBlock: #85c8a3;
 $darkGreenDullBorder: #008377;
 
+$darkOrangeDullText: #dab429;
+$darkOrangeBack: #333333;
+$darkOrangeBrightText: #e8ede0;
+$darkOrangeMiddleBlock: #5e5741;
+$darkOrangeAdvanced: #af7300;
+$darkOrangeIntermediate: #cf9d13;
+$darkOrangeBeginner: #dabc18;
+$darkOrangeError: #e5704d;
+$darkOrangeBrightBorder: #e8ede07a;
+$darkOrangeBrighterBlock: #bfa036;
+$darkOrangeDullBorder: #4b0e0d;
+
 .dark-green-mode {
     &__bright-right-border {
         border-right: 1px solid $darkGreenBrightBorder;
@@ -107,5 +119,105 @@ $darkGreenDullBorder: #008377;
 
     &__error-border {
         border: 1px solid $darkGreenError;
+    }
+}
+
+.dark-orange-mode {
+    &__bright-right-border {
+        border-right: 1px solid $darkOrangeBrightBorder;
+    }
+
+    &__bright-border {
+        border: 1px solid $darkOrangeBrightBorder;
+    }
+
+    &__bright-block {
+        background-color: $darkOrangeDullText;
+    }
+
+    &__brighter-block {
+        background-color: $darkOrangeBrighterBlock;
+    }
+
+    &__bright-block_hovered-scroll {
+        &:hover {
+            &::-webkit-scrollbar-thumb {
+                background-color: $darkOrangeDullText;
+            }
+        }
+    }
+
+    &__bright-left-border {
+        border-left: 1px solid $darkOrangeDullBorder;
+    }
+
+    &__middle-block {
+        background-color: $darkOrangeMiddleBlock;
+
+        &_hovered {
+            &:hover {
+                background-color: #39666d;
+            }
+        }
+    }
+
+    &__dull-text {
+        color: $darkOrangeDullText;
+
+        &::after {
+            background-color: $darkOrangeDullText;
+        }
+    }
+
+    &__block {
+        background-color: $darkOrangeBack;
+    }
+
+    &__bright-text {
+        color: $darkOrangeBrightText;
+
+        &::after {
+            background-color: $darkOrangeBrightText;
+        }
+    }
+
+    &__img {
+        filter: invert(0.8);
+    }
+
+    &__advanced-block {
+        background-color: $darkOrangeAdvanced;
+    }
+
+    &__intermediate-block {
+        background-color: $darkOrangeIntermediate;
+    }
+
+    &__beginner-block {
+        background-color: $darkOrangeBeginner;
+    }
+
+    &__advanced-text {
+        color: $darkOrangeAdvanced;
+    }
+
+    &__intermediate-text {
+        color: $darkOrangeIntermediate;
+    }
+
+    &__beginner-text {
+        color: $darkOrangeBeginner;
+    }
+
+    &__error-block {
+        background-color: $darkOrangeError;
+    }
+
+    &__error-text {
+        color: $darkOrangeError;
+    }
+
+    &__error-border {
+        border: 1px solid $darkOrangeError;
     }
 }
